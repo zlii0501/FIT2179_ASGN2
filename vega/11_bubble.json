@@ -34,7 +34,7 @@
       "type": "quantitative",
       "scale": {
         "domain": [0, 180],
-        "range": ["#130c04", "#4a1f06", "#8a3c12", "#c46228", "#e89040", "#f8c870"]
+        "range": ["#130c04", "#4a1f06", "#8a3c12", "#b85a22", "#cf7025", "#e09848"]
       },
       "legend": {
         "title": "Avg FRP (MW)",
