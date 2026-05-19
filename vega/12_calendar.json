@@ -8,14 +8,10 @@
     { "name": "labelA1", "value": "Sep" },
     { "name": "labelA2", "value": "Oct" },
     { "name": "labelA3", "value": "Nov" },
-    { "name": "labelA4", "value": "Dec" },
-    { "name": "labelA5", "value": "Jan 2020" },
     { "name": "labelB0", "value": "Aug 2018" },
     { "name": "labelB1", "value": "Sep" },
     { "name": "labelB2", "value": "Oct" },
-    { "name": "labelB3", "value": "Nov" },
-    { "name": "labelB4", "value": "Dec" },
-    { "name": "labelB5", "value": "Jan 2019" }
+    { "name": "labelB3", "value": "Nov" }
   ],
   "transform": [
     {
@@ -37,7 +33,7 @@
       "width": "container",
       "height": 118,
       "transform": [
-        { "filter": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 184" },
+        { "filter": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 122" },
         { "calculate": "datum.day_index - selectedStartA", "as": "window_day" },
         { "calculate": "floor(datum.window_day / 7)", "as": "window_week" },
         { "calculate": "datum.window_week < 10 ? '0' + datum.window_week : '' + datum.window_week", "as": "window_week_key" }
@@ -73,22 +69,13 @@
               "14",
               "15",
               "16",
-              "17",
-              "18",
-              "19",
-              "20",
-              "21",
-              "22",
-              "23",
-              "24",
-              "25",
-              "26"
+              "17"
             ]
           },
           "axis": {
             "labelAngle": 0,
             "labelOverlap": false,
-            "labelExpr": "{'00':labelA0,'04':labelA1,'08':labelA2,'13':labelA3,'17':labelA4,'21':labelA5}[datum.value] || ''"
+            "labelExpr": "{'00':labelA0,'04':labelA1,'08':labelA2,'13':labelA3}[datum.value] || ''"
           }
         },
         "y": {
@@ -132,7 +119,7 @@
       "width": "container",
       "height": 118,
       "transform": [
-        { "filter": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 184" },
+        { "filter": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 122" },
         { "calculate": "datum.day_index - selectedStartB", "as": "window_day" },
         { "calculate": "floor(datum.window_day / 7)", "as": "window_week" },
         { "calculate": "datum.window_week < 10 ? '0' + datum.window_week : '' + datum.window_week", "as": "window_week_key" }
@@ -168,22 +155,13 @@
               "14",
               "15",
               "16",
-              "17",
-              "18",
-              "19",
-              "20",
-              "21",
-              "22",
-              "23",
-              "24",
-              "25",
-              "26"
+              "17"
             ]
           },
           "axis": {
             "labelAngle": 0,
             "labelOverlap": false,
-            "labelExpr": "{'00':labelB0,'04':labelB1,'08':labelB2,'13':labelB3,'17':labelB4,'21':labelB5}[datum.value] || ''"
+            "labelExpr": "{'00':labelB0,'04':labelB1,'08':labelB2,'13':labelB3}[datum.value] || ''"
           }
         },
         "y": {

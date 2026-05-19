@@ -102,7 +102,7 @@ function addMonths(year, monthIndex, delta) {
 }
 
 function comparisonAxisLabels(option) {
-  return Array.from({ length: 6 }, (_, i) => {
+  return Array.from({ length: 4 }, (_, i) => {
     const date = addMonths(option.year, option.monthIndex, i);
     const label = monthShortNames[date.monthIndex];
     return i === 0 || date.monthIndex === 0 ? `${label} ${date.year}` : label;
@@ -111,7 +111,7 @@ function comparisonAxisLabels(option) {
 
 function comparisonWindowLabel(option) {
   const start = addMonths(option.year, option.monthIndex, 0);
-  const end = addMonths(option.year, option.monthIndex, 5);
+  const end = addMonths(option.year, option.monthIndex, 3);
   return `${monthShortNames[start.monthIndex]} ${start.year}-` +
     `${monthShortNames[end.monthIndex]} ${end.year}`;
 }
