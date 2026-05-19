@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abstract Index Layout Editor</title>
+  <link rel="stylesheet" href="css/layout-editor.css?v=3">
+</head>
+<body>
+  <header class="editor-header">
+    <div>
+      <p class="eyebrow">Australia's Black Summer</p>
+      <h1>Abstract Index Layout</h1>
+    </div>
+    <div class="toolbar" aria-label="Layout controls">
+      <label class="range-control" for="canvas-width">
+        <span>Canvas</span>
+        <input id="canvas-width" type="range" min="900" max="1440" step="20" value="1240">
+        <output id="canvas-width-value" for="canvas-width">1240px</output>
+      </label>
+      <button type="button" id="save-layout">Save</button>
+      <button type="button" id="apply-layout">Apply to index</button>
+      <button type="button" id="copy-css">Copy CSS</button>
+      <button type="button" id="download-css">Download CSS</button>
+      <button type="button" id="reset-layout" class="quiet">Reset</button>
+    </div>
+  </header>
+
+  <div class="editor-shell">
+    <aside class="inspector" aria-label="Selected block">
+      <div class="inspector-head">
+        <span class="panel-kicker">Selected</span>
+        <strong id="selected-title">None</strong>
+      </div>
+      <div class="field-grid">
+        <label for="field-col-start">Column</label>
+        <input id="field-col-start" type="number" min="1" max="12" step="1">
+        <label for="field-col-span">Span</label>
+        <input id="field-col-span" type="number" min="1" max="12" step="1">
+        <label for="field-row-start">Row</label>
+        <input id="field-row-start" type="number" min="1" max="40" step="1">
+        <label for="field-row-span">Height</label>
+        <input id="field-row-span" type="number" min="2" max="24" step="1">
+      </div>
+      <div class="io-actions">
+        <button type="button" id="export-json" class="quiet">Export JSON</button>
+        <label class="file-button" for="import-json">Import JSON</label>
+        <input id="import-json" type="file" accept="application/json">
+      </div>
+      <label class="css-output-label" for="css-output">CSS</label>
+      <textarea id="css-output" readonly spellcheck="false"></textarea>
+    </aside>
+
+    <main class="boards-wrap">
+      <div id="boards" class="boards" aria-label="Abstract page layout"></div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="js/layout-editor.js?v=4"></script>
+</body>
+</html>
