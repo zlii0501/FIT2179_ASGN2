@@ -101,6 +101,19 @@ function addMonths(year, monthIndex, delta) {
   return { year: date.getUTCFullYear(), monthIndex: date.getUTCMonth() };
 }
 
+function gridStartForMonth(year, monthIndex) {
+  const dow = new Date(Date.UTC(year, monthIndex, 1)).getUTCDay();
+  return dayIndexForMonth(year, monthIndex) - dow;
+}
+
+function labelWeeksForGrid(year, monthIndex) {
+  const gridStart = gridStartForMonth(year, monthIndex);
+  return Array.from({ length: 4 }, (_, i) => {
+    const m = addMonths(year, monthIndex, i);
+    return Math.floor((dayIndexForMonth(m.year, m.monthIndex) - gridStart) / 7);
+  });
+}
+
 function comparisonAxisLabels(option) {
   return Array.from({ length: 4 }, (_, i) => {
     const date = addMonths(option.year, option.monthIndex, i);
@@ -196,8 +209,14 @@ function updateComparisonCharts(target) {
   }
 
   if (calendarView) {
+    const gridStart = gridStartForMonth(option.year, option.monthIndex);
+    const labelWeeks = labelWeeksForGrid(option.year, option.monthIndex);
     calendarView.signal(`selectedStart${suffix}`, option.dayStart);
-    labels.forEach((label, index) => calendarView.signal(`label${suffix}${index}`, label));
+    calendarView.signal(`gridStart${suffix}`, gridStart);
+    labels.forEach((label, index) => {
+      calendarView.signal(`label${suffix}${index}`, label);
+      calendarView.signal(`labelWeek${suffix}${index}`, labelWeeks[index]);
+    });
     calendarView.runAsync();
   }
   if (overlayView) {

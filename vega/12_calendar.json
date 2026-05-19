@@ -2,8 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "data": { "url": "data/hist_daily_continuous.csv" },
   "params": [
-    { "name": "selectedStartA", "value": 5326 },
-    { "name": "selectedStartB", "value": 4961 },
+    { "name": "selectedStartA", "value": 5325 },
+    { "name": "selectedStartB", "value": 4960 },
+    { "name": "gridStartA", "value": 5321 },
+    { "name": "gridStartB", "value": 4957 },
     { "name": "labelA0", "value": "Aug 2019" },
     { "name": "labelA1", "value": "Sep" },
     { "name": "labelA2", "value": "Oct" },
@@ -11,7 +13,15 @@
     { "name": "labelB0", "value": "Aug 2018" },
     { "name": "labelB1", "value": "Sep" },
     { "name": "labelB2", "value": "Oct" },
-    { "name": "labelB3", "value": "Nov" }
+    { "name": "labelB3", "value": "Nov" },
+    { "name": "labelWeekA0", "value": 0 },
+    { "name": "labelWeekA1", "value": 5 },
+    { "name": "labelWeekA2", "value": 9 },
+    { "name": "labelWeekA3", "value": 13 },
+    { "name": "labelWeekB0", "value": 0 },
+    { "name": "labelWeekB1", "value": 4 },
+    { "name": "labelWeekB2", "value": 9 },
+    { "name": "labelWeekB3", "value": 13 }
   ],
   "transform": [
     {
@@ -33,15 +43,15 @@
       "width": "container",
       "height": 118,
       "transform": [
-        { "filter": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 122" },
-        { "calculate": "datum.day_index - selectedStartA", "as": "window_day" },
+        { "filter": "datum.day_index >= gridStartA && datum.day_index < gridStartA + 126" },
+        { "calculate": "datum.day_index - gridStartA", "as": "window_day" },
         { "calculate": "floor(datum.window_day / 7)", "as": "window_week" },
         { "calculate": "datum.window_week < 10 ? '0' + datum.window_week : '' + datum.window_week", "as": "window_week_key" }
       ],
       "mark": {
         "type": "rect",
         "cornerRadius": 2,
-        "stroke": "rgba(248,113,113,0.7)",
+        "stroke": "rgba(248,113,113,0.5)",
         "strokeWidth": 0.55
       },
       "encoding": {
@@ -52,30 +62,14 @@
           "sort": "ascending",
           "scale": {
             "domain": [
-              "00",
-              "01",
-              "02",
-              "03",
-              "04",
-              "05",
-              "06",
-              "07",
-              "08",
-              "09",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17"
+              "00","01","02","03","04","05","06","07","08","09",
+              "10","11","12","13","14","15","16","17"
             ]
           },
           "axis": {
             "labelAngle": 0,
             "labelOverlap": false,
-            "labelExpr": "{'00':labelA0,'04':labelA1,'08':labelA2,'13':labelA3}[datum.value] || ''"
+            "labelExpr": "datum.value === ((labelWeekA0 < 10 ? '0' : '') + labelWeekA0) ? labelA0 : datum.value === ((labelWeekA1 < 10 ? '0' : '') + labelWeekA1) ? labelA1 : datum.value === ((labelWeekA2 < 10 ? '0' : '') + labelWeekA2) ? labelA2 : datum.value === ((labelWeekA3 < 10 ? '0' : '') + labelWeekA3) ? labelA3 : ''"
           }
         },
         "y": {
@@ -98,6 +92,13 @@
             "orient": "bottom",
             "gradientLength": 180
           }
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 122",
+            "value": 0.95
+          },
+          "value": 0.2
         },
         "tooltip": [
           { "field": "day_label", "title": "Date" },
@@ -119,8 +120,8 @@
       "width": "container",
       "height": 118,
       "transform": [
-        { "filter": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 122" },
-        { "calculate": "datum.day_index - selectedStartB", "as": "window_day" },
+        { "filter": "datum.day_index >= gridStartB && datum.day_index < gridStartB + 126" },
+        { "calculate": "datum.day_index - gridStartB", "as": "window_day" },
         { "calculate": "floor(datum.window_day / 7)", "as": "window_week" },
         { "calculate": "datum.window_week < 10 ? '0' + datum.window_week : '' + datum.window_week", "as": "window_week_key" }
       ],
@@ -138,30 +139,14 @@
           "sort": "ascending",
           "scale": {
             "domain": [
-              "00",
-              "01",
-              "02",
-              "03",
-              "04",
-              "05",
-              "06",
-              "07",
-              "08",
-              "09",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-              "16",
-              "17"
+              "00","01","02","03","04","05","06","07","08","09",
+              "10","11","12","13","14","15","16","17"
             ]
           },
           "axis": {
             "labelAngle": 0,
             "labelOverlap": false,
-            "labelExpr": "{'00':labelB0,'04':labelB1,'08':labelB2,'13':labelB3}[datum.value] || ''"
+            "labelExpr": "datum.value === ((labelWeekB0 < 10 ? '0' : '') + labelWeekB0) ? labelB0 : datum.value === ((labelWeekB1 < 10 ? '0' : '') + labelWeekB1) ? labelB1 : datum.value === ((labelWeekB2 < 10 ? '0' : '') + labelWeekB2) ? labelB2 : datum.value === ((labelWeekB3 < 10 ? '0' : '') + labelWeekB3) ? labelB3 : ''"
           }
         },
         "y": {
@@ -184,6 +169,13 @@
             "orient": "bottom",
             "gradientLength": 180
           }
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 122",
+            "value": 0.95
+          },
+          "value": 0.2
         },
         "tooltip": [
           { "field": "day_label", "title": "Date" },
