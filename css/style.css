@@ -459,6 +459,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   grid-template-columns: minmax(240px, 0.3fr) minmax(0, 0.7fr);
 }
 
+.figure-side-layout-radar {
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 0.72fr);
+  align-items: center;
+}
+
 .figure-copy {
   min-width: 0;
   padding: 0.15rem 0.2rem 0 0;
@@ -475,6 +480,13 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .figure-side-layout + .chart-annotation {
   display: none;
+}
+
+.chart-annotation.compact-p {
+  margin-top: 0.45rem;
+  max-width: 80ch;
+  font-size: 0.73rem;
+  line-height: 1.4;
 }
 
 .linked-fire-grid {
@@ -821,9 +833,23 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 #viz-alluvial,
 #viz-hexbin,
+#viz-state-radar,
 #viz-overlay,
 #viz-yearmonth-heat {
   width: 100%;
+  overflow: visible;
+}
+
+#viz-state-radar .vega-embed {
+  width: 100%;
+  overflow: visible;
+}
+
+#viz-state-radar .vega-embed svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
   overflow: visible;
 }
 

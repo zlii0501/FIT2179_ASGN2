@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Radar profile comparing each state's relative Black Summer fire footprint, energy, intensity, density, and night activity.",
   "width": "container",
-  "height": 230,
-  "padding": {"left": 24, "top": 12, "right": 24, "bottom": 40},
+  "height": 320,
+  "padding": {"left": 36, "top": 24, "right": 36, "bottom": 54},
   "datasets": {
     "radar_grid": [
       {"ring": 25, "metric_order": 0},
@@ -103,18 +103,18 @@
       "data": {"name": "radar_axes"},
       "transform": [
         {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
-        {"calculate": "108 * cos(datum.angle)", "as": "x"},
-        {"calculate": "106 * sin(datum.angle)", "as": "y"}
+        {"calculate": "112 * cos(datum.angle)", "as": "x"},
+        {"calculate": "110 * sin(datum.angle)", "as": "y"}
       ],
       "mark": {
         "type": "text",
         "align": "center",
         "baseline": "middle",
         "font": "sans-serif",
-        "fontSize": 9,
+        "fontSize": 10,
         "fontWeight": 700,
         "fill": "#d9bc91",
-        "limit": 64,
+        "limit": 74,
         "clip": false
       },
       "encoding": {
@@ -135,6 +135,17 @@
     },
     {
       "data": {"url": "data/fire_state_totals.csv"},
+      "params": [
+        {
+          "name": "stateHover",
+          "select": {
+            "type": "point",
+            "fields": ["state"],
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ],
       "transform": [
         {
           "lookup": "state",
@@ -182,17 +193,6 @@
           "as": "raw_label"
         }
       ],
-      "params": [
-        {
-          "name": "stateHover",
-          "select": {
-            "type": "point",
-            "fields": ["state"],
-            "on": "mouseover",
-            "clear": "mouseout"
-          }
-        }
-      ],
       "mark": {
         "type": "line",
         "interpolate": "linear-closed",
@@ -222,10 +222,10 @@
             "title": null,
             "orient": "bottom",
             "direction": "horizontal",
-            "columns": 6,
+            "columns": 3,
             "symbolType": "stroke",
             "symbolStrokeWidth": 3,
-            "labelFontSize": 9,
+            "labelFontSize": 10,
             "labelColor": "#b8956a"
           }
         },
@@ -322,7 +322,8 @@
           "scale": {
             "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
             "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
-          }
+          },
+          "legend": null
         },
         "size": {
           "condition": {"param": "stateHover", "value": 74},

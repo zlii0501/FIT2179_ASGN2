@@ -7,6 +7,9 @@ embedChart('#viz-waffle', 'vega/01_waffle.json', embedOpts);
 /* VIZ 2 — State Streamgraph (loaded from file) */
 embedChart('#viz-state-bar', 'vega/02_state_streamgraph.json', embedOpts);
 
+/* VIZ 3B - State radar profile (loaded from file) */
+embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=20260519b', embedOpts);
+
 /* VIZ 15 — Fire Causes Icon Waffle (loaded from file) */
 embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=icon-folder-20260517', embedOpts);
 

@@ -20,7 +20,7 @@
     align-self: stretch;
     min-height: 460px;
   }
-  [data-layout-id="fig01-causes"] {
+  [data-layout-id="fig03-state-radar"] {
     order: 3;
     grid-column: 1 / span 4;
     grid-row: 7 / span 12;
@@ -33,6 +33,13 @@
     grid-row: 11 / span 8;
     align-self: stretch;
     min-height: 368px;
+  }
+  [data-layout-id="fig01-causes"] {
+    order: 5;
+    grid-column: 1 / -1;
+    grid-row: 19 / span 13;
+    align-self: stretch;
+    min-height: 598px;
   }
   /* Chapter 2 - When */
   .chapter-grid-ch2 {
@@ -77,37 +84,37 @@
   [data-layout-id="fig06-frp-density"] {
     order: 2;
     grid-column: 5 / span 8;
-    grid-row: 1 / span 7;
+    grid-row: 1 / span 8;
     align-self: stretch;
-    min-height: 322px;
+    min-height: 368px;
   }
   [data-layout-id="fig07-daynight"] {
     order: 3;
     grid-column: 1 / span 4;
-    grid-row: 8 / span 8;
+    grid-row: 8 / span 10;
     align-self: stretch;
-    min-height: 368px;
+    min-height: 460px;
   }
-  [data-layout-id="fig08-bubble"] {
+  [data-layout-id="fig10-heatmatrix"] {
     order: 4;
     grid-column: 5 / span 8;
-    grid-row: 8 / span 8;
-    align-self: stretch;
-    min-height: 368px;
-  }
-  [data-layout-id="fig09-alluvial"] {
-    order: 5;
-    grid-column: 1 / -1;
-    grid-row: 16 / span 9;
+    grid-row: 9 / span 9;
     align-self: stretch;
     min-height: 414px;
   }
-  [data-layout-id="fig10-heatmatrix"] {
-    order: 6;
-    grid-column: 1 / -1;
-    grid-row: 25 / span 8;
+  [data-layout-id="fig09-alluvial"] {
+    order: 5;
+    grid-column: 1 / span 7;
+    grid-row: 18 / span 9;
     align-self: stretch;
-    min-height: 368px;
+    min-height: 414px;
+  }
+  [data-layout-id="fig08-bubble"] {
+    order: 6;
+    grid-column: 8 / span 5;
+    grid-row: 18 / span 9;
+    align-self: stretch;
+    min-height: 414px;
   }
   /* Chapter 4 - Legacy */
   .chapter-grid-ch4 {
@@ -118,9 +125,9 @@
   [data-layout-id="ch4-lede"] {
     order: 1;
     grid-column: 1 / span 4;
-    grid-row: 1 / span 8;
+    grid-row: 1 / span 9;
     align-self: stretch;
-    min-height: 368px;
+    min-height: 414px;
   }
   [data-layout-id="fig11-annual-area"] {
     order: 2;
