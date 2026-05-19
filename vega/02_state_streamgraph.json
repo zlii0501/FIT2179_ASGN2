@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Streamgraph of monthly fire detection counts by Australian state",
   "width": "container",
-  "height": 205,
+  "height": 280,
   "background": "transparent",
   "data": {
     "url": "data/fire_monthly_state.csv"
@@ -21,7 +21,7 @@
         "title": null,
         "grid": false,
         "labelAngle": -35,
-        "labelFontSize": 9,
+        "labelFontSize": 10,
         "labelLimit": 80
       }
     },
@@ -42,16 +42,16 @@
         "title": null,
         "orient": "none",
         "legendX": 12,
-        "legendY": 8,
+        "legendY": 12,
         "direction": "horizontal",
         "columns": 6,
         "symbolType": "square",
-        "symbolSize": 82,
-        "labelFontSize": 10,
+        "symbolSize": 110,
+        "labelFontSize": 11,
         "fillColor": "rgba(10,14,26,0.86)",
         "strokeColor": "rgba(255,255,255,0.12)",
         "cornerRadius": 6,
-        "padding": 6
+        "padding": 8
       }
     },
     "tooltip": [

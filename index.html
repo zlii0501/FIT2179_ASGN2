@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig01-text-20260519">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=fig05-inset-compact-20260516">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=3">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -115,31 +115,13 @@
         </div>
       </div>
         <div class="chart-card grid-span-4" data-layout-id="fig01-causes">
-          <div style="display: flex;">
-            <div>
           <div class="chart-title"><span class="chart-number">Fig. 01</span><span class="chart-title-text">A Perfect Storm — the six interlocking conditions that made Black Summer possible</span></div>
-
-                        <p class="chart-annotation">Three years of drought, record-breaking heat, and an El Niño-like climate signal primed the landscape; when lightning struck tinder-dry forests under extreme fire weather, the result was inevitable.</p>
-
-            </div>
           <div id="viz-causes-waffle"></div>
-          </div>
-          
+          <p class="chart-annotation">Three years of drought, record-breaking heat, and an El Niño-like climate signal primed the landscape; when lightning struck tinder-dry forests under extreme fire weather, the result was inevitable.</p>
         </div>
         <div class="chart-card grid-span-8" data-layout-id="fig03-state-stream">
-          <div class="chart-title"><span class="chart-number">Fig. 03A</span><span class="chart-title-text">Month by Month, State by State — how each region's fires rose and fell across the season</span></div>
+          <div class="chart-title"><span class="chart-number">Fig. 03</span><span class="chart-title-text">Month by Month, State by State — how each region's fires rose and fell across the season</span></div>
           <div id="viz-state-bar"></div>
-          <p class="chart-annotation chart-annotation-compact">The centred bands make the December surge visible at a glance: NSW expands fastest, while WA and NT taper as the northern dry-season pattern gives way to the east-coast emergency.</p>
-        </div>
-        <div class="chart-card grid-span-12 radar-card" data-layout-id="fig03-state-radar">
-          <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile - the footprint, energy and night-time character of each region</span></div>
-          <div class="figure-side-layout figure-side-layout-radar">
-            <div class="figure-copy">
-              <p class="chart-annotation">Each axis is scaled from 0 to 100 against the highest state value, so the shape shows relative pressure rather than raw totals alone. NSW dominates footprint and density, while WA stands out for average fire power.</p>
-              <p class="chart-annotation">Hover a state line to trace its profile across detections, total energy, average FRP, density, and night activity.</p>
-            </div>
-            <div id="viz-state-radar"></div>
-          </div>
         </div>
   </div>
 </section>
@@ -208,7 +190,6 @@
             </div>
           </div>
           <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
-          <p class="chart-annotation month-map-context">Use the month buttons to compare how hotspots shift across the season; larger points mark stronger fire radiative power, not larger burned area.</p>
         </div>
         <div class="month-controls">
           <div class="month-control-title">Month</div>
@@ -381,8 +362,8 @@
 <script src="js/layout-runtime.js?v=3"></script>
 <script src="js/ui.js"></script>
 <script src="js/vega-utils.js"></script>
-<script src="js/basic-charts.js?v=fig01-text-20260519"></script>
-<script src="js/month-explorer.js?v=ch12-fit-20260519"></script>
+<script src="js/basic-charts.js?v=fig01-icon-folder-20260517"></script>
+<script src="js/month-explorer.js?v=fig05-inset-compact-20260516"></script>
 <script src="js/chart-embeds.js"></script>
 <script src="js/raincloud-detail.js"></script>
 <script src="js/hexbin-zoom.js"></script>

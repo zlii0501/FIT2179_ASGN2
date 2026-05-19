@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 230,
+  "height": 340,
   "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
   "transform": [
     {
@@ -53,13 +53,13 @@
     "x": {
       "field": "x_pos",
       "type": "quantitative",
-      "scale": { "domain": [-168, 168] },
+      "scale": { "domain": [-162, 162] },
       "axis": null
     },
     "y": {
       "field": "y_pos",
       "type": "quantitative",
-      "scale": { "domain": [-14, 168] },
+      "scale": { "domain": [-10, 165] },
       "axis": null
     },
     "color": {

@@ -7,3 +7,23 @@ server-*.log
 *-check.png
 choropleth-debug.png
 choropleth-root-check.json
+# Local assistant/worktree metadata
+.claude/
+.superpowers/
+
+# Local server logs and visual QA artifacts
+server-*.log
+*.err.log
+*.out.log
+*-debug.png
+*-browser-check.png
+*-check.png
+choropleth-root-check.json
+
+# Raw/source data not required by the deployed GitHub Pages site
+*.zip
+*.xlsx
+package_show*.json
+data/*.zip
+data/*.xlsx
+data/Historical_Wildfires.csv
