@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-hidden="true">
+  <rect x="6" y="6" width="244" height="244" rx="34" fill="#fffaf1" stroke="#d99417" stroke-width="6"/>
+
+  <!-- Dry fuels: log + dry grass + leaf -->
+  <path d="M88 133 C128 103, 176 84, 209 92 C220 95, 221 110, 212 118 C174 151, 122 169, 86 158 C72 154, 75 142, 88 133Z" fill="#8c5630" stroke="#5a341c" stroke-width="7"/>
+  <ellipse cx="88" cy="146" rx="22" ry="28" transform="rotate(58 88 146)" fill="#d8ae75" stroke="#5a341c" stroke-width="7"/>
+  <ellipse cx="88" cy="146" rx="11" ry="16" transform="rotate(58 88 146)" fill="#f0d7a6"/>
+  <g stroke="#5a341c" stroke-width="5" stroke-linecap="round">
+    <path d="M121 125 L159 111"/><path d="M145 145 L187 128"/>
+  </g>
+  <path d="M135 177 C163 145, 203 145, 220 180 C186 194, 158 195, 135 177Z" fill="#d8a043" stroke="#6b3f1f" stroke-width="6"/>
+  <path d="M144 174 L212 174" stroke="#6b3f1f" stroke-width="5" stroke-linecap="round"/>
+  <path d="M168 161 L181 174 L170 185" fill="none" stroke="#6b3f1f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g stroke="#c49756" stroke-width="8" stroke-linecap="round">
+    <path d="M173 86 C169 58, 178 43, 185 28"/>
+    <path d="M197 100 C204 72, 214 58, 226 46"/>
+    <path d="M113 165 C95 138, 90 115, 93 94"/>
+  </g>
+
+</svg>

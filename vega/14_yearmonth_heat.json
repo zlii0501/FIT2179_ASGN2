@@ -1,0 +1,289 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Stable raincloud-style distribution chart comparing Black Summer monthly fire area against historical months",
+  "width": "container",
+  "height": 420,
+  "layer": [
+    {
+      "data": { "url": "data/hist_month_distribution.csv" },
+      "transform": [
+        { "calculate": "toNumber(datum.month_order) - 0.43", "as": "row_y0" },
+        { "calculate": "toNumber(datum.month_order) + 0.43", "as": "row_y1" }
+      ],
+      "mark": {
+        "type": "rect",
+        "fill": "transparent",
+        "cursor": "pointer"
+      },
+      "encoding": {
+        "x": {
+          "datum": 0,
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": null
+        },
+        "x2": { "datum": 65000 },
+        "y": {
+          "field": "row_y0",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "y2": { "field": "row_y1" },
+        "tooltip": [
+          { "field": "month_label", "title": "Click for detail" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/hist_month_distribution.csv" },
+      "mark": {
+        "type": "rule",
+        "stroke": "rgba(156,163,175,0.28)",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "x": {
+          "field": "min_fire_area_km2",
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": {
+            "title": "Estimated fire area (km2)",
+            "format": "~s",
+            "grid": true
+          }
+        },
+        "x2": { "field": "max_fire_area_km2" },
+        "y": {
+          "field": "month_order",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "tooltip": [
+          { "field": "month_label", "title": "Month" },
+          { "field": "min_fire_area_km2", "title": "Historical min km2", "format": ",.0f" },
+          { "field": "max_fire_area_km2", "title": "Historical max km2", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/hist_month_distribution.csv" },
+      "mark": {
+        "type": "rect",
+        "cornerRadius": 7,
+        "fill": "rgba(156,163,175,0.24)",
+        "stroke": "rgba(232,201,160,0.16)",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "x": {
+          "field": "q1_fire_area_km2",
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": null
+        },
+        "x2": { "field": "q3_fire_area_km2" },
+        "y": {
+          "field": "cloud_y0",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "y2": { "field": "cloud_y1" },
+        "tooltip": [
+          { "field": "month_label", "title": "Month" },
+          { "field": "q1_fire_area_km2", "title": "Historical Q1 km2", "format": ",.0f" },
+          { "field": "median_fire_area_km2", "title": "Historical median km2", "format": ",.0f" },
+          { "field": "q3_fire_area_km2", "title": "Historical Q3 km2", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/hist_month_distribution.csv" },
+      "mark": {
+        "type": "tick",
+        "color": "#e8c9a0",
+        "thickness": 2,
+        "size": 22
+      },
+      "encoding": {
+        "x": {
+          "field": "median_fire_area_km2",
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": null
+        },
+        "y": {
+          "field": "month_order",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "tooltip": [
+          { "field": "month_label", "title": "Month" },
+          { "field": "median_fire_area_km2", "title": "Historical median km2", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/hist_firework.csv" },
+      "transform": [
+        { "filter": "datum.year >= 2005 && datum.year <= 2018" },
+        {
+          "calculate": "toNumber(datum.month_order) + (((toNumber(datum.year) * 37) % 100) / 100 - 0.5) * 0.22",
+          "as": "plot_y_jitter"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "filled": true,
+        "size": 34,
+        "color": "rgba(156,163,175,0.58)"
+      },
+      "encoding": {
+        "x": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": null
+        },
+        "y": {
+          "field": "plot_y_jitter",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "tooltip": [
+          { "field": "year", "title": "Historical year" },
+          { "field": "month_label", "title": "Month" },
+          { "field": "total_fire_area_km2", "title": "Fire area km2", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "data": { "url": "data/hist_firework.csv" },
+      "transform": [
+        { "filter": "datum.is_black_summer === 'True' || datum.is_black_summer === true" }
+      ],
+      "mark": {
+        "type": "rule",
+        "stroke": "#e74c3c",
+        "strokeWidth": 1.8,
+        "opacity": 0.55
+      },
+      "encoding": {
+        "x": {
+          "field": "median_fire_area_km2",
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": null
+        },
+        "x2": { "field": "total_fire_area_km2" },
+        "y": {
+          "field": "month_order",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "detail": { "field": "month_label" }
+      }
+    },
+    {
+      "data": { "url": "data/hist_firework.csv" },
+      "transform": [
+        { "filter": "datum.is_black_summer === 'True' || datum.is_black_summer === true" }
+      ],
+      "mark": {
+        "type": "circle",
+        "filled": true,
+        "size": 150,
+        "stroke": "#f0dcc0",
+        "strokeWidth": 1.4
+      },
+      "encoding": {
+        "x": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" },
+          "axis": null
+        },
+        "y": {
+          "field": "month_order",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "color": {
+          "field": "ratio_to_median",
+          "type": "quantitative",
+          "scale": {
+            "domain": [1, 8],
+            "range": ["#f8961e", "#e74c3c", "#7f1d1d"]
+          },
+          "legend": {
+            "title": "Black Summer vs monthly median",
+            "orient": "bottom",
+            "gradientLength": 180
+          }
+        },
+        "tooltip": [
+          { "field": "year", "title": "Black Summer year" },
+          { "field": "month_label", "title": "Month" },
+          { "field": "total_fire_area_km2", "title": "Fire area km2", "format": ",.0f" },
+          { "field": "median_fire_area_km2", "title": "Historical median km2", "format": ",.0f" },
+          { "field": "ratio_to_median", "title": "Times median", "format": ".2f" }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          { "month_order": 0, "month_label": "Jan" },
+          { "month_order": 1, "month_label": "Feb" },
+          { "month_order": 2, "month_label": "Mar" },
+          { "month_order": 3, "month_label": "Apr" },
+          { "month_order": 4, "month_label": "May" },
+          { "month_order": 5, "month_label": "Jun" },
+          { "month_order": 6, "month_label": "Jul" },
+          { "month_order": 7, "month_label": "Aug" },
+          { "month_order": 8, "month_label": "Sep" },
+          { "month_order": 9, "month_label": "Oct" },
+          { "month_order": 10, "month_label": "Nov" },
+          { "month_order": 11, "month_label": "Dec" }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -8,
+        "font": "Courier New",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#e8c9a0"
+      },
+      "encoding": {
+        "x": {
+          "datum": 0,
+          "type": "quantitative",
+          "scale": { "domain": [0, 65000], "type": "sqrt" }
+        },
+        "y": {
+          "field": "month_order",
+          "type": "quantitative",
+          "scale": { "domain": [-0.7, 11.7], "reverse": true },
+          "axis": null
+        },
+        "text": { "field": "month_label" }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": { "x": "shared", "y": "shared" }
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "domain": false, "ticks": false }
+  }
+}

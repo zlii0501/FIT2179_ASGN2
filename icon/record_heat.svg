@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-hidden="true">
+  <rect x="6" y="6" width="244" height="244" rx="34" fill="#fff7f1" stroke="#d24a37" stroke-width="6"/>
+
+  <!-- Record heat: thermometer + sun + heat waves -->
+  <circle cx="182" cy="75" r="27" fill="#f5a623" stroke="#df8f12" stroke-width="6"/>
+  <g stroke="#df8f12" stroke-width="7" stroke-linecap="round">
+    <path d="M182 27 L182 42"/><path d="M182 108 L182 123"/>
+    <path d="M134 75 L149 75"/><path d="M215 75 L230 75"/>
+    <path d="M148 41 L158 51"/><path d="M207 99 L217 109"/>
+    <path d="M216 41 L206 51"/><path d="M158 99 L148 109"/>
+  </g>
+  <path d="M74 57 C61 70, 91 86, 74 101 C61 114, 91 130, 74 145" fill="none" stroke="#d24a37" stroke-width="7" stroke-linecap="round"/>
+  <path d="M49 62 C36 75, 66 91, 49 106 C36 119, 66 135, 49 150" fill="none" stroke="#d24a37" stroke-width="7" stroke-linecap="round"/>
+  <path d="M128 45 C109 45, 101 55, 101 72 L101 153 C83 163, 75 181, 83 200 C91 221, 115 233, 137 226 C159 219, 171 196, 164 175 C160 164, 153 157, 144 153 L144 72 C144 55, 136 45, 128 45Z" fill="#fffaf4" stroke="#5b3b24" stroke-width="7"/>
+  <path d="M123 82 L123 171" stroke="#d84b35" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="123" cy="190" r="31" fill="#e85b3f" stroke="#d84b35" stroke-width="7"/>
+
+</svg>

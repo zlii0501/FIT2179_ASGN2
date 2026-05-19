@@ -1,0 +1,91 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 270,
+  "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
+  "transform": [
+    { "calculate": "floor(datum.i / 10)", "as": "row" },
+    { "calculate": "datum.i % 10", "as": "col" },
+    {
+      "calculate": "datum.i < 22 ? 'Prolonged drought' : datum.i < 40 ? 'Record heat' : datum.i < 57 ? 'Dry fuels' : datum.i < 73 ? 'Extreme fire weather' : datum.i < 87 ? 'Dry lightning' : 'Climate change signal'",
+      "as": "driver"
+    },
+    {
+      "calculate": "datum.driver === 'Prolonged drought' ? 'cracked ground / low moisture' : datum.driver === 'Record heat' ? 'heat stress and record temperatures' : datum.driver === 'Dry fuels' ? 'vegetation ready to burn' : datum.driver === 'Extreme fire weather' ? 'wind, low humidity, severe fire danger' : datum.driver === 'Dry lightning' ? 'natural ignition source' : 'long-term warming increases fire-weather risk'",
+      "as": "note"
+    },
+    {
+      "calculate": "datum.driver === 'Prolonged drought' ? '22 icons' : datum.driver === 'Record heat' ? '18 icons' : datum.driver === 'Dry fuels' ? '17 icons' : datum.driver === 'Extreme fire weather' ? '16 icons' : datum.driver === 'Dry lightning' ? '14 icons' : '13 icons'",
+      "as": "share"
+    },
+    {
+      "calculate": "datum.driver === 'Prolonged drought' ? 'icon/prolonged_drought.svg?v=20260517' : datum.driver === 'Record heat' ? 'icon/record_heat.svg?v=20260517' : datum.driver === 'Dry fuels' ? 'icon/dry_fuels.svg?v=20260517' : datum.driver === 'Extreme fire weather' ? 'icon/extreme_fire_weather.svg?v=20260517' : datum.driver === 'Dry lightning' ? 'icon/dry_lightning.svg?v=20260517' : 'icon/climate_change_signal.svg?v=20260517'",
+      "as": "icon_url"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "col",
+      "type": "ordinal",
+      "axis": null
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": null
+    },
+    "tooltip": [
+      { "field": "driver", "title": "Driver" },
+      { "field": "share", "title": "Relative emphasis" },
+      { "field": "note", "title": "Meaning" }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "image",
+        "width": 27,
+        "height": 27
+      },
+      "encoding": {
+        "url": { "field": "icon_url", "type": "nominal" }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "shape": "square",
+        "filled": true,
+        "size": 760,
+        "opacity": 0
+      },
+      "encoding": {
+        "color": {
+          "field": "driver",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Prolonged drought",
+              "Record heat",
+              "Dry fuels",
+              "Extreme fire weather",
+              "Dry lightning",
+              "Climate change signal"
+            ],
+            "range": ["#b88949", "#d65f3b", "#9a9b8f", "#d68b2c", "#f0a31f", "#4a8cca"]
+          },
+          "legend": {
+            "title": "Driver",
+            "orient": "bottom",
+            "columns": 2,
+            "symbolType": "square"
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null }
+  }
+}

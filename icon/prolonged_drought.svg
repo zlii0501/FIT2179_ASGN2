@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-hidden="true">
+  <rect x="6" y="6" width="244" height="244" rx="34" fill="#fffaf1" stroke="#b88949" stroke-width="6"/>
+
+  <!-- Prolonged drought: cracked dry ground + dead tree -->
+  <path d="M40 167 C71 151, 185 151, 216 167 L216 203 C173 219, 83 219, 40 203 Z" fill="#d9b37a"/>
+  <path d="M40 178 C73 164, 183 164, 216 178" fill="none" stroke="#6b3f1f" stroke-width="7" stroke-linecap="round"/>
+  <path d="M78 204 L100 181 L118 206" fill="none" stroke="#6b3f1f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M136 204 L118 181 L149 171 L169 195 L190 178" fill="none" stroke="#6b3f1f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M65 188 L90 188 L105 169" fill="none" stroke="#6b3f1f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M112 157 L112 88" fill="none" stroke="#6b3f1f" stroke-width="9" stroke-linecap="round"/>
+  <path d="M112 112 L82 85" fill="none" stroke="#6b3f1f" stroke-width="8" stroke-linecap="round"/>
+  <path d="M112 114 L147 93" fill="none" stroke="#6b3f1f" stroke-width="8" stroke-linecap="round"/>
+  <path d="M112 88 L129 58" fill="none" stroke="#6b3f1f" stroke-width="8" stroke-linecap="round"/>
+  <path d="M84 78 C72 70, 68 57, 78 48" fill="none" stroke="#6b3f1f" stroke-width="7" stroke-linecap="round"/>
+  <path d="M146 96 C158 98, 166 107, 162 121 C151 120, 143 111, 146 96Z" fill="#9f7643" stroke="#6b3f1f" stroke-width="5"/>
+  <path d="M81 91 C68 92, 59 101, 61 114 C73 114, 82 105, 81 91Z" fill="#9f7643" stroke="#6b3f1f" stroke-width="5"/>
+
+</svg>

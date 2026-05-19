@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Connected dot plot of southeast Australian fire area by bushfire season",
+  "width": "container",
+  "height": 280,
+  "data": { "url": "data/hist_annual.csv" },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "point": false,
+        "stroke": "rgba(232,201,160,0.42)",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": { "field": "season_start", "order": "ascending" },
+          "title": "Bushfire season (Aug-Jan)",
+          "axis": { "labelAngle": -35, "labelFontSize": 10 }
+        },
+        "y": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "title": "Estimated fire area (km2)",
+          "axis": { "format": "~s" }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 115,
+        "stroke": "rgba(255,255,255,0.28)",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": { "field": "season_start", "order": "ascending" },
+          "title": "Bushfire season (Aug-Jan)"
+        },
+        "y": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "title": "Estimated fire area (km2)"
+        },
+        "color": {
+          "condition": { "test": "datum.is_black_summer", "value": "#e74c3c" },
+          "value": "#8f9aa8"
+        },
+        "size": {
+          "condition": { "test": "datum.is_black_summer", "value": 220 },
+          "value": 90
+        },
+        "tooltip": [
+          { "field": "year", "title": "Bushfire season" },
+          { "field": "total_fire_area_km2", "title": "SE/E fire area (km2)", "format": ",.0f" },
+          { "field": "national_fire_area_km2", "title": "National fire area (km2)", "format": ",.0f" },
+          { "field": "total_count", "title": "SE/E detections", "format": "," }
+        ]
+      }
+    },
+    {
+      "transform": [{ "filter": "datum.is_black_summer" }],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": -82,
+        "dy": -18,
+        "font": "sans-serif",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#f0dcc0"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": { "field": "season_start", "order": "ascending" }
+        },
+        "y": { "field": "total_fire_area_km2", "type": "quantitative" },
+        "text": { "field": "total_fire_area_km2", "type": "quantitative", "format": ",.0f" }
+      }
+    }
+  ],
+  "config": { "view": { "stroke": null } }
+}

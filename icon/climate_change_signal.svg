@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-hidden="true">
+  <rect x="6" y="6" width="244" height="244" rx="34" fill="#f3fbf0" stroke="#5a8d58" stroke-width="6"/>
+
+  <!-- Climate change signal: globe + rising line + thermometer -->
+  <circle cx="84" cy="92" r="50" fill="#79c6df" stroke="#347b93" stroke-width="7"/>
+  <path d="M49 75 C61 70, 69 64, 78 70 C85 76, 79 86, 69 85 C60 84, 56 92, 49 96 Z" fill="#79a96c"/>
+  <path d="M91 49 C103 56, 109 65, 107 78 C101 74, 94 75, 88 68 C82 60, 84 54, 91 49Z" fill="#79a96c"/>
+  <path d="M100 110 C115 112, 122 122, 118 136 C104 135, 91 128, 84 116 C88 111, 93 109, 100 110Z" fill="#79a96c"/>
+  <path d="M47 119 C57 122, 62 133, 71 140 C56 136, 47 128, 47 119Z" fill="#79a96c"/>
+  <path d="M46 201 L86 164 L119 190 L170 139 L198 166 L225 136" fill="none" stroke="#5a8d58" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208 134 L225 136 L224 154" fill="none" stroke="#5a8d58" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M190 63 C174 63, 168 72, 168 86 L168 157 C154 166, 148 181, 154 197 C161 216, 182 226, 201 220 C221 214, 232 193, 225 174 C222 166, 217 160, 210 157 L210 86 C210 72, 204 63, 190 63Z" fill="#fffaf4" stroke="#6b3f1f" stroke-width="7"/>
+  <path d="M189 104 L189 177" stroke="#e15a3c" stroke-width="17" stroke-linecap="round"/>
+  <circle cx="189" cy="190" r="25" fill="#e15a3c" stroke="#e15a3c" stroke-width="4"/>
+
+</svg>

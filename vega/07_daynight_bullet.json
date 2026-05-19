@@ -1,0 +1,237 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 336,
+  "data": { "url": "data/fire_daynight_state.csv" },
+  "transform": [
+    { "calculate": "0", "as": "zero" },
+    { "calculate": "50", "as": "benchmark" },
+    { "calculate": "60", "as": "sixty" },
+    { "calculate": "70", "as": "seventy" },
+    { "calculate": "100", "as": "hundred" },
+    { "calculate": "'0-50%'", "as": "band_0_50" },
+    { "calculate": "'Night-skewed or balanced'", "as": "meaning_0_50" },
+    { "calculate": "'50-60%'", "as": "band_50_60" },
+    { "calculate": "'Day-skewed'", "as": "meaning_50_60" },
+    { "calculate": "'60-70%'", "as": "band_60_70" },
+    { "calculate": "'Strong daytime skew'", "as": "meaning_60_70" },
+    { "calculate": "'70-100%'", "as": "band_70_100" },
+    { "calculate": "'Extreme daytime skew'", "as": "meaning_70_100" },
+    { "calculate": "'50% even day/night split'", "as": "benchmark_label" },
+    { "calculate": "format(datum.day_share_pct, '.1f') + '%'", "as": "share_label" }
+  ],
+  "layer": [
+    {
+      "mark": { "type": "bar", "width": 30, "opacity": 0.5 },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "title": null,
+          "axis": { "labelFontSize": 12, "labelFontWeight": "bold" }
+        },
+        "y": {
+          "field": "benchmark",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": {
+            "title": "Daytime share of detections",
+            "values": [0, 25, 50, 75, 100],
+            "labelExpr": "datum.value + '%'"
+          }
+        },
+        "y2": { "field": "zero" },
+        "color": { "value": "#223044" },
+        "tooltip": [
+          { "field": "band_0_50", "title": "Band" },
+          { "field": "meaning_0_50", "title": "Meaning" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "bar", "width": 30, "opacity": 0.5 },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "axis": null
+        },
+        "y": {
+          "field": "sixty",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "y2": { "field": "benchmark" },
+        "color": { "value": "#5f4a2b" },
+        "tooltip": [
+          { "field": "band_50_60", "title": "Band" },
+          { "field": "meaning_50_60", "title": "Meaning" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "bar", "width": 30, "opacity": 0.5 },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "axis": null
+        },
+        "y": {
+          "field": "seventy",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "y2": { "field": "sixty" },
+        "color": { "value": "#7a372d" },
+        "tooltip": [
+          { "field": "band_60_70", "title": "Band" },
+          { "field": "meaning_60_70", "title": "Meaning" }
+        ]
+      }
+    },
+    {
+      "mark": { "type": "bar", "width": 30, "opacity": 0.5 },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "axis": null
+        },
+        "y": {
+          "field": "hundred",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "y2": { "field": "seventy" },
+        "color": { "value": "#4f1f22" },
+        "tooltip": [
+          { "field": "band_70_100", "title": "Band" },
+          { "field": "meaning_70_100", "title": "Meaning" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "width": 14,
+        "color": "#f8961e",
+        "cornerRadiusEnd": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "axis": null
+        },
+        "y": {
+          "field": "day_share_pct",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "y2": { "field": "zero" },
+        "tooltip": [
+          { "field": "state", "title": "State" },
+          { "field": "day_count", "title": "Daytime detections", "format": "," },
+          { "field": "night_count", "title": "Nighttime detections", "format": "," },
+          { "field": "day_share_pct", "title": "Daytime share", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "tick",
+        "orient": "horizontal",
+        "color": "#e8c9a0",
+        "thickness": 2,
+        "size": 34
+      },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "axis": null
+        },
+        "y": {
+          "field": "benchmark",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "tooltip": [
+          { "field": "benchmark_label", "title": "Benchmark" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -6,
+        "font": "Courier New",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "fill": "#f8c471"
+      },
+      "encoding": {
+        "x": {
+          "field": "state",
+          "type": "nominal",
+          "sort": { "field": "day_share_pct", "order": "descending" },
+          "axis": null
+        },
+        "y": {
+          "field": "day_share_pct",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "text": { "field": "share_label" }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          { "benchmark": 50, "label": "50% even split" }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 4,
+        "dy": -3,
+        "font": "sans-serif",
+        "fontSize": 10,
+        "fill": "#e8c9a0"
+      },
+      "encoding": {
+        "x": { "value": 0 },
+        "y": {
+          "field": "benchmark",
+          "type": "quantitative",
+          "scale": { "domain": [0, 100] },
+          "axis": null
+        },
+        "text": { "field": "label" }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": { "x": "shared", "y": "shared" }
+  },
+  "config": {
+    "bar": { "binSpacing": 0 }
+  }
+}

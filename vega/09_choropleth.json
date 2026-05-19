@@ -1,0 +1,267 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Spatial hexbin map of VIIRS fire detections across Australia during the 2019-20 season.",
+  "width": 940,
+  "height": 480,
+  "padding": { "left": 18, "right": 24, "top": 18, "bottom": 44 },
+  "autosize": { "type": "fit", "contains": "padding" },
+  "background": "transparent",
+  "signals": [
+    {
+      "name": "hoverBin",
+      "value": null,
+      "on": [
+        { "events": "@hex:mouseover", "update": "datum" },
+        { "events": "@hex:mouseout", "update": "null" }
+      ]
+    },
+    {
+      "name": "selectedState",
+      "value": "ALL",
+      "on": [
+        { "events": "@stateButton:click", "update": "datum.state" }
+      ]
+    }
+  ],
+  "projections": [
+    {
+      "name": "aus",
+      "type": "mercator",
+      "center": [134.5, -27.4],
+      "scale": 680,
+      "translate": [380, 210]
+    }
+  ],
+  "data": [
+    {
+      "name": "states",
+      "url": "data/australia_states.geojson",
+      "format": { "type": "json", "property": "features" }
+    },
+    {
+      "name": "bins",
+      "url": "data/fire_hexbin_map.json",
+      "format": { "type": "json", "property": "bins" }
+    },
+    {
+      "name": "legend",
+      "values": [
+        { "label": "1", "count": 1, "x": 814, "y": 320 },
+        { "label": "20", "count": 20, "x": 814, "y": 350 },
+        { "label": "50", "count": 50, "x": 814, "y": 380 },
+        { "label": "90", "count": 90, "x": 814, "y": 410 }
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "as": "path",
+          "expr": "'M' + datum.x + ',' + (datum.y - 13.8) + ' L' + (datum.x + 11.95) + ',' + (datum.y - 6.9) + ' L' + (datum.x + 11.95) + ',' + (datum.y + 6.9) + ' L' + datum.x + ',' + (datum.y + 13.8) + ' L' + (datum.x - 11.95) + ',' + (datum.y + 6.9) + ' L' + (datum.x - 11.95) + ',' + (datum.y - 6.9) + ' Z'"
+        }
+      ]
+    },
+    {
+      "name": "stateFilters",
+      "values": [
+        { "label": "All", "state": "ALL", "y": 74 },
+        { "label": "NSW", "state": "NSW", "y": 110 },
+        { "label": "QLD", "state": "QLD", "y": 146 },
+        { "label": "WA", "state": "WA", "y": 182 },
+        { "label": "NT", "state": "NT", "y": 218 },
+        { "label": "SA", "state": "SA", "y": 254 },
+        { "label": "VIC", "state": "VIC", "y": 290 }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "countColor",
+      "type": "sqrt",
+      "domain": [1, 90],
+      "range": ["#f4d3a0", "#c77a3f", "#99442a", "#651b1b", "#2b0707"]
+    },
+    {
+      "name": "countOpacity",
+      "type": "sqrt",
+      "domain": [1, 90],
+      "range": [0.42, 0.96]
+    }
+  ],
+  "marks": [
+    {
+      "type": "shape",
+      "from": { "data": "states" },
+      "encode": {
+        "enter": {
+          "fill": { "value": "rgba(31,41,55,0.2)" },
+          "stroke": { "value": "rgba(232,201,160,0.22)" },
+          "strokeWidth": { "value": 0.8 }
+        }
+      },
+      "transform": [{ "type": "geoshape", "projection": "aus" }]
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": { "value": 18 },
+          "y": { "value": 6 },
+          "text": { "value": "SPATIAL BIN MAP — VIIRS FIRE DETECTIONS" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": "bold" },
+          "letterSpacing": { "value": 1.5 },
+          "fill": { "value": "#b8c4d8" }
+        }
+      }
+    },
+    {
+      "name": "hex",
+      "type": "path",
+      "from": { "data": "bins" },
+      "encode": {
+        "enter": {
+          "path": { "field": "path" },
+          "stroke": { "value": "#0b111c" },
+          "strokeWidth": { "value": 0.55 },
+          "tooltip": {
+            "signal": "{'Detections in bin': format(datum.count, ','), 'Dominant state': datum.state, 'Peak sample month': datum.month, 'Avg FRP (MW)': format(datum.avg_frp, '.1f')}"
+          }
+        },
+        "update": {
+          "fill": { "scale": "countColor", "field": "count" },
+          "fillOpacity": [
+            { "test": "hoverBin && hoverBin.q === datum.q && hoverBin.r === datum.r", "value": 1 },
+            { "test": "selectedState !== 'ALL' && datum.state !== selectedState", "value": 0 },
+            { "test": "hoverBin", "value": 0.24 },
+            { "scale": "countOpacity", "field": "count" }
+          ],
+          "stroke": [
+            { "test": "hoverBin && hoverBin.q === datum.q && hoverBin.r === datum.r", "value": "#f0dcc0" },
+            { "value": "#0b111c" }
+          ],
+          "strokeWidth": [
+            { "test": "hoverBin && hoverBin.q === datum.q && hoverBin.r === datum.r", "value": 1.6 },
+            { "value": 0.55 }
+          ],
+          "zindex": [
+            { "test": "hoverBin && hoverBin.q === datum.q && hoverBin.r === datum.r", "value": 2 },
+            { "value": 1 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": { "value": 912 },
+          "y": { "value": 298 },
+          "text": { "value": "detections per spatial bin" },
+          "align": { "value": "right" },
+          "baseline": { "value": "middle" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 11 },
+          "fill": { "value": "#9ca3af" }
+        }
+      }
+    },
+    {
+      "type": "path",
+      "from": { "data": "legend" },
+      "encode": {
+        "enter": {
+          "path": { "field": "path" },
+          "fill": { "scale": "countColor", "field": "count" },
+          "stroke": { "value": "#111827" },
+          "strokeWidth": { "value": 1 }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": { "data": "legend" },
+      "encode": {
+        "enter": {
+          "x": { "signal": "datum.x + 28" },
+          "y": { "signal": "datum.y + 4" },
+          "text": { "field": "label" },
+          "align": { "value": "left" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 10 },
+          "fill": { "value": "#9ca3af" }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": { "value": 790 },
+          "y": { "value": 36 },
+          "text": { "value": "FILTER STATE" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 11 },
+          "fontWeight": { "value": "bold" },
+          "letterSpacing": { "value": 1.2 },
+          "fill": { "value": "#b8c4d8" }
+        }
+      }
+    },
+    {
+      "name": "stateButton",
+      "type": "rect",
+      "from": { "data": "stateFilters" },
+      "encode": {
+        "enter": {
+          "x": { "value": 782 },
+          "x2": { "value": 912 },
+          "y": { "signal": "datum.y - 15" },
+          "y2": { "signal": "datum.y + 15" },
+          "cornerRadius": { "value": 4 },
+          "cursor": { "value": "pointer" },
+          "tooltip": { "signal": "datum.state === 'ALL' ? 'Show all states' : 'Show ' + datum.state + ' bins only'" }
+        },
+        "update": {
+          "fill": [
+            { "test": "selectedState === datum.state", "value": "#374151" },
+            { "value": "#111827" }
+          ],
+          "stroke": [
+            { "test": "selectedState === datum.state", "value": "#f0dcc0" },
+            { "value": "rgba(232,201,160,0.24)" }
+          ],
+          "strokeWidth": [
+            { "test": "selectedState === datum.state", "value": 1.2 },
+            { "value": 0.8 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": { "data": "stateFilters" },
+      "encode": {
+        "enter": {
+          "x": { "value": 847 },
+          "y": { "field": "y" },
+          "text": { "field": "label" },
+          "align": { "value": "center" },
+          "baseline": { "value": "middle" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": "bold" },
+          "fill": { "value": "#f0dcc0" },
+          "cursor": { "value": "pointer" }
+        },
+        "update": {
+          "fillOpacity": [
+            { "test": "selectedState === datum.state", "value": 1 },
+            { "value": 0.66 }
+          ]
+        }
+      }
+    }
+  ]
+}
