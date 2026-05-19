@@ -1,0 +1,63 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Streamgraph of monthly fire detection counts by Australian state",
+  "width": "container",
+  "height": 205,
+  "background": "transparent",
+  "data": {
+    "url": "data/fire_monthly_state.csv"
+  },
+  "mark": {
+    "type": "area",
+    "interpolate": "monotone",
+    "opacity": 0.85
+  },
+  "encoding": {
+    "x": {
+      "field": "month",
+      "type": "ordinal",
+      "axis": {
+        "labelExpr": "{'2019-08':'Aug 2019','2019-09':'Sep 2019','2019-10':'Oct 2019','2019-11':'Nov 2019','2019-12':'Dec 2019','2020-01':'Jan 2020'}[datum.value] || datum.value",
+        "title": null,
+        "grid": false,
+        "labelAngle": -35,
+        "labelFontSize": 9,
+        "labelLimit": 80
+      }
+    },
+    "y": {
+      "field": "count",
+      "type": "quantitative",
+      "stack": "center",
+      "axis": null
+    },
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "scale": {
+        "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
+        "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
+      },
+      "legend": {
+        "title": null,
+        "orient": "none",
+        "legendX": 12,
+        "legendY": 8,
+        "direction": "horizontal",
+        "columns": 6,
+        "symbolType": "square",
+        "symbolSize": 82,
+        "labelFontSize": 10,
+        "fillColor": "rgba(10,14,26,0.86)",
+        "strokeColor": "rgba(255,255,255,0.12)",
+        "cornerRadius": 6,
+        "padding": 6
+      }
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "month", "type": "ordinal", "title": "Month"},
+      {"field": "count", "type": "quantitative", "title": "Fire Detections", "format": ","}
+    ]
+  }
+}

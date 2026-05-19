@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "KDE density curve of Fire Radiative Power (FRP) distribution",
+  "width": "container",
+  "height": 220,
+  "background": "transparent",
+  "data": {
+    "url": "data/fire_sample_map.csv"
+  },
+  "transform": [
+    {"filter": "datum.frp < 800"}
+  ],
+  "layer": [
+    {
+      "transform": [
+        {
+          "density": "frp",
+          "bandwidth": 12,
+          "extent": [0, 800],
+          "steps": 300
+        }
+      ],
+      "mark": {
+        "type": "area",
+        "line": true,
+        "color": "#e74c3c",
+        "fillOpacity": 0.15
+      },
+      "encoding": {
+        "x": {
+          "field": "value",
+          "type": "quantitative",
+          "title": "Fire Radiative Power (MW)",
+          "scale": {"domain": [0, 800]}
+        },
+        "y": {
+          "field": "density",
+          "type": "quantitative",
+          "axis": null,
+          "stack": null
+        },
+        "tooltip": [
+          {"field": "value", "type": "quantitative", "title": "FRP (MW)", "format": ".0f"},
+          {"field": "density", "type": "quantitative", "title": "Density", "format": ".5f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "rgba(255,200,100,0.5)",
+        "strokeDash": [4, 4]
+      },
+      "encoding": {
+        "x": {
+          "datum": 89,
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "color": "rgba(255,200,100,0.5)",
+        "align": "left",
+        "dx": 6,
+        "dy": -80,
+        "text": "Mean: 89 MW"
+      },
+      "encoding": {
+        "x": {
+          "datum": 89,
+          "type": "quantitative"
+        }
+      }
+    }
+  ]
+}

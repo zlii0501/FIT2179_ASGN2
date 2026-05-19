@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-hidden="true">
+  <rect x="6" y="6" width="244" height="244" rx="34" fill="#f2f8ff" stroke="#2b6ca3" stroke-width="6"/>
+
+  <!-- Dry lightning: storm cloud + lightning over dry ground, no rain -->
+  <path d="M70 117 C55 115, 45 102, 47 87 C49 72, 62 62, 78 64 C86 46, 104 35, 126 38 C151 42, 165 60, 168 83 C183 83, 197 94, 199 110 C201 129, 186 144, 167 144 H75 C62 144, 51 134, 51 122 C51 120, 52 118, 53 116 C58 118, 64 119, 70 117Z" fill="#8c8f91" stroke="#62666a" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M132 116 L102 174 H129 L113 220 L170 143 H140 L154 116 Z" fill="#f4a51c" stroke="#ffffff" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M132 116 L102 174 H129 L113 220 L170 143 H140 L154 116 Z" fill="#f4a51c" stroke="#df8f12" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M51 217 H205" stroke="#6b3f1f" stroke-width="7" stroke-linecap="round"/>
+  <path d="M164 217 C167 188, 179 171, 197 156" fill="none" stroke="#b58a51" stroke-width="7" stroke-linecap="round"/>
+  <path d="M170 217 C179 191, 195 180, 218 171" fill="none" stroke="#b58a51" stroke-width="7" stroke-linecap="round"/>
+  <path d="M154 217 C151 192, 144 180, 133 168" fill="none" stroke="#b58a51" stroke-width="7" stroke-linecap="round"/>
+
+</svg>

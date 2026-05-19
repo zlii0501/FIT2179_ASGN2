@@ -1,0 +1,364 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": { "url": "data/hist_wa_monthly_frp.csv" },
+  "params": [
+    { "name": "selectedMonthA", "value": 175 },
+    { "name": "selectedMonthB", "value": 163 },
+    { "name": "rhythmTitleA", "value": "Aug 2019 - Jan 2020" },
+    { "name": "rhythmTitleB", "value": "Aug 2018 - Jan 2019" }
+  ],
+  "hconcat": [
+    {
+      "width": 405,
+      "height": 300,
+      "transform": [
+        { "filter": "datum.month_index >= selectedMonthA && datum.month_index < selectedMonthA + 6" },
+        { "calculate": "datum.month_index - selectedMonthA", "as": "month_order" },
+        { "calculate": "34 + datum.month_order * 12", "as": "inner_r" },
+        { "calculate": "44 + datum.month_order * 12", "as": "outer_r" },
+        { "calculate": "0", "as": "theta_start" },
+        { "calculate": "min(datum.avg_frp, 330) / 330 * 6.283185307179586", "as": "theta_end" },
+        { "calculate": "6.283185307179586", "as": "theta_full" },
+        { "calculate": "datum.month_label_long + '  ' + format(datum.avg_frp, '.1f') + ' MW'", "as": "legend_label" },
+        { "calculate": "rhythmTitleA", "as": "window_title" }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "arc",
+            "cornerRadius": 6,
+            "color": "rgba(232,201,160,0.10)",
+            "stroke": "rgba(232,201,160,0.05)",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "theta": {
+              "field": "theta_start",
+              "type": "quantitative",
+              "scale": { "domain": [0, 6.283185307179586], "range": [0, 6.283185307179586] },
+              "axis": null
+            },
+            "theta2": { "field": "theta_full" },
+            "radius": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            },
+            "radius2": {
+              "field": "inner_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "arc",
+            "cornerRadius": 6,
+            "stroke": "#0d1117",
+            "strokeWidth": 1.2
+          },
+          "encoding": {
+            "theta": {
+              "field": "theta_start",
+              "type": "quantitative",
+              "scale": { "domain": [0, 6.283185307179586], "range": [0, 6.283185307179586] },
+              "axis": null
+            },
+            "theta2": { "field": "theta_end" },
+            "radius": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            },
+            "radius2": {
+              "field": "inner_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            },
+            "color": {
+              "field": "avg_frp",
+              "type": "quantitative",
+              "scale": {
+                "domain": [50, 330],
+                "range": ["#ffd166", "#f8961e", "#e74c3c", "#7f1d1d"]
+              },
+              "legend": null
+            },
+            "tooltip": [
+              { "field": "month_label_long", "title": "Month" },
+              { "field": "avg_frp", "title": "Avg FRP (MW)", "format": ".1f" },
+              { "field": "max_daily_frp", "title": "Max daily mean FRP (MW)", "format": ".1f" },
+              { "field": "detection_count", "title": "Detections", "format": "," },
+              { "field": "period", "title": "Period" }
+            ]
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.month_order === 0" }],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "font": "sans-serif",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "fill": "#f0dcc0"
+          },
+          "encoding": {
+            "x": { "value": 0 },
+            "y": { "value": 0 },
+            "text": { "field": "window_title" }
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.month_order === 0" }],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "font": "sans-serif",
+            "fontSize": 10,
+            "fontWeight": "bold",
+            "fill": "#fca5a5"
+          },
+          "encoding": {
+            "x": { "value": 0 },
+            "y": { "value": 18 },
+            "text": { "value": "Diagram A" }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "shape": "square",
+            "filled": true,
+            "size": 60,
+            "stroke": "#0d1117",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": { "value": 300 },
+            "y": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [222, 110] },
+              "axis": null
+            },
+            "color": {
+              "field": "avg_frp",
+              "type": "quantitative",
+              "scale": {
+                "domain": [50, 330],
+                "range": ["#ffd166", "#f8961e", "#e74c3c", "#7f1d1d"]
+              },
+              "legend": null
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "font": "Courier New",
+            "fontSize": 10,
+            "fontWeight": "bold",
+            "fill": "#f0dcc0"
+          },
+          "encoding": {
+            "x": { "value": 312 },
+            "y": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [222, 110] },
+              "axis": null
+            },
+            "text": { "field": "legend_label" }
+          }
+        }
+      ]
+    },
+    {
+      "width": 405,
+      "height": 300,
+      "transform": [
+        { "filter": "datum.month_index >= selectedMonthB && datum.month_index < selectedMonthB + 6" },
+        { "calculate": "datum.month_index - selectedMonthB", "as": "month_order" },
+        { "calculate": "34 + datum.month_order * 12", "as": "inner_r" },
+        { "calculate": "44 + datum.month_order * 12", "as": "outer_r" },
+        { "calculate": "0", "as": "theta_start" },
+        { "calculate": "min(datum.avg_frp, 330) / 330 * 6.283185307179586", "as": "theta_end" },
+        { "calculate": "6.283185307179586", "as": "theta_full" },
+        { "calculate": "datum.month_label_long + '  ' + format(datum.avg_frp, '.1f') + ' MW'", "as": "legend_label" },
+        { "calculate": "rhythmTitleB", "as": "window_title" }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "arc",
+            "cornerRadius": 6,
+            "color": "rgba(232,201,160,0.10)",
+            "stroke": "rgba(232,201,160,0.05)",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "theta": {
+              "field": "theta_start",
+              "type": "quantitative",
+              "scale": { "domain": [0, 6.283185307179586], "range": [0, 6.283185307179586] },
+              "axis": null
+            },
+            "theta2": { "field": "theta_full" },
+            "radius": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            },
+            "radius2": {
+              "field": "inner_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "arc",
+            "cornerRadius": 6,
+            "stroke": "#0d1117",
+            "strokeWidth": 1.2
+          },
+          "encoding": {
+            "theta": {
+              "field": "theta_start",
+              "type": "quantitative",
+              "scale": { "domain": [0, 6.283185307179586], "range": [0, 6.283185307179586] },
+              "axis": null
+            },
+            "theta2": { "field": "theta_end" },
+            "radius": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            },
+            "radius2": {
+              "field": "inner_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [30, 110] }
+            },
+            "color": {
+              "field": "avg_frp",
+              "type": "quantitative",
+              "scale": {
+                "domain": [50, 330],
+                "range": ["#ffd166", "#f8961e", "#e74c3c", "#7f1d1d"]
+              },
+              "legend": null
+            },
+            "tooltip": [
+              { "field": "month_label_long", "title": "Month" },
+              { "field": "avg_frp", "title": "Avg FRP (MW)", "format": ".1f" },
+              { "field": "max_daily_frp", "title": "Max daily mean FRP (MW)", "format": ".1f" },
+              { "field": "detection_count", "title": "Detections", "format": "," },
+              { "field": "period", "title": "Period" }
+            ]
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.month_order === 0" }],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "font": "sans-serif",
+            "fontSize": 12,
+            "fontWeight": "bold",
+            "fill": "#f0dcc0"
+          },
+          "encoding": {
+            "x": { "value": 0 },
+            "y": { "value": 0 },
+            "text": { "field": "window_title" }
+          }
+        },
+        {
+          "transform": [{ "filter": "datum.month_order === 0" }],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "top",
+            "font": "sans-serif",
+            "fontSize": 10,
+            "fontWeight": "bold",
+            "fill": "#e8c9a0"
+          },
+          "encoding": {
+            "x": { "value": 0 },
+            "y": { "value": 18 },
+            "text": { "value": "Diagram B" }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "shape": "square",
+            "filled": true,
+            "size": 60,
+            "stroke": "#0d1117",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": { "value": 300 },
+            "y": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [222, 110] },
+              "axis": null
+            },
+            "color": {
+              "field": "avg_frp",
+              "type": "quantitative",
+              "scale": {
+                "domain": [50, 330],
+                "range": ["#ffd166", "#f8961e", "#e74c3c", "#7f1d1d"]
+              },
+              "legend": null
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "font": "Courier New",
+            "fontSize": 10,
+            "fontWeight": "bold",
+            "fill": "#f0dcc0"
+          },
+          "encoding": {
+            "x": { "value": 312 },
+            "y": {
+              "field": "outer_r",
+              "type": "quantitative",
+              "scale": { "domain": [30, 110], "range": [222, 110] },
+              "axis": null
+            },
+            "text": { "field": "legend_label" }
+          }
+        }
+      ]
+    }
+  ],
+  "spacing": 20,
+  "resolve": {
+    "scale": {
+      "color": "shared"
+    }
+  },
+  "config": {
+    "axis": { "grid": false },
+    "view": { "stroke": null }
+  }
+}

@@ -1,0 +1,340 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 940,
+  "height": 500,
+  "padding": 0,
+  "background": "transparent",
+  "signals": [
+    { "name": "selectedState", "value": "ALL" },
+    {
+      "name": "requestedState",
+      "value": "ALL",
+      "on": [{ "events": "@stateButton:click", "update": "datum.state" }]
+    },
+    { "name": "visibleStateA", "value": "ALL" },
+    { "name": "visibleStateB", "value": "" },
+    { "name": "binResolution", "value": "coarse" },
+    { "name": "coarseBinFade", "value": 1 },
+    { "name": "fineBinFadeA", "value": 0 },
+    { "name": "fineBinFadeB", "value": 0 },
+    { "name": "mapScale", "value": 680 },
+    { "name": "mapTx", "value": 395 },
+    { "name": "mapTy", "value": 230 }
+  ],
+  "projections": [
+    {
+      "name": "aus",
+      "type": "mercator",
+      "center": [134.5, -27.4],
+      "scale": { "signal": "mapScale" },
+      "translate": [{ "signal": "mapTx" }, { "signal": "mapTy" }]
+    }
+  ],
+  "data": [
+    {
+      "name": "states",
+      "url": "data/australia_states.geojson",
+      "format": { "type": "json", "property": "features" },
+      "transform": [
+        {
+          "type": "formula",
+          "as": "state_abbr",
+          "expr": "datum.properties.STATE_NAME === 'New South Wales' || datum.properties.STATE_NAME === 'Australian Capital Territory' ? 'NSW' : datum.properties.STATE_NAME === 'Queensland' ? 'QLD' : datum.properties.STATE_NAME === 'Western Australia' ? 'WA' : datum.properties.STATE_NAME === 'Northern Territory' ? 'NT' : datum.properties.STATE_NAME === 'South Australia' ? 'SA' : datum.properties.STATE_NAME === 'Victoria' ? 'VIC' : datum.properties.STATE_NAME === 'Tasmania' ? 'TAS' : 'OTHER'"
+        }
+      ]
+    },
+    {
+      "name": "hexbins",
+      "url": "data/hex_bins.geojson",
+      "format": { "type": "json", "property": "features" }
+    },
+    {
+      "name": "fineHexbins",
+      "url": "data/hex_bins_fine.geojson",
+      "format": { "type": "json", "property": "features" }
+    },
+    {
+      "name": "visibleHexbins",
+      "source": "hexbins",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "binResolution === 'coarse' && (visibleStateA === 'ALL' || datum.properties.state === visibleStateA || datum.properties.state === visibleStateB)"
+        }
+      ]
+    },
+    {
+      "name": "visibleFineHexbins",
+      "source": "fineHexbins",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "binResolution === 'fine' && (visibleStateA === 'ALL' || datum.properties.state === visibleStateA || datum.properties.state === visibleStateB)"
+        }
+      ]
+    },
+    {
+      "name": "stateFilters",
+      "values": [
+        { "label": "ALL", "state": "ALL", "y": 58 },
+        { "label": "NSW", "state": "NSW", "y": 98 },
+        { "label": "QLD", "state": "QLD", "y": 138 },
+        { "label": "WA", "state": "WA", "y": 178 },
+        { "label": "NT", "state": "NT", "y": 218 },
+        { "label": "SA", "state": "SA", "y": 258 },
+        { "label": "VIC", "state": "VIC", "y": 298 },
+        { "label": "TAS", "state": "TAS", "y": 338 }
+      ]
+    },
+    {
+      "name": "legendBins",
+      "values": [
+        { "coarseLabel": "no data", "fineLabel": "no data", "coarseCount": 0, "fineCount": 0, "y": 412, "empty": true },
+        { "coarseLabel": "1", "fineLabel": "1", "coarseCount": 1, "fineCount": 1, "y": 428, "empty": false },
+        { "coarseLabel": "12", "fineLabel": "6", "coarseCount": 12, "fineCount": 6, "y": 440, "empty": false },
+        { "coarseLabel": "24", "fineLabel": "12", "coarseCount": 24, "fineCount": 12, "y": 452, "empty": false },
+        { "coarseLabel": "41", "fineLabel": "22", "coarseCount": 41, "fineCount": 22, "y": 464, "empty": false }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "countColor",
+      "type": "sqrt",
+      "domain": [1, 41],
+      "range": ["#f6d89a", "#f59e0b", "#dc2626", "#7f1d1d"]
+    },
+    {
+      "name": "fineCountColor",
+      "type": "sqrt",
+      "domain": [1, 22],
+      "range": ["#f6d89a", "#f59e0b", "#dc2626", "#7f1d1d"]
+    }
+  ],
+  "marks": [
+    {
+      "type": "shape",
+      "from": { "data": "states" },
+      "encode": {
+        "enter": {
+          "fill": { "value": "#162536" },
+          "stroke": { "value": "rgba(190,210,220,0.22)" },
+          "strokeWidth": { "value": 0.7 }
+        }
+      },
+      "transform": [{ "type": "geoshape", "projection": "aus" }]
+    },
+    {
+      "type": "shape",
+      "from": { "data": "visibleHexbins" },
+      "encode": {
+        "enter": {
+          "aria": { "value": true },
+          "description": {
+            "signal": "datum.properties.count > 0 ? 'State: ' + datum.properties.state + '; Detections: ' + format(datum.properties.count, ',') + '; Avg FRP (MW): ' + format(datum.properties.avg_frp, '.1f') + '; Main month: ' + datum.properties.month : 'State: ' + datum.properties.state + '; Detections: No detections'"
+          },
+          "tooltip": {
+            "signal": "datum.properties.count > 0 ? {'State': datum.properties.state, 'Detections': datum.properties.count, 'Avg FRP (MW)': format(datum.properties.avg_frp, '.1f'), 'Main month': datum.properties.month} : {'State': datum.properties.state, 'Detections': 'No detections'}"
+          }
+        },
+        "update": {
+          "fill": [
+            { "test": "datum.properties.count === 0", "value": "#203142" },
+            { "scale": "countColor", "field": "properties.count" }
+          ],
+          "fillOpacity": [
+            { "test": "datum.properties.count === 0", "signal": "0.34 * coarseBinFade" },
+            { "signal": "0.94 * coarseBinFade" }
+          ],
+          "stroke": [
+            { "test": "datum.properties.count === 0", "value": "rgba(190,210,220,0.18)" },
+            { "value": "rgba(17,24,39,0.78)" }
+          ],
+          "strokeWidth": [
+            { "test": "datum.properties.count === 0", "value": 0.35 },
+            { "value": 0.25 }
+          ],
+          "strokeOpacity": { "signal": "coarseBinFade" }
+        }
+      },
+      "transform": [{ "type": "geoshape", "projection": "aus" }]
+    },
+    {
+      "type": "shape",
+      "from": { "data": "visibleFineHexbins" },
+      "encode": {
+        "enter": {
+          "aria": { "value": true },
+          "description": {
+            "signal": "datum.properties.count > 0 ? 'State: ' + datum.properties.state + '; Detections: ' + format(datum.properties.count, ',') + '; Avg FRP (MW): ' + format(datum.properties.avg_frp, '.1f') + '; Main month: ' + datum.properties.month : 'State: ' + datum.properties.state + '; Detections: No detections'"
+          },
+          "tooltip": {
+            "signal": "datum.properties.count > 0 ? {'State': datum.properties.state, 'Detections': datum.properties.count, 'Avg FRP (MW)': format(datum.properties.avg_frp, '.1f'), 'Main month': datum.properties.month} : {'State': datum.properties.state, 'Detections': 'No detections'}"
+          }
+        },
+        "update": {
+          "fill": [
+            { "test": "datum.properties.count === 0", "value": "#203142" },
+            { "scale": "fineCountColor", "field": "properties.count" }
+          ],
+          "fillOpacity": [
+            { "signal": "(datum.properties.count === 0 ? 0.3 : 0.94) * (datum.properties.state === visibleStateB ? fineBinFadeB : fineBinFadeA)" }
+          ],
+          "stroke": [
+            { "test": "datum.properties.count === 0", "value": "rgba(190,210,220,0.16)" },
+            { "value": "rgba(17,24,39,0.74)" }
+          ],
+          "strokeWidth": [
+            { "test": "datum.properties.count === 0", "value": 0.22 },
+            { "value": 0.16 }
+          ],
+          "strokeOpacity": { "signal": "datum.properties.state === visibleStateB ? fineBinFadeB : fineBinFadeA" }
+        }
+      },
+      "transform": [{ "type": "geoshape", "projection": "aus" }]
+    },
+    {
+      "type": "shape",
+      "interactive": false,
+      "from": { "data": "states" },
+      "encode": {
+        "enter": {
+          "fill": { "value": "transparent" },
+          "stroke": { "value": "rgba(210,225,230,0.38)" },
+          "strokeWidth": { "value": 0.75 }
+        }
+      },
+      "transform": [{ "type": "geoshape", "projection": "aus" }]
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": { "value": 800 },
+          "y": { "value": 30 },
+          "text": { "value": "FILTER STATE" },
+          "align": { "value": "center" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 11 },
+          "fontWeight": { "value": "bold" },
+          "fill": { "value": "#9ca3af" }
+        }
+      }
+    },
+    {
+      "name": "stateButton",
+      "type": "rect",
+      "from": { "data": "stateFilters" },
+      "encode": {
+        "enter": {
+          "x": { "value": 760 },
+          "x2": { "value": 840 },
+          "y": { "signal": "datum.y - 14" },
+          "y2": { "signal": "datum.y + 14" },
+          "cornerRadius": { "value": 5 },
+          "cursor": { "value": "pointer" },
+          "aria": { "value": true },
+          "description": { "signal": "datum.state === 'ALL' ? 'Show all states' : 'Zoom to ' + datum.state" },
+          "tooltip": { "signal": "datum.state === 'ALL' ? 'Show all states' : 'Zoom to ' + datum.state" }
+        },
+        "update": {
+          "fill": [
+            { "test": "selectedState === datum.state", "value": "#374151" },
+            { "value": "rgba(17,24,39,0.8)" }
+          ],
+          "stroke": [
+            { "test": "selectedState === datum.state", "value": "#dc2626" },
+            { "value": "rgba(232,201,160,0.2)" }
+          ],
+          "strokeWidth": [
+            { "test": "selectedState === datum.state", "value": 1.5 },
+            { "value": 0.8 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "interactive": false,
+      "from": { "data": "stateFilters" },
+      "encode": {
+        "enter": {
+          "x": { "value": 800 },
+          "y": { "field": "y" },
+          "text": { "field": "label" },
+          "align": { "value": "center" },
+          "baseline": { "value": "middle" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": "bold" },
+          "fill": { "value": "#f0dcc0" },
+          "cursor": { "value": "pointer" }
+        },
+        "update": {
+          "fillOpacity": [
+            { "test": "selectedState === datum.state", "value": 1 },
+            { "value": 0.65 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": { "value": 800 },
+          "y": { "value": 394 },
+          "align": { "value": "center" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 10 },
+          "fill": { "value": "#6b7280" }
+        },
+        "update": {
+          "text": { "signal": "binResolution === 'fine' ? 'FINE DETECTIONS / BIN' : 'DETECTIONS / BIN'" }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": { "data": "legendBins" },
+      "encode": {
+        "enter": {
+          "x": { "value": 760 },
+          "x2": { "value": 840 },
+          "y": { "signal": "datum.y - 6" },
+          "y2": { "signal": "datum.y + 6" },
+          "stroke": { "value": "rgba(190,210,220,0.18)" },
+          "strokeWidth": { "value": 0.4 }
+        },
+        "update": {
+          "fill": [
+            { "test": "datum.empty", "value": "#203142" },
+            { "test": "binResolution === 'fine'", "scale": "fineCountColor", "field": "fineCount" },
+            { "scale": "countColor", "field": "coarseCount" }
+          ],
+          "fillOpacity": [
+            { "test": "datum.empty", "value": 0.34 },
+            { "value": 1 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "legendBins" },
+      "encode": {
+        "enter": {
+          "x": { "value": 848 },
+          "y": { "field": "y" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 9 },
+          "baseline": { "value": "middle" },
+          "fill": { "value": "#9ca3af" }
+        },
+        "update": {
+          "text": { "signal": "binResolution === 'fine' ? datum.fineLabel : datum.coarseLabel" }
+        }
+      }
+    }
+  ]
+}

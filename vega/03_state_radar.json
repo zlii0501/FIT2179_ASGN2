@@ -1,0 +1,347 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Radar profile comparing each state's relative Black Summer fire footprint, energy, intensity, density, and night activity.",
+  "width": "container",
+  "height": 230,
+  "padding": {"left": 24, "top": 12, "right": 24, "bottom": 40},
+  "datasets": {
+    "radar_grid": [
+      {"ring": 25, "metric_order": 0},
+      {"ring": 25, "metric_order": 1},
+      {"ring": 25, "metric_order": 2},
+      {"ring": 25, "metric_order": 3},
+      {"ring": 25, "metric_order": 4},
+      {"ring": 50, "metric_order": 0},
+      {"ring": 50, "metric_order": 1},
+      {"ring": 50, "metric_order": 2},
+      {"ring": 50, "metric_order": 3},
+      {"ring": 50, "metric_order": 4},
+      {"ring": 75, "metric_order": 0},
+      {"ring": 75, "metric_order": 1},
+      {"ring": 75, "metric_order": 2},
+      {"ring": 75, "metric_order": 3},
+      {"ring": 75, "metric_order": 4},
+      {"ring": 100, "metric_order": 0},
+      {"ring": 100, "metric_order": 1},
+      {"ring": 100, "metric_order": 2},
+      {"ring": 100, "metric_order": 3},
+      {"ring": 100, "metric_order": 4}
+    ],
+    "radar_axes": [
+      {"metric_order": 0, "metric": "Detections"},
+      {"metric_order": 1, "metric": "Energy"},
+      {"metric_order": 2, "metric": "Avg FRP"},
+      {"metric_order": 3, "metric": "Density"},
+      {"metric_order": 4, "metric": "Night"}
+    ]
+  },
+  "layer": [
+    {
+      "data": {"name": "radar_grid"},
+      "transform": [
+        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
+        {"calculate": "datum.ring * cos(datum.angle)", "as": "x"},
+        {"calculate": "datum.ring * sin(datum.angle)", "as": "y"}
+      ],
+      "mark": {
+        "type": "line",
+        "interpolate": "linear-closed",
+        "stroke": "rgba(255,255,255,0.09)",
+        "strokeWidth": 1,
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [-118, 118], "nice": false},
+          "axis": null
+        },
+        "detail": {"field": "ring"},
+        "order": {"field": "metric_order", "type": "ordinal"}
+      }
+    },
+    {
+      "data": {"name": "radar_axes"},
+      "transform": [
+        {"calculate": "0", "as": "x0"},
+        {"calculate": "0", "as": "y0"},
+        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
+        {"calculate": "100 * cos(datum.angle)", "as": "x"},
+        {"calculate": "100 * sin(datum.angle)", "as": "y"}
+      ],
+      "mark": {
+        "type": "rule",
+        "stroke": "rgba(232,201,160,0.16)",
+        "strokeWidth": 1,
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "x0",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "y": {
+          "field": "y0",
+          "type": "quantitative",
+          "scale": {"domain": [-118, 118], "nice": false},
+          "axis": null
+        },
+        "x2": {"field": "x"},
+        "y2": {"field": "y"}
+      }
+    },
+    {
+      "data": {"name": "radar_axes"},
+      "transform": [
+        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
+        {"calculate": "108 * cos(datum.angle)", "as": "x"},
+        {"calculate": "106 * sin(datum.angle)", "as": "y"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "font": "sans-serif",
+        "fontSize": 9,
+        "fontWeight": 700,
+        "fill": "#d9bc91",
+        "limit": 64,
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [-118, 118], "nice": false},
+          "axis": null
+        },
+        "text": {"field": "metric"}
+      }
+    },
+    {
+      "data": {"url": "data/fire_state_totals.csv"},
+      "transform": [
+        {
+          "lookup": "state",
+          "from": {
+            "data": {"url": "data/fire_daynight_state.csv"},
+            "key": "state",
+            "fields": ["day_share_pct"]
+          }
+        },
+        {"calculate": "toNumber(datum.total)", "as": "detections"},
+        {"calculate": "toNumber(datum.total_frp)", "as": "total_energy"},
+        {"calculate": "toNumber(datum.avg_frp)", "as": "avg_fire_power"},
+        {"calculate": "toNumber(datum.density)", "as": "detection_density"},
+        {"calculate": "100 - toNumber(datum.day_share_pct)", "as": "night_activity"},
+        {
+          "fold": [
+            "detections",
+            "total_energy",
+            "avg_fire_power",
+            "detection_density",
+            "night_activity"
+          ],
+          "as": ["metric_key", "raw_value"]
+        },
+        {
+          "calculate": "indexof(['detections','total_energy','avg_fire_power','detection_density','night_activity'], datum.metric_key)",
+          "as": "metric_order"
+        },
+        {
+          "calculate": "{'detections':'Detections','total_energy':'Energy','avg_fire_power':'Avg FRP','detection_density':'Density','night_activity':'Night'}[datum.metric_key]",
+          "as": "metric"
+        },
+        {
+          "joinaggregate": [
+            {"op": "max", "field": "raw_value", "as": "metric_max"}
+          ],
+          "groupby": ["metric_key"]
+        },
+        {"calculate": "datum.raw_value / datum.metric_max * 100", "as": "score"},
+        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
+        {"calculate": "datum.score * cos(datum.angle)", "as": "x"},
+        {"calculate": "datum.score * sin(datum.angle)", "as": "y"},
+        {
+          "calculate": "datum.metric_key === 'detections' ? format(datum.raw_value, ',.0f') + ' detections' : datum.metric_key === 'total_energy' ? format(datum.raw_value / 1000000, '.2f') + 'M MW total' : datum.metric_key === 'avg_fire_power' ? format(datum.raw_value, '.1f') + ' MW avg' : datum.metric_key === 'detection_density' ? format(datum.raw_value, '.1f') + ' per 1,000 km2' : format(datum.raw_value, '.1f') + '% night'",
+          "as": "raw_label"
+        }
+      ],
+      "params": [
+        {
+          "name": "stateHover",
+          "select": {
+            "type": "point",
+            "fields": ["state"],
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "interpolate": "linear-closed",
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [-118, 118], "nice": false},
+          "axis": null
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
+            "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 6,
+            "symbolType": "stroke",
+            "symbolStrokeWidth": 3,
+            "labelFontSize": 9,
+            "labelColor": "#b8956a"
+          }
+        },
+        "detail": {"field": "state"},
+        "order": {"field": "metric_order", "type": "ordinal"},
+        "opacity": {
+          "condition": {"param": "stateHover", "value": 0.98},
+          "value": 0.48
+        },
+        "strokeWidth": {
+          "condition": {"param": "stateHover", "value": 3.1},
+          "value": 1.7
+        },
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {"field": "metric", "title": "Metric"},
+          {"field": "score", "type": "quantitative", "title": "Relative score", "format": ".1f"},
+          {"field": "raw_label", "title": "Raw value"}
+        ]
+      }
+    },
+    {
+      "data": {"url": "data/fire_state_totals.csv"},
+      "transform": [
+        {
+          "lookup": "state",
+          "from": {
+            "data": {"url": "data/fire_daynight_state.csv"},
+            "key": "state",
+            "fields": ["day_share_pct"]
+          }
+        },
+        {"calculate": "toNumber(datum.total)", "as": "detections"},
+        {"calculate": "toNumber(datum.total_frp)", "as": "total_energy"},
+        {"calculate": "toNumber(datum.avg_frp)", "as": "avg_fire_power"},
+        {"calculate": "toNumber(datum.density)", "as": "detection_density"},
+        {"calculate": "100 - toNumber(datum.day_share_pct)", "as": "night_activity"},
+        {
+          "fold": [
+            "detections",
+            "total_energy",
+            "avg_fire_power",
+            "detection_density",
+            "night_activity"
+          ],
+          "as": ["metric_key", "raw_value"]
+        },
+        {
+          "calculate": "indexof(['detections','total_energy','avg_fire_power','detection_density','night_activity'], datum.metric_key)",
+          "as": "metric_order"
+        },
+        {
+          "calculate": "{'detections':'Detections','total_energy':'Energy','avg_fire_power':'Avg FRP','detection_density':'Density','night_activity':'Night'}[datum.metric_key]",
+          "as": "metric"
+        },
+        {
+          "joinaggregate": [
+            {"op": "max", "field": "raw_value", "as": "metric_max"}
+          ],
+          "groupby": ["metric_key"]
+        },
+        {"calculate": "datum.raw_value / datum.metric_max * 100", "as": "score"},
+        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
+        {"calculate": "datum.score * cos(datum.angle)", "as": "x"},
+        {"calculate": "datum.score * sin(datum.angle)", "as": "y"},
+        {
+          "calculate": "datum.metric_key === 'detections' ? format(datum.raw_value, ',.0f') + ' detections' : datum.metric_key === 'total_energy' ? format(datum.raw_value / 1000000, '.2f') + 'M MW total' : datum.metric_key === 'avg_fire_power' ? format(datum.raw_value, '.1f') + ' MW avg' : datum.metric_key === 'detection_density' ? format(datum.raw_value, '.1f') + ' per 1,000 km2' : format(datum.raw_value, '.1f') + '% night'",
+          "as": "raw_label"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "stroke": "#0d1117",
+        "strokeWidth": 1.2,
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [-118, 118], "nice": false},
+          "axis": null
+        },
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
+            "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
+          }
+        },
+        "size": {
+          "condition": {"param": "stateHover", "value": 74},
+          "value": 38
+        },
+        "opacity": {
+          "condition": {"param": "stateHover", "value": 1},
+          "value": 0.64
+        },
+        "tooltip": [
+          {"field": "state", "title": "State"},
+          {"field": "metric", "title": "Metric"},
+          {"field": "score", "type": "quantitative", "title": "Relative score", "format": ".1f"},
+          {"field": "raw_label", "title": "Raw value"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null}
+  }
+}

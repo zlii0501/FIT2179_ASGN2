@@ -1,0 +1,91 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 260,
+  "padding": {"left": 8, "top": 12, "right": 8, "bottom": 24},
+  "data": {"url": "data/fire_monthly_state.csv"},
+  "transform": [
+    {
+      "calculate": "{'2019-08':'Aug 2019','2019-09':'Sep 2019','2019-10':'Oct 2019','2019-11':'Nov 2019','2019-12':'Dec 2019','2020-01':'Jan 2020'}[datum.month]",
+      "as": "month_label"
+    }
+  ],
+  "params": [
+    {
+      "name": "hover",
+      "select": {"type": "point", "on": "mouseover"}
+    }
+  ],
+  "mark": {"type": "circle", "opacity": 0.85, "strokeWidth": 1.5, "clip": false},
+  "encoding": {
+    "x": {
+      "field": "month",
+      "type": "ordinal",
+      "title": null,
+      "scale": {"padding": 0.55},
+      "axis": {
+        "labelExpr": "{'2019-08':'Aug','2019-09':'Sep','2019-10':'Oct','2019-11':'Nov','2019-12':'Dec','2020-01':'Jan'}[datum.label]"
+      }
+    },
+    "y": {
+      "field": "state",
+      "type": "nominal",
+      "scale": {"padding": 0.5},
+      "sort": {"field": "count", "op": "sum", "order": "descending"},
+      "title": null
+    },
+    "size": {
+      "field": "total_frp",
+      "type": "quantitative",
+      "scale": {"type": "sqrt", "range": [30, 1250]},
+      "legend": {
+        "title": "Total Fire Energy (MW)",
+        "orient": "right",
+        "direction": "vertical",
+        "values": [500000, 1500000, 3000000, 4500000],
+        "rowPadding": 12,
+        "symbolFillColor": "#d0a34a",
+        "symbolStrokeColor": "#f0dcc0",
+        "symbolOpacity": 0.78,
+        "labelFontSize": 10,
+        "titleLimit": 190
+      }
+    },
+    "color": {
+      "field": "avg_frp",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 180],
+        "range": ["#f2d28a", "#d97745", "#8f2f2a"]
+      },
+      "legend": {
+        "title": "Avg FRP (MW)",
+        "orient": "right",
+        "direction": "horizontal",
+        "gradientLength": 150,
+        "gradientThickness": 12,
+        "titleAnchor": "start",
+        "labelFontSize": 10
+      }
+    },
+    "opacity": {
+      "condition": {"param": "hover", "value": 1.0},
+      "value": 0.75
+    },
+    "stroke": {
+      "condition": {"param": "hover", "value": "#ffffff"},
+      "value": "transparent"
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {
+        "field": "month_label",
+        "type": "ordinal",
+        "title": "Month"
+      },
+      {"field": "count", "type": "quantitative", "title": "Detections", "format": ","},
+      {"field": "avg_frp", "type": "quantitative", "title": "Avg FRP (MW)", "format": ".1f"},
+      {"field": "total_frp", "type": "quantitative", "title": "Total Energy (MW)", "format": ",.0f"}
+    ]
+  }
+}

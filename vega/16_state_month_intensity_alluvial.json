@@ -1,0 +1,201 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Month to state to FRP intensity alluvial diagram using precomputed static layout.",
+  "width": 940,
+  "height": 700,
+  "padding": { "left": 18, "right": 82, "top": 18, "bottom": 54 },
+  "autosize": { "type": "fit", "contains": "padding" },
+  "background": "transparent",
+  "signals": [
+    {
+      "name": "hoverLink",
+      "value": null,
+      "on": [
+        { "events": "@flow:mouseover", "update": "datum" },
+        { "events": "@flow:mouseout", "update": "null" }
+      ]
+    },
+    {
+      "name": "hoverNode",
+      "value": null,
+      "on": [
+        { "events": "@node:mouseover", "update": "datum.id" },
+        { "events": "@node:mouseout", "update": "null" }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "links",
+      "url": "data/alluvial_month_state_intensity.json",
+      "format": { "type": "json", "property": "links" }
+    },
+    {
+      "name": "nodes",
+      "url": "data/alluvial_month_state_intensity.json",
+      "format": { "type": "json", "property": "nodes" }
+    },
+    {
+      "name": "columns",
+      "values": [
+        { "x": 110, "label": "MONTH" },
+        { "x": 420, "label": "STATE" },
+        { "x": 710, "label": "FRP INTENSITY" }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "from": { "data": "columns" },
+      "encode": {
+        "enter": {
+          "x": { "field": "x" },
+          "y": { "value": -2 },
+          "text": { "field": "label" },
+          "align": { "value": "center" },
+          "baseline": { "value": "top" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": "bold" },
+          "letterSpacing": { "value": 1.6 },
+          "fill": { "value": "#b8956a" }
+        }
+      }
+    },
+    {
+      "name": "flow",
+      "type": "path",
+      "from": { "data": "links" },
+      "encode": {
+        "enter": {
+          "path": { "field": "path" },
+          "stroke": { "field": "color" },
+          "strokeWidth": { "field": "strokeWidth" },
+          "strokeCap": { "value": "butt" },
+          "fill": { "value": null },
+          "aria": { "value": true },
+          "description": {
+            "signal": "'Flow: ' + datum.label + '; Detections: ' + format(datum.count, ',')"
+          },
+          "tooltip": {
+            "signal": "{'Flow': datum.label, 'Detections': format(datum.count, ',')}"
+          }
+        },
+        "update": {
+          "strokeOpacity": [
+            {
+              "test": "hoverLink && datum.source === hoverLink.source && datum.target === hoverLink.target",
+              "value": 0.92
+            },
+            {
+              "test": "hoverNode && (datum.source === hoverNode || datum.target === hoverNode)",
+              "value": 0.78
+            },
+            {
+              "test": "hoverLink || hoverNode",
+              "value": 0.12
+            },
+            { "value": 0.34 }
+          ],
+          "zindex": [
+            {
+              "test": "hoverLink && datum.source === hoverLink.source && datum.target === hoverLink.target",
+              "value": 3
+            },
+            {
+              "test": "hoverNode && (datum.source === hoverNode || datum.target === hoverNode)",
+              "value": 2
+            },
+            { "value": 0 }
+          ]
+        },
+        "hover": {
+          "strokeOpacity": { "value": 0.9 }
+        }
+      }
+    },
+    {
+      "name": "node",
+      "type": "rect",
+      "from": { "data": "nodes" },
+      "encode": {
+        "enter": {
+          "x": { "field": "x0" },
+          "x2": { "field": "x1" },
+          "y": { "field": "y0" },
+          "y2": { "field": "y1" },
+          "cornerRadius": { "value": 3 },
+          "fill": { "field": "color" },
+          "stroke": { "value": "rgba(240,220,192,0.28)" },
+          "strokeWidth": { "value": 0.8 },
+          "aria": { "value": true },
+          "description": {
+            "signal": "'Node: ' + datum.label + '; Column: ' + datum.columnLabel + '; Detections: ' + format(datum.count, ',')"
+          },
+          "tooltip": {
+            "signal": "{'Node': datum.label, 'Column': datum.columnLabel, 'Detections': format(datum.count, ',')}"
+          }
+        },
+        "update": {
+          "fillOpacity": [
+            { "test": "hoverNode === datum.id", "value": 1 },
+            { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
+            { "test": "hoverNode || hoverLink", "value": 0.38 },
+            { "value": 0.9 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "nodes" },
+      "encode": {
+        "enter": {
+          "x": { "signal": "datum.column === 'intensity' ? datum.x1 + 8 : datum.x0 - 8" },
+          "y": { "field": "yc" },
+          "text": { "field": "label" },
+          "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
+          "baseline": { "value": "middle" },
+          "font": { "value": "Georgia" },
+          "fontSize": { "value": 12 },
+          "fontWeight": { "value": "bold" },
+          "fill": { "value": "#f0dcc0" }
+        },
+        "update": {
+          "fillOpacity": [
+            { "test": "hoverNode === datum.id", "value": 1 },
+            { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
+            { "test": "hoverNode || hoverLink", "value": 0.42 },
+            { "value": 0.92 }
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "nodes" },
+      "encode": {
+        "enter": {
+          "x": { "signal": "datum.column === 'intensity' ? datum.x1 + 8 : datum.x0 - 8" },
+          "y": { "signal": "datum.yc + 14" },
+          "text": { "signal": "format(datum.count, ',')" },
+          "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
+          "baseline": { "value": "middle" },
+          "font": { "value": "Courier New" },
+          "fontSize": { "value": 10 },
+          "fill": { "value": "#9ca3af" }
+        },
+        "update": {
+          "fillOpacity": [
+            { "test": "datum.column === 'state'", "value": 0 },
+            { "test": "hoverNode === datum.id", "value": 1 },
+            { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
+            { "test": "hoverNode || hoverLink", "value": 0.35 },
+            { "value": 0.82 }
+          ]
+        }
+      }
+    }
+  ]
+}

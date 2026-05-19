@@ -1,0 +1,9 @@
+.claude/
+.superpowers/
+server-*.log
+*.err.log
+*.out.log
+*-browser-check.png
+*-check.png
+choropleth-debug.png
+choropleth-root-check.json

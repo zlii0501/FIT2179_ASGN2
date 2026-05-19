@@ -1,0 +1,174 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Drill-down annual detail for one selected month in the historical raincloud chart",
+  "data": { "url": "data/hist_firework.csv" },
+  "params": [
+    { "name": "selectedMonth", "value": 1 }
+  ],
+  "transform": [
+    { "filter": "datum.month_num == selectedMonth" },
+    {
+      "calculate": "datum.is_black_summer === 'True' || datum.is_black_summer === true",
+      "as": "is_selected_black_summer"
+    },
+    {
+      "calculate": "datum.is_selected_black_summer ? 'Black Summer' : 'Historical year'",
+      "as": "period_label"
+    }
+  ],
+  "width": "container",
+  "height": 420,
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 3,
+        "cornerRadiusTopRight": 3,
+        "opacity": 0.74
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "sort": "ascending",
+          "axis": {
+            "labelAngle": -35,
+            "labelPadding": 6
+          }
+        },
+        "y": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "title": "Estimated fire area (km2)",
+          "axis": {
+            "format": "~s",
+            "grid": true
+          }
+        },
+        "color": {
+          "field": "period_label",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Historical year", "Black Summer"],
+            "range": ["rgba(156,163,175,0.62)", "#e74c3c"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top-right"
+          }
+        },
+        "tooltip": [
+          { "field": "year", "title": "Year" },
+          { "field": "month_label", "title": "Month" },
+          { "field": "total_fire_area_km2", "title": "Fire area km2", "format": ",.0f" },
+          { "field": "total_count", "title": "Detections", "format": "," },
+          { "field": "median_fire_area_km2", "title": "Historical median km2", "format": ",.0f" },
+          { "field": "ratio_to_median", "title": "Times median", "format": ".2f" }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "stroke": "#f0dcc0",
+        "strokeWidth": 1.4,
+        "strokeDash": [5, 4],
+        "opacity": 0.82
+      },
+      "encoding": {
+        "y": {
+          "field": "median_fire_area_km2",
+          "type": "quantitative",
+          "axis": null
+        },
+        "detail": { "field": "month_label" },
+        "tooltip": [
+          { "field": "month_label", "title": "Month" },
+          { "field": "median_fire_area_km2", "title": "Historical median km2", "format": ",.0f" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.is_selected_black_summer" }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 190,
+        "stroke": "#f0dcc0",
+        "strokeWidth": 1.5,
+        "color": "#e74c3c"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": "ascending",
+          "axis": null
+        },
+        "y": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "axis": null
+        },
+        "tooltip": [
+          { "field": "year", "title": "Black Summer year" },
+          { "field": "month_label", "title": "Month" },
+          { "field": "total_fire_area_km2", "title": "Fire area km2", "format": ",.0f" },
+          { "field": "ratio_to_median", "title": "Times median", "format": ".2f" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.is_selected_black_summer" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -9,
+        "font": "sans-serif",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "fill": "#fca5a5"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "sort": "ascending",
+          "axis": null
+        },
+        "y": {
+          "field": "total_fire_area_km2",
+          "type": "quantitative",
+          "axis": null
+        },
+        "text": { "value": "Black Summer" }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "y": "shared",
+      "x": "shared"
+    }
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": {
+      "domain": false,
+      "ticks": false,
+      "labelColor": "#9ca3af",
+      "titleColor": "#b8956a",
+      "gridColor": "rgba(156,163,175,0.14)"
+    },
+    "legend": {
+      "labelColor": "#9ca3af",
+      "titleColor": "#b8956a"
+    }
+  }
+}
