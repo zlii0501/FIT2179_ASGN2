@@ -1,9 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Radar profile comparing each state's relative Black Summer fire footprint, energy, intensity, density, and night activity.",
-  "width": "container",
-  "height": 320,
-  "padding": {"left": 36, "top": 24, "right": 36, "bottom": 54},
+  "width": 236,
+  "height": 236,
+  "padding": {"left": 32, "top": 18, "right": 32, "bottom": 48},
   "datasets": {
     "radar_grid": [
       {"ring": 25, "metric_order": 0},
@@ -60,7 +60,7 @@
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-118, 118], "nice": false},
+          "scale": {"domain": [-126, 126], "nice": false},
           "axis": null
         },
         "detail": {"field": "ring"},
@@ -92,7 +92,7 @@
         "y": {
           "field": "y0",
           "type": "quantitative",
-          "scale": {"domain": [-118, 118], "nice": false},
+          "scale": {"domain": [-126, 126], "nice": false},
           "axis": null
         },
         "x2": {"field": "x"},
@@ -127,7 +127,7 @@
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-118, 118], "nice": false},
+          "scale": {"domain": [-126, 126], "nice": false},
           "axis": null
         },
         "text": {"field": "metric"}
@@ -208,7 +208,7 @@
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-118, 118], "nice": false},
+          "scale": {"domain": [-126, 126], "nice": false},
           "axis": null
         },
         "color": {
@@ -313,7 +313,7 @@
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-118, 118], "nice": false},
+          "scale": {"domain": [-126, 126], "nice": false},
           "axis": null
         },
         "color": {

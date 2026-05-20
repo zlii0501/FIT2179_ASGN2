@@ -33,7 +33,8 @@
       "field": "avg_frp",
       "type": "quantitative",
       "scale": {
-        "domain": [0, 180],
+        "domain": [0, 250],
+        "clamp": true,
         "range": ["#e09848", "#cf7025", "#b85a22", "#8a3c12", "#5a2410", "#3d1a08"]
       },
       "legend": {

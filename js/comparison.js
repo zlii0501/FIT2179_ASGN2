@@ -158,7 +158,7 @@ function timelineFireHeight(monthKey) {
   const count = comparisonMonthlyFire.get(monthKey) || 0;
   if (!comparisonMonthlyFireMax) return 10;
   const normalized = Math.sqrt(count) / Math.sqrt(comparisonMonthlyFireMax);
-  return Math.round(8 + normalized * 58);
+  return Math.round(6 + normalized * 34);
 }
 
 function timelineFireLevel(monthKey) {
@@ -302,7 +302,7 @@ async function buildComparisonTimeline() {
   if (comparisonEventsEl) {
     comparisonEventsEl.innerHTML = '';
     [
-      { date: Date.UTC(2019, 7, 1), label: 'Black Summer window', top: '0px', stem: '66px', className: 'black-summer' }
+      { date: Date.UTC(2019, 7, 1), label: 'Black Summer window', top: '0px', stem: '42px', className: 'black-summer' }
     ].forEach(event => {
       const label = document.createElement('span');
       label.className = `calendar-event-label ${event.className || ''} ${event.edge || ''}`.trim();
@@ -341,23 +341,23 @@ async function buildComparisonTimeline() {
 
 buildComparisonTimeline();
 
-embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json', 'vconcat', 0, { width: 'container', height: 100 }).then(result => {
+embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json', 'vconcat', 0, { width: 'container', height: 62 }).then(result => {
   comparisonViews.calendarA = result?.view || null;
   updateComparisonCharts('a');
 });
-embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json', 'hconcat', 0, { width: 'container', height: 220 }).then(result => {
+embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json', 'hconcat', 0, { width: 'container', height: 96 }).then(result => {
   comparisonViews.overlayA = result?.view || null;
   updateComparisonCharts('a');
 });
 embedComposedPanel('#viz-calendar-b', 'vega/12_calendar.json', 'vconcat', 1, {
   width: 'container',
-  height: 100,
+  height: 62,
   encoding: { y: { axis: null } }
 }).then(result => {
   comparisonViews.calendarB = result?.view || null;
   updateComparisonCharts('b');
 });
-embedComposedPanel('#viz-overlay-b', 'vega/10_wa_overlay.json', 'hconcat', 1, { width: 'container', height: 220 }).then(result => {
+embedComposedPanel('#viz-overlay-b', 'vega/10_wa_overlay.json', 'hconcat', 1, { width: 'container', height: 96 }).then(result => {
   comparisonViews.overlayB = result?.view || null;
   updateComparisonCharts('b');
 });

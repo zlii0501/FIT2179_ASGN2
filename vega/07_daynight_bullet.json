@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 336,
+  "height": 300,
   "data": { "url": "data/fire_daynight_state.csv" },
   "transform": [
     { "calculate": "0", "as": "zero" },

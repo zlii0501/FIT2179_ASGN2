@@ -2,10 +2,10 @@
 embedChart('#viz-frp-hist', 'vega/05_frp_density.json', embedOpts);
 
 /* VIZ 7 — Day/Night Bullet Chart (loaded from file) */
-embedChart('#viz-daynight', 'vega/07_daynight_bullet.json', embedOpts);
+embedChart('#viz-daynight', 'vega/07_daynight_bullet.json?v=card-fit-20260521', embedOpts);
 
 /* VIZ 11 — Bubble Chart (loaded from file) */
-embedChart('#viz-bubble', 'vega/11_bubble.json', embedOpts);
+embedChart('#viz-bubble', 'vega/11_bubble.json?v=card-fit-20260521', embedOpts);
 
 /* VIZ 16 — Month -> State -> Intensity Alluvial (Vega spec loaded from file) */
 embedChart('#viz-alluvial', 'vega/16_state_month_intensity_alluvial.json', embedOpts);

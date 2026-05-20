@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 460,
+  "height": 380,
   "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
   "transform": [
     { "calculate": "floor(datum.i / 10)", "as": "row" },
@@ -45,8 +45,8 @@
     {
       "mark": {
         "type": "image",
-        "width": 50,
-        "height": 50
+        "width": 34,
+        "height": 34
       },
       "encoding": {
         "url": { "field": "icon_url", "type": "nominal" }
@@ -57,7 +57,7 @@
         "type": "point",
         "shape": "square",
         "filled": true,
-        "size": 760,
+        "size": 280,
         "opacity": 0
       },
       "encoding": {
@@ -75,12 +75,7 @@
             ],
             "range": ["#b88949", "#d65f3b", "#9a9b8f", "#d68b2c", "#f0a31f", "#4a8cca"]
           },
-          "legend": {
-            "title": "Driver",
-            "orient": "bottom",
-            "columns": 2,
-            "symbolType": "square"
-          }
+          "legend": null
         }
       }
     }

@@ -70,7 +70,7 @@ async function showRaincloudOverview() {
   raincloudMode = 'overview';
   setRaincloudToolbar(false);
   await swapRaincloud(
-    () => 'vega/14_yearmonth_heat.json',
+    () => 'vega/14_yearmonth_heat.json?v=card-fit-20260521',
     attachRaincloudOverviewClick
   );
 }
@@ -78,7 +78,7 @@ async function showRaincloudOverview() {
 async function showRaincloudDetail(monthNum, monthLabel) {
   raincloudMode = 'detail';
   setRaincloudToolbar(true, monthLabel);
-  const response = await fetch('vega/14_yearmonth_detail.json');
+  const response = await fetch('vega/14_yearmonth_detail.json?v=card-fit-20260521');
   const detailSpec = await response.json();
   await swapRaincloud(() => {
     const spec = cloneSpec(detailSpec);

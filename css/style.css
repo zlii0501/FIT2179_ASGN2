@@ -489,6 +489,95 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   line-height: 1.4;
 }
 
+[data-layout-id="fig01-causes"] .fig01-causes-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.24fr) minmax(0, 0.76fr);
+  gap: 1.05rem;
+  align-items: start;
+}
+
+[data-layout-id="fig01-causes"] .fig01-causes-copy,
+[data-layout-id="fig01-causes"] #viz-causes-waffle {
+  min-width: 0;
+}
+
+[data-layout-id="fig01-causes"] .chart-annotation {
+  margin-top: 0.68rem;
+  max-width: 31ch;
+  font-size: 0.74rem;
+  line-height: 1.38;
+}
+
+.fig01-driver-legend {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.38rem;
+  padding: 0.64rem 0.7rem;
+  background: rgba(10,14,26,0.72);
+  border: 1px solid rgba(232,201,160,0.14);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.fig01-driver-legend span,
+.fig03a-state-legend span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.fig01-driver-legend i,
+.fig03a-state-legend i {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.68rem;
+  height: 0.68rem;
+  margin-right: 0.4rem;
+  border-radius: 2px;
+  background: var(--swatch);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+}
+
+[data-layout-id="fig03-state-stream"] .fig03a-caption-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(214px, 0.34fr);
+  gap: 0.82rem;
+  align-items: start;
+  margin-top: 0.4rem;
+}
+
+[data-layout-id="fig03-state-stream"] .fig03a-caption-row .compact-p {
+  margin-top: 0;
+}
+
+.fig03a-state-legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.34rem 0.58rem;
+  padding: 0.58rem 0.65rem;
+  background: rgba(10,14,26,0.72);
+  border: 1px solid rgba(232,201,160,0.14);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.7rem;
+  line-height: 1.1;
+}
+
+[data-layout-id="fig04-timeseries"] .compact-p,
+[data-layout-id="fig06-frp-density"] .compact-p,
+[data-layout-id="fig07-daynight"] .compact-p,
+[data-layout-id="fig08-bubble"] .compact-p,
+[data-layout-id="fig12-raincloud"] .compact-p,
+[data-layout-id="fig13-hexbin"] .compact-p {
+  margin-top: 0.38rem;
+  font-size: 0.7rem;
+  line-height: 1.34;
+}
+
 .linked-fire-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -610,6 +699,120 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig-comparison-note {
   margin-top: 0;
   max-width: 82ch;
+}
+
+[data-layout-id="fig14-comparison"].fig-comparison-card {
+  gap: 0.42rem;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-controlbar {
+  align-items: center;
+  padding: 0.48rem 0.62rem;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-title .chart-title-text {
+  gap: 0.04rem;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-title .chart-title-text > span:last-child {
+  font-size: 0.68rem;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-key {
+  gap: 0.34rem;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-chip {
+  min-height: 24px;
+  padding: 0.18rem 0.45rem;
+  font-size: 0.58rem;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-chip strong {
+  font-size: 0.66rem;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-compare-controls {
+  margin: 0;
+  padding: 0.38rem 0.58rem 0.3rem;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-timeline {
+  height: 66px;
+  margin: 0;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-timeline-line {
+  top: 48px;
+  height: 2px;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-marker {
+  top: calc(48px - var(--marker-height));
+}
+
+[data-layout-id="fig14-comparison"] .calendar-handle {
+  top: 38px;
+  width: 18px;
+  height: 18px;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-marker.selected-a::after,
+[data-layout-id="fig14-comparison"] .calendar-marker.selected-b::before {
+  bottom: -10px;
+  width: 5px;
+  height: 5px;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-marker.selected-b::before {
+  bottom: -17px;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-event-label {
+  padding: 0.12rem 0.34rem;
+  font-size: 0.56rem;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-event-label::after {
+  height: var(--event-stem);
+}
+
+[data-layout-id="fig14-comparison"] .calendar-timeline-labels {
+  height: 15px;
+  font-size: 0.54rem;
+}
+
+[data-layout-id="fig14-comparison"] .calendar-timeline-label {
+  top: 2px;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.38rem;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-panel {
+  gap: 0.22rem;
+  padding: 0.4rem 0.44rem 0.46rem;
+}
+
+[data-layout-id="fig14-comparison"] .linked-panel-title-compact {
+  font-size: 0.62rem;
+  gap: 0.22rem 0.32rem;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-viz .vega-embed svg {
+  display: block;
+  width: 100%;
+  height: 82px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+[data-layout-id="fig14-comparison"] .fig-comparison-note {
+  max-width: 100%;
+  font-size: 0.68rem;
+  line-height: 1.28;
 }
 
 @media (max-width: 860px) {
@@ -887,6 +1090,39 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   width: 100%;
   max-width: 100%;
   height: auto;
+}
+
+[data-layout-id="fig13-hexbin"] #viz-hexbin.vega-embed svg,
+[data-layout-id="fig13-hexbin"] #viz-hexbin .vega-embed svg {
+  width: auto;
+  height: 318px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 860px) {
+  [data-layout-id="fig01-causes"] .fig01-causes-layout,
+  [data-layout-id="fig03-state-stream"] .fig03a-caption-row {
+    grid-template-columns: 1fr;
+  }
+
+  [data-layout-id="fig01-causes"] .chart-annotation {
+    max-width: 68ch;
+  }
+
+  .fig01-driver-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fig03a-state-legend {
+    max-width: 320px;
+  }
+
+  [data-layout-id="fig13-hexbin"] #viz-hexbin.vega-embed svg,
+  [data-layout-id="fig13-hexbin"] #viz-hexbin .vega-embed svg {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .custom-vega-tooltip {

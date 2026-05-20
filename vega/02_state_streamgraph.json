@@ -38,21 +38,7 @@
         "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
         "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
       },
-      "legend": {
-        "title": null,
-        "orient": "none",
-        "legendX": 12,
-        "legendY": 12,
-        "direction": "horizontal",
-        "columns": 6,
-        "symbolType": "square",
-        "symbolSize": 110,
-        "labelFontSize": 11,
-        "fillColor": "rgba(10,14,26,0.86)",
-        "strokeColor": "rgba(255,255,255,0.12)",
-        "cornerRadius": 6,
-        "padding": 8
-      }
+      "legend": null
     },
     "tooltip": [
       {"field": "state", "type": "nominal", "title": "State"},
