@@ -529,7 +529,6 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   min-width: 0;
 }
 
-.fig01-driver-legend i,
 .fig03a-state-legend i {
   display: inline-block;
   flex: 0 0 auto;
@@ -539,6 +538,15 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   border-radius: 2px;
   background: var(--swatch);
   box-shadow: 0 0 0 1px rgba(255,255,255,0.12);
+}
+
+.fig01-driver-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 1.18rem;
+  height: 1.18rem;
+  margin-right: 0.42rem;
+  object-fit: contain;
 }
 
 [data-layout-id="fig03-state-stream"] .fig03a-caption-row {
