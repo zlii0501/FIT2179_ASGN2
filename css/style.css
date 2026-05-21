@@ -1613,10 +1613,10 @@ input[type=range] {
 
 .fig05-caption-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.62fr);
-  gap: 0.95rem;
+  grid-template-columns: minmax(0, 1fr) minmax(430px, 0.72fr);
+  gap: 0.82rem;
   align-items: start;
-  margin-top: 0.7rem;
+  margin-top: 0.55rem;
 }
 
 .fig05-caption-row .compact-p {
@@ -1625,8 +1625,8 @@ input[type=range] {
 
 .fig05-legend-row {
   display: grid;
-  grid-template-columns: minmax(118px, 0.28fr) minmax(0, 0.72fr);
-  gap: 0.65rem;
+  grid-template-columns: minmax(120px, 0.25fr) minmax(0, 0.75fr);
+  gap: 0.55rem;
   align-items: stretch;
   min-width: 0;
 }
@@ -1647,7 +1647,50 @@ input[type=range] {
 }
 
 .fig05-legend-row .frp-legend-title {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.38rem;
+}
+
+.fig05-legend-row .map-legend {
+  padding: 0.5rem 0.56rem;
+}
+
+.fig05-legend-row .month-size-legend .size-legend-row {
+  display: grid;
+  grid-template-columns: 20px auto;
+  min-height: 18px;
+  margin: 0 0 0.24rem;
+}
+
+.fig05-legend-row .frp-legend-items {
+  grid-template-columns: repeat(5, minmax(42px, 1fr));
+  gap: 0.24rem;
+}
+
+.fig05-legend-row .frp-legend-item {
+  grid-template-columns: 12px minmax(0, 1fr);
+  min-height: 24px;
+  padding: 0.2rem 0.25rem;
+  gap: 0.3rem;
+}
+
+.fig05-legend-row .frp-swatch {
+  width: 11px;
+  height: 11px;
+  align-self: center;
+  justify-self: center;
+}
+
+.fig05-legend-row .frp-label {
+  font-size: 0.68rem;
+}
+
+.fig05-legend-row .frp-range {
+  font-size: 0.5rem;
+}
+
+.fig05-legend-row .size-dot-lg {
+  width: 16px;
+  height: 16px;
 }
 
 .month-zoom-lens {

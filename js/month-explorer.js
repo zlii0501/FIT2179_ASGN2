@@ -218,7 +218,7 @@ const monthMapSpec = {
   "projection": {
     "type": "mercator",
     "center": [134.5, -27.4],
-    "scale": 720
+    "scale": 620
   },
   "params": [
     { "name": "sel_month", "value": "2019-12" },
