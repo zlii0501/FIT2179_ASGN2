@@ -37,7 +37,8 @@ textarea {
 }
 
 button,
-.file-button {
+.file-button,
+.button-link {
   min-height: 44px;
   border: 1px solid rgba(231, 182, 107, 0.42);
   border-radius: 8px;
@@ -50,21 +51,25 @@ button,
   gap: 0.45rem;
   padding: 0 0.85rem;
   transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+  text-decoration: none;
 }
 
 button:hover,
-.file-button:hover {
+.file-button:hover,
+.button-link:hover {
   background: #3a2a1c;
   border-color: rgba(231, 182, 107, 0.72);
 }
 
 button:active,
-.file-button:active {
+.file-button:active,
+.button-link:active {
   transform: translateY(1px);
 }
 
 button:focus-visible,
 .file-button:focus-visible,
+.button-link:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 .layout-card:focus-visible {

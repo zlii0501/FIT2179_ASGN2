@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrapesJS Editor - Australia's Black Summer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/grapesjs@0.22.14/dist/css/grapes.min.css">
+  <link rel="stylesheet" href="css/grapesjs-editor.css?v=1">
+</head>
+<body>
+  <header class="gjs-shell-header">
+    <div>
+      <p class="editor-kicker">Australia's Black Summer</p>
+      <h1>GrapesJS Page Editor</h1>
+    </div>
+    <nav class="editor-actions" aria-label="GrapesJS controls">
+      <a href="index.html" target="_blank" rel="noreferrer">Open site</a>
+      <a href="layout-editor.html">Layout editor</a>
+      <button type="button" id="export-html">Export HTML</button>
+      <button type="button" id="export-css">Export CSS</button>
+      <button type="button" id="reset-grapes" class="quiet">Reset draft</button>
+    </nav>
+  </header>
+
+  <main class="gjs-editor-wrap">
+    <div id="gjs">
+      <section class="editor-loading" aria-live="polite">
+        Loading index.html into GrapesJS...
+      </section>
+    </div>
+  </main>
+
+  <div id="gjs-toast" class="gjs-toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/grapesjs@0.22.14/dist/grapes.min.js"></script>
+  <script src="js/grapesjs-editor.js?v=1"></script>
+</body>
+</html>
