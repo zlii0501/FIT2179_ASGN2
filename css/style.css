@@ -493,7 +493,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   display: grid;
   grid-template-columns: minmax(190px, 0.32fr) minmax(0, 0.66fr);
   gap: 1.05rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 [data-layout-id="fig01-causes"] .fig01-causes-copy,
@@ -507,9 +507,9 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 [data-layout-id="fig01-causes"] .fig01-causes-copy {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.68rem;
-  align-content: start;
 }
 
 [data-layout-id="fig01-causes"] .chart-annotation {
@@ -517,20 +517,24 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   max-width: none;
   font-size: 0.74rem;
   line-height: 1.38;
+  flex-shrink: 0;
 }
 
 .fig01-driver-legend {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: 0.44rem;
-  padding: 0.64rem 0.7rem;
-  background: rgba(10,14,26,0.72);
-  border: 1px solid rgba(232,201,160,0.14);
-  border-radius: 6px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
   color: var(--text-muted);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 0.72rem;
   line-height: 1.2;
+  flex: 1;
+  min-height: 0;
 }
 
 .fig01-driver-legend span,
@@ -541,17 +545,41 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .fig01-driver-legend span[data-driver] {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 5px;
+  background: rgba(10,14,26,0.72);
+  border: 1px solid rgba(232,201,160,0.14);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
+  min-height: 0;
 }
 .fig01-driver-legend span[data-driver]:hover {
-  background: rgba(232,201,160,0.1);
+  background: rgba(232,201,160,0.08);
   border-color: rgba(232,201,160,0.32);
 }
 .fig01-driver-legend span[data-driver].active {
   background: rgba(232,201,160,0.14);
   border-color: rgba(232,201,160,0.5);
   color: #e8c9a0;
+}
+
+.fig01-driver-photo {
+  display: block;
+  width: 54px;
+  flex: 0 0 54px;
+  object-fit: cover;
+  background: rgba(255,255,255,0.06);
+}
+
+.fig01-driver-info {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.3rem 0.4rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .fig01-annotation {
@@ -563,6 +591,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   line-height: 1.42;
   color: #9ca3af;
   transition: color 0.2s;
+  flex-shrink: 0;
 }
 .fig01-annotation[data-driver]:not([data-driver="all"]) {
   color: #b8a080;
@@ -583,9 +612,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig01-driver-icon {
   display: block;
   flex: 0 0 auto;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-right: 0.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
   object-fit: contain;
 }
 
