@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig14-legend-20260521">
+  <link rel="stylesheet" href="css/style.css?v=fig14-vertical-legend-20260521">
   <link rel="stylesheet" href="css/layout-overrides.css?v=5">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -372,14 +372,18 @@
             <div class="fig-comparison-legend-section">
               <span class="fig-comparison-legend-kicker">Fig. 14</span>
               <strong>Daily detections</strong>
-              <div class="fig-comparison-gradient fig-comparison-gradient-calendar" aria-hidden="true"></div>
-              <div class="fig-comparison-legend-scale"><span>0</span><span>3,000</span></div>
+              <div class="fig-comparison-legend-body">
+                <div class="fig-comparison-gradient fig-comparison-gradient-calendar" aria-hidden="true"></div>
+                <div class="fig-comparison-legend-scale"><span>3,000</span><span>0</span></div>
+              </div>
             </div>
             <div class="fig-comparison-legend-section">
               <span class="fig-comparison-legend-kicker">Fig. 15</span>
               <strong>WA average FRP</strong>
-              <div class="fig-comparison-gradient fig-comparison-gradient-frp" aria-hidden="true"></div>
-              <div class="fig-comparison-legend-scale"><span>50 MW</span><span>330 MW</span></div>
+              <div class="fig-comparison-legend-body">
+                <div class="fig-comparison-gradient fig-comparison-gradient-frp" aria-hidden="true"></div>
+                <div class="fig-comparison-legend-scale"><span>330 MW</span><span>50 MW</span></div>
+              </div>
               <span class="fig-comparison-legend-note">Concentric rings map the selected Aug-Jan months.</span>
             </div>
           </aside>
@@ -399,9 +403,9 @@
               <div id="viz-overlay-b" class="fig-comparison-viz"></div>
             </section>
           </div>
+          <p class="chart-annotation fig-comparison-note">Fig. 14 keeps the national daily calendar view; Fig. 15 keeps the WA monthly FRP rhythm. Read across each row to compare the same season window, then down the columns to contrast Black Summer against the prior year.</p>
         </div>
       </div>
-      <p class="chart-annotation fig-comparison-note">Fig. 14 keeps the national daily calendar view; Fig. 15 keeps the WA monthly FRP rhythm. Read across each row to compare the same season window, then down the columns to contrast Black Summer against the prior year.</p>
     </div>
   </div>
 </section>
@@ -421,7 +425,7 @@
 <script src="js/chart-embeds.js?v=card-fit-20260521"></script>
 <script src="js/raincloud-detail.js?v=card-fit-20260521"></script>
 <script src="js/hexbin-zoom.js"></script>
-<script src="js/comparison.js?v=fig14-legend-20260521"></script>
+<script src="js/comparison.js?v=fig14-vertical-legend-20260521"></script>
 
 </body>
 </html>
