@@ -1577,9 +1577,13 @@ input[type=range] {
 /* === MONTH SELECTOR BUTTONS === */
 .month-explorer {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 210px;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) 204px;
+  gap: 1.05rem;
   align-items: start;
+}
+
+.fig05-main {
+  min-width: 0;
 }
 
 .month-map-panel {
@@ -1613,8 +1617,8 @@ input[type=range] {
 
 .fig05-caption-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(430px, 0.72fr);
-  gap: 0.82rem;
+  grid-template-columns: minmax(0, 0.46fr) minmax(500px, 0.54fr);
+  gap: 0.75rem;
   align-items: start;
   margin-top: 0.55rem;
 }
@@ -1625,7 +1629,7 @@ input[type=range] {
 
 .fig05-legend-row {
   display: grid;
-  grid-template-columns: minmax(120px, 0.25fr) minmax(0, 0.75fr);
+  grid-template-columns: minmax(112px, 0.22fr) minmax(0, 0.78fr);
   gap: 0.55rem;
   align-items: stretch;
   min-width: 0;
