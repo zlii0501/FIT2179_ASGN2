@@ -675,14 +675,33 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-comparison-lower-row {
   display: grid;
-  grid-template-columns: minmax(145px, 0.17fr) minmax(0, 0.6fr) minmax(190px, 0.23fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.72rem;
-  align-items: start;
+  align-items: stretch;
+}
+
+.fig-comparison-lower-left,
+.fig-comparison-lower-right {
+  display: grid;
+  min-width: 0;
+  gap: 0.72rem;
+  align-items: stretch;
+}
+
+.fig-comparison-lower-left {
+  grid-template-columns: minmax(190px, 0.42fr) minmax(0, 0.58fr);
+}
+
+.fig-comparison-lower-right {
+  grid-template-columns: minmax(0, 0.66fr) minmax(150px, 0.34fr);
 }
 
 .fig-comparison-legend-panel {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: stretch;
   gap: 0.8rem;
+  height: 100%;
   min-width: 0;
   padding: 0.62rem 0.68rem;
   background: rgba(10,14,26,0.52);
@@ -722,7 +741,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-comparison-gradient {
   width: 0.62rem;
-  height: 86px;
+  height: 74px;
   border-radius: 999px;
   box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
 }
@@ -751,6 +770,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig-comparison-panel {
   display: grid;
   gap: 0.42rem;
+  align-self: stretch;
+  height: 100%;
   min-width: 0;
   padding: 0.58rem 0.62rem 0.64rem;
   background: rgba(10,14,26,0.35);
@@ -779,8 +800,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .fig-comparison-note {
-  margin-top: 0;
-  max-width: 24ch;
+  display: flex;
+  align-self: stretch;
+  height: 100%;
+  margin: 0;
+  max-width: none;
   padding: 0.62rem 0.68rem;
   background: rgba(10,14,26,0.38);
   border: 1px solid rgba(232,201,160,0.1);
@@ -805,6 +829,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
   .fig-comparison-row,
   .fig-comparison-lower-row {
+    grid-template-columns: 1fr;
+  }
+
+  .fig-comparison-lower-left,
+  .fig-comparison-lower-right {
     grid-template-columns: 1fr;
   }
 
