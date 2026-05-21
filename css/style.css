@@ -662,8 +662,15 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig-comparison-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.72rem 0.42rem;
+  gap: 0.72rem;
   align-items: start;
+}
+
+.fig-comparison-column {
+  display: grid;
+  gap: 0.72rem;
+  min-width: 0;
+  align-content: start;
 }
 
 .fig-comparison-panel {
@@ -713,6 +720,10 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
   .fig-comparison-grid {
     grid-template-columns: 1fr;
+  }
+
+  .fig-comparison-column {
+    gap: 0.72rem;
   }
 
   .figure-side-layout,

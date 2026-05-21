@@ -153,9 +153,9 @@
   [data-layout-id="fig14-comparison"] {
     order: 5;
     grid-column: 1 / -1;
-    grid-row: 29 / span 10;
+    grid-row: 29 / span 17;
     align-self: stretch;
-    min-height: 460px;
+    min-height: 782px;
   }
 }
 
