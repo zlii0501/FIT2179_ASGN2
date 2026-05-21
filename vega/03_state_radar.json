@@ -1,9 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Radar profile comparing each state's relative Black Summer fire footprint, energy, intensity, density, and night activity.",
-  "width": 236,
-  "height": 236,
-  "padding": {"left": 32, "top": 18, "right": 32, "bottom": 48},
+  "width": 292,
+  "height": 292,
+  "padding": {"left": 28, "top": 24, "right": 28, "bottom": 24},
   "datasets": {
     "radar_grid": [
       {"ring": 25, "metric_order": 0},
@@ -54,13 +54,13 @@
         "x": {
           "field": "x",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "detail": {"field": "ring"},
@@ -86,13 +86,13 @@
         "x": {
           "field": "x0",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "y": {
           "field": "y0",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "x2": {"field": "x"},
@@ -168,13 +168,13 @@
         "x": {
           "field": "x",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "color": {
@@ -184,16 +184,7 @@
             "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
             "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
           },
-          "legend": {
-            "title": null,
-            "orient": "bottom",
-            "direction": "horizontal",
-            "columns": 3,
-            "symbolType": "stroke",
-            "symbolStrokeWidth": 3,
-            "labelFontSize": 10,
-            "labelColor": "#b8956a"
-          }
+          "legend": null
         },
         "detail": {"field": "state"},
         "order": {"field": "metric_order", "type": "ordinal"},
@@ -202,8 +193,8 @@
           "value": 0.48
         },
         "strokeWidth": {
-          "condition": {"param": "stateHover", "value": 3.1},
-          "value": 1.7
+          "condition": {"param": "stateHover", "value": 2.4},
+          "value": 1.25
         },
         "tooltip": [
           {"field": "state", "title": "State"},
@@ -273,13 +264,13 @@
         "x": {
           "field": "x",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "color": {
@@ -311,15 +302,15 @@
       "data": {"name": "radar_axes"},
       "transform": [
         {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
-        {"calculate": "120 * cos(datum.angle)", "as": "x"},
-        {"calculate": "118 * sin(datum.angle)", "as": "y"}
+        {"calculate": "126 * cos(datum.angle)", "as": "x"},
+        {"calculate": "126 * sin(datum.angle)", "as": "y"}
       ],
       "mark": {
         "type": "text",
         "align": "center",
         "baseline": "middle",
         "font": "sans-serif",
-        "fontSize": 10,
+        "fontSize": 10.5,
         "fontWeight": 700,
         "fill": "#f0dcc0",
         "limit": 74,
@@ -329,13 +320,13 @@
         "x": {
           "field": "x",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "y": {
           "field": "y",
           "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
+          "scale": {"domain": [-136, 136], "nice": false},
           "axis": null
         },
         "text": {"field": "metric"}

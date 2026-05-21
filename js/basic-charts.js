@@ -8,36 +8,36 @@ embedChart('#viz-waffle', 'vega/01_waffle.json?v=state-safe-20260521', embedOpts
 embedChart('#viz-state-bar', 'vega/02_state_streamgraph.json?v=state-safe-20260521', embedOpts);
 
 /* VIZ 3B - State radar profile (loaded from file) */
-embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=state-safe-20260521', embedOpts);
+embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=multi-fig-polish-20260522', embedOpts);
 
 /* VIZ 15 — Fire Causes Icon Waffle with interactive legend */
 const causesAnnotations = {
-  '': `<p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence.</p>
-       <p class="fig01-ann-analysis">Click any driver in the legend to explore its role and share. The icon grid shows each factor's relative weight — larger shares reflect greater contribution to the conditions that made Black Summer possible.</p>`,
+  '': `<p class="fig01-ann-intro">Six conditions converged to produce Australia's most destructive fire season. No single driver explains Black Summer — their simultaneous presence overwhelmed every natural and human defence.</p>
+       <p class="fig01-ann-analysis">Click a driver in the legend to explore its role. Larger icon shares reflect greater contribution to the conditions that made Black Summer possible.</p>`,
 
-  'Prolonged drought': `<p class="fig01-ann-intro">Extended rainfall deficits depleted soil moisture and dried river systems across eastern Australia over three consecutive years before a single fire was lit.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">22 %</span><span>of the icon grid — the largest single share of any driver</span></div>
-       <p class="fig01-ann-analysis">Without this moisture deficit, the other five drivers would have produced a far more typical fire season. Drought is the foundation: it removed the landscape's capacity to resist fire before any extreme weather arrived.</p>`,
+  'Prolonged drought': `<p class="fig01-ann-intro">Three consecutive years of rainfall deficits dried soils and river systems across eastern Australia before a single fire was lit.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">22 %</span><span>of the icon grid — the largest single share</span></div>
+       <p class="fig01-ann-analysis">Drought removed the landscape's capacity to resist fire. Without it, the other five drivers would have produced a far more typical season.</p>`,
 
-  'Record heat': `<p class="fig01-ann-intro">Australia recorded its hottest year ever in 2019. On 18 December, a new national daily temperature record of 41.9 °C was set — part of a 48-hour period that was among the most dangerous in the country's history.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">18 %</span><span>of the grid — second only to drought in its contribution</span></div>
-       <p class="fig01-ann-analysis">Heat accelerated evapotranspiration, desiccated fuels in hours rather than days, and pushed fire behaviour indices into ranges suppression models had never been designed to handle. It was the amplifier that turned a drought into a crisis.</p>`,
+  'Record heat': `<p class="fig01-ann-intro">Australia recorded its hottest year ever in 2019, peaking at a national daily record of 41.9 °C on 18 December.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">18 %</span><span>of the grid — second only to drought</span></div>
+       <p class="fig01-ann-analysis">Heat desiccated fuels in hours and pushed fire behaviour indices beyond what suppression models were designed to handle.</p>`,
 
-  'Dry fuels': `<p class="fig01-ann-intro">Years of drought loaded forests and grasslands with cured and dead vegetation well above any historical average. Fuel moisture in some areas reached levels not seen since records began.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">17 %</span><span>of the grid — the landscape's accumulated, season-long vulnerability</span></div>
-       <p class="fig01-ann-analysis">Fuel loads determined how intensely fires burned once ignited. With moisture below critical thresholds, fires spread faster and generated more energy than crews were equipped to counter. Dry fuels acted as a force multiplier on every other driver.</p>`,
+  'Dry fuels': `<p class="fig01-ann-intro">Years of drought loaded forests and grasslands with cured, dead vegetation — fuel moisture reached levels not seen since records began.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">17 %</span><span>of the grid — season-long vulnerability</span></div>
+       <p class="fig01-ann-analysis">Once ignited, fires burned with intensity that outpaced suppression capacity. Dry fuels acted as a force multiplier on every other driver.</p>`,
 
-  'Extreme fire weather': `<p class="fig01-ann-intro">Hot temperatures, low relative humidity, and strong winds combined to produce simultaneous extreme and catastrophic fire danger ratings across multiple states — an occurrence with no historical precedent.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">16 %</span><span>of the grid — conditions that broke all existing response frameworks</span></div>
-       <p class="fig01-ann-analysis">Suppression resources designed for one or two simultaneous state-level emergencies faced eight or nine. On several days, containment was functionally impossible. Extreme fire weather transformed individual fires into megafires within hours.</p>`,
+  'Extreme fire weather': `<p class="fig01-ann-intro">Heat, low humidity, and strong winds combined to produce simultaneous catastrophic fire danger ratings across multiple states — unprecedented in the historical record.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">16 %</span><span>of the grid — broke all response frameworks</span></div>
+       <p class="fig01-ann-analysis">Resources built for one or two state emergencies faced eight or nine at once. Containment was functionally impossible on the worst days.</p>`,
 
-  'Dry lightning': `<p class="fig01-ann-intro">Lightning storms with little or no accompanying rain ignited fires across remote terrain before ground or aerial crews could reach them — seeding the season's largest and most destructive fires.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">14 %</span><span>of the grid — the ignition trigger that activated every other driver</span></div>
-       <p class="fig01-ann-analysis">Remote ignitions are the hardest to suppress in their early, manageable phase. In a season where every uncontrolled fire rapidly became a megafire, each dry-lightning strike effectively seeded a major disaster.</p>`,
+  'Dry lightning': `<p class="fig01-ann-intro">Lightning with little or no rain ignited fires across remote terrain before crews could reach them, seeding the season's largest fires.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">14 %</span><span>of the grid — the ignition trigger</span></div>
+       <p class="fig01-ann-analysis">Remote ignitions are the hardest to suppress early. In a season where every escaped fire became a megafire, each strike seeded a major disaster.</p>`,
 
-  'Climate change signal': `<p class="fig01-ann-intro">Attribution science links human-caused climate change to the heightened probability of the fire-weather conditions experienced during Black Summer — the only driver with a clear future trajectory.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">13 %</span><span>of the grid — smallest share, but most consequential for the future</span></div>
-       <p class="fig01-ann-analysis">Research found these extreme conditions were at least 30 % more likely due to climate change. Every other driver in the grid is being amplified by the same long-term warming trend. Black Summer is not an anomaly — it is a preview of what a warmer baseline makes increasingly ordinary.</p>`
+  'Climate change signal': `<p class="fig01-ann-intro">Attribution science links human-caused warming to the heightened probability of these fire-weather conditions — the only driver with a clear future trajectory.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">13 %</span><span>of the grid — smallest share, biggest future risk</span></div>
+       <p class="fig01-ann-analysis">Conditions were at least 30 % more likely due to climate change. Every other driver is being amplified by the same warming trend.</p>`
 };
 
 embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=causes-interact-20260520', embedOpts).then(result => {
@@ -91,6 +91,9 @@ const timeseriesSpec = {
   "width": "container",
   "height": 212,
   "data": { "url": "data/fire_daily.csv" },
+  "params": [
+    { "name": "selectedDay", "value": "2020-01-04" }
+  ],
   "layer": [
     {
       "mark": { "type": "area", "line": true, "color": "#e74c3c", "fillOpacity": 0.15 },
@@ -151,8 +154,94 @@ const timeseriesSpec = {
         "y": { "value": 20 },
         "text": { "field": "label" }
       }
+    },
+    {
+      "transform": [
+        { "filter": "timeFormat(datum.date, '%Y-%m-%d') === selectedDay" }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#f0dcc0",
+        "strokeWidth": 1.4,
+        "strokeDash": [3, 3]
+      },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" }
+      }
+    },
+    {
+      "transform": [
+        { "filter": "timeFormat(datum.date, '%Y-%m-%d') === selectedDay" }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 92,
+        "color": "#f0dcc0",
+        "stroke": "#0d1117",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal" },
+        "y": { "field": "count", "type": "quantitative" },
+        "tooltip": [
+          { "field": "date", "type": "temporal", "title": "Selected day", "format": "%d %b %Y" },
+          { "field": "count", "title": "Detections", "format": "," }
+        ]
+      }
     }
   ]
 };
 
-embedChart('#viz-timeseries', timeseriesSpec, embedOpts);
+let fig04TimeseriesView = null;
+embedChart('#viz-timeseries', timeseriesSpec, embedOpts).then(result => {
+  fig04TimeseriesView = result.view;
+});
+
+const fig04Slider = document.getElementById('fig04-day-slider');
+const fig04DayLabel = document.getElementById('fig04-day-label');
+const fig04DayCount = document.getElementById('fig04-day-count');
+
+if (fig04Slider && fig04DayLabel && fig04DayCount) {
+  fetch('data/fire_daily.csv')
+    .then(response => response.text())
+    .then(text => {
+      const rows = text.trim().split(/\r?\n/).slice(1)
+        .map(line => {
+          const [date, count] = line.split(',');
+          return { date, count: Number(count) };
+        })
+        .filter(row => row.date && Number.isFinite(row.count));
+
+      if (!rows.length) return;
+      const peakIndex = rows.reduce((best, row, index) => row.count > rows[best].count ? index : best, 0);
+
+      function formatDay(dateText) {
+        const date = new Date(`${dateText}T00:00:00Z`);
+        return new Intl.DateTimeFormat('en-AU', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          timeZone: 'UTC'
+        }).format(date);
+      }
+
+      function updateDay(index) {
+        const row = rows[Math.max(0, Math.min(rows.length - 1, Number(index)))];
+        fig04DayLabel.textContent = formatDay(row.date);
+        fig04DayCount.textContent = row.count.toLocaleString('en-AU');
+        if (fig04TimeseriesView) {
+          fig04TimeseriesView.signal('selectedDay', row.date).runAsync();
+        }
+      }
+
+      fig04Slider.max = String(rows.length - 1);
+      fig04Slider.value = String(peakIndex);
+      updateDay(peakIndex);
+      fig04Slider.addEventListener('input', event => updateDay(event.target.value));
+    })
+    .catch(() => {
+      fig04DayLabel.textContent = 'Unavailable';
+      fig04DayCount.textContent = '0';
+    });
+}

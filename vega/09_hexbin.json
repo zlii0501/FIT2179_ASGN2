@@ -89,11 +89,11 @@
     {
       "name": "legendBins",
       "values": [
-        { "coarseLabel": "no data", "fineLabel": "no data", "coarseCount": 0, "fineCount": 0, "y": 412, "empty": true },
-        { "coarseLabel": "1", "fineLabel": "1", "coarseCount": 1, "fineCount": 1, "y": 428, "empty": false },
+        { "coarseLabel": "no data", "fineLabel": "no data", "coarseCount": 0, "fineCount": 0, "y": 402, "empty": true },
+        { "coarseLabel": "1", "fineLabel": "1", "coarseCount": 1, "fineCount": 1, "y": 421, "empty": false },
         { "coarseLabel": "12", "fineLabel": "6", "coarseCount": 12, "fineCount": 6, "y": 440, "empty": false },
-        { "coarseLabel": "24", "fineLabel": "12", "coarseCount": 24, "fineCount": 12, "y": 452, "empty": false },
-        { "coarseLabel": "41", "fineLabel": "22", "coarseCount": 41, "fineCount": 22, "y": 464, "empty": false }
+        { "coarseLabel": "24", "fineLabel": "12", "coarseCount": 24, "fineCount": 12, "y": 459, "empty": false },
+        { "coarseLabel": "41", "fineLabel": "22", "coarseCount": 41, "fineCount": 22, "y": 478, "empty": false }
       ]
     }
   ],
@@ -210,12 +210,12 @@
       "type": "text",
       "encode": {
         "enter": {
-          "x": { "value": 800 },
+          "x": { "value": 804 },
           "y": { "value": 30 },
           "text": { "value": "FILTER STATE" },
           "align": { "value": "center" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 11 },
+          "fontSize": { "value": 12 },
           "fontWeight": { "value": "bold" },
           "fill": { "value": "#9ca3af" }
         }
@@ -227,11 +227,11 @@
       "from": { "data": "stateFilters" },
       "encode": {
         "enter": {
-          "x": { "value": 760 },
-          "x2": { "value": 840 },
-          "y": { "signal": "datum.y - 14" },
-          "y2": { "signal": "datum.y + 14" },
-          "cornerRadius": { "value": 5 },
+          "x": { "value": 744 },
+          "x2": { "value": 864 },
+          "y": { "signal": "datum.y - 17" },
+          "y2": { "signal": "datum.y + 17" },
+          "cornerRadius": { "value": 6 },
           "cursor": { "value": "pointer" },
           "aria": { "value": true },
           "description": { "signal": "datum.state === 'ALL' ? 'Show all states' : 'Zoom to ' + datum.state" },
@@ -259,13 +259,13 @@
       "from": { "data": "stateFilters" },
       "encode": {
         "enter": {
-          "x": { "value": 800 },
+          "x": { "value": 804 },
           "y": { "field": "y" },
           "text": { "field": "label" },
           "align": { "value": "center" },
           "baseline": { "value": "middle" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 12 },
+          "fontSize": { "value": 14 },
           "fontWeight": { "value": "bold" },
           "fill": { "value": "#f0dcc0" },
           "cursor": { "value": "pointer" }
@@ -282,11 +282,12 @@
       "type": "text",
       "encode": {
         "enter": {
-          "x": { "value": 800 },
-          "y": { "value": 394 },
+          "x": { "value": 804 },
+          "y": { "value": 381 },
           "align": { "value": "center" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 10 },
+          "fontSize": { "value": 11 },
+          "fontWeight": { "value": "bold" },
           "fill": { "value": "#6b7280" }
         },
         "update": {
@@ -299,12 +300,12 @@
       "from": { "data": "legendBins" },
       "encode": {
         "enter": {
-          "x": { "value": 760 },
-          "x2": { "value": 840 },
-          "y": { "signal": "datum.y - 6" },
-          "y2": { "signal": "datum.y + 6" },
+          "x": { "value": 744 },
+          "x2": { "value": 864 },
+          "y": { "signal": "datum.y - 8" },
+          "y2": { "signal": "datum.y + 8" },
           "stroke": { "value": "rgba(190,210,220,0.18)" },
-          "strokeWidth": { "value": 0.4 }
+          "strokeWidth": { "value": 0.6 }
         },
         "update": {
           "fill": [
@@ -324,10 +325,10 @@
       "from": { "data": "legendBins" },
       "encode": {
         "enter": {
-          "x": { "value": 848 },
+          "x": { "value": 874 },
           "y": { "field": "y" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 9 },
+          "fontSize": { "value": 11 },
           "baseline": { "value": "middle" },
           "fill": { "value": "#9ca3af" }
         },

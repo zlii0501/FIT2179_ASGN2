@@ -35,8 +35,9 @@ const monthZoomRegions = {
 };
 
 const monthMapProjection = {
+  type: "mercator",
   center: [134.5, -27.4],
-  scale: 720
+  scale: 620
 };
 
 const insetScaleLimits = { min: 3600, max: 9200 };
@@ -216,9 +217,9 @@ const monthMapSpec = {
   "width": "container",
   "height": 440,
   "projection": {
-    "type": "mercator",
-    "center": [134.5, -27.4],
-    "scale": 620
+    "type": monthMapProjection.type,
+    "center": monthMapProjection.center,
+    "scale": monthMapProjection.scale
   },
   "params": [
     { "name": "sel_month", "value": "2019-12" },
@@ -294,6 +295,7 @@ const monthMapSpec = {
 
 embedChart('#viz-month-map', monthMapSpec, embedOpts).then(result => {
   monthMapView = result.view;
+  updateZoomLens();
 });
 
 /* Build selector buttons */
