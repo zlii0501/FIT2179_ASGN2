@@ -540,6 +540,35 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   min-width: 0;
 }
 
+.fig01-driver-legend span[data-driver] {
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.fig01-driver-legend span[data-driver]:hover {
+  background: rgba(232,201,160,0.1);
+  border-color: rgba(232,201,160,0.32);
+}
+.fig01-driver-legend span[data-driver].active {
+  background: rgba(232,201,160,0.14);
+  border-color: rgba(232,201,160,0.5);
+  color: #e8c9a0;
+}
+
+.fig01-annotation {
+  padding: 0.62rem 0.75rem;
+  background: rgba(255,255,255,0.03);
+  border-left: 2px solid rgba(232,201,160,0.22);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.71rem;
+  line-height: 1.42;
+  color: #9ca3af;
+  transition: color 0.2s;
+}
+.fig01-annotation[data-driver]:not([data-driver="all"]) {
+  color: #b8a080;
+  border-left-color: rgba(232,201,160,0.45);
+}
+
 .fig03a-state-legend i {
   display: inline-block;
   flex: 0 0 auto;

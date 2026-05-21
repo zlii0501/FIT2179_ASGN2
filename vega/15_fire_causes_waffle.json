@@ -2,6 +2,9 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 650,
+  "params": [
+    { "name": "selectedDriver", "value": "" }
+  ],
   "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
   "transform": [
     { "calculate": "floor(datum.i / 10)", "as": "row" },
@@ -49,7 +52,14 @@
         "height": 55
       },
       "encoding": {
-        "url": { "field": "icon_url", "type": "nominal" }
+        "url": { "field": "icon_url", "type": "nominal" },
+        "opacity": {
+          "condition": {
+            "test": "selectedDriver === '' || datum.driver === selectedDriver",
+            "value": 1
+          },
+          "value": 0.1
+        }
       }
     },
     {
