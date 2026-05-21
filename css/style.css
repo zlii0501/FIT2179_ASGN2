@@ -565,14 +565,6 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   color: #e8c9a0;
 }
 
-.fig01-driver-photo {
-  display: block;
-  width: 54px;
-  flex: 0 0 54px;
-  object-fit: cover;
-  background: rgba(255,255,255,0.06);
-}
-
 .fig01-driver-info {
   display: flex;
   align-items: center;
