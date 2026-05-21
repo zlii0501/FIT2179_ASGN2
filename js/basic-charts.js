@@ -12,13 +12,32 @@ embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=state-safe-20260521',
 
 /* VIZ 15 — Fire Causes Icon Waffle with interactive legend */
 const causesAnnotations = {
-  '': 'Three years of drought, record heat, and an El Niño-like climate signal primed the landscape. When lightning struck tinder-dry forests under extreme fire weather, the result was inevitable. Click a driver above to explore each factor.',
-  'Prolonged drought': '22 in every 100 fire-season icons trace back to drought. Three consecutive years of below-average rainfall left soil moisture at historic lows — forests entered Black Summer without any recovery between seasons.',
-  'Record heat': 'Australia recorded its hottest year in 2019, peaking at a national record of 41.9 °C in December. Extreme heat desiccated fuels overnight and pushed fire behaviour beyond any previously documented scale.',
-  'Dry fuels': 'Drought left millions of hectares loaded with cured and dead vegetation. Fuel moisture dropped below critical fire thresholds, enabling fires to spread at speeds and intensities never before recorded in Australia.',
-  'Extreme fire weather': 'Simultaneous extreme fire danger ratings across multiple states overwhelmed suppression resources. Wind, low humidity, and heat combined in ways that made containment functionally impossible on the most critical days.',
-  'Dry lightning': 'Lightning strikes seeded hundreds of fires in remote areas before crews could respond. Under these fuel loads, even single ignitions rapidly escalated into megafires.',
-  'Climate change signal': 'Attribution science found climate change made these conditions at least 30 % more likely. Black Summer is not an anomaly — it is a preview of what regular fire seasons will increasingly look like.'
+  '': `<p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence.</p>
+       <p class="fig01-ann-analysis">Click any driver in the legend to explore its role and share. The icon grid shows each factor's relative weight — larger shares reflect greater contribution to the conditions that made Black Summer possible.</p>`,
+
+  'Prolonged drought': `<p class="fig01-ann-intro">Extended rainfall deficits depleted soil moisture and dried river systems across eastern Australia over three consecutive years before a single fire was lit.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">22 %</span><span>of the icon grid — the largest single share of any driver</span></div>
+       <p class="fig01-ann-analysis">Without this moisture deficit, the other five drivers would have produced a far more typical fire season. Drought is the foundation: it removed the landscape's capacity to resist fire before any extreme weather arrived.</p>`,
+
+  'Record heat': `<p class="fig01-ann-intro">Australia recorded its hottest year ever in 2019. On 18 December, a new national daily temperature record of 41.9 °C was set — part of a 48-hour period that was among the most dangerous in the country's history.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">18 %</span><span>of the grid — second only to drought in its contribution</span></div>
+       <p class="fig01-ann-analysis">Heat accelerated evapotranspiration, desiccated fuels in hours rather than days, and pushed fire behaviour indices into ranges suppression models had never been designed to handle. It was the amplifier that turned a drought into a crisis.</p>`,
+
+  'Dry fuels': `<p class="fig01-ann-intro">Years of drought loaded forests and grasslands with cured and dead vegetation well above any historical average. Fuel moisture in some areas reached levels not seen since records began.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">17 %</span><span>of the grid — the landscape's accumulated, season-long vulnerability</span></div>
+       <p class="fig01-ann-analysis">Fuel loads determined how intensely fires burned once ignited. With moisture below critical thresholds, fires spread faster and generated more energy than crews were equipped to counter. Dry fuels acted as a force multiplier on every other driver.</p>`,
+
+  'Extreme fire weather': `<p class="fig01-ann-intro">Hot temperatures, low relative humidity, and strong winds combined to produce simultaneous extreme and catastrophic fire danger ratings across multiple states — an occurrence with no historical precedent.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">16 %</span><span>of the grid — conditions that broke all existing response frameworks</span></div>
+       <p class="fig01-ann-analysis">Suppression resources designed for one or two simultaneous state-level emergencies faced eight or nine. On several days, containment was functionally impossible. Extreme fire weather transformed individual fires into megafires within hours.</p>`,
+
+  'Dry lightning': `<p class="fig01-ann-intro">Lightning storms with little or no accompanying rain ignited fires across remote terrain before ground or aerial crews could reach them — seeding the season's largest and most destructive fires.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">14 %</span><span>of the grid — the ignition trigger that activated every other driver</span></div>
+       <p class="fig01-ann-analysis">Remote ignitions are the hardest to suppress in their early, manageable phase. In a season where every uncontrolled fire rapidly became a megafire, each dry-lightning strike effectively seeded a major disaster.</p>`,
+
+  'Climate change signal': `<p class="fig01-ann-intro">Attribution science links human-caused climate change to the heightened probability of the fire-weather conditions experienced during Black Summer — the only driver with a clear future trajectory.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">13 %</span><span>of the grid — smallest share, but most consequential for the future</span></div>
+       <p class="fig01-ann-analysis">Research found these extreme conditions were at least 30 % more likely due to climate change. Every other driver in the grid is being amplified by the same long-term warming trend. Black Summer is not an anomaly — it is a preview of what a warmer baseline makes increasingly ordinary.</p>`
 };
 
 embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=causes-interact-20260520', embedOpts).then(result => {
@@ -32,7 +51,7 @@ embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=causes-inter
   function setDriver(driver) {
     activeDriver = driver;
     waffleView.signal('selectedDriver', driver).runAsync();
-    annotationEl.textContent = causesAnnotations[driver] ?? causesAnnotations[''];
+    annotationEl.innerHTML = causesAnnotations[driver] ?? causesAnnotations[''];
     annotationEl.dataset.driver = driver || 'all';
     legend.querySelectorAll('[data-driver]').forEach(el => {
       el.classList.toggle('active', el.dataset.driver === driver && driver !== '');
