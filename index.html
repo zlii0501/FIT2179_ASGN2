@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig01-two-col-legend-20260521">
+  <link rel="stylesheet" href="css/style.css?v=fig05-caption-legends-20260522">
   <link rel="stylesheet" href="css/layout-overrides.css?v=5">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -196,27 +196,6 @@
               </div>
               <div id="viz-month-inset"></div>
             </div>
-            <div class="size-legend map-legend month-size-legend" aria-label="Point size legend">
-              <div class="frp-legend-title">Point Size</div>
-              <div class="size-legend-row">
-                <span class="size-dot size-dot-sm" aria-hidden="true"></span>
-                <span>50 MW</span>
-              </div>
-              <div class="size-legend-row">
-                <span class="size-dot size-dot-md" aria-hidden="true"></span>
-                <span>250 MW</span>
-              </div>
-              <div class="size-legend-row">
-                <span class="size-dot size-dot-lg" aria-hidden="true"></span>
-                <span>500+ MW</span>
-              </div>
-            </div>
-            <div class="map-legend-stack" aria-label="Map legends">
-              <div class="frp-legend map-legend" aria-label="Fire radiative power legend">
-                <div class="frp-legend-title">Fire Power</div>
-                <div id="frp-legend-items" class="frp-legend-items"></div>
-              </div>
-            </div>
           </div>
           <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
         </div>
@@ -226,7 +205,32 @@
           </div>
         </div>
       </div>
-      <p class="chart-annotation compact-p">Select any month to see where satellite sensors detected active fires across the continent. December 2019 stands out with 81,412 detections concentrated along the NSW–QLD border and the south-east coast. Open the Hotspot Zoom lens to explore individual fire clusters at higher resolution.</p>
+      <div class="fig05-caption-row">
+        <p class="chart-annotation compact-p">Select any month to see where satellite sensors detected active fires across the continent. December 2019 stands out with 81,412 detections concentrated along the NSW–QLD border and the south-east coast. Open the Hotspot Zoom lens to explore individual fire clusters at higher resolution.</p>
+        <div class="fig05-legend-row" aria-label="Fig. 05 legends">
+          <div class="size-legend map-legend month-size-legend" aria-label="Point size legend">
+            <div class="frp-legend-title">Point Size</div>
+            <div class="size-legend-row">
+              <span class="size-dot size-dot-sm" aria-hidden="true"></span>
+              <span>50 MW</span>
+            </div>
+            <div class="size-legend-row">
+              <span class="size-dot size-dot-md" aria-hidden="true"></span>
+              <span>250 MW</span>
+            </div>
+            <div class="size-legend-row">
+              <span class="size-dot size-dot-lg" aria-hidden="true"></span>
+              <span>500+ MW</span>
+            </div>
+          </div>
+          <div class="map-legend-stack" aria-label="Map legends">
+            <div class="frp-legend map-legend" aria-label="Fire radiative power legend">
+              <div class="frp-legend-title">Fire Power</div>
+              <div id="frp-legend-items" class="frp-legend-items"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -423,7 +427,7 @@
 <script src="js/ui.js"></script>
 <script src="js/vega-utils.js"></script>
 <script src="js/basic-charts.js?v=state-safe-20260521"></script>
-<script src="js/month-explorer.js?v=fig05-explain-20260519"></script>
+<script src="js/month-explorer.js?v=fig05-caption-legends-20260522"></script>
 <script src="js/chart-embeds.js?v=card-fit-20260521"></script>
 <script src="js/raincloud-detail.js?v=card-fit-20260521"></script>
 <script src="js/hexbin-zoom.js"></script>

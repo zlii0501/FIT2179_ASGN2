@@ -1611,6 +1611,45 @@ input[type=range] {
   transform: scale(0.995);
 }
 
+.fig05-caption-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.62fr);
+  gap: 0.95rem;
+  align-items: start;
+  margin-top: 0.7rem;
+}
+
+.fig05-caption-row .compact-p {
+  margin-top: 0;
+}
+
+.fig05-legend-row {
+  display: grid;
+  grid-template-columns: minmax(118px, 0.28fr) minmax(0, 0.72fr);
+  gap: 0.65rem;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.fig05-legend-row .map-legend,
+.fig05-legend-row .month-size-legend {
+  position: static;
+  min-width: 0;
+  width: auto;
+  margin: 0;
+}
+
+.fig05-legend-row .map-legend-stack {
+  position: static;
+  display: block;
+  max-width: none;
+  margin: 0;
+}
+
+.fig05-legend-row .frp-legend-title {
+  margin-bottom: 0.45rem;
+}
+
 .month-zoom-lens {
   --lens-left: 50%;
   --lens-top: 50%;
@@ -2133,6 +2172,11 @@ input[type=range] {
 
   .month-controls {
     padding-top: 0;
+  }
+
+  .fig05-caption-row,
+  .fig05-legend-row {
+    grid-template-columns: 1fr;
   }
 
   .map-legend-stack {

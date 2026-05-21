@@ -214,7 +214,7 @@ function makeMonthInsetSpec(monthKey) {
 const monthMapSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 540,
+  "height": 440,
   "projection": {
     "type": "mercator",
     "center": [134.5, -27.4],
