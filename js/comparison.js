@@ -17,6 +17,7 @@ function mergePanelSpec(baseSpec, overrides = {}) {
 }
 
 async function embedComposedPanel(selector, specUrl, composeKey, panelIndex, overrides = {}) {
+  const { omitLegendLabels = false, ...chartOverrides } = overrides;
   const response = await fetch(specUrl);
   const baseSpec = await response.json();
   const panelSpec = baseSpec[composeKey]?.[panelIndex];
@@ -24,13 +25,23 @@ async function embedComposedPanel(selector, specUrl, composeKey, panelIndex, ove
 
   const { [composeKey]: _unused, transform: baseTransform, ...baseRest } = baseSpec;
   const { transform: panelTransform, ...panelRest } = panelSpec;
-  const spec = mergePanelSpec({ ...baseRest, ...panelRest }, overrides);
+  const spec = mergePanelSpec({ ...baseRest, ...panelRest }, chartOverrides);
 
   if (baseTransform || panelTransform) {
     spec.transform = [
       ...(baseTransform || []),
       ...(panelTransform || [])
     ];
+  }
+
+  if (omitLegendLabels && Array.isArray(spec.layer)) {
+    spec.layer = spec.layer.filter(layer => {
+      const isMonthSwatch = layer.mark?.type === 'point' &&
+        layer.mark?.shape === 'square' &&
+        layer.encoding?.x?.value === 300;
+      const isMonthLabel = layer.encoding?.text?.field === 'legend_label';
+      return !isMonthSwatch && !isMonthLabel;
+    });
   }
 
   return embedChart(selector, spec, embedOpts);
@@ -341,23 +352,38 @@ async function buildComparisonTimeline() {
 
 buildComparisonTimeline();
 
-embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json', 'vconcat', 0, { width: 'container', height: 100 }).then(result => {
+embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json', 'vconcat', 0, {
+  width: 'container',
+  height: 100,
+  encoding: { color: { legend: null } }
+}).then(result => {
   comparisonViews.calendarA = result?.view || null;
   updateComparisonCharts('a');
 });
-embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json', 'hconcat', 0, { width: 'container', height: 220 }).then(result => {
+embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json', 'hconcat', 0, {
+  width: 'container',
+  height: 220,
+  omitLegendLabels: true
+}).then(result => {
   comparisonViews.overlayA = result?.view || null;
   updateComparisonCharts('a');
 });
 embedComposedPanel('#viz-calendar-b', 'vega/12_calendar.json', 'vconcat', 1, {
   width: 'container',
   height: 100,
-  encoding: { y: { axis: null } }
+  encoding: {
+    y: { axis: null },
+    color: { legend: null }
+  }
 }).then(result => {
   comparisonViews.calendarB = result?.view || null;
   updateComparisonCharts('b');
 });
-embedComposedPanel('#viz-overlay-b', 'vega/10_wa_overlay.json', 'hconcat', 1, { width: 'container', height: 220 }).then(result => {
+embedComposedPanel('#viz-overlay-b', 'vega/10_wa_overlay.json', 'hconcat', 1, {
+  width: 'container',
+  height: 220,
+  omitLegendLabels: true
+}).then(result => {
   comparisonViews.overlayB = result?.view || null;
   updateComparisonCharts('b');
 });
