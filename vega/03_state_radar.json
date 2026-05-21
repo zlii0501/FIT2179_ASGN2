@@ -100,40 +100,6 @@
       }
     },
     {
-      "data": {"name": "radar_axes"},
-      "transform": [
-        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
-        {"calculate": "112 * cos(datum.angle)", "as": "x"},
-        {"calculate": "110 * sin(datum.angle)", "as": "y"}
-      ],
-      "mark": {
-        "type": "text",
-        "align": "center",
-        "baseline": "middle",
-        "font": "sans-serif",
-        "fontSize": 10,
-        "fontWeight": 700,
-        "fill": "#d9bc91",
-        "limit": 74,
-        "clip": false
-      },
-      "encoding": {
-        "x": {
-          "field": "x",
-          "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
-          "axis": null
-        },
-        "y": {
-          "field": "y",
-          "type": "quantitative",
-          "scale": {"domain": [-126, 126], "nice": false},
-          "axis": null
-        },
-        "text": {"field": "metric"}
-      }
-    },
-    {
       "data": {"url": "data/fire_state_totals.csv"},
       "params": [
         {
@@ -216,7 +182,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
-            "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
+            "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
           },
           "legend": {
             "title": null,
@@ -321,7 +287,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
-            "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
+            "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
           },
           "legend": null
         },
@@ -339,6 +305,40 @@
           {"field": "score", "type": "quantitative", "title": "Relative score", "format": ".1f"},
           {"field": "raw_label", "title": "Raw value"}
         ]
+      }
+    },
+    {
+      "data": {"name": "radar_axes"},
+      "transform": [
+        {"calculate": "PI / 2 - datum.metric_order / 5 * 2 * PI", "as": "angle"},
+        {"calculate": "120 * cos(datum.angle)", "as": "x"},
+        {"calculate": "118 * sin(datum.angle)", "as": "y"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "font": "sans-serif",
+        "fontSize": 10,
+        "fontWeight": 700,
+        "fill": "#f0dcc0",
+        "limit": 74,
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {"domain": [-126, 126], "nice": false},
+          "axis": null
+        },
+        "text": {"field": "metric"}
       }
     }
   ],

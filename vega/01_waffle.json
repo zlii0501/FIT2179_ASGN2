@@ -67,7 +67,7 @@
       "type": "nominal",
       "scale": {
         "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
-        "range": ["#c94f44", "#b96f3a", "#b8956a", "#d0a34a", "#7f8f6a", "#6f9a9a"]
+        "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
       },
       "legend": null
     },

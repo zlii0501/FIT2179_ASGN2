@@ -2,13 +2,13 @@
    VIZ 1 — Dot Map
    ======================================================== */
 /* VIZ 1 — Flame Parliament Chart (loaded from file) */
-embedChart('#viz-waffle', 'vega/01_waffle.json', embedOpts);
+embedChart('#viz-waffle', 'vega/01_waffle.json?v=state-safe-20260521', embedOpts);
 
 /* VIZ 2 — State Streamgraph (loaded from file) */
-embedChart('#viz-state-bar', 'vega/02_state_streamgraph.json?v=card-fit-20260521', embedOpts);
+embedChart('#viz-state-bar', 'vega/02_state_streamgraph.json?v=state-safe-20260521', embedOpts);
 
 /* VIZ 3B - State radar profile (loaded from file) */
-embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=card-fit-20260521', embedOpts);
+embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=state-safe-20260521', embedOpts);
 
 /* VIZ 15 — Fire Causes Icon Waffle (loaded from file) */
 embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=card-fit-20260521', embedOpts);
