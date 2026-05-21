@@ -22,7 +22,7 @@
       "as": "share"
     },
     {
-      "calculate": "datum.driver === 'Prolonged drought' ? 'icon/prolonged_drought.svg?v=20260517' : datum.driver === 'Record heat' ? 'icon/record_heat.svg?v=20260517' : datum.driver === 'Dry fuels' ? 'icon/dry_fuels.svg?v=20260517' : datum.driver === 'Extreme fire weather' ? 'icon/extreme_fire_weather.svg?v=20260517' : datum.driver === 'Dry lightning' ? 'icon/dry_lightning.svg?v=20260517' : 'icon/climate_change_signal.svg?v=20260517'",
+      "calculate": "datum.driver === 'Prolonged drought' ? 'icon/prolonged_drought.png?v=20260522' : datum.driver === 'Record heat' ? 'icon/record_heat.png?v=20260522' : datum.driver === 'Dry fuels' ? 'icon/dry_fuels.png?v=20260522' : datum.driver === 'Extreme fire weather' ? 'icon/extreme_fire_weather.png?v=20260522' : datum.driver === 'Dry lightning' ? 'icon/dry_lightning.png?v=20260522' : 'icon/climate_change_signal.png?v=20260522'",
       "as": "icon_url"
     }
   ],

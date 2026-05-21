@@ -40,7 +40,7 @@ const causesAnnotations = {
        <p class="fig01-ann-analysis">Conditions were at least 30 % more likely due to climate change. Every other driver is being amplified by the same warming trend.</p>`
 };
 
-embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=causes-interact-20260520', embedOpts).then(result => {
+embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=png-icons-20260522', embedOpts).then(result => {
   const waffleView = result.view;
   const legend = document.getElementById('fig01-driver-legend');
   const annotationEl = document.getElementById('fig01-annotation');
