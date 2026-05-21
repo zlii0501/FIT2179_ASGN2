@@ -491,7 +491,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 [data-layout-id="fig01-causes"] .fig01-causes-layout {
   display: grid;
-  grid-template-columns: minmax(190px, 0.3fr) minmax(0, 0.76fr);
+  grid-template-columns: minmax(190px, 0.32fr) minmax(0, 0.66fr);
   gap: 1.05rem;
   align-items: start;
 }
@@ -499,6 +499,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 [data-layout-id="fig01-causes"] .fig01-causes-copy,
 [data-layout-id="fig01-causes"] #viz-causes-waffle {
   min-width: 0;
+}
+
+[data-layout-id="fig01-causes"] #viz-causes-waffle.vega-embed svg,
+[data-layout-id="fig01-causes"] #viz-causes-waffle .vega-embed svg {
+  width: auto;
 }
 
 [data-layout-id="fig01-causes"] .fig01-causes-copy {
@@ -516,7 +521,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig01-driver-legend {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.44rem;
   padding: 0.64rem 0.7rem;
   background: rgba(10,14,26,0.72);
@@ -549,8 +554,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig01-driver-icon {
   display: block;
   flex: 0 0 auto;
-  width: 1.72rem;
-  height: 1.72rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-right: 0.5rem;
   object-fit: contain;
 }

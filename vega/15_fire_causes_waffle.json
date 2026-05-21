@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 380,
+  "height": 650,
   "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
   "transform": [
     { "calculate": "floor(datum.i / 10)", "as": "row" },
@@ -45,8 +45,8 @@
     {
       "mark": {
         "type": "image",
-        "width": 34,
-        "height": 34
+        "width": 55,
+        "height": 55
       },
       "encoding": {
         "url": { "field": "icon_url", "type": "nominal" }
