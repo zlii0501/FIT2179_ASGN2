@@ -36,8 +36,8 @@
 
   function canvasStyles() {
     return [
-      'css/style.css?v=fig01-two-col-legend-20260521',
-      'css/layout-overrides.css?v=5'
+      'css/style.css?v=fig05-left-info-20260523',
+      'css/layout-overrides.css?v=6'
     ];
   }
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig03-tight-20260523">
+  <link rel="stylesheet" href="css/style.css?v=fig05-left-info-20260523">
   <link rel="stylesheet" href="css/layout-overrides.css?v=6">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -204,8 +204,37 @@
       <div class="month-explorer">
         <!-- Large map -->
         <div class="fig05-main">
+          <div class="fig05-info-panel">
+            <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
+            <div class="fig05-caption-row">
+              <p class="chart-annotation compact-p">Select any month to see where satellite sensors detected active fires across the continent. December 2019 stands out with 81,412 detections concentrated along the NSW–QLD border and the south-east coast. Open the Hotspot Zoom lens to explore individual fire clusters at higher resolution.</p>
+              <div class="fig05-legend-row" aria-label="Fig. 05 legends">
+                <div class="map-legend-stack" aria-label="Map legends">
+                  <div class="frp-legend map-legend" aria-label="Fire radiative power legend">
+                    <div class="frp-legend-title">Fire Power</div>
+                    <div id="frp-legend-items" class="frp-legend-items"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="month-map-panel">
             <div id="viz-month-map"></div>
+            <div class="size-legend map-legend month-size-legend" aria-label="Point size legend">
+              <div class="frp-legend-title">Point Size</div>
+              <div class="size-legend-row">
+                <span class="size-dot size-dot-sm" aria-hidden="true"></span>
+                <span>50 MW</span>
+              </div>
+              <div class="size-legend-row">
+                <span class="size-dot size-dot-md" aria-hidden="true"></span>
+                <span>250 MW</span>
+              </div>
+              <div class="size-legend-row">
+                <span class="size-dot size-dot-lg" aria-hidden="true"></span>
+                <span>500+ MW</span>
+              </div>
+            </div>
             <div class="month-zoom-lens" aria-hidden="true"></div>
             <div class="month-inset is-compact" aria-label="Zoomed hotspot map">
               <div class="month-inset-head">
@@ -216,33 +245,6 @@
                 <button type="button" id="month-inset-toggle" class="month-inset-toggle" aria-label="Open hotspot zoom" aria-expanded="false">Open</button>
               </div>
               <div id="viz-month-inset"></div>
-            </div>
-          </div>
-          <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
-          <div class="fig05-caption-row">
-            <p class="chart-annotation compact-p">Select any month to see where satellite sensors detected active fires across the continent. December 2019 stands out with 81,412 detections concentrated along the NSW–QLD border and the south-east coast. Open the Hotspot Zoom lens to explore individual fire clusters at higher resolution.</p>
-            <div class="fig05-legend-row" aria-label="Fig. 05 legends">
-              <div class="size-legend map-legend month-size-legend" aria-label="Point size legend">
-                <div class="frp-legend-title">Point Size</div>
-                <div class="size-legend-row">
-                  <span class="size-dot size-dot-sm" aria-hidden="true"></span>
-                  <span>50 MW</span>
-                </div>
-                <div class="size-legend-row">
-                  <span class="size-dot size-dot-md" aria-hidden="true"></span>
-                  <span>250 MW</span>
-                </div>
-                <div class="size-legend-row">
-                  <span class="size-dot size-dot-lg" aria-hidden="true"></span>
-                  <span>500+ MW</span>
-                </div>
-              </div>
-              <div class="map-legend-stack" aria-label="Map legends">
-                <div class="frp-legend map-legend" aria-label="Fire radiative power legend">
-                  <div class="frp-legend-title">Fire Power</div>
-                  <div id="frp-legend-items" class="frp-legend-items"></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
