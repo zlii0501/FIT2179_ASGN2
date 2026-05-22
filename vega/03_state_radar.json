@@ -4,6 +4,9 @@
   "width": 292,
   "height": 292,
   "padding": {"left": 28, "top": 24, "right": 28, "bottom": 24},
+  "params": [
+    {"name": "hoveredState", "value": ""}
+  ],
   "datasets": {
     "radar_grid": [
       {"ring": 25, "metric_order": 0},
@@ -101,18 +104,6 @@
     },
     {
       "data": {"url": "data/fire_state_totals.csv"},
-      "params": [
-        {
-          "name": "stateHover",
-          "select": {
-            "type": "point",
-            "fields": ["state"],
-            "on": "mouseover",
-            "clear": "mouseout"
-          }
-        },
-        {"name": "hoveredState", "value": ""}
-      ],
       "transform": [
         {
           "lookup": "state",
@@ -189,21 +180,8 @@
         },
         "detail": {"field": "state"},
         "order": {"field": "metric_order", "type": "ordinal"},
-        "opacity": {
-          "condition": [
-            {"param": "stateHover", "value": 0.98},
-            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 0.98},
-            {"test": "hoveredState !== ''", "value": 0.12}
-          ],
-          "value": 0.48
-        },
-        "strokeWidth": {
-          "condition": [
-            {"param": "stateHover", "value": 2.4},
-            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 2.4}
-          ],
-          "value": 1.25
-        },
+        "opacity": {"value": 0.48},
+        "strokeWidth": {"value": 1.25},
         "tooltip": [
           {"field": "state", "title": "State"},
           {"field": "metric", "title": "Metric"},
@@ -290,21 +268,8 @@
           },
           "legend": null
         },
-        "size": {
-          "condition": [
-            {"param": "stateHover", "value": 74},
-            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 74}
-          ],
-          "value": 38
-        },
-        "opacity": {
-          "condition": [
-            {"param": "stateHover", "value": 1},
-            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 1},
-            {"test": "hoveredState !== ''", "value": 0.12}
-          ],
-          "value": 0.64
-        },
+        "size": {"value": 38},
+        "opacity": {"value": 0.64},
         "tooltip": [
           {"field": "state", "title": "State"},
           {"field": "metric", "title": "Metric"},
