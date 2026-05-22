@@ -422,7 +422,7 @@
      * Build the terrain from the GeoJSON
      * ------------------------------------------------------------------ */
     async function buildTerrain() {
-      const res = await fetch('data/australia_states.geojson');
+      const res = await fetch('data/australia_states_hd.geojson');
       const geojson = await res.json();
 
       // 5a. Extract the outer ring of every polygon, projected to [-1,1].
@@ -450,8 +450,8 @@
           allRings.push(projected);
           // Decimate coast vertices before triangulation: skip tiny offshore
           // islands and stride-sample longer rings to ~100 points each.
-          if (projected.length < 20) continue; // skip tiny islands
-          const stride = Math.max(1, Math.floor(projected.length / 100));
+          if (projected.length < 10) continue; // skip tiny islands
+          const stride = Math.max(1, Math.floor(projected.length / 150));
           for (let vi = 0; vi < projected.length; vi += stride) {
             coastVertices.push(projected[vi]);
           }
@@ -459,8 +459,8 @@
       }
 
       // 5d. Regular grid sampling over [-1.1, 1.1] x [-0.9, 0.9].
-      const GRID_X = 80;
-      const GRID_Y = 60;
+      const GRID_X = 120;
+      const GRID_Y = 90;
       const X_MIN = -1.1, X_MAX = 1.1;
       const Y_MIN = -0.9, Y_MAX = 0.9;
 
