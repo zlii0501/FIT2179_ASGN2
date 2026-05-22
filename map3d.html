@@ -230,68 +230,48 @@
     /* ------------------------------------------------------------------ *
      * Height field
      * ------------------------------------------------------------------ */
+    // DEM pixel data loaded from data/australia_dem.png
+    const DEM_W = 512, DEM_H = 424;
+    const DEM_LON_MIN = 112.9999, DEM_LON_MAX = 153.9999;
+    const DEM_LAT_MIN = -44.0001, DEM_LAT_MAX = -10.0001;
+    let demPixels = null; // Float32Array, 0-1 normalised elevation
+
+    async function loadDEM() {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = DEM_W; canvas.height = DEM_H;
+          canvas.getContext('2d').drawImage(img, 0, 0);
+          const rgba = canvas.getContext('2d').getImageData(0, 0, DEM_W, DEM_H).data;
+          demPixels = new Float32Array(DEM_W * DEM_H);
+          for (let i = 0; i < DEM_W * DEM_H; i++) demPixels[i] = rgba[i * 4] / 255;
+          console.log('[map3d] DEM loaded');
+          resolve();
+        };
+        img.onerror = () => {
+          console.warn('[map3d] DEM not found — terrain will be flat');
+          demPixels = new Float32Array(DEM_W * DEM_H);
+          resolve();
+        };
+        img.src = 'data/australia_dem.png';
+      });
+    }
+
     function heightAt(x, y) {
-      // All coordinates in projected normalised space (x: -1.1..1.1, y: -0.9..0.9)
-      // Helper: gaussian bump
-      function gb(cx, cy, rx, ry, h) {
-        return h * Math.exp(-(Math.pow((x - cx) / rx, 2) + Math.pow((y - cy) / ry, 2)));
-      }
-
-      let h = 0.04; // base continental shelf height (most of Australia is flat plateau)
-
-      // === Major terrain features (lon->x, lat->y via project formula) ===
-
-      // Western Plateau (Pilbara/Kimberley highlands) — centred ~120°E, -24°S
-      // project([120,-24]) ≈ x=-0.38, y=0.41
-      h += gb(-0.38, 0.41, 0.35, 0.28, 0.20);
-
-      // Western Plateau south extension (Goldfields) — ~122°E, -30°S
-      // project([122,-30]) ≈ x=-0.29, y=0.23
-      h += gb(-0.29, 0.23, 0.25, 0.20, 0.12);
-
-      // MacDonnell Ranges (NT centre) — ~133°E, -23°S
-      // project([133,-23]) ≈ x=0.25, y=0.45
-      h += gb(0.25, 0.45, 0.18, 0.12, 0.18);
-
-      // Arnhem Land escarpment — ~133°E, -14°S
-      // project([133,-14]) ≈ x=0.25, y=0.71
-      h += gb(0.25, 0.71, 0.20, 0.12, 0.10);
-
-      // Great Dividing Range (main) — ~150°E, -28°S
-      // project([150,-28]) ≈ x=0.90, y=0.29
-      h += gb(0.90, 0.29, 0.10, 0.55, 0.28);
-
-      // Snowy Mountains / Australian Alps — ~148°E, -36.5°S
-      // project([148,-36.5]) ≈ x=0.83, y=0.04
-      h += gb(0.83, 0.04, 0.08, 0.08, 0.25);
-
-      // Queensland tablelands (Atherton) — ~145°E, -17°S
-      // project([145,-17]) ≈ x=0.73, y=0.62
-      h += gb(0.73, 0.62, 0.10, 0.10, 0.14);
-
-      // === Basins and depressions (subtract height) ===
-
-      // Lake Eyre Basin / central lowlands — ~137°E, -28°S
-      // project([137,-28]) ≈ x=0.38, y=0.29
-      h -= gb(0.38, 0.29, 0.35, 0.28, 0.06);
-
-      // Murray-Darling Basin — ~145°E, -33°S
-      // project([145,-33]) ≈ x=0.73, y=0.15
-      h -= gb(0.73, 0.15, 0.20, 0.15, 0.04);
-
-      // Add very subtle coherent noise for local variation (micro-terrain)
-      function smoothNoise(nx, ny, scale) {
-        const sx = nx * scale, sy = ny * scale;
-        const ix = Math.floor(sx), iy = Math.floor(sy);
-        const fx = sx - ix, fy = sy - iy;
-        const ux = fx * fx * (3 - 2 * fx);
-        const uy = fy * fy * (3 - 2 * fy);
-        function v(a, b) { const n = Math.sin(a*127.1+b*311.7)*43758.5453; return n-Math.floor(n); }
-        return v(ix,iy)*(1-ux)*(1-uy) + v(ix+1,iy)*ux*(1-uy) + v(ix,iy+1)*(1-ux)*uy + v(ix+1,iy+1)*ux*uy;
-      }
-      h += smoothNoise(x, y, 3) * 0.04;  // subtle local variation only
-
-      return Math.max(0, Math.min(h, 0.5)); // clamp to [0, 0.5]
+      if (!demPixels) return 0.02;
+      // Reverse-project normalised (x, y) → geographic (lon, lat)
+      const lon = (x / 1.1 + 1) / 2 * (DEM_LON_MAX - DEM_LON_MIN) + DEM_LON_MIN;
+      const lat = (y / 0.9 + 1) / 2 * (DEM_LAT_MAX - DEM_LAT_MIN) + DEM_LAT_MIN;
+      // Map to pixel coords; PNG row 0 = north (lat=-10), row H-1 = south (lat=-44)
+      const col = (lon - DEM_LON_MIN) / (DEM_LON_MAX - DEM_LON_MIN) * (DEM_W - 1);
+      const row = (1 - (lat - DEM_LAT_MIN) / (DEM_LAT_MAX - DEM_LAT_MIN)) * (DEM_H - 1);
+      const c0 = Math.max(0, Math.min(DEM_W - 2, Math.floor(col)));
+      const r0 = Math.max(0, Math.min(DEM_H - 2, Math.floor(row)));
+      const fc = col - c0, fr = row - r0;
+      const v00 = demPixels[r0 * DEM_W + c0],       v10 = demPixels[r0 * DEM_W + c0 + 1];
+      const v01 = demPixels[(r0+1) * DEM_W + c0],   v11 = demPixels[(r0+1) * DEM_W + c0 + 1];
+      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.5;
     }
 
     function heightToColor(h) {
@@ -576,7 +556,7 @@
         if (!geom) continue;
         const stateName = feature.properties?.STATE_NAME ?? '';
         const color = STATE_COLORS[stateName] ?? '#aaaaaa';
-        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.75 });
+        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.85, depthTest: false });
 
         const polys = geom.type === 'Polygon'
           ? [geom.coordinates]
@@ -592,7 +572,9 @@
           }
           const geo = new THREE.BufferGeometry();
           geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
-          scene.add(new THREE.LineLoop(geo, mat));
+          const line = new THREE.LineLoop(geo, mat);
+          line.renderOrder = 1;
+          scene.add(line);
         }
       }
       // ------------------------------------------------------------------
@@ -999,7 +981,8 @@
     }
 
     // Kick everything off.
-    buildTerrain()
+    loadDEM()
+      .then(() => buildTerrain())
       .then(() => loadFireData())
       .then((points) => buildFlames(points))
       .catch((err) => console.error('[map3d] init error', err));
