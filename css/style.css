@@ -1867,8 +1867,24 @@ input[type=range] {
 .month-explorer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 204px;
+  grid-template-rows: minmax(0, 1fr);
   gap: 1.05rem;
-  align-items: start;
+  align-items: stretch;
+  min-height: 0;
+}
+
+[data-layout-id="fig05-month-map"] {
+  display: flex;
+  flex-direction: column;
+}
+
+[data-layout-id="fig05-month-map"] .chart-title {
+  flex: 0 0 auto;
+}
+
+[data-layout-id="fig05-month-map"] .month-explorer {
+  flex: 1 1 auto;
+  height: 100%;
 }
 
 .fig05-main {
@@ -1877,6 +1893,10 @@ input[type=range] {
   gap: 0.9rem;
   align-items: stretch;
   min-width: 0;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .fig05-info-panel {
@@ -1884,13 +1904,18 @@ input[type=range] {
   flex-direction: column;
   gap: 0.72rem;
   min-width: 0;
+  min-height: 0;
   height: 100%;
+  overflow: hidden;
 }
 
 .month-map-panel {
   position: relative;
   overflow: hidden;
   min-width: 0;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
 }
 
 .month-map-panel.is-zoom-active {
@@ -1904,11 +1929,20 @@ input[type=range] {
 .month-map-panel .vega-embed {
   display: flex;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .month-map-panel .vega-embed svg {
+  width: 100%;
+  height: 100%;
   transition: opacity 0.22s ease, filter 0.22s ease, transform 0.22s ease;
   transform-origin: center center;
+}
+
+#viz-month-map {
+  width: 100%;
+  height: 100%;
 }
 
 .month-map-panel.is-switching .vega-embed svg {
