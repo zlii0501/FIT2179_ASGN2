@@ -1754,6 +1754,7 @@ input[type=range] {
   flex-direction: column;
   gap: 0.72rem;
   min-width: 0;
+  height: 100%;
 }
 
 .month-map-panel {
@@ -1791,6 +1792,7 @@ input[type=range] {
   flex-direction: column;
   gap: 0.72rem;
   align-items: start;
+  flex: 1;
   margin-top: 0;
   min-width: 0;
 }
@@ -1804,6 +1806,7 @@ input[type=range] {
   grid-template-columns: 1fr;
   gap: 0.55rem;
   align-items: stretch;
+  margin-top: auto;
   width: 100%;
   min-width: 0;
 }

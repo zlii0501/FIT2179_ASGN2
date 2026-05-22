@@ -2,12 +2,48 @@
    VIZ 4 — Monthly Explorer (large map + selector buttons)
    ======================================================== */
 const months = [
-  { key: "2019-08", label: "Aug 2019", count: "16,254",  note: "Season begins — savanna fires burning in WA and NT" },
-  { key: "2019-09", label: "Sep 2019", count: "19,756",  note: "Spring arrives, detections spread south-east" },
-  { key: "2019-10", label: "Oct 2019", count: "41,308",  note: "October surge — NSW coast ignites under drought conditions" },
-  { key: "2019-11", label: "Nov 2019", count: "47,138",  note: "Fire danger ratings surge across NSW and QLD" },
-  { key: "2019-12", label: "Dec 2019", count: "81,412",  note: "Peak month — catastrophic fire conditions declared" },
-  { key: "2020-01", label: "Jan 2020", count: "34,794",  note: "Rain finally arrives, crisis begins to ease" }
+  {
+    key: "2019-08",
+    label: "Aug 2019",
+    count: "16,254",
+    note: "Season begins — savanna fires burning in WA and NT",
+    paragraph: "August is still mostly a northern fire month. Detections cluster across the Top End, the Kimberley and inland Queensland, where dry-season savanna burns dominate before the south-east crisis has fully taken hold."
+  },
+  {
+    key: "2019-09",
+    label: "Sep 2019",
+    count: "19,756",
+    note: "Spring arrives, detections spread south-east",
+    paragraph: "September shows the first clear shift toward the east coast. Northern burning remains visible, but new clusters appear around coastal NSW and southern Queensland as drought-stressed forests begin to ignite earlier than usual."
+  },
+  {
+    key: "2019-10",
+    label: "Oct 2019",
+    count: "41,308",
+    note: "October surge — NSW coast ignites under drought conditions",
+    paragraph: "October doubles the spatial footprint. The NSW coast becomes the dominant band of activity, with fires pushing through dry forest corridors while Queensland and WA add scattered but persistent inland hotspots."
+  },
+  {
+    key: "2019-11",
+    label: "Nov 2019",
+    count: "47,138",
+    note: "Fire danger ratings surge across NSW and QLD",
+    paragraph: "November concentrates the crisis along the NSW-QLD border and mid-north coast. The map begins to read less like isolated ignitions and more like connected fire weather across a continuous eastern fireground."
+  },
+  {
+    key: "2019-12",
+    label: "Dec 2019",
+    count: "81,412",
+    note: "Peak month — catastrophic fire conditions declared",
+    paragraph: "December is the season's spatial rupture point: active fires crowd the NSW-QLD border, then run down the south-east coast into Gippsland. Open the Hotspot Zoom lens to inspect the clusters where high fire power and dense detections overlap."
+  },
+  {
+    key: "2020-01",
+    label: "Jan 2020",
+    count: "34,794",
+    note: "Rain finally arrives, crisis begins to ease",
+    paragraph: "January shows a reduced but still dangerous pattern. Activity contracts from the December peak, yet severe clusters remain in south-east NSW, eastern Victoria and Tasmania before rain and cooler conditions finally begin to suppress the season."
+  }
 ];
 
 let monthMapView = null;
@@ -302,6 +338,7 @@ embedChart('#viz-month-map', monthMapSpec, embedOpts).then(result => {
 const selectorEl = document.getElementById('month-selector');
 const frpLegendEl = document.getElementById('frp-legend-items');
 const noteEl = document.getElementById('month-map-note');
+const paragraphEl = document.getElementById('month-map-paragraph');
 const monthMapPanel = document.querySelector('.month-map-panel');
 const monthZoomLensEl = document.querySelector('.month-zoom-lens');
 const monthInsetEl = document.querySelector('.month-inset');
@@ -570,7 +607,8 @@ months.forEach(m => {
     document.querySelectorAll('.month-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     resetInsetFocusForMonth(m.key);
-    noteEl.textContent = `Showing: ${m.label} — ${m.note}`;
+    if (noteEl) noteEl.textContent = `Showing: ${m.label} — ${m.note}`;
+    if (paragraphEl) paragraphEl.textContent = m.paragraph;
     /* Update the variable signal directly — works with plain params, not selections */
     if (monthMapView) {
       if (!monthChanged || !monthMapPanel) {
