@@ -36,8 +36,8 @@
 
   function canvasStyles() {
     return [
-      'css/style.css?v=fig05-map-bottom-tight-20260523',
-      'css/layout-overrides.css?v=9'
+      'css/style.css?v=fig06-fig10-caption-layout-20260523',
+      'css/layout-overrides.css?v=8'
     ];
   }
 

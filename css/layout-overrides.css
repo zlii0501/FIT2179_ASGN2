@@ -68,8 +68,7 @@
     grid-column: 1 / -1;
     grid-row: 9 / span 10;
     align-self: start;
-    height: 350px;
-    min-height: 350px;
+    min-height: 0;
   }
   /* Chapter 3 - How Intense */
   .chapter-grid-ch3 {
@@ -81,9 +80,8 @@
     order: 1;
     grid-column: 1 / span 4;
     grid-row: 1 / span 7;
-    align-self: start;
-    height: 350px;
-    min-height: 350px;
+    align-self: stretch;
+    min-height: 322px;
   }
   [data-layout-id="fig06-frp-density"] {
     order: 2;
