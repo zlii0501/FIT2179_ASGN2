@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig05-firepower-bottom-20260523">
+  <link rel="stylesheet" href="css/style.css?v=fig06-caption-legend-20260523">
   <link rel="stylesheet" href="css/layout-overrides.css?v=7">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -270,7 +270,13 @@
       <div class="chart-card grid-span-8" data-layout-id="fig06-frp-density">
         <div class="chart-title"><span class="chart-number">Fig. 06</span><span class="chart-title-text">Fire energy distribution — most fires burn quietly, but a handful are catastrophic</span></div>
         <div id="viz-frp-hist"></div>
-        <p class="chart-annotation compact-p">Most detections sit at low FRP values, but the long right tail shows why averages can hide danger: only a small number of fires exceed 800 MW, yet those outliers dominate the season's energy story.</p>
+        <div class="fig06-caption-row">
+          <p class="chart-annotation compact-p">Most detections sit at low FRP values, but the long right tail shows why averages can hide danger: only a small number of fires exceed 800 MW, yet those outliers dominate the season's energy story.</p>
+          <div class="fig06-legend" aria-label="Fig. 06 legend">
+            <span><i class="fig06-density-swatch" aria-hidden="true"></i>Detection density</span>
+            <span><i class="fig06-mean-swatch" aria-hidden="true"></i>Mean FRP, 89 MW</span>
+          </div>
+        </div>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig07-daynight">
         <div class="chart-title"><span class="chart-number">Fig. 07</span><span class="chart-title-text">When fires burn — each state's daytime share against a 50/50 baseline</span></div>
