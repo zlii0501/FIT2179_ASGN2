@@ -602,7 +602,7 @@
           const { lat, lon, frp } = dotPoints[i];
           const [px, py] = project([lon, lat]);
           const worldX = px;
-          const worldY = heightAt(px, py) + 0.02;
+          const worldY = heightAt(px, py) + 0.01;
           const worldZ = -py;
 
           posArr[i * 3]     = worldX;
@@ -727,7 +727,7 @@
           const s       = ring;
           const segFrac = s / HEIGHT_SEGS;
 
-          const taper = Math.pow(1 - segFrac, 0.5);
+          const taper = Math.pow(segFrac, 0.5);
 
           const swayX = SWAY_AMP * Math.sin(SWAY_FREQ * segFrac * t + flame.phaseI) * taper * flame.frpScale;
           const swayZ = SWAY_AMP * Math.cos(SWAY_FREQ * segFrac * t * 0.7 + flame.phaseI + Math.PI / 3) * taper * flame.frpScale;
