@@ -225,30 +225,43 @@
     /* ------------------------------------------------------------------ *
      * Height field
      * ------------------------------------------------------------------ */
-    function noise2D(x, y, seed) {
-      const n = Math.sin(x * 127.1 + y * 311.7 + seed * 74.3) * 43758.5453;
+    // Coherent value noise via bilinear interpolation over a coarse lattice
+    function valueLattice(ix, iy, seed) {
+      const n = Math.sin(ix * 127.1 + iy * 311.7 + seed * 74.3) * 43758.5453;
       return n - Math.floor(n);
+    }
+
+    function smoothNoise(x, y, scale, seed) {
+      const sx = x * scale, sy = y * scale;
+      const ix = Math.floor(sx), iy = Math.floor(sy);
+      const fx = sx - ix, fy = sy - iy;
+      // Smooth step
+      const ux = fx * fx * (3 - 2 * fx);
+      const uy = fy * fy * (3 - 2 * fy);
+      const v00 = valueLattice(ix,   iy,   seed);
+      const v10 = valueLattice(ix+1, iy,   seed);
+      const v01 = valueLattice(ix,   iy+1, seed);
+      const v11 = valueLattice(ix+1, iy+1, seed);
+      return v00*(1-ux)*(1-uy) + v10*ux*(1-uy) + v01*(1-ux)*uy + v11*ux*uy;
     }
 
     function heightAt(x, y) {
       let h = 0;
-      h += noise2D(x * 2, y * 2, 0) * 0.5;
-      h += noise2D(x * 4, y * 4, 1) * 0.25;
-      h += noise2D(x * 8, y * 8, 2) * 0.125;
-      h = h / 0.875; // normalise to [0,1]
-
-      // Great Dividing Range: gaussian ridge along x ~= 0.8 (east coast)
+      h += smoothNoise(x, y, 2, 0) * 0.5;
+      h += smoothNoise(x, y, 4, 1) * 0.25;
+      h += smoothNoise(x, y, 8, 2) * 0.125;
+      h = h / 0.875; // normalise to ~[0,1]
+      // Great Dividing Range: gaussian ridge along east coast (projected x ≈ 0.8)
       const ridge = Math.exp(-Math.pow((x - 0.8) / 0.15, 2)) * 0.4;
-      h += ridge;
-
-      return Math.min(h, 1.0) * 0.5; // max height 0.5 units
+      h = Math.min(h + ridge, 1.0) * 0.5;
+      return h;
     }
 
     function heightToColor(h) {
-      if (h < 0.025) return new THREE.Color('#1a3a2a');
-      if (h < 0.125) return new THREE.Color('#2a5038');
-      if (h < 0.275) return new THREE.Color('#3d6e4a');
-      return new THREE.Color('#5a7a4a');
+      if (h < 0.05)  return new THREE.Color('#1a3a2a'); // coastal plains
+      if (h < 0.15)  return new THREE.Color('#2a5038'); // low hills
+      if (h < 0.30)  return new THREE.Color('#3d6e4a'); // highlands
+      return new THREE.Color('#5a7a4a');                // peaks
     }
 
     /* ------------------------------------------------------------------ *
@@ -315,7 +328,7 @@
         for (const t of triangulation) {
           const ddx = p[0] - t.cc.cx;
           const ddy = p[1] - t.cc.cy;
-          if (ddx * ddx + ddy * ddy <= t.cc.r * t.cc.r) {
+          if (ddx * ddx + ddy * ddy < t.cc.r * t.cc.r) {
             badTriangles.push(t);
           }
         }
@@ -398,7 +411,13 @@
           if (!outer || outer.length < 3) continue;
           const projected = outer.map(project);
           allRings.push(projected);
-          for (const v of projected) coastVertices.push(v);
+          // Decimate coast vertices before triangulation: skip tiny offshore
+          // islands and stride-sample longer rings to ~100 points each.
+          if (projected.length < 20) continue; // skip tiny islands
+          const stride = Math.max(1, Math.floor(projected.length / 100));
+          for (let vi = 0; vi < projected.length; vi += stride) {
+            coastVertices.push(projected[vi]);
+          }
         }
       }
 
@@ -511,7 +530,7 @@
      * Stubs for later tasks
      * ------------------------------------------------------------------ */
     // Task 2 will replace these
-    let flameGeometries = [];
+    const flameGeometries = [];
     function animateFlames(t) {}
 
     // Task 3 will replace these
