@@ -36,7 +36,7 @@
 
   function canvasStyles() {
     return [
-      'css/style.css?v=fig06-fill-height-20260523',
+      'css/style.css?v=fig07-fig10-fill-height-20260523',
       'css/layout-overrides.css?v=10'
     ];
   }
