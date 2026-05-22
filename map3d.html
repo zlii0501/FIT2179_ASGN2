@@ -98,6 +98,7 @@
       border-radius: 4px;
       background: rgba(6, 10, 18, 0.7);
       overflow: hidden;
+      display: none;
     }
 
     /* Gesture status badge (content from task 3) */
@@ -816,7 +817,6 @@
       let prevPinch = null;
       let prevPalmX = null;
       let prevPalmY = null;
-      let handVisible = false;
 
       function updateCamera() {
         camPhi = Math.max(MIN_PHI, Math.min(MAX_PHI, camPhi));
@@ -835,14 +835,15 @@
 
       function onResults(results) {
         if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
-          handVisible = false;
           prevPinch = null; prevPalmX = null; prevPalmY = null;
+          ema_pinch = null;
+          ema_palmX = null;
+          ema_palmY = null;
           controls.enabled = true;   // re-enable OrbitControls fallback
           setStatus('● Detecting');
           return;
         }
 
-        handVisible = true;
         controls.enabled = false;    // disable OrbitControls while hand present
 
         const lm = results.multiHandLandmarks[0];
@@ -885,12 +886,20 @@
           prevPalmY = ema_palmY;
 
         } else {
-          // Transition zone — hold current state
+          // Transition zone — keep prev accumulators in sync to avoid jump on re-entry
+          prevPinch = ema_pinch;
+          prevPalmX = ema_palmX;
+          prevPalmY = ema_palmY;
           setStatus('● Detecting');
         }
       }
 
       // --- MediaPipe setup ---
+      if (typeof Hands === 'undefined' || typeof Camera === 'undefined') {
+        console.warn('[map3d] MediaPipe not loaded — gesture control disabled');
+        setStatus('Gesture lib unavailable');
+        return;
+      }
       const hands = new Hands({
         locateFile: (file) =>
           `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`
@@ -939,7 +948,7 @@
     function animate() {
       requestAnimationFrame(animate);
       const elapsed = clock.getElapsedTime();
-      controls.update();
+      if (controls.enabled) controls.update();
       animateFlames(elapsed);
       renderer.render(scene, camera);
     }
