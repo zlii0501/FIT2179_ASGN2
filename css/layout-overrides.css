@@ -95,15 +95,17 @@
   [data-layout-id="fig07-daynight"] {
     order: 3;
     grid-column: 1 / span 4;
-    grid-row: 8 / span 10;
+    grid-row: 7 / span 11;
     align-self: stretch;
+    margin-top: 24px;
     min-height: 460px;
   }
   [data-layout-id="fig10-heatmatrix"] {
     order: 4;
     grid-column: 5 / span 8;
-    grid-row: 8 / span 10;
+    grid-row: 7 / span 11;
     align-self: stretch;
+    margin-top: 24px;
     min-height: 460px;
   }
   [data-layout-id="fig09-alluvial"] {
