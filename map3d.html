@@ -170,7 +170,7 @@
 
     // Warm point light over the NSW coast fire cluster
     const fireLight = new THREE.PointLight('#f97316', 1.5);
-    fireLight.position.set(0.3, 0.8, 0.1);
+    fireLight.position.set(0.9, 0.8, -0.3);
     scene.add(fireLight);
 
     /* ------------------------------------------------------------------ *
@@ -527,11 +527,218 @@
     }
 
     /* ------------------------------------------------------------------ *
-     * Stubs for later tasks
+     * Fire data loading
      * ------------------------------------------------------------------ */
-    // Task 2 will replace these
+    async function loadFireData() {
+      const resp = await fetch('data/fire_sample_map.csv');
+      const text = await resp.text();
+      const lines = text.trim().split('\n');
+      const headers = lines[0].split(',').map(s => s.trim());
+      const latIdx = headers.indexOf('latitude');
+      const lonIdx = headers.indexOf('longitude');
+      const frpIdx = headers.indexOf('frp');
+
+      let points = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(',');
+        const lat = parseFloat(cols[latIdx]);
+        const lon = parseFloat(cols[lonIdx]);
+        const frp = parseFloat(cols[frpIdx]);
+        if (!isNaN(lat) && !isNaN(lon) && !isNaN(frp) && frp > 0) {
+          points.push({ lat, lon, frp });
+        }
+      }
+
+      // Subsample to max 3000 points (random sample to keep variety)
+      if (points.length > 3000) {
+        points = points.sort(() => Math.random() - 0.5).slice(0, 3000);
+      }
+
+      console.log(`[map3d] loaded ${points.length} fire points`);
+      return points;
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Flame geometry constants
+     * ------------------------------------------------------------------ */
+    const RADIAL_SEGS = 8;
+    const HEIGHT_SEGS = 6;
+    const SWAY_AMP = 0.012;
+    const SWAY_FREQ = 3.5;
+
+    function flameColor(t) {
+      if (t < 0.4)  return new THREE.Color('#7f1d1d').lerp(new THREE.Color('#ef4444'), t / 0.4);
+      if (t < 0.7)  return new THREE.Color('#ef4444').lerp(new THREE.Color('#f97316'), (t - 0.4) / 0.3);
+      if (t < 0.9)  return new THREE.Color('#f97316').lerp(new THREE.Color('#fbbf24'), (t - 0.7) / 0.2);
+      return new THREE.Color('#fde68a');
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Build flames and fire dots from loaded fire points
+     * ------------------------------------------------------------------ */
     const flameGeometries = [];
-    function animateFlames(t) {}
+
+    function buildFlames(points) {
+      // Sort by frp descending; top 1000 get animated flames, rest get dots
+      points.sort((a, b) => b.frp - a.frp);
+      const flamePoints = points.slice(0, 1000);
+      const dotPoints   = points.slice(1000, 3000);
+
+      // ---- Flat dots for lower-FRP points --------------------------------
+      if (dotPoints.length > 0) {
+        const dotGeo = new THREE.BufferGeometry();
+        const posArr = new Float32Array(dotPoints.length * 3);
+        const colArr = new Float32Array(dotPoints.length * 3);
+
+        // FRP range within the dot tier for colour lerp
+        const dotFrpMax = dotPoints[0].frp;
+        const dotFrpMin = dotPoints[dotPoints.length - 1].frp;
+        const dotFrpRange = dotFrpMax - dotFrpMin || 1;
+
+        const colLow  = new THREE.Color('#f97316');
+        const colHigh = new THREE.Color('#ef4444');
+
+        for (let i = 0; i < dotPoints.length; i++) {
+          const { lat, lon, frp } = dotPoints[i];
+          const [px, py] = project([lon, lat]);
+          const worldX = px;
+          const worldY = heightAt(px, py) + 0.02;
+          const worldZ = -py;
+
+          posArr[i * 3]     = worldX;
+          posArr[i * 3 + 1] = worldY;
+          posArr[i * 3 + 2] = worldZ;
+
+          const t = (frp - dotFrpMin) / dotFrpRange;
+          const col = colLow.clone().lerp(colHigh, t);
+          colArr[i * 3]     = col.r;
+          colArr[i * 3 + 1] = col.g;
+          colArr[i * 3 + 2] = col.b;
+        }
+
+        dotGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+        dotGeo.setAttribute('color',    new THREE.BufferAttribute(colArr, 3));
+
+        const dotMat = new THREE.PointsMaterial({
+          vertexColors: true,
+          size: 0.008,
+          sizeAttenuation: true
+        });
+
+        scene.add(new THREE.Points(dotGeo, dotMat));
+        console.log(`[map3d] added ${dotPoints.length} fire dots`);
+      }
+
+      // ---- Animated flame cones for top-1000 FRP points ------------------
+      for (let i = 0; i < flamePoints.length; i++) {
+        const { lat, lon, frp } = flamePoints[i];
+        const [px, py] = project([lon, lat]);
+        const worldX = px;
+        const terrainY = heightAt(px, py) + 0.01;
+        const worldZ = -py;
+
+        const frpScale = Math.log(frp + 1) / Math.log(500);
+        const baseRadius = frpScale * 0.008;
+        const flameHeight = frpScale * 0.04;
+        const phaseI = (i * 2.399963) % (Math.PI * 2);
+
+        // Build per-vertex positions and colours
+        // Layout: (HEIGHT_SEGS + 1) rings × RADIAL_SEGS vertices
+        const totalVerts = (HEIGHT_SEGS + 1) * RADIAL_SEGS;
+        const posData = new Float32Array(totalVerts * 3);
+        const colData = new Float32Array(totalVerts * 3);
+
+        for (let s = 0; s <= HEIGHT_SEGS; s++) {
+          const t = s / HEIGHT_SEGS;
+          const radius = baseRadius * (1 - t);
+          const yPos   = flameHeight * t;
+          const col    = flameColor(t);
+
+          for (let r = 0; r < RADIAL_SEGS; r++) {
+            const angle = (r / RADIAL_SEGS) * Math.PI * 2;
+            const vi = s * RADIAL_SEGS + r;
+
+            posData[vi * 3]     = Math.cos(angle) * radius;
+            posData[vi * 3 + 1] = yPos;
+            posData[vi * 3 + 2] = Math.sin(angle) * radius;
+
+            colData[vi * 3]     = col.r;
+            colData[vi * 3 + 1] = col.g;
+            colData[vi * 3 + 2] = col.b;
+          }
+        }
+
+        // Build index buffer: quads between adjacent rings + tip fan
+        const indices = [];
+        for (let s = 0; s < HEIGHT_SEGS; s++) {
+          for (let r = 0; r < RADIAL_SEGS; r++) {
+            const rNext = (r + 1) % RADIAL_SEGS;
+            const v00 = s * RADIAL_SEGS + r;
+            const v10 = s * RADIAL_SEGS + rNext;
+            const v01 = (s + 1) * RADIAL_SEGS + r;
+            const v11 = (s + 1) * RADIAL_SEGS + rNext;
+            indices.push(v00, v10, v01);
+            indices.push(v10, v11, v01);
+          }
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(posData, 3));
+        geometry.setAttribute('color',    new THREE.BufferAttribute(colData, 3));
+        geometry.setIndex(indices);
+
+        const material = new THREE.MeshBasicMaterial({
+          vertexColors: true,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.9
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(worldX, terrainY, worldZ);
+        scene.add(mesh);
+
+        flameGeometries.push({
+          geo: geometry,
+          mesh,
+          baseX: worldX,
+          baseY: terrainY,
+          baseZ: worldZ,
+          frpScale,
+          phaseI,
+          origPositions: posData.slice()
+        });
+      }
+
+      console.log(`[map3d] built ${flameGeometries.length} flame meshes`);
+    }
+
+    /* ------------------------------------------------------------------ *
+     * Flame sway animation
+     * ------------------------------------------------------------------ */
+    function animateFlames(t) {
+      for (const flame of flameGeometries) {
+        const pos  = flame.geo.attributes.position;
+        const orig = flame.origPositions;
+        const totalVerts = pos.count;
+
+        for (let vi = 0; vi < totalVerts; vi++) {
+          const ring    = Math.floor(vi / RADIAL_SEGS);
+          const s       = ring;
+          const segFrac = s / HEIGHT_SEGS;
+
+          const taper = Math.pow(1 - segFrac, 0.5);
+
+          const swayX = SWAY_AMP * Math.sin(SWAY_FREQ * segFrac * t + flame.phaseI) * taper * flame.frpScale;
+          const swayZ = SWAY_AMP * Math.cos(SWAY_FREQ * segFrac * t * 0.7 + flame.phaseI + Math.PI / 3) * taper * flame.frpScale;
+
+          pos.setX(vi, orig[vi * 3]     + swayX);
+          pos.setY(vi, orig[vi * 3 + 1]);
+          pos.setZ(vi, orig[vi * 3 + 2] + swayZ);
+        }
+        flame.geo.attributes.position.needsUpdate = true;
+      }
+    }
 
     // Task 3 will replace these
     function initGestures() {}
@@ -556,7 +763,10 @@
     }
 
     // Kick everything off.
-    buildTerrain().catch((err) => console.error('[map3d] terrain error', err));
+    buildTerrain()
+      .then(() => loadFireData())
+      .then((points) => buildFlames(points))
+      .catch((err) => console.error('[map3d] init error', err));
     initGestures();
     animate();
   </script>
