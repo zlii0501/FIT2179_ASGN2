@@ -166,8 +166,8 @@
   <div id="webcam-preview"></div>
   <div id="gesture-guide" role="tooltip">
     <h4>Gesture Controls</h4>
-    <div class="row"><span class="icon">🤏</span><span class="desc">Pinch tight — Zoom in</span></div>
-    <div class="row"><span class="icon">🤏</span><span class="desc">Relax pinch — Zoom out</span></div>
+    <div class="row"><span class="icon">🤏</span><span class="desc">Squeeze tight (≥50%) — Zoom in</span></div>
+    <div class="row"><span class="icon">🤏</span><span class="desc">Relax pinch (&lt;50%) — Zoom out</span></div>
     <div class="row"><span class="icon">✊</span><span class="desc">Fist + move — Orbit camera</span></div>
     <div class="row"><span class="icon">✊</span><span class="desc">Fist still (hold) — Reset view</span></div>
     <div class="row"><span class="icon">✋</span><span class="desc">Open palm — Free reposition</span></div>
@@ -863,13 +863,17 @@
       const ALPHA         = 0.25;   // EMA smoothing (lower = smoother)
       const K_ORBIT_H     = 3.5;
       const K_ORBIT_V     = 2.0;
-      const K_ZOOM2       = 25.0;   // two-hand spread zoom — higher = more responsive
-      const K_ZOOM_VEL    = 0.22;   // velocity zoom: (neutral-dist)*this per frame
-      const PINCH_NEUTRAL = 0.038;  // pinch tightness at which zoom velocity = 0
+      const K_ZOOM2       = 25.0;   // two-hand spread zoom
+      const K_ZOOM_VEL    = 0.40;   // velocity zoom gain per frame
+      // PINCH_NEUTRAL is the tightness at which zoom velocity = 0.
+      // Values BELOW neutral → zoom in; ABOVE neutral → zoom out.
+      // Set to ~55% of PINCH_THRESH so a natural medium pinch starts zooming in.
+      const PINCH_NEUTRAL = 0.065;
       const MIN_R         = 1.0,  MAX_R   = 7.0;
       const MIN_PHI       = 5  * Math.PI / 180;
       const MAX_PHI       = 85 * Math.PI / 180;
-      const PINCH_THRESH  = 0.07;   // thumb-index distance → pinching
+      // Wider threshold: easier to detect pinch; fist still needs extCnt===0
+      const PINCH_THRESH  = 0.12;
       const FIST_HOLD     = 12;     // frames fist must be stationary to trigger reset
       const DEAD_DIST     = 0.009;  // fist movement below this = stationary (no orbit)
 
@@ -1045,16 +1049,18 @@
 
           if (e_pinch < PINCH_THRESH && !isFist) {
             // ── Pinch: continuous velocity zoom ───────────────
-            // Squeezing tighter than neutral → zoom in.
-            // Relaxing past neutral → zoom out.
-            // No hand movement needed — works in place.
+            // Squeeze tighter than PINCH_NEUTRAL → zoom in (velocity > 0).
+            // Relax past PINCH_NEUTRAL toward PINCH_THRESH → zoom out.
             fistFrames = 0;
             const vel = (PINCH_NEUTRAL - e_pinch) * K_ZOOM_VEL;
             camRadius *= (1 - vel);
             updateCamera();
             p_pinch = e_pinch; p_palmX = null; p_palmY = null;
-            const dir = vel > 0.001 ? '▲ in' : vel < -0.001 ? '▼ out' : '—';
-            setStatus(`🤏 Zoom ${dir}`, '#f97316');
+            // Show clear direction + current distance so user knows where they are
+            const dir   = vel >  0.002 ? '▲ in'
+                        : vel < -0.002 ? '▼ out' : '● hold';
+            const tight = Math.round((1 - e_pinch / PINCH_THRESH) * 100);
+            setStatus(`🤏 Zoom ${dir}  ${tight}%`, '#f97316');
 
           } else if (isFist) {
             // ── Fist: grab-and-drag orbit; stationary → reset ─
