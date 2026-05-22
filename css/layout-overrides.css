@@ -86,9 +86,9 @@
   [data-layout-id="fig06-frp-density"] {
     order: 2;
     grid-column: 5 / span 8;
-    grid-row: 1 / span 8;
+    grid-row: 1 / span 7;
     align-self: stretch;
-    min-height: 368px;
+    min-height: 322px;
   }
   [data-layout-id="fig07-daynight"] {
     order: 3;
@@ -100,9 +100,9 @@
   [data-layout-id="fig10-heatmatrix"] {
     order: 4;
     grid-column: 5 / span 8;
-    grid-row: 9 / span 9;
+    grid-row: 8 / span 10;
     align-self: stretch;
-    min-height: 414px;
+    min-height: 460px;
   }
   [data-layout-id="fig09-alluvial"] {
     order: 5;

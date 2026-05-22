@@ -36,8 +36,8 @@
 
   function canvasStyles() {
     return [
-      'css/style.css?v=fig06-caption-legend-20260523',
-      'css/layout-overrides.css?v=7'
+      'css/style.css?v=fig06-fig10-caption-layout-20260523',
+      'css/layout-overrides.css?v=8'
     ];
   }
 

@@ -79,13 +79,7 @@
             "domain": ["Aug 2019", "Dec 2019"],
             "range": ["#6f9a9a", "#c94f44"]
           },
-          "legend": {
-            "title": null,
-            "orient": "top",
-            "direction": "horizontal",
-            "symbolType": "circle",
-            "symbolSize": 110
-          }
+          "legend": null
         },
         "tooltip": [
           {"field": "state", "title": "State"},

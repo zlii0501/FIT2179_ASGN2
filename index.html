@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig06-caption-legend-20260523">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=fig06-fig10-caption-layout-20260523">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=8">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -269,13 +269,15 @@
     </div>
       <div class="chart-card grid-span-8" data-layout-id="fig06-frp-density">
         <div class="chart-title"><span class="chart-number">Fig. 06</span><span class="chart-title-text">Fire energy distribution — most fires burn quietly, but a handful are catastrophic</span></div>
-        <div id="viz-frp-hist"></div>
-        <div class="fig06-caption-row">
-          <p class="chart-annotation compact-p">Most detections sit at low FRP values, but the long right tail shows why averages can hide danger: only a small number of fires exceed 800 MW, yet those outliers dominate the season's energy story.</p>
-          <div class="fig06-legend" aria-label="Fig. 06 legend">
-            <span><i class="fig06-density-swatch" aria-hidden="true"></i>Detection density</span>
-            <span><i class="fig06-mean-swatch" aria-hidden="true"></i>Mean FRP, 89 MW</span>
+        <div class="fig06-content-row">
+          <div class="fig06-caption-row">
+            <p class="chart-annotation compact-p">Most detections sit at low FRP values, but the long right tail shows why averages can hide danger: only a small number of fires exceed 800 MW, yet those outliers dominate the season's energy story.</p>
+            <div class="fig06-legend" aria-label="Fig. 06 legend">
+              <span><i class="fig06-density-swatch" aria-hidden="true"></i>Detection density</span>
+              <span><i class="fig06-mean-swatch" aria-hidden="true"></i>Mean FRP, 89 MW</span>
+            </div>
           </div>
+          <div id="viz-frp-hist"></div>
         </div>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig07-daynight">
@@ -300,14 +302,20 @@
     </div>
     <div class="chart-card grid-span-12" data-layout-id="fig10-heatmatrix">
       <div class="chart-title"><span class="chart-number">Fig. 10</span><span class="chart-title-text">The season ramps up — change in fire detections from August to December</span></div>
-      <div class="figure-side-layout">
-        <div class="figure-copy">
+      <div class="fig10-chart-shell">
+        <div id="viz-heatmatrix"></div>
+      </div>
+      <div class="fig10-caption-row">
+        <div class="fig10-copy">
           <p class="chart-annotation">Each line connects a state's August and December detection counts, turning the seasonal build-up into a direction-of-change comparison.</p>
           <p class="chart-annotation">NSW surged most sharply, with its December point shifting far beyond the rest of the field. Queensland also climbed as spring fire weather worsened, while NT and WA moved backward as their savanna dry season wound down. The contrast separates the national emergency from the normal north-west seasonal rhythm.</p>
         </div>
-        <div id="viz-heatmatrix"></div>
+        <div class="fig10-legend" aria-label="Fig. 10 legend">
+          <span><i class="fig10-dot fig10-dot-aug" aria-hidden="true"></i>Aug 2019</span>
+          <span><i class="fig10-dot fig10-dot-dec" aria-hidden="true"></i>Dec 2019</span>
+          <span><i class="fig10-line-swatch" aria-hidden="true"></i>State change</span>
+        </div>
       </div>
-      <p class="chart-annotation">Each line connects a state's August and December detection counts. NSW surged most sharply — its dot shifts further right than any other state, reflecting the catastrophic spring build-up that defined Black Summer. NT and WA bucked the trend, with detections actually falling as their savanna dry season wound down.</p>
     </div>
   </div>
 </section>
@@ -453,7 +461,7 @@
 <script src="js/vega-utils.js"></script>
 <script src="js/basic-charts.js?v=state-hover-20260522"></script>
 <script src="js/month-explorer.js?v=fig05-firepower-bottom-20260523"></script>
-<script src="js/chart-embeds.js?v=card-fit-20260521"></script>
+<script src="js/chart-embeds.js?v=fig10-html-legend-20260523"></script>
 <script src="js/raincloud-detail.js?v=card-fit-20260521"></script>
 <script src="js/hexbin-zoom.js?v=multi-fig-polish-20260522"></script>
 <script src="js/comparison.js?v=multi-fig-polish-20260522"></script>
