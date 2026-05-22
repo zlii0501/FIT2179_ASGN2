@@ -563,6 +563,7 @@
      * ------------------------------------------------------------------ */
     async function loadFireData() {
       const resp = await fetch('data/fire_sample_map.csv');
+      if (!resp.ok) throw new Error(`[map3d] CSV fetch failed: ${resp.status} ${resp.url}`);
       const text = await resp.text();
       const lines = text.trim().split('\n');
       const headers = lines[0].split(',').map(s => s.trim());
@@ -702,7 +703,8 @@
 
         // Build index buffer: quads between adjacent rings + tip fan
         const indices = [];
-        for (let s = 0; s < HEIGHT_SEGS; s++) {
+        // Quads for rings 0 to HEIGHT_SEGS-2 (stops before the tip ring)
+        for (let s = 0; s < HEIGHT_SEGS - 1; s++) {
           for (let r = 0; r < RADIAL_SEGS; r++) {
             const rNext = (r + 1) % RADIAL_SEGS;
             const v00 = s * RADIAL_SEGS + r;
@@ -712,6 +714,13 @@
             indices.push(v00, v10, v01);
             indices.push(v10, v11, v01);
           }
+        }
+        // Tip fan: last ring (HEIGHT_SEGS-1) to tip ring (HEIGHT_SEGS)
+        const tipRingStart = (HEIGHT_SEGS - 1) * RADIAL_SEGS;
+        const tipRing = HEIGHT_SEGS * RADIAL_SEGS;
+        for (let r = 0; r < RADIAL_SEGS; r++) {
+          const rNext = (r + 1) % RADIAL_SEGS;
+          indices.push(tipRingStart + r, tipRingStart + rNext, tipRing + r);
         }
 
         const geometry = new THREE.BufferGeometry();
@@ -765,7 +774,6 @@
           const swayZ = SWAY_AMP * Math.cos(SWAY_FREQ * segFrac * t * 0.7 + flame.phaseI + Math.PI / 3) * taper * flame.frpScale;
 
           pos.setX(vi, orig[vi * 3]     + swayX);
-          pos.setY(vi, orig[vi * 3 + 1]);
           pos.setZ(vi, orig[vi * 3 + 2] + swayZ);
         }
         flame.geo.attributes.position.needsUpdate = true;
