@@ -166,12 +166,14 @@
   <div id="webcam-preview"></div>
   <div id="gesture-guide" role="tooltip">
     <h4>Gesture Controls</h4>
-    <div class="row"><span class="icon">✋</span><span class="desc">Open palm — Orbit</span></div>
-    <div class="row"><span class="icon">🤏</span><span class="desc">Pinch — Zoom</span></div>
-    <div class="row"><span class="icon">✊</span><span class="desc">Fist (hold) — Reset view</span></div>
-    <div class="row"><span class="icon">🤏🤏</span><span class="desc">Both pinch, spread — Zoom ×2</span></div>
-    <div class="row"><span class="icon">✋✋</span><span class="desc">Both open — Smooth orbit</span></div>
-    <div class="row"><span class="icon">✋🤏</span><span class="desc">Split — Orbit + Zoom</span></div>
+    <div class="row"><span class="icon">🤏</span><span class="desc">Pinch tight — Zoom in</span></div>
+    <div class="row"><span class="icon">🤏</span><span class="desc">Relax pinch — Zoom out</span></div>
+    <div class="row"><span class="icon">✊</span><span class="desc">Fist + move — Orbit camera</span></div>
+    <div class="row"><span class="icon">✊</span><span class="desc">Fist still (hold) — Reset view</span></div>
+    <div class="row"><span class="icon">✋</span><span class="desc">Open palm — Free reposition</span></div>
+    <div class="row"><span class="icon">🤏🤏</span><span class="desc">Both pinch, spread — Zoom</span></div>
+    <div class="row"><span class="icon">✊✊</span><span class="desc">Both fists — 2-hand orbit</span></div>
+    <div class="row"><span class="icon">✊🤏</span><span class="desc">Fist + Pinch — Orbit &amp; Zoom</span></div>
   </div>
   <div id="gesture-status">Gestures: off</div>
 
@@ -859,16 +861,17 @@
 
       // ── Tuning ────────────────────────────────────────────────
       const ALPHA         = 0.25;   // EMA smoothing (lower = smoother)
-      const K_ZOOM        = 5.0;
       const K_ORBIT_H     = 3.5;
       const K_ORBIT_V     = 2.0;
-      const K_ZOOM2       = 10.0;   // two-hand zoom feels better with higher gain
-      const MIN_R         = 1.2,  MAX_R   = 6.0;
+      const K_ZOOM2       = 25.0;   // two-hand spread zoom — higher = more responsive
+      const K_ZOOM_VEL    = 0.22;   // velocity zoom: (neutral-dist)*this per frame
+      const PINCH_NEUTRAL = 0.038;  // pinch tightness at which zoom velocity = 0
+      const MIN_R         = 1.0,  MAX_R   = 7.0;
       const MIN_PHI       = 5  * Math.PI / 180;
       const MAX_PHI       = 85 * Math.PI / 180;
       const PINCH_THRESH  = 0.07;   // thumb-index distance → pinching
-      const OPEN_THRESH   = 0.15;   // distance above this → open palm
-      const FIST_HOLD     = 10;     // frames fist must be held to trigger reset
+      const FIST_HOLD     = 12;     // frames fist must be stationary to trigger reset
+      const DEAD_DIST     = 0.009;  // fist movement below this = stationary (no orbit)
 
       // Camera spherical coords, initialised from scene camera
       let camRadius = camera.position.length();
@@ -953,10 +956,10 @@
           const p0 = pinchDist(lm0), p1 = pinchDist(lm1);
           const e0 = countExtended(lm0), e1 = countExtended(lm1);
 
+          const h0Fist     = e0 === 0 && p0 > PINCH_THRESH;
+          const h1Fist     = e1 === 0 && p1 > PINCH_THRESH;
           const h0Pinching = p0 < PINCH_THRESH;
           const h1Pinching = p1 < PINCH_THRESH;
-          const h0Open     = p0 > OPEN_THRESH && e0 >= 3;
-          const h1Open     = p1 > OPEN_THRESH && e1 >= 3;
 
           if (h0Pinching && h1Pinching) {
             // ── Both pinching → spread/contract to zoom ────────
@@ -968,15 +971,14 @@
             const rawDist = Math.hypot(mid0x - mid1x, mid0y - mid1y);
             e_twoDist = ema(e_twoDist, rawDist);
             if (p_twoDist !== null) {
-              // spread apart = zoom in (radius shrinks)
               camRadius *= 1 - (e_twoDist - p_twoDist) * K_ZOOM2;
               updateCamera();
             }
             p_twoDist = e_twoDist;
             setStatus('🤏🤏 Spread to Zoom', '#f97316');
 
-          } else if (h0Open && h1Open) {
-            // ── Both open → orbit with palm midpoint ──────────
+          } else if (h0Fist && h1Fist) {
+            // ── Both fists → two-hand orbit (midpoint) ────────
             e_twoDist = p_twoDist = null;
             e_oX = e_oY = p_oX = p_oY = e_pZ = p_pZ = null;
 
@@ -990,38 +992,36 @@
               updateCamera();
             }
             p_twoX = e_twoX; p_twoY = e_twoY;
-            setStatus('✋✋ 2-Hand Orbit', '#60a5fa');
+            setStatus('✊✊ 2-Hand Orbit', '#60a5fa');
 
-          } else if ((h0Open && h1Pinching) || (h0Pinching && h1Open)) {
-            // ── Split control: one hand orbits, other zooms ───
+          } else if ((h0Fist && h1Pinching) || (h0Pinching && h1Fist)) {
+            // ── Split: fist hand orbits, pinch hand velocity-zooms ──
             e_twoDist = p_twoDist = null;
             e_twoX = e_twoY = p_twoX = p_twoY = null;
 
-            const openLm  = h0Open     ? lm0 : lm1;
+            const fistLm  = h0Fist     ? lm0 : lm1;
             const pinchLm = h0Pinching ? lm0 : lm1;
 
-            // Orbit with open hand
-            e_oX = ema(e_oX, openLm[9].x);
-            e_oY = ema(e_oY, openLm[9].y);
+            // Orbit with fist
+            e_oX = ema(e_oX, fistLm[9].x);
+            e_oY = ema(e_oY, fistLm[9].y);
             if (p_oX !== null) {
               camTheta -= (e_oX - p_oX) * K_ORBIT_H;
               camPhi   += (e_oY - p_oY) * K_ORBIT_V;
             }
             p_oX = e_oX; p_oY = e_oY;
 
-            // Zoom with pinch hand
-            const rawPZ = pinchDist(pinchLm);
-            e_pZ = ema(e_pZ, rawPZ);
-            if (p_pZ !== null) {
-              camRadius *= 1 + (e_pZ - p_pZ) * K_ZOOM;
-            }
+            // Velocity zoom with pinch hand
+            e_pZ = ema(e_pZ, pinchDist(pinchLm));
+            const vel = (PINCH_NEUTRAL - e_pZ) * K_ZOOM_VEL;
+            camRadius *= (1 - vel);
             p_pZ = e_pZ;
 
             updateCamera();
-            setStatus('✋🤏 Orbit + Zoom', '#a78bfa');
+            setStatus('✊🤏 Orbit + Zoom', '#a78bfa');
 
           } else {
-            // transition — clear prev states to avoid position jump
+            // Transition — clear prev states to avoid jump on re-entry
             p_twoDist = null; p_twoX = null; p_twoY = null;
             p_oX = null; p_oY = null; p_pZ = null;
             setStatus('● Detecting');
@@ -1033,54 +1033,65 @@
           e_twoX = e_twoY = p_twoX = p_twoY = null;
           e_oX = e_oY = p_oX = p_oY = e_pZ = p_pZ = null;
 
-          const lm      = handsList[0];
-          const rawP    = pinchDist(lm);
-          const extCnt  = countExtended(lm);
-          const isFist  = extCnt <= 1 && rawP > PINCH_THRESH;
+          const lm     = handsList[0];
+          const rawP   = pinchDist(lm);
+          const extCnt = countExtended(lm);
+          // Fist: all 4 fingers curled, thumb NOT specifically touching index
+          const isFist = extCnt === 0 && rawP > PINCH_THRESH;
 
           e_pinch = ema(e_pinch, rawP);
           e_palmX = ema(e_palmX, lm[9].x);
           e_palmY = ema(e_palmY, lm[9].y);
 
-          if (isFist) {
-            // ── Fist held for FIST_HOLD frames → reset ────────
-            fistFrames++;
-            p_pinch = null; p_palmX = null; p_palmY = null;
-            if (fistFrames >= FIST_HOLD) {
-              resetCamera();
-              setStatus('✊ View Reset!', '#f97316');
-              fistFrames = 0;
-            } else {
-              const pct = Math.round(fistFrames / FIST_HOLD * 100);
-              setStatus(`✊ Hold… ${pct}%`, '#f97316');
-            }
-
-          } else if (e_pinch < PINCH_THRESH) {
-            // ── Pinch → zoom ──────────────────────────────────
+          if (e_pinch < PINCH_THRESH && !isFist) {
+            // ── Pinch: continuous velocity zoom ───────────────
+            // Squeezing tighter than neutral → zoom in.
+            // Relaxing past neutral → zoom out.
+            // No hand movement needed — works in place.
             fistFrames = 0;
-            if (p_pinch !== null) {
-              camRadius *= 1 + (e_pinch - p_pinch) * K_ZOOM;
-              updateCamera();
-            }
-            p_pinch = e_pinch; p_palmX = e_palmX; p_palmY = e_palmY;
-            setStatus('🤏 Zoom', '#60a5fa');
+            const vel = (PINCH_NEUTRAL - e_pinch) * K_ZOOM_VEL;
+            camRadius *= (1 - vel);
+            updateCamera();
+            p_pinch = e_pinch; p_palmX = null; p_palmY = null;
+            const dir = vel > 0.001 ? '▲ in' : vel < -0.001 ? '▼ out' : '—';
+            setStatus(`🤏 Zoom ${dir}`, '#f97316');
 
-          } else if (e_pinch > OPEN_THRESH) {
-            // ── Open palm → orbit ─────────────────────────────
-            fistFrames = 0;
+          } else if (isFist) {
+            // ── Fist: grab-and-drag orbit; stationary → reset ─
+            // Open hand at any time to stop orbiting and reposition freely.
             if (p_palmX !== null) {
-              camTheta -= (e_palmX - p_palmX) * K_ORBIT_H;
-              camPhi   += (e_palmY - p_palmY) * K_ORBIT_V;
-              updateCamera();
+              const moved = Math.hypot(e_palmX - p_palmX, e_palmY - p_palmY);
+              if (moved < DEAD_DIST) {
+                // Stationary fist — accumulate hold frames
+                fistFrames++;
+                if (fistFrames >= FIST_HOLD) {
+                  resetCamera();
+                  setStatus('✊ Reset!', '#f97316');
+                  fistFrames = 0; p_palmX = null; p_palmY = null;
+                } else {
+                  const pct = Math.round(fistFrames / FIST_HOLD * 100);
+                  setStatus(`✊ Hold ${pct}%…`, '#e0a020');
+                }
+              } else {
+                // Moving fist — orbit
+                fistFrames = 0;
+                camTheta -= (e_palmX - p_palmX) * K_ORBIT_H;
+                camPhi   += (e_palmY - p_palmY) * K_ORBIT_V;
+                updateCamera();
+                setStatus('✊ Orbit', '#60a5fa');
+              }
+            } else {
+              fistFrames = 0;
+              setStatus('✊ Orbit', '#60a5fa');
             }
             p_pinch = e_pinch; p_palmX = e_palmX; p_palmY = e_palmY;
-            setStatus('✋ Orbit', '#60a5fa');
 
           } else {
-            // Transition zone
+            // Open palm or any other shape → IDLE, camera locked
+            // User can freely reposition their hand without moving the camera.
             fistFrames = 0;
-            p_pinch = e_pinch; p_palmX = e_palmX; p_palmY = e_palmY;
-            setStatus('● Detecting');
+            p_pinch = e_pinch; p_palmX = null; p_palmY = null;
+            setStatus('✋ Idle — free to reposition');
           }
         }
       }
