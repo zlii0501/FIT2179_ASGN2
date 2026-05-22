@@ -674,7 +674,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 [data-layout-id="fig03-state-radar"] .compact-p {
-  margin-top: 0.45rem;
+  width: min(100%, 310px);
+  margin: 0.45rem auto 0;
 }
 
 .fig04-caption-row {
