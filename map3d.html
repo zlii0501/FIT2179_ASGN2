@@ -225,43 +225,75 @@
     /* ------------------------------------------------------------------ *
      * Height field
      * ------------------------------------------------------------------ */
-    // Coherent value noise via bilinear interpolation over a coarse lattice
-    function valueLattice(ix, iy, seed) {
-      const n = Math.sin(ix * 127.1 + iy * 311.7 + seed * 74.3) * 43758.5453;
-      return n - Math.floor(n);
-    }
-
-    function smoothNoise(x, y, scale, seed) {
-      const sx = x * scale, sy = y * scale;
-      const ix = Math.floor(sx), iy = Math.floor(sy);
-      const fx = sx - ix, fy = sy - iy;
-      // Smooth step
-      const ux = fx * fx * (3 - 2 * fx);
-      const uy = fy * fy * (3 - 2 * fy);
-      const v00 = valueLattice(ix,   iy,   seed);
-      const v10 = valueLattice(ix+1, iy,   seed);
-      const v01 = valueLattice(ix,   iy+1, seed);
-      const v11 = valueLattice(ix+1, iy+1, seed);
-      return v00*(1-ux)*(1-uy) + v10*ux*(1-uy) + v01*(1-ux)*uy + v11*ux*uy;
-    }
-
     function heightAt(x, y) {
-      let h = 0;
-      h += smoothNoise(x, y, 2, 0) * 0.5;
-      h += smoothNoise(x, y, 4, 1) * 0.25;
-      h += smoothNoise(x, y, 8, 2) * 0.125;
-      h = h / 0.875; // normalise to ~[0,1]
-      // Great Dividing Range: gaussian ridge along east coast (projected x ≈ 0.8)
-      const ridge = Math.exp(-Math.pow((x - 0.8) / 0.15, 2)) * 0.4;
-      h = Math.min(h + ridge, 1.0) * 0.5;
-      return h;
+      // All coordinates in projected normalised space (x: -1.1..1.1, y: -0.9..0.9)
+      // Helper: gaussian bump
+      function gb(cx, cy, rx, ry, h) {
+        return h * Math.exp(-(Math.pow((x - cx) / rx, 2) + Math.pow((y - cy) / ry, 2)));
+      }
+
+      let h = 0.04; // base continental shelf height (most of Australia is flat plateau)
+
+      // === Major terrain features (lon->x, lat->y via project formula) ===
+
+      // Western Plateau (Pilbara/Kimberley highlands) — centred ~120°E, -24°S
+      // project([120,-24]) ≈ x=-0.38, y=0.41
+      h += gb(-0.38, 0.41, 0.35, 0.28, 0.20);
+
+      // Western Plateau south extension (Goldfields) — ~122°E, -30°S
+      // project([122,-30]) ≈ x=-0.29, y=0.23
+      h += gb(-0.29, 0.23, 0.25, 0.20, 0.12);
+
+      // MacDonnell Ranges (NT centre) — ~133°E, -23°S
+      // project([133,-23]) ≈ x=0.25, y=0.45
+      h += gb(0.25, 0.45, 0.18, 0.12, 0.18);
+
+      // Arnhem Land escarpment — ~133°E, -14°S
+      // project([133,-14]) ≈ x=0.25, y=0.71
+      h += gb(0.25, 0.71, 0.20, 0.12, 0.10);
+
+      // Great Dividing Range (main) — ~150°E, -28°S
+      // project([150,-28]) ≈ x=0.90, y=0.29
+      h += gb(0.90, 0.29, 0.10, 0.55, 0.28);
+
+      // Snowy Mountains / Australian Alps — ~148°E, -36.5°S
+      // project([148,-36.5]) ≈ x=0.83, y=0.04
+      h += gb(0.83, 0.04, 0.08, 0.08, 0.25);
+
+      // Queensland tablelands (Atherton) — ~145°E, -17°S
+      // project([145,-17]) ≈ x=0.73, y=0.62
+      h += gb(0.73, 0.62, 0.10, 0.10, 0.14);
+
+      // === Basins and depressions (subtract height) ===
+
+      // Lake Eyre Basin / central lowlands — ~137°E, -28°S
+      // project([137,-28]) ≈ x=0.38, y=0.29
+      h -= gb(0.38, 0.29, 0.35, 0.28, 0.06);
+
+      // Murray-Darling Basin — ~145°E, -33°S
+      // project([145,-33]) ≈ x=0.73, y=0.15
+      h -= gb(0.73, 0.15, 0.20, 0.15, 0.04);
+
+      // Add very subtle coherent noise for local variation (micro-terrain)
+      function smoothNoise(nx, ny, scale) {
+        const sx = nx * scale, sy = ny * scale;
+        const ix = Math.floor(sx), iy = Math.floor(sy);
+        const fx = sx - ix, fy = sy - iy;
+        const ux = fx * fx * (3 - 2 * fx);
+        const uy = fy * fy * (3 - 2 * fy);
+        function v(a, b) { const n = Math.sin(a*127.1+b*311.7)*43758.5453; return n-Math.floor(n); }
+        return v(ix,iy)*(1-ux)*(1-uy) + v(ix+1,iy)*ux*(1-uy) + v(ix,iy+1)*(1-ux)*uy + v(ix+1,iy+1)*ux*uy;
+      }
+      h += smoothNoise(x, y, 3) * 0.04;  // subtle local variation only
+
+      return Math.max(0, Math.min(h, 0.5)); // clamp to [0, 0.5]
     }
 
     function heightToColor(h) {
-      if (h < 0.05)  return new THREE.Color('#1a3a2a'); // coastal plains
-      if (h < 0.15)  return new THREE.Color('#2a5038'); // low hills
-      if (h < 0.30)  return new THREE.Color('#3d6e4a'); // highlands
-      return new THREE.Color('#5a7a4a');                // peaks
+      if (h < 0.06)  return new THREE.Color('#1a3a2a'); // coastal plains / river flats
+      if (h < 0.14)  return new THREE.Color('#2a5038'); // low plateau
+      if (h < 0.24)  return new THREE.Color('#3d6e4a'); // highlands
+      return new THREE.Color('#5a7a4a');                // peaks (GDR / Snowy)
     }
 
     /* ------------------------------------------------------------------ *
