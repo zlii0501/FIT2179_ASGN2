@@ -36,7 +36,7 @@
 
   function canvasStyles() {
     return [
-      'css/style.css?v=fig05-compact-month-copy-20260523',
+      'css/style.css?v=fig05-firepower-bottom-20260523',
       'css/layout-overrides.css?v=7'
     ];
   }

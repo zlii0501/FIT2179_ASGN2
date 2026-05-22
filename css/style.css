@@ -1743,7 +1743,7 @@ input[type=range] {
 
 .fig05-main {
   display: grid;
-  grid-template-columns: minmax(238px, 0.32fr) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 0.38fr) minmax(0, 1fr);
   gap: 0.9rem;
   align-items: stretch;
   min-width: 0;
@@ -1947,6 +1947,24 @@ input[type=range] {
   resize: both;
   overflow: hidden;
   transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.fig05-info-panel .month-inset {
+  position: static;
+  z-index: auto;
+  flex: 1 1 auto;
+  width: 100% !important;
+  height: auto !important;
+  min-width: 0;
+  min-height: 252px;
+  max-width: none;
+  max-height: none;
+  padding: 0.58rem;
+  resize: none;
+}
+
+.fig05-info-panel .month-inset #viz-month-inset {
+  display: block;
 }
 
 .month-inset.is-switching {
@@ -2216,6 +2234,10 @@ input[type=range] {
   gap: 0.5rem;
   max-width: calc(100% - 1.5rem);
   pointer-events: auto;
+}
+
+.month-map-panel .map-legend-stack {
+  bottom: 0;
 }
 
 .map-legend {

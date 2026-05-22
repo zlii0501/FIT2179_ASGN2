@@ -35,7 +35,7 @@ const months = [
     label: "Dec 2019",
     count: "81,412",
     note: "Peak month — catastrophic fire conditions declared",
-    paragraph: "December is the season's spatial rupture point: active fires crowd the NSW-QLD border, then run down the south-east coast into Gippsland. Open the Hotspot Zoom lens to inspect the clusters where high fire power and dense detections overlap."
+    paragraph: "December is the season's spatial rupture point: active fires crowd the NSW-QLD border, then run down the south-east coast into Gippsland. Use the Hotspot Zoom view to inspect the clusters where high fire power and dense detections overlap."
   },
   {
     key: "2020-01",
@@ -653,4 +653,4 @@ frpIntensityBins.forEach(bin => {
 });
 
 resetInsetFocusForMonth(activeMonthKey);
-setInsetOpen(false, false);
+setInsetOpen(true, true);
