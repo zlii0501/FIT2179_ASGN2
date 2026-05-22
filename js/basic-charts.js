@@ -81,9 +81,18 @@ const dailyDateAxis = {
   format: "%d %b",
   tickCount: { "interval": "week", "step": 2 },
   labelAngle: -35,
-  labelPadding: 8,
+  labelPadding: 6,
   labelOverlap: "greedy",
-  titlePadding: 30
+  titlePadding: 22
+};
+
+const dailyCountAxis = {
+  title: "Daily detections",
+  labelPadding: 4,
+  titlePadding: 8,
+  labelFontSize: 10,
+  titleFontSize: 10,
+  titleLimit: 120
 };
 
 const dailyDateScale = { domain: ["2019-08-01", "2020-01-31"] };
@@ -110,7 +119,7 @@ const timeseriesSpec = {
           "axis": dailyDateAxis,
           "scale": dailyDateScale
         },
-        "y": { "field": "count", "type": "quantitative", "title": "Daily detections" },
+        "y": { "field": "count", "type": "quantitative", "axis": dailyCountAxis },
         "color": { "value": "#e74c3c" },
         "tooltip": [
           { "field": "date", "type": "temporal", "title": "Date", "format": "%d %b %Y" },
@@ -132,7 +141,7 @@ const timeseriesSpec = {
           "axis": dailyDateAxis,
           "scale": dailyDateScale
         },
-        "y": { "field": "avg_count", "type": "quantitative", "title": "Daily detections" },
+        "y": { "field": "avg_count", "type": "quantitative", "axis": dailyCountAxis },
         "tooltip": [
           { "field": "month_day", "title": "Calendar day" },
           { "field": "avg_count", "title": "2005-2018 avg detections", "format": ".1f" }

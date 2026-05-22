@@ -685,16 +685,60 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   margin-top: 0.42rem;
 }
 
+.fig04-caption-copy {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
 .fig04-caption-row .compact-p {
   margin-top: 0;
+}
+
+.fig04-line-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.46rem 0.78rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.58rem 0.65rem;
+  background: rgba(10,14,26,0.72);
+  border: 1px solid rgba(232,201,160,0.14);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.68rem;
+  line-height: 1.1;
+}
+
+.fig04-line-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.fig04-line-swatch {
+  display: inline-block;
+  width: 30px;
+  height: 0;
+  border-top: 2px solid #e74c3c;
+  flex: 0 0 auto;
+}
+
+.fig04-line-dashed {
+  border-color: rgba(232,201,160,0.72);
+  border-top-style: dashed;
 }
 
 .fig04-timeline-control {
   display: grid;
   align-content: start;
-  gap: 0.38rem;
+  gap: 0.5rem;
   min-width: 0;
-  padding: 0.5rem 0.62rem 0.46rem;
+  padding: 0.64rem 0.72rem;
   background: rgba(10,14,26,0.72);
   border: 1px solid rgba(232,201,160,0.14);
   border-radius: 6px;
@@ -702,15 +746,15 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig04-timeline-head {
   display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
-  gap: 0.5rem;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 0.58rem;
   align-items: center;
 }
 
 .fig04-play-btn {
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border: 1px solid rgba(232,201,160,0.22);
   border-radius: 50%;
   background: rgba(231,76,60,0.12);
@@ -780,7 +824,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   align-items: baseline;
   min-width: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.66rem;
+  font-size: 0.68rem;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -793,7 +837,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig04-timeline-control output {
   font-family: 'Courier New', monospace;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   letter-spacing: 0;
   text-transform: none;
   color: #f0dcc0;
