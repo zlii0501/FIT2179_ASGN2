@@ -43,7 +43,7 @@ embedChart('#viz-state-bar', 'vega/02_state_streamgraph.json?v=state-hover-20260
   .then(r => { ch1StreamView = r.view; });
 
 /* VIZ 3B - State radar profile (loaded from file) */
-embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=fig03b-render-restore-20260523', embedOpts)
+embedChart('#viz-state-radar', 'vega/03_state_radar.json?v=fig03b-legend-hover-20260523', embedOpts)
   .then(r => { ch1RadarView = r.view; });
 
 initCh1LegendHover();

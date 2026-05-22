@@ -180,8 +180,19 @@
         },
         "detail": {"field": "state"},
         "order": {"field": "metric_order", "type": "ordinal"},
-        "opacity": {"value": 0.48},
-        "strokeWidth": {"value": 1.25},
+        "opacity": {
+          "condition": [
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 0.96},
+            {"test": "hoveredState !== ''", "value": 0.16}
+          ],
+          "value": 0.58
+        },
+        "strokeWidth": {
+          "condition": [
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 2.8}
+          ],
+          "value": 1.875
+        },
         "tooltip": [
           {"field": "state", "title": "State"},
           {"field": "metric", "title": "Metric"},
@@ -268,8 +279,19 @@
           },
           "legend": null
         },
-        "size": {"value": 38},
-        "opacity": {"value": 0.64},
+        "size": {
+          "condition": [
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 68}
+          ],
+          "value": 38
+        },
+        "opacity": {
+          "condition": [
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 0.96},
+            {"test": "hoveredState !== ''", "value": 0.16}
+          ],
+          "value": 0.66
+        },
         "tooltip": [
           {"field": "state", "title": "State"},
           {"field": "metric", "title": "Metric"},
