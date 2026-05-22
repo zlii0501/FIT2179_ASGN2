@@ -559,6 +559,44 @@
       const terrain = new THREE.Mesh(geometry, material);
       scene.add(terrain);
 
+      // ---- State boundary lines ----------------------------------------
+      const STATE_COLORS = {
+        'New South Wales':        '#D55E00',
+        'Victoria':               '#56B4E9',
+        'Queensland':             '#E69F00',
+        'South Australia':        '#009E73',
+        'Western Australia':      '#0072B2',
+        'Tasmania':               '#F0E442',
+        'Northern Territory':     '#CC79A7',
+        'Australian Capital Territory': '#bbbbbb',
+      };
+
+      for (const feature of geojson.features) {
+        const geom = feature.geometry;
+        if (!geom) continue;
+        const stateName = feature.properties?.STATE_NAME ?? '';
+        const color = STATE_COLORS[stateName] ?? '#aaaaaa';
+        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.75 });
+
+        const polys = geom.type === 'Polygon'
+          ? [geom.coordinates]
+          : geom.coordinates;           // MultiPolygon
+
+        for (const poly of polys) {
+          const outer = poly[0];
+          if (!outer || outer.length < 3) continue;
+          const verts = [];
+          for (const coord of outer) {
+            const [px, py] = project(coord);
+            verts.push(px, heightAt(px, py) + 0.008, -py);
+          }
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+          scene.add(new THREE.LineLoop(geo, mat));
+        }
+      }
+      // ------------------------------------------------------------------
+
       console.log(
         `[map3d] terrain built: ${points2D.length} points, ${keptTris.length} triangles`
       );
