@@ -667,8 +667,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.34rem 0.58rem;
   width: min(100%, 310px);
-  margin: 0.35rem auto 0;
-  padding: 0.54rem 0.62rem;
+  margin: 0.16rem auto 0;
+  padding: 0.54rem 0.9rem;
   background: rgba(10,14,26,0.72);
   border: 1px solid rgba(232,201,160,0.14);
   border-radius: 6px;

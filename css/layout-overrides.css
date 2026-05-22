@@ -24,15 +24,17 @@
     order: 3;
     grid-column: 1 / span 4;
     grid-row: 7 / span 12;
-    align-self: stretch;
-    min-height: 552px;
+    align-self: start;
+    height: calc(100% - 38px);
+    min-height: 514px;
   }
   [data-layout-id="fig03-state-stream"] {
     order: 4;
     grid-column: 5 / span 8;
     grid-row: 11 / span 8;
-    align-self: stretch;
-    min-height: 368px;
+    align-self: start;
+    height: calc(100% - 38px);
+    min-height: 330px;
   }
   [data-layout-id="fig01-causes"] {
     order: 5;
