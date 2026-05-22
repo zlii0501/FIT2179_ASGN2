@@ -94,7 +94,7 @@
       z-index: 40;
       width: 100px;
       height: 75px;
-      border: 1px solid rgba(232, 201, 160, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 4px;
       background: rgba(6, 10, 18, 0.7);
       overflow: hidden;
@@ -107,11 +107,11 @@
       bottom: 24px;
       z-index: 40;
       min-width: 100px;
-      padding: 6px 12px;
-      font-size: 0.8rem;
+      padding: 4px 10px;
+      font-size: 13px;
       text-align: center;
-      color: var(--text);
-      background: rgba(6, 10, 18, 0.7);
+      color: #e8c9a0;
+      background: rgba(0, 0, 0, 0.6);
       border: 1px solid rgba(232, 201, 160, 0.25);
       border-radius: 4px;
     }
@@ -133,6 +133,10 @@
   <!-- Webcam preview + gesture badge (task 3) -->
   <div id="webcam-preview"></div>
   <div id="gesture-status">Gestures: off</div>
+
+  <!-- MediaPipe (classic scripts — must be non-module for CDN globals) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675466862/camera_utils.js" crossorigin="anonymous"></script>
 
   <script type="module">
     import * as THREE from 'three';
@@ -780,8 +784,146 @@
       }
     }
 
-    // Task 3 will replace these
-    function initGestures() {}
+    function initGestures() {
+      const video = document.getElementById('webcam');
+      const preview = document.getElementById('webcam-preview');
+      const statusBadge = document.getElementById('gesture-status');
+
+      // --- EMA state ---
+      let ema_pinch = null;      // smoothed pinch distance
+      let ema_palmX = null;      // smoothed palm X
+      let ema_palmY = null;      // smoothed palm Y
+      const ALPHA = 0.25;        // EMA factor (lower = smoother)
+
+      function ema(prev, val) {
+        return prev === null ? val : prev + ALPHA * (val - prev);
+      }
+
+      // --- Camera spherical coords ---
+      let camRadius = Math.sqrt(
+        camera.position.x**2 + camera.position.y**2 + camera.position.z**2
+      );
+      let camTheta = Math.atan2(camera.position.x, camera.position.z); // azimuth
+      let camPhi   = Math.acos(camera.position.y / camRadius);          // polar (elevation from top)
+
+      const K_ZOOM   = 4.0;
+      const K_ORBIT_H = 3.5;
+      const K_ORBIT_V = 2.0;
+      const MIN_R = 1.2, MAX_R = 6.0;
+      const MIN_PHI = 5  * Math.PI / 180;   // 5°  from top
+      const MAX_PHI = 85 * Math.PI / 180;   // 85° from top
+
+      let prevPinch = null;
+      let prevPalmX = null;
+      let prevPalmY = null;
+      let handVisible = false;
+
+      function updateCamera() {
+        camPhi = Math.max(MIN_PHI, Math.min(MAX_PHI, camPhi));
+        camRadius = Math.max(MIN_R, Math.min(MAX_R, camRadius));
+        camera.position.set(
+          camRadius * Math.sin(camPhi) * Math.sin(camTheta),
+          camRadius * Math.cos(camPhi),
+          camRadius * Math.sin(camPhi) * Math.cos(camTheta)
+        );
+        camera.lookAt(0, 0, 0);
+      }
+
+      function setStatus(text) {
+        statusBadge.textContent = text;
+      }
+
+      function onResults(results) {
+        if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
+          handVisible = false;
+          prevPinch = null; prevPalmX = null; prevPalmY = null;
+          controls.enabled = true;   // re-enable OrbitControls fallback
+          setStatus('● Detecting');
+          return;
+        }
+
+        handVisible = true;
+        controls.enabled = false;    // disable OrbitControls while hand present
+
+        const lm = results.multiHandLandmarks[0];
+        const thumb = lm[4];   // thumb tip
+        const index = lm[8];   // index finger tip
+        const palm  = lm[9];   // middle finger MCP (palm centre)
+
+        // Pinch distance
+        const rawPinch = Math.sqrt(
+          (thumb.x - index.x)**2 + (thumb.y - index.y)**2
+        );
+        ema_pinch = ema(ema_pinch, rawPinch);
+        ema_palmX = ema(ema_palmX, palm.x);
+        ema_palmY = ema(ema_palmY, palm.y);
+
+        if (ema_pinch < 0.07) {
+          // === ZOOM mode ===
+          setStatus('🤏 Zoom');
+          if (prevPinch !== null) {
+            const delta = ema_pinch - prevPinch;
+            camRadius *= (1 + delta * K_ZOOM);
+            updateCamera();
+          }
+          prevPinch = ema_pinch;
+          prevPalmX = ema_palmX;
+          prevPalmY = ema_palmY;
+
+        } else if (ema_pinch > 0.15) {
+          // === ORBIT mode ===
+          setStatus('✋ Orbit');
+          if (prevPalmX !== null) {
+            const dx = ema_palmX - prevPalmX;
+            const dy = ema_palmY - prevPalmY;
+            camTheta -= dx * K_ORBIT_H;
+            camPhi   += dy * K_ORBIT_V;
+            updateCamera();
+          }
+          prevPinch = ema_pinch;
+          prevPalmX = ema_palmX;
+          prevPalmY = ema_palmY;
+
+        } else {
+          // Transition zone — hold current state
+          setStatus('● Detecting');
+        }
+      }
+
+      // --- MediaPipe setup ---
+      const hands = new Hands({
+        locateFile: (file) =>
+          `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`
+      });
+      hands.setOptions({
+        maxNumHands: 1,
+        modelComplexity: 1,
+        minDetectionConfidence: 0.7,
+        minTrackingConfidence: 0.5
+      });
+      hands.onResults(onResults);
+
+      // --- Webcam via MediaPipe Camera ---
+      const mpCamera = new Camera(video, {
+        onFrame: async () => { await hands.send({ image: video }); },
+        width: 320,
+        height: 240
+      });
+      mpCamera.start().then(() => {
+        // Show webcam preview once camera is active
+        preview.style.display = 'block';
+        // Mirror the video feed into the preview div as a background
+        video.style.width  = '100px';
+        video.style.height = '75px';
+        video.style.opacity = '1';
+        preview.appendChild(video);
+      }).catch(err => {
+        console.warn('[map3d] Webcam unavailable:', err);
+        setStatus('No camera');
+      });
+
+      setStatus('● Detecting');
+    }
 
     /* ------------------------------------------------------------------ *
      * Resize + animation loop
