@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=multi-fig-polish-20260522">
+  <link rel="stylesheet" href="css/style.css?v=fig04-play-20260522">
   <link rel="stylesheet" href="css/layout-overrides.css?v=5">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -193,14 +193,18 @@
       <div class="fig04-caption-row">
         <p class="chart-annotation compact-p">Daily detections pass the historical rhythm in November, then surge through December and early January. The sharpest spike lands on 4 Jan 2020 with 7,342 detections, marking where Black Summer breaks from the 2005-2018 baseline.</p>
         <div class="fig04-timeline-control" aria-label="Interactive daily timeline">
-          <label for="fig04-day-slider">
-            <span>Explore day</span>
-            <output id="fig04-day-label" for="fig04-day-slider">04 Jan 2020</output>
-          </label>
-          <input type="range" id="fig04-day-slider" min="0" max="0" value="0" step="1">
-          <div class="fig04-day-metric">
-            <strong id="fig04-day-count">7,342</strong>
-            <span>detections</span>
+          <div class="fig04-timeline-head">
+            <button type="button" id="fig04-play" class="fig04-play-btn" aria-label="Play timeline" aria-pressed="false">
+              <span class="fig04-play-icon" aria-hidden="true"></span>
+            </button>
+            <label for="fig04-day-slider">
+              <span>Timeline</span>
+              <output id="fig04-day-label" for="fig04-day-slider">04 Jan 2020</output>
+            </label>
+          </div>
+          <div class="fig04-slider-wrap">
+            <input type="range" id="fig04-day-slider" min="0" max="0" value="0" step="1">
+            <div class="fig04-timeline-bounds" aria-hidden="true"><span>Aug 2019</span><span>Jan 2020</span></div>
           </div>
         </div>
       </div>
@@ -453,7 +457,7 @@
 <script src="js/layout-runtime.js?v=3"></script>
 <script src="js/ui.js"></script>
 <script src="js/vega-utils.js"></script>
-<script src="js/basic-charts.js?v=multi-fig-polish-20260522"></script>
+<script src="js/basic-charts.js?v=fig04-play-20260522"></script>
 <script src="js/month-explorer.js?v=multi-fig-polish-20260522"></script>
 <script src="js/chart-embeds.js?v=card-fit-20260521"></script>
 <script src="js/raincloud-detail.js?v=card-fit-20260521"></script>

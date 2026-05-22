@@ -89,7 +89,7 @@ const dailyDateAxis = {
 const timeseriesSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 212,
+  "height": 180,
   "data": { "url": "data/fire_daily.csv" },
   "params": [
     { "name": "selectedDay", "value": "2020-01-04" }
@@ -201,8 +201,9 @@ embedChart('#viz-timeseries', timeseriesSpec, embedOpts).then(result => {
 const fig04Slider = document.getElementById('fig04-day-slider');
 const fig04DayLabel = document.getElementById('fig04-day-label');
 const fig04DayCount = document.getElementById('fig04-day-count');
+const fig04PlayBtn = document.getElementById('fig04-play');
 
-if (fig04Slider && fig04DayLabel && fig04DayCount) {
+if (fig04Slider && fig04DayLabel) {
   fetch('data/fire_daily.csv')
     .then(response => response.text())
     .then(text => {
@@ -215,6 +216,10 @@ if (fig04Slider && fig04DayLabel && fig04DayCount) {
 
       if (!rows.length) return;
       const peakIndex = rows.reduce((best, row, index) => row.count > rows[best].count ? index : best, 0);
+      let currentIndex = peakIndex;
+      let playTimer = null;
+      let hasTimelineInteraction = false;
+      const playDelay = 155;
 
       function formatDay(dateText) {
         const date = new Date(`${dateText}T00:00:00Z`);
@@ -227,21 +232,61 @@ if (fig04Slider && fig04DayLabel && fig04DayCount) {
       }
 
       function updateDay(index) {
-        const row = rows[Math.max(0, Math.min(rows.length - 1, Number(index)))];
+        currentIndex = Math.max(0, Math.min(rows.length - 1, Number(index)));
+        const row = rows[currentIndex];
+        fig04Slider.value = String(currentIndex);
         fig04DayLabel.textContent = formatDay(row.date);
-        fig04DayCount.textContent = row.count.toLocaleString('en-AU');
+        if (fig04DayCount) fig04DayCount.textContent = row.count.toLocaleString('en-AU');
         if (fig04TimeseriesView) {
           fig04TimeseriesView.signal('selectedDay', row.date).runAsync();
         }
       }
 
+      function setPlaying(isPlaying) {
+        if (!fig04PlayBtn) return;
+        fig04PlayBtn.classList.toggle('is-playing', isPlaying);
+        fig04PlayBtn.setAttribute('aria-pressed', String(isPlaying));
+        fig04PlayBtn.setAttribute('aria-label', isPlaying ? 'Pause timeline' : 'Play timeline');
+      }
+
+      function stopPlayback() {
+        window.clearInterval(playTimer);
+        playTimer = null;
+        setPlaying(false);
+      }
+
+      function startPlayback() {
+        if (playTimer) return;
+        if (!hasTimelineInteraction || currentIndex >= rows.length - 1) updateDay(0);
+        hasTimelineInteraction = true;
+        setPlaying(true);
+        playTimer = window.setInterval(() => {
+          if (currentIndex >= rows.length - 1) {
+            stopPlayback();
+            return;
+          }
+          updateDay(currentIndex + 1);
+        }, playDelay);
+      }
+
       fig04Slider.max = String(rows.length - 1);
       fig04Slider.value = String(peakIndex);
       updateDay(peakIndex);
-      fig04Slider.addEventListener('input', event => updateDay(event.target.value));
+      fig04Slider.addEventListener('input', event => {
+        hasTimelineInteraction = true;
+        stopPlayback();
+        updateDay(event.target.value);
+      });
+      fig04PlayBtn?.addEventListener('click', () => {
+        if (playTimer) {
+          stopPlayback();
+        } else {
+          startPlayback();
+        }
+      });
     })
     .catch(() => {
       fig04DayLabel.textContent = 'Unavailable';
-      fig04DayCount.textContent = '0';
+      if (fig04DayCount) fig04DayCount.textContent = '0';
     });
 }

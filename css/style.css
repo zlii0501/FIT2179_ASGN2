@@ -691,12 +691,86 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig04-timeline-control {
   display: grid;
-  gap: 0.52rem;
+  align-content: start;
+  gap: 0.38rem;
   min-width: 0;
-  padding: 0.58rem 0.68rem;
+  padding: 0.5rem 0.62rem 0.46rem;
   background: rgba(10,14,26,0.72);
   border: 1px solid rgba(232,201,160,0.14);
   border-radius: 6px;
+}
+
+.fig04-timeline-head {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.fig04-play-btn {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(232,201,160,0.22);
+  border-radius: 50%;
+  background: rgba(231,76,60,0.12);
+  color: #f0dcc0;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.24);
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.fig04-play-btn:hover,
+.fig04-play-btn:focus-visible {
+  border-color: rgba(248,113,113,0.68);
+  background: rgba(231,76,60,0.2);
+  outline: none;
+}
+
+.fig04-play-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(240,220,192,0.32), 0 6px 16px rgba(0,0,0,0.24);
+}
+
+.fig04-play-btn:active {
+  transform: scale(0.96);
+}
+
+.fig04-play-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #f0dcc0;
+  transform: translate(-38%, -50%);
+}
+
+.fig04-play-btn.is-playing .fig04-play-icon {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  transform: translate(-50%, -50%);
+}
+
+.fig04-play-btn.is-playing .fig04-play-icon::before,
+.fig04-play-btn.is-playing .fig04-play-icon::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 12px;
+  border-radius: 1px;
+  background: #f0dcc0;
+}
+
+.fig04-play-btn.is-playing .fig04-play-icon::before {
+  left: 0;
+}
+
+.fig04-play-btn.is-playing .fig04-play-icon::after {
+  right: 0;
 }
 
 .fig04-timeline-control label {
@@ -712,6 +786,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   color: var(--text-muted);
 }
 
+.fig04-slider-wrap {
+  display: grid;
+  gap: 0.22rem;
+}
+
 .fig04-timeline-control output {
   font-family: 'Courier New', monospace;
   font-size: 0.72rem;
@@ -723,30 +802,19 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig04-timeline-control input[type=range] {
   width: 100%;
+  height: 16px;
   min-width: 0;
   margin: 0;
   accent-color: #e74c3c;
 }
 
-.fig04-day-metric {
+.fig04-timeline-bounds {
   display: flex;
-  align-items: baseline;
   justify-content: space-between;
-  gap: 0.5rem;
-  min-width: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--text-muted);
-}
-
-.fig04-day-metric strong {
+  gap: 0.55rem;
   font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  line-height: 1;
-  color: #ff6b57;
-}
-
-.fig04-day-metric span {
-  font-size: 0.68rem;
+  font-size: 0.58rem;
+  color: rgba(156,163,175,0.72);
 }
 
 [data-layout-id="fig04-timeseries"] .compact-p,
