@@ -1876,6 +1876,7 @@ input[type=range] {
 [data-layout-id="fig05-month-map"] {
   display: flex;
   flex-direction: column;
+  padding-bottom: 0.25rem;
 }
 
 [data-layout-id="fig05-month-map"] .chart-title {
