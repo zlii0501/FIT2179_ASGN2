@@ -102,14 +102,8 @@ const timeseriesSpec = {
   "width": "container",
   "height": 180,
   "data": { "url": "data/fire_daily.csv" },
-  "params": [
-    { "name": "selectedDay", "value": "2020-01-04" }
-  ],
   "layer": [
     {
-      "transform": [
-        { "filter": "timeFormat(datum.date, '%Y-%m-%d') <= selectedDay" }
-      ],
       "mark": { "type": "area", "line": true, "color": "#e74c3c", "fillOpacity": 0.15 },
       "encoding": {
         "x": {
@@ -129,9 +123,6 @@ const timeseriesSpec = {
     },
     {
       "data": { "url": "data/hist_seasonal_avg.csv" },
-      "transform": [
-        { "filter": "timeFormat(datum.baseline_date, '%Y-%m-%d') <= selectedDay" }
-      ],
       "mark": { "type": "line", "strokeDash": [6,4], "color": "rgba(232,201,160,0.52)", "strokeWidth": 2 },
       "encoding": {
         "x": {
@@ -149,9 +140,6 @@ const timeseriesSpec = {
       }
     },
     {
-      "transform": [
-        { "filter": "timeFormat(datum.date, '%Y-%m-%d') <= selectedDay" }
-      ],
       "mark": { "type": "rule", "strokeDash": [4,4], "color": "rgba(255,200,100,0.4)" },
       "data": {
         "values": [
@@ -164,9 +152,6 @@ const timeseriesSpec = {
       }
     },
     {
-      "transform": [
-        { "filter": "timeFormat(datum.date, '%Y-%m-%d') <= selectedDay" }
-      ],
       "mark": { "type": "text", "align": "left", "dx": 5, "dy": -8, "fontSize": 10, "fill": "rgba(255,200,100,0.7)", "font": "sans-serif" },
       "data": {
         "values": [
@@ -178,41 +163,6 @@ const timeseriesSpec = {
         "x": { "field": "date", "type": "temporal" },
         "y": { "value": 20 },
         "text": { "field": "label" }
-      }
-    },
-    {
-      "transform": [
-        { "filter": "timeFormat(datum.date, '%Y-%m-%d') === selectedDay" }
-      ],
-      "mark": {
-        "type": "rule",
-        "color": "#f0dcc0",
-        "strokeWidth": 1.4,
-        "strokeDash": [3, 3]
-      },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" }
-      }
-    },
-    {
-      "transform": [
-        { "filter": "timeFormat(datum.date, '%Y-%m-%d') === selectedDay" }
-      ],
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 92,
-        "color": "#f0dcc0",
-        "stroke": "#0d1117",
-        "strokeWidth": 1
-      },
-      "encoding": {
-        "x": { "field": "date", "type": "temporal" },
-        "y": { "field": "count", "type": "quantitative" },
-        "tooltip": [
-          { "field": "date", "type": "temporal", "title": "Selected day", "format": "%d %b %Y" },
-          { "field": "count", "title": "Detections", "format": "," }
-        ]
       }
     }
   ]
