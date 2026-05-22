@@ -4,6 +4,7 @@
   "width": "container",
   "height": 176,
   "background": "transparent",
+  "params": [{"name": "hoveredState", "value": ""}],
   "data": {
     "url": "data/fire_monthly_state.csv"
   },
@@ -39,6 +40,13 @@
         "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
       },
       "legend": null
+    },
+    "opacity": {
+      "condition": [
+        {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 0.9},
+        {"test": "hoveredState !== ''", "value": 0.08}
+      ],
+      "value": 0.85
     },
     "tooltip": [
       {"field": "state", "type": "nominal", "title": "State"},

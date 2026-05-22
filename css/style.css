@@ -545,6 +545,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   min-width: 0;
 }
 
+.fig03a-state-legend [data-state],
+.fig03b-state-legend [data-state] {
+  cursor: pointer;
+}
+
 .fig01-driver-legend span[data-driver] {
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
@@ -1158,6 +1163,10 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .waffle-legend-row {
   display: contents;
+}
+
+.waffle-legend-row[data-state] span {
+  cursor: pointer;
 }
 
 .waffle-legend-row span {

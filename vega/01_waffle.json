@@ -2,6 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 340,
+  "params": [{"name": "hoveredState", "value": ""}],
   "data": { "sequence": { "start": 0, "stop": 100, "as": "i" } },
   "transform": [
     {
@@ -70,6 +71,13 @@
         "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
       },
       "legend": null
+    },
+    "opacity": {
+      "condition": [
+        {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 1},
+        {"test": "hoveredState !== ''", "value": 0.1}
+      ],
+      "value": 1
     },
     "tooltip": [
       { "field": "state", "title": "State" },

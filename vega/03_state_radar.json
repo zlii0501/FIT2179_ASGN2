@@ -110,7 +110,8 @@
             "on": "mouseover",
             "clear": "mouseout"
           }
-        }
+        },
+        {"name": "hoveredState", "value": ""}
       ],
       "transform": [
         {
@@ -189,11 +190,18 @@
         "detail": {"field": "state"},
         "order": {"field": "metric_order", "type": "ordinal"},
         "opacity": {
-          "condition": {"param": "stateHover", "value": 0.98},
+          "condition": [
+            {"param": "stateHover", "value": 0.98},
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 0.98},
+            {"test": "hoveredState !== ''", "value": 0.12}
+          ],
           "value": 0.48
         },
         "strokeWidth": {
-          "condition": {"param": "stateHover", "value": 2.4},
+          "condition": [
+            {"param": "stateHover", "value": 2.4},
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 2.4}
+          ],
           "value": 1.25
         },
         "tooltip": [
@@ -283,11 +291,18 @@
           "legend": null
         },
         "size": {
-          "condition": {"param": "stateHover", "value": 74},
+          "condition": [
+            {"param": "stateHover", "value": 74},
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 74}
+          ],
           "value": 38
         },
         "opacity": {
-          "condition": {"param": "stateHover", "value": 1},
+          "condition": [
+            {"param": "stateHover", "value": 1},
+            {"test": "hoveredState !== '' && datum.state === hoveredState", "value": 1},
+            {"test": "hoveredState !== ''", "value": 0.12}
+          ],
           "value": 0.64
         },
         "tooltip": [

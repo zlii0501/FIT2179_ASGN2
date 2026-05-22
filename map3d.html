@@ -552,7 +552,8 @@
         vertexColors: true,
         flatShading: true,
         roughness: 0.9,
-        metalness: 0
+        metalness: 0,
+        side: THREE.DoubleSide
       });
 
       const terrain = new THREE.Mesh(geometry, material);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig03-polish-20260522">
+  <link rel="stylesheet" href="css/style.css?v=state-hover-20260522">
   <link rel="stylesheet" href="css/layout-overrides.css?v=5">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -71,17 +71,17 @@
                   <span>Share</span>
                   <span>Detections</span>
                 </div>
-                <div class="waffle-legend-row">
+                <div class="waffle-legend-row" data-state="NSW">
                   <span><i style="--swatch:#D55E00"></i>NSW</span>
                   <span>51.0%</span>
                   <span>101,569</span>
                 </div>
-                <div class="waffle-legend-row">
+                <div class="waffle-legend-row" data-state="QLD">
                   <span><i style="--swatch:#E69F00"></i>QLD</span>
                   <span>17.1%</span>
                   <span>34,158</span>
                 </div>
-                <div class="waffle-legend-row">
+                <div class="waffle-legend-row" data-state="WA">
                   <span><i style="--swatch:#0072B2"></i>WA</span>
                   <span>17.0%</span>
                   <span>33,964</span>
@@ -93,17 +93,17 @@
                   <span>Share</span>
                   <span>Detections</span>
                 </div>
-                <div class="waffle-legend-row">
+                <div class="waffle-legend-row" data-state="NT">
                   <span><i style="--swatch:#CC79A7"></i>NT</span>
                   <span>13.1%</span>
                   <span>26,037</span>
                 </div>
-                <div class="waffle-legend-row">
+                <div class="waffle-legend-row" data-state="SA">
                   <span><i style="--swatch:#009E73"></i>SA</span>
                   <span>1.4%</span>
                   <span>2,834</span>
                 </div>
-                <div class="waffle-legend-row">
+                <div class="waffle-legend-row" data-state="VIC">
                   <span><i style="--swatch:#56B4E9"></i>VIC</span>
                   <span>0.4%</span>
                   <span>845</span>
@@ -144,12 +144,12 @@
           <div class="fig03a-caption-row">
             <p class="chart-annotation compact-p">NSW and Victoria drove the east-coast surge — NSW detections climbed from around 2,800 in September to a season peak in December 2019, while Victoria's fires ignited rapidly in late December. Queensland's contribution was heavier in the early months; WA and NT were dominated by northern savanna burns through August and September.</p>
             <div class="fig03a-state-legend" aria-label="State legend">
-              <span><i style="--swatch:#D55E00"></i>NSW</span>
-              <span><i style="--swatch:#E69F00"></i>QLD</span>
-              <span><i style="--swatch:#0072B2"></i>WA</span>
-              <span><i style="--swatch:#CC79A7"></i>NT</span>
-              <span><i style="--swatch:#009E73"></i>SA</span>
-              <span><i style="--swatch:#56B4E9"></i>VIC</span>
+              <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+              <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+              <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+              <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+              <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+              <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
             </div>
           </div>
         </div>
@@ -157,12 +157,12 @@
           <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile — relative footprint, energy, intensity, density and night activity</span></div>
           <div id="viz-state-radar"></div>
           <div class="fig03b-state-legend" aria-label="State legend">
-            <span><i style="--swatch:#D55E00"></i>NSW</span>
-            <span><i style="--swatch:#E69F00"></i>QLD</span>
-            <span><i style="--swatch:#0072B2"></i>WA</span>
-            <span><i style="--swatch:#CC79A7"></i>NT</span>
-            <span><i style="--swatch:#009E73"></i>SA</span>
-            <span><i style="--swatch:#56B4E9"></i>VIC</span>
+            <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+            <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+            <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+            <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+            <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+            <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
           </div>
           <p class="chart-annotation compact-p">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
         </div>
@@ -446,7 +446,7 @@
 <script src="js/layout-runtime.js?v=3"></script>
 <script src="js/ui.js"></script>
 <script src="js/vega-utils.js"></script>
-<script src="js/basic-charts.js?v=fig03-polish-20260522"></script>
+<script src="js/basic-charts.js?v=state-hover-20260522"></script>
 <script src="js/month-explorer.js?v=multi-fig-polish-20260522"></script>
 <script src="js/chart-embeds.js?v=card-fit-20260521"></script>
 <script src="js/raincloud-detail.js?v=card-fit-20260521"></script>
