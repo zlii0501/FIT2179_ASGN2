@@ -107,7 +107,7 @@
       right: 24px;
       bottom: 24px;
       z-index: 40;
-      min-width: 100px;
+      min-width: 110px;
       padding: 4px 10px;
       font-size: 13px;
       text-align: center;
@@ -115,7 +115,38 @@
       background: rgba(0, 0, 0, 0.6);
       border: 1px solid rgba(232, 201, 160, 0.25);
       border-radius: 4px;
+      transition: border-color 0.25s ease;
+      cursor: pointer;
     }
+
+    /* Gesture legend panel (toggled by clicking the status badge) */
+    #gesture-guide {
+      position: fixed;
+      right: 24px;
+      bottom: 58px;
+      z-index: 40;
+      width: 220px;
+      padding: 10px 12px;
+      font-size: 11.5px;
+      line-height: 1.75;
+      color: #e8c9a0;
+      background: rgba(6, 10, 18, 0.88);
+      border: 1px solid rgba(232, 201, 160, 0.2);
+      border-radius: 4px;
+      display: none;
+      backdrop-filter: blur(4px);
+    }
+    #gesture-guide.open { display: block; }
+    #gesture-guide h4 {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 6px;
+    }
+    #gesture-guide .row { display: flex; gap: 6px; }
+    #gesture-guide .icon { flex: 0 0 22px; text-align: center; }
+    #gesture-guide .desc { opacity: 0.85; }
   </style>
 </head>
 <body>
@@ -133,6 +164,15 @@
 
   <!-- Webcam preview + gesture badge (task 3) -->
   <div id="webcam-preview"></div>
+  <div id="gesture-guide" role="tooltip">
+    <h4>Gesture Controls</h4>
+    <div class="row"><span class="icon">✋</span><span class="desc">Open palm — Orbit</span></div>
+    <div class="row"><span class="icon">🤏</span><span class="desc">Pinch — Zoom</span></div>
+    <div class="row"><span class="icon">✊</span><span class="desc">Fist (hold) — Reset view</span></div>
+    <div class="row"><span class="icon">🤏🤏</span><span class="desc">Both pinch, spread — Zoom ×2</span></div>
+    <div class="row"><span class="icon">✋✋</span><span class="desc">Both open — Smooth orbit</span></div>
+    <div class="row"><span class="icon">✋🤏</span><span class="desc">Split — Orbit + Zoom</span></div>
+  </div>
   <div id="gesture-status">Gestures: off</div>
 
   <!-- MediaPipe (classic scripts — must be non-module for CDN globals) -->
@@ -271,13 +311,15 @@
       const fc = col - c0, fr = row - r0;
       const v00 = demPixels[r0 * DEM_W + c0],       v10 = demPixels[r0 * DEM_W + c0 + 1];
       const v01 = demPixels[(r0+1) * DEM_W + c0],   v11 = demPixels[(r0+1) * DEM_W + c0 + 1];
-      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.5;
+      // PNG normalised to actual max 1918m; multiply by 0.8 for ~2.5x vertical exaggeration
+      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.8;
     }
 
     function heightToColor(h) {
-      if (h < 0.06)  return new THREE.Color('#1a3a2a'); // coastal plains / river flats
-      if (h < 0.14)  return new THREE.Color('#2a5038'); // low plateau
-      if (h < 0.24)  return new THREE.Color('#3d6e4a'); // highlands
+      // Thresholds tuned to real DEM with 0.8 scale: h=0.8 → 1918m
+      if (h < 0.04)  return new THREE.Color('#1a3a2a'); // 0-96m  coastal plains
+      if (h < 0.12)  return new THREE.Color('#2a5038'); // 96-288m low plateau
+      if (h < 0.25)  return new THREE.Color('#3d6e4a'); // 288-600m highlands
       return new THREE.Color('#5a7a4a');                // peaks (GDR / Snowy)
     }
 
@@ -807,41 +849,52 @@
     }
 
     function initGestures() {
-      const video = document.getElementById('webcam');
-      const preview = document.getElementById('webcam-preview');
+      const video       = document.getElementById('webcam');
+      const preview     = document.getElementById('webcam-preview');
       const statusBadge = document.getElementById('gesture-status');
+      const guidePanel  = document.getElementById('gesture-guide');
 
-      // --- EMA state ---
-      let ema_pinch = null;      // smoothed pinch distance
-      let ema_palmX = null;      // smoothed palm X
-      let ema_palmY = null;      // smoothed palm Y
-      const ALPHA = 0.25;        // EMA factor (lower = smoother)
+      // Toggle gesture guide on badge click
+      statusBadge.addEventListener('click', () => guidePanel.classList.toggle('open'));
 
-      function ema(prev, val) {
-        return prev === null ? val : prev + ALPHA * (val - prev);
-      }
+      // ── Tuning ────────────────────────────────────────────────
+      const ALPHA         = 0.25;   // EMA smoothing (lower = smoother)
+      const K_ZOOM        = 5.0;
+      const K_ORBIT_H     = 3.5;
+      const K_ORBIT_V     = 2.0;
+      const K_ZOOM2       = 10.0;   // two-hand zoom feels better with higher gain
+      const MIN_R         = 1.2,  MAX_R   = 6.0;
+      const MIN_PHI       = 5  * Math.PI / 180;
+      const MAX_PHI       = 85 * Math.PI / 180;
+      const PINCH_THRESH  = 0.07;   // thumb-index distance → pinching
+      const OPEN_THRESH   = 0.15;   // distance above this → open palm
+      const FIST_HOLD     = 10;     // frames fist must be held to trigger reset
 
-      // --- Camera spherical coords ---
-      let camRadius = Math.sqrt(
-        camera.position.x**2 + camera.position.y**2 + camera.position.z**2
-      );
-      let camTheta = Math.atan2(camera.position.x, camera.position.z); // azimuth
-      let camPhi   = Math.acos(camera.position.y / camRadius);          // polar (elevation from top)
+      // Camera spherical coords, initialised from scene camera
+      let camRadius = camera.position.length();
+      let camTheta  = Math.atan2(camera.position.x, camera.position.z);
+      let camPhi    = Math.acos(Math.max(-1, Math.min(1, camera.position.y / camRadius)));
+      const DEF_R = camRadius, DEF_THETA = camTheta, DEF_PHI = camPhi;
 
-      const K_ZOOM   = 4.0;
-      const K_ORBIT_H = 3.5;
-      const K_ORBIT_V = 2.0;
-      const MIN_R = 1.2, MAX_R = 6.0;
-      const MIN_PHI = 5  * Math.PI / 180;   // 5°  from top
-      const MAX_PHI = 85 * Math.PI / 180;   // 85° from top
+      // ── EMA state buckets ─────────────────────────────────────
+      // Single-hand
+      let e_pinch = null, e_palmX = null, e_palmY = null;
+      let p_pinch = null, p_palmX = null, p_palmY = null;
+      // Two-hand spread-zoom
+      let e_twoDist = null, p_twoDist = null;
+      // Two-hand orbit (midpoint)
+      let e_twoX = null, e_twoY = null, p_twoX = null, p_twoY = null;
+      // Split: open-hand orbit + pinch-hand zoom
+      let e_oX = null, e_oY = null, p_oX = null, p_oY = null;
+      let e_pZ = null, p_pZ = null;
+      // Fist debounce
+      let fistFrames = 0;
 
-      let prevPinch = null;
-      let prevPalmX = null;
-      let prevPalmY = null;
+      function ema(prev, v) { return prev === null ? v : prev + ALPHA * (v - prev); }
 
       function updateCamera() {
-        camPhi = Math.max(MIN_PHI, Math.min(MAX_PHI, camPhi));
-        camRadius = Math.max(MIN_R, Math.min(MAX_R, camRadius));
+        camPhi    = Math.max(MIN_PHI, Math.min(MAX_PHI,   camPhi));
+        camRadius = Math.max(MIN_R,   Math.min(MAX_R, camRadius));
         camera.position.set(
           camRadius * Math.sin(camPhi) * Math.sin(camTheta),
           camRadius * Math.cos(camPhi),
@@ -850,108 +903,221 @@
         camera.lookAt(0, 0, 0);
       }
 
-      function setStatus(text) {
+      function resetCamera() {
+        camRadius = DEF_R; camTheta = DEF_THETA; camPhi = DEF_PHI;
+        updateCamera();
+      }
+
+      function setStatus(text, color) {
         statusBadge.textContent = text;
+        statusBadge.style.borderColor = color || 'rgba(232,201,160,0.25)';
+      }
+
+      // Count extended fingers (index–pinky), excluding thumb
+      function countExtended(lm) {
+        const tips = [8, 12, 16, 20], pips = [6, 10, 14, 18];
+        let n = 0;
+        for (let i = 0; i < 4; i++) if (lm[tips[i]].y < lm[pips[i]].y) n++;
+        return n;
+      }
+
+      function pinchDist(lm) {
+        return Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
+      }
+
+      function clearAll() {
+        e_pinch = e_palmX = e_palmY = p_pinch = p_palmX = p_palmY = null;
+        e_twoDist = p_twoDist = null;
+        e_twoX = e_twoY = p_twoX = p_twoY = null;
+        e_oX = e_oY = p_oX = p_oY = e_pZ = p_pZ = null;
+        fistFrames = 0;
       }
 
       function onResults(results) {
-        if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
-          prevPinch = null; prevPalmX = null; prevPalmY = null;
-          ema_pinch = null;
-          ema_palmX = null;
-          ema_palmY = null;
-          controls.enabled = true;   // re-enable OrbitControls fallback
+        const handsList = results.multiHandLandmarks || [];
+
+        if (handsList.length === 0) {
+          clearAll();
+          controls.enabled = true;
           setStatus('● Detecting');
           return;
         }
+        controls.enabled = false;
 
-        controls.enabled = false;    // disable OrbitControls while hand present
+        if (handsList.length >= 2) {
+          // ── TWO-HAND GESTURES ────────────────────────────────
+          e_pinch = e_palmX = e_palmY = p_pinch = p_palmX = p_palmY = null;
+          fistFrames = 0;
 
-        const lm = results.multiHandLandmarks[0];
-        const thumb = lm[4];   // thumb tip
-        const index = lm[8];   // index finger tip
-        const palm  = lm[9];   // middle finger MCP (palm centre)
+          const [lm0, lm1] = handsList;
+          const p0 = pinchDist(lm0), p1 = pinchDist(lm1);
+          const e0 = countExtended(lm0), e1 = countExtended(lm1);
 
-        // Pinch distance
-        const rawPinch = Math.sqrt(
-          (thumb.x - index.x)**2 + (thumb.y - index.y)**2
-        );
-        ema_pinch = ema(ema_pinch, rawPinch);
-        ema_palmX = ema(ema_palmX, palm.x);
-        ema_palmY = ema(ema_palmY, palm.y);
+          const h0Pinching = p0 < PINCH_THRESH;
+          const h1Pinching = p1 < PINCH_THRESH;
+          const h0Open     = p0 > OPEN_THRESH && e0 >= 3;
+          const h1Open     = p1 > OPEN_THRESH && e1 >= 3;
 
-        if (ema_pinch < 0.07) {
-          // === ZOOM mode ===
-          setStatus('🤏 Zoom');
-          if (prevPinch !== null) {
-            const delta = ema_pinch - prevPinch;
-            camRadius *= (1 + delta * K_ZOOM);
+          if (h0Pinching && h1Pinching) {
+            // ── Both pinching → spread/contract to zoom ────────
+            e_twoX = e_twoY = p_twoX = p_twoY = null;
+            e_oX = e_oY = p_oX = p_oY = e_pZ = p_pZ = null;
+
+            const mid0x = (lm0[4].x + lm0[8].x) / 2, mid0y = (lm0[4].y + lm0[8].y) / 2;
+            const mid1x = (lm1[4].x + lm1[8].x) / 2, mid1y = (lm1[4].y + lm1[8].y) / 2;
+            const rawDist = Math.hypot(mid0x - mid1x, mid0y - mid1y);
+            e_twoDist = ema(e_twoDist, rawDist);
+            if (p_twoDist !== null) {
+              // spread apart = zoom in (radius shrinks)
+              camRadius *= 1 - (e_twoDist - p_twoDist) * K_ZOOM2;
+              updateCamera();
+            }
+            p_twoDist = e_twoDist;
+            setStatus('🤏🤏 Spread to Zoom', '#f97316');
+
+          } else if (h0Open && h1Open) {
+            // ── Both open → orbit with palm midpoint ──────────
+            e_twoDist = p_twoDist = null;
+            e_oX = e_oY = p_oX = p_oY = e_pZ = p_pZ = null;
+
+            const rawX = (lm0[9].x + lm1[9].x) / 2;
+            const rawY = (lm0[9].y + lm1[9].y) / 2;
+            e_twoX = ema(e_twoX, rawX);
+            e_twoY = ema(e_twoY, rawY);
+            if (p_twoX !== null) {
+              camTheta -= (e_twoX - p_twoX) * K_ORBIT_H;
+              camPhi   += (e_twoY - p_twoY) * K_ORBIT_V;
+              updateCamera();
+            }
+            p_twoX = e_twoX; p_twoY = e_twoY;
+            setStatus('✋✋ 2-Hand Orbit', '#60a5fa');
+
+          } else if ((h0Open && h1Pinching) || (h0Pinching && h1Open)) {
+            // ── Split control: one hand orbits, other zooms ───
+            e_twoDist = p_twoDist = null;
+            e_twoX = e_twoY = p_twoX = p_twoY = null;
+
+            const openLm  = h0Open     ? lm0 : lm1;
+            const pinchLm = h0Pinching ? lm0 : lm1;
+
+            // Orbit with open hand
+            e_oX = ema(e_oX, openLm[9].x);
+            e_oY = ema(e_oY, openLm[9].y);
+            if (p_oX !== null) {
+              camTheta -= (e_oX - p_oX) * K_ORBIT_H;
+              camPhi   += (e_oY - p_oY) * K_ORBIT_V;
+            }
+            p_oX = e_oX; p_oY = e_oY;
+
+            // Zoom with pinch hand
+            const rawPZ = pinchDist(pinchLm);
+            e_pZ = ema(e_pZ, rawPZ);
+            if (p_pZ !== null) {
+              camRadius *= 1 + (e_pZ - p_pZ) * K_ZOOM;
+            }
+            p_pZ = e_pZ;
+
             updateCamera();
-          }
-          prevPinch = ema_pinch;
-          prevPalmX = ema_palmX;
-          prevPalmY = ema_palmY;
+            setStatus('✋🤏 Orbit + Zoom', '#a78bfa');
 
-        } else if (ema_pinch > 0.15) {
-          // === ORBIT mode ===
-          setStatus('✋ Orbit');
-          if (prevPalmX !== null) {
-            const dx = ema_palmX - prevPalmX;
-            const dy = ema_palmY - prevPalmY;
-            camTheta -= dx * K_ORBIT_H;
-            camPhi   += dy * K_ORBIT_V;
-            updateCamera();
+          } else {
+            // transition — clear prev states to avoid position jump
+            p_twoDist = null; p_twoX = null; p_twoY = null;
+            p_oX = null; p_oY = null; p_pZ = null;
+            setStatus('● Detecting');
           }
-          prevPinch = ema_pinch;
-          prevPalmX = ema_palmX;
-          prevPalmY = ema_palmY;
 
         } else {
-          // Transition zone — keep prev accumulators in sync to avoid jump on re-entry
-          prevPinch = ema_pinch;
-          prevPalmX = ema_palmX;
-          prevPalmY = ema_palmY;
-          setStatus('● Detecting');
+          // ── SINGLE-HAND GESTURES ─────────────────────────────
+          e_twoDist = p_twoDist = null;
+          e_twoX = e_twoY = p_twoX = p_twoY = null;
+          e_oX = e_oY = p_oX = p_oY = e_pZ = p_pZ = null;
+
+          const lm      = handsList[0];
+          const rawP    = pinchDist(lm);
+          const extCnt  = countExtended(lm);
+          const isFist  = extCnt <= 1 && rawP > PINCH_THRESH;
+
+          e_pinch = ema(e_pinch, rawP);
+          e_palmX = ema(e_palmX, lm[9].x);
+          e_palmY = ema(e_palmY, lm[9].y);
+
+          if (isFist) {
+            // ── Fist held for FIST_HOLD frames → reset ────────
+            fistFrames++;
+            p_pinch = null; p_palmX = null; p_palmY = null;
+            if (fistFrames >= FIST_HOLD) {
+              resetCamera();
+              setStatus('✊ View Reset!', '#f97316');
+              fistFrames = 0;
+            } else {
+              const pct = Math.round(fistFrames / FIST_HOLD * 100);
+              setStatus(`✊ Hold… ${pct}%`, '#f97316');
+            }
+
+          } else if (e_pinch < PINCH_THRESH) {
+            // ── Pinch → zoom ──────────────────────────────────
+            fistFrames = 0;
+            if (p_pinch !== null) {
+              camRadius *= 1 + (e_pinch - p_pinch) * K_ZOOM;
+              updateCamera();
+            }
+            p_pinch = e_pinch; p_palmX = e_palmX; p_palmY = e_palmY;
+            setStatus('🤏 Zoom', '#60a5fa');
+
+          } else if (e_pinch > OPEN_THRESH) {
+            // ── Open palm → orbit ─────────────────────────────
+            fistFrames = 0;
+            if (p_palmX !== null) {
+              camTheta -= (e_palmX - p_palmX) * K_ORBIT_H;
+              camPhi   += (e_palmY - p_palmY) * K_ORBIT_V;
+              updateCamera();
+            }
+            p_pinch = e_pinch; p_palmX = e_palmX; p_palmY = e_palmY;
+            setStatus('✋ Orbit', '#60a5fa');
+
+          } else {
+            // Transition zone
+            fistFrames = 0;
+            p_pinch = e_pinch; p_palmX = e_palmX; p_palmY = e_palmY;
+            setStatus('● Detecting');
+          }
         }
       }
 
-      // --- MediaPipe setup ---
+      // ── MediaPipe setup ───────────────────────────────────────
       if (typeof Hands === 'undefined' || typeof Camera === 'undefined') {
         console.warn('[map3d] MediaPipe not loaded — gesture control disabled');
         setStatus('Gesture lib unavailable');
         return;
       }
-      const hands = new Hands({
+      const gestureHands = new Hands({
         locateFile: (file) =>
           `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`
       });
-      hands.setOptions({
-        maxNumHands: 1,
+      gestureHands.setOptions({
+        maxNumHands: 2,
         modelComplexity: 1,
         minDetectionConfidence: 0.7,
         minTrackingConfidence: 0.5
       });
-      hands.onResults(onResults);
+      gestureHands.onResults(onResults);
 
-      // --- Webcam via MediaPipe Camera ---
       const mpCamera = new Camera(video, {
-        onFrame: async () => { await hands.send({ image: video }); },
+        onFrame: async () => { await gestureHands.send({ image: video }); },
         width: 320,
         height: 240
       });
       mpCamera.start().then(() => {
-        // Show webcam preview once camera is active
-        preview.style.display = 'block';
-        // Clear the fixed-position CSS that was applied before reparenting
-        video.style.position  = 'static';
-        video.style.top       = '';
-        video.style.left      = '';
-        video.style.transform = ''; // mirror is now on #webcam-preview instead
-        // Make the video fill the preview container
-        video.style.width     = '100%';
-        video.style.height    = '100%';
-        video.style.objectFit = 'cover';
-        video.style.opacity   = '1';
+        preview.style.display  = 'block';
+        video.style.position   = 'static';
+        video.style.top        = '';
+        video.style.left       = '';
+        video.style.transform  = '';
+        video.style.width      = '100%';
+        video.style.height     = '100%';
+        video.style.objectFit  = 'cover';
+        video.style.opacity    = '1';
         preview.appendChild(video);
       }).catch(err => {
         console.warn('[map3d] Webcam unavailable:', err);
