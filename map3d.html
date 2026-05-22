@@ -51,7 +51,6 @@
       height: 1px;
       opacity: 0;
       pointer-events: none;
-      transform: scaleX(-1); /* mirror so it reads naturally */
     }
 
     /* Debug overlay for hand landmark dots (task 3) */
@@ -99,6 +98,7 @@
       background: rgba(6, 10, 18, 0.7);
       overflow: hidden;
       display: none;
+      transform: scaleX(-1); /* mirror applied to container instead of the video element */
     }
 
     /* Gesture status badge (content from task 3) */
@@ -921,10 +921,16 @@
       mpCamera.start().then(() => {
         // Show webcam preview once camera is active
         preview.style.display = 'block';
-        // Mirror the video feed into the preview div as a background
-        video.style.width  = '100px';
-        video.style.height = '75px';
-        video.style.opacity = '1';
+        // Clear the fixed-position CSS that was applied before reparenting
+        video.style.position  = 'static';
+        video.style.top       = '';
+        video.style.left      = '';
+        video.style.transform = ''; // mirror is now on #webcam-preview instead
+        // Make the video fill the preview container
+        video.style.width     = '100%';
+        video.style.height    = '100%';
+        video.style.objectFit = 'cover';
+        video.style.opacity   = '1';
         preview.appendChild(video);
       }).catch(err => {
         console.warn('[map3d] Webcam unavailable:', err);
