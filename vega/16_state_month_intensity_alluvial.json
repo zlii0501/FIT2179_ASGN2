@@ -27,12 +27,12 @@
   "data": [
     {
       "name": "links",
-      "url": "data/alluvial_month_state_intensity.json",
+      "url": "data/alluvial_month_state_intensity.json?v=state-colors-20260524",
       "format": { "type": "json", "property": "links" }
     },
     {
       "name": "nodes",
-      "url": "data/alluvial_month_state_intensity.json",
+      "url": "data/alluvial_month_state_intensity.json?v=state-colors-20260524",
       "format": { "type": "json", "property": "nodes" }
     },
     {
