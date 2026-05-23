@@ -959,7 +959,7 @@
           // Checked BEFORE pinch so a closed fist never triggers zoom.
           if (p_palmX !== null) {
             camTheta -= (e_palmX - p_palmX) * K_ORBIT_H;
-            camPhi   += (e_palmY - p_palmY) * K_ORBIT_V;
+            camPhi   -= (e_palmY - p_palmY) * K_ORBIT_V;
             updateCamera();
           }
           p_palmX = e_palmX; p_palmY = e_palmY;
@@ -977,8 +977,8 @@
             // Camera right and forward vectors projected onto XZ plane
             const rX =  Math.cos(camTheta), rZ = -Math.sin(camTheta);
             const fX = -Math.sin(camTheta), fZ = -Math.cos(camTheta);
-            panX -= dx * speed * rX + dy * speed * fX;
-            panZ -= dx * speed * rZ + dy * speed * fZ;
+            panX += dx * speed * rX - dy * speed * fX;
+            panZ += dx * speed * rZ - dy * speed * fZ;
             updateCamera();
           }
           p_ptX = e_ptX; p_ptY = e_ptY;
