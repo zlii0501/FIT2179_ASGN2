@@ -79,3 +79,46 @@ const embedChart = (selector, spec, opts = embedOpts) =>
     result.view.tooltip(customTooltipHandler);
     return result;
   });
+
+function chartHeightFor(selector, offset = 0, minHeight = 180) {
+  const el = document.querySelector(selector);
+  if (!el) return minHeight;
+  return Math.max(minHeight, Math.floor(el.getBoundingClientRect().height - offset));
+}
+
+async function loadChartSpec(spec) {
+  if (typeof spec !== 'string') return JSON.parse(JSON.stringify(spec));
+  const response = await fetch(spec);
+  if (!response.ok) throw new Error(`Could not load Vega spec: ${spec}`);
+  return response.json();
+}
+
+function embedChartFitHeight(selector, spec, opts = embedOpts, sizing = {}) {
+  const { offset = 0, minHeight = 180 } = sizing;
+  return loadChartSpec(spec).then(baseSpec => {
+    const targetEl = document.querySelector(selector);
+    const fittedSpec = {
+      ...baseSpec,
+      height: chartHeightFor(selector, offset, minHeight)
+    };
+
+    return vegaEmbed(selector, fittedSpec, opts).then(result => {
+      let frame = null;
+      const syncHeight = () => {
+        window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(() => {
+          result.view.height(chartHeightFor(selector, offset, minHeight)).runAsync();
+        });
+      };
+
+      result.view.tooltip(customTooltipHandler);
+      if (targetEl && 'ResizeObserver' in window) {
+        new ResizeObserver(syncHeight).observe(targetEl);
+      } else {
+        window.addEventListener('resize', syncHeight);
+      }
+      syncHeight();
+      return result;
+    });
+  });
+}
