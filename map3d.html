@@ -958,7 +958,7 @@
           // ── ✊ Fist → grab-and-drag orbit ──────────────────────
           // Checked BEFORE pinch so a closed fist never triggers zoom.
           if (p_palmX !== null) {
-            camTheta -= (e_palmX - p_palmX) * K_ORBIT_H;
+            camTheta += (e_palmX - p_palmX) * K_ORBIT_H;
             camPhi   -= (e_palmY - p_palmY) * K_ORBIT_V;
             updateCamera();
           }
