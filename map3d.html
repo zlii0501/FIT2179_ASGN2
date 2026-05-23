@@ -170,7 +170,7 @@
     <div class="row"><span class="icon">🤏</span><span class="desc">Pinch tight — Zoom in</span></div>
     <div class="row"><span class="icon">🤏</span><span class="desc">Relax pinch — Zoom out</span></div>
     <div class="row"><span class="icon">☝️</span><span class="desc">Point finger — Pan view</span></div>
-    <div class="row"><span class="icon">👍</span><span class="desc">Thumbs up — Reset view</span></div>
+
     <div class="row"><span class="icon">✋</span><span class="desc">Open palm — Safe reposition</span></div>
   </div>
   <div id="gesture-status">Gestures: off</div>
@@ -921,12 +921,6 @@
         return Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
       }
 
-      // Thumbs-up: all 4 fingers curled, thumb tip well above thumb knuckle
-      function thumbUp(lm) {
-        if (countExtended(lm) > 0) return false;
-        return lm[4].y < lm[2].y - 0.05; // tip at least 5% of frame above IP joint
-      }
-
       // Point: only index finger extended, others curled
       function isPointing(lm) {
         return lm[8].y  < lm[6].y  &&   // index extended
@@ -960,14 +954,7 @@
         e_palmX = ema(e_palmX, lm[9].x);
         e_palmY = ema(e_palmY, lm[9].y);
 
-        if (thumbUp(lm)) {
-          // ── 👍 Thumbs-up → instant reset ──────────────────────
-          resetCamera();
-          e_ptX = e_ptY = p_ptX = p_ptY = null;
-          p_palmX = null; p_palmY = null;
-          setStatus('👍 Reset!', '#f97316');
-
-        } else if (extCnt === 0) {
+        if (extCnt === 0) {
           // ── ✊ Fist → grab-and-drag orbit ──────────────────────
           // Checked BEFORE pinch so a closed fist never triggers zoom.
           if (p_palmX !== null) {
