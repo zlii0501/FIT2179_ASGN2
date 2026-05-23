@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig07-fig10-fit-content-20260523">
+  <link rel="stylesheet" href="css/style.css?v=fig09-bottom-legend-20260523">
   <link rel="stylesheet" href="css/layout-overrides.css?v=10">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -292,12 +292,37 @@
       </div>
     <div class="chart-card grid-span-12 fig-09-wide-card" data-layout-id="fig09-alluvial">
       <div class="chart-title"><span class="chart-number">Fig. 09</span><span class="chart-title-text">Fire pathways &mdash; month to state to FRP intensity</span></div>
-      <div class="figure-side-layout figure-side-layout-alluvial">
-        <div class="figure-copy">
-          <p class="chart-annotation">This alluvial view follows sampled VIIRS detections from month, through state, into FRP intensity class. Wider ribbons mean more detections; hover a ribbon or node to isolate its path.</p>
-          <p class="chart-annotation">Read the thick December-to-NSW stream as the clearest signal of the crisis: the season did not simply get busier, it concentrated into the south-east with a larger share of high and severe fire-power observations. WA and NT remain visible because their early dry-season fires were numerous, but their ribbons thin as the eastern emergency takes over.</p>
-        </div>
+      <div class="fig09-chart-shell">
         <div id="viz-alluvial"></div>
+      </div>
+      <div class="fig09-caption-row">
+        <div class="fig09-copy">
+          <p class="chart-annotation">This alluvial view follows sampled VIIRS detections from month, through state, into FRP intensity class. Wider ribbons mean more detections; the thick December-to-NSW stream shows how the crisis concentrated into the south-east with a larger share of high and severe fire-power observations.</p>
+        </div>
+        <div class="fig09-legend" aria-label="Fig. 09 legend">
+          <div class="fig09-legend-group fig09-legend-flow">
+            <strong>Flow width</strong>
+            <span><i class="fig09-flow-swatch fig09-flow-thin" aria-hidden="true"></i>Fewer detections</span>
+            <span><i class="fig09-flow-swatch fig09-flow-thick" aria-hidden="true"></i>More detections</span>
+          </div>
+          <div class="fig09-legend-group">
+            <strong>State</strong>
+            <span><i style="--swatch:#c94f44" aria-hidden="true"></i>NSW</span>
+            <span><i style="--swatch:#b96f3a" aria-hidden="true"></i>QLD</span>
+            <span><i style="--swatch:#b8956a" aria-hidden="true"></i>WA</span>
+            <span><i style="--swatch:#d0a34a" aria-hidden="true"></i>NT</span>
+            <span><i style="--swatch:#7f8f6a" aria-hidden="true"></i>SA</span>
+            <span><i style="--swatch:#6f9a9a" aria-hidden="true"></i>VIC</span>
+          </div>
+          <div class="fig09-legend-group">
+            <strong>FRP intensity</strong>
+            <span><i style="--swatch:#ffd166" aria-hidden="true"></i>Low</span>
+            <span><i style="--swatch:#f8961e" aria-hidden="true"></i>Moderate</span>
+            <span><i style="--swatch:#f3722c" aria-hidden="true"></i>High</span>
+            <span><i style="--swatch:#d00000" aria-hidden="true"></i>Severe</span>
+            <span><i style="--swatch:#7f1d1d" aria-hidden="true"></i>Extreme</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="chart-card grid-span-12" data-layout-id="fig10-heatmatrix">
@@ -461,7 +486,7 @@
 <script src="js/vega-utils.js?v=fit-height-20260523"></script>
 <script src="js/basic-charts.js?v=state-hover-20260522"></script>
 <script src="js/month-explorer.js?v=fig05-firepower-bottom-20260523"></script>
-<script src="js/chart-embeds.js?v=fit-height-content-20260523"></script>
+<script src="js/chart-embeds.js?v=fig09-bottom-legend-20260523"></script>
 <script src="js/raincloud-detail.js?v=card-fit-20260521"></script>
 <script src="js/hexbin-zoom.js?v=multi-fig-polish-20260522"></script>
 <script src="js/comparison.js?v=multi-fig-polish-20260522"></script>

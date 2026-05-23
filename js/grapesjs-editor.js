@@ -36,7 +36,7 @@
 
   function canvasStyles() {
     return [
-      'css/style.css?v=fig07-fig10-fit-content-20260523',
+      'css/style.css?v=fig09-bottom-legend-20260523',
       'css/layout-overrides.css?v=10'
     ];
   }

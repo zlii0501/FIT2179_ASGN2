@@ -478,6 +478,109 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   margin-top: 0.7rem;
 }
 
+.fig-09-wide-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.fig-09-wide-card .chart-title,
+.fig09-caption-row {
+  flex: 0 0 auto;
+}
+
+.fig09-chart-shell {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fig09-caption-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 0.5fr);
+  gap: 0.85rem;
+  align-items: stretch;
+  margin-top: 0.52rem;
+}
+
+.fig09-copy {
+  min-width: 0;
+}
+
+.fig09-copy .chart-annotation {
+  margin-top: 0;
+  max-width: none;
+  font-size: 0.68rem;
+  line-height: 1.3;
+}
+
+.fig09-legend {
+  display: grid;
+  gap: 0.34rem;
+  padding: 0.48rem 0.56rem;
+  background: rgba(10,14,26,0.72);
+  border: 1px solid rgba(232,201,160,0.14);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.62rem;
+  line-height: 1.08;
+}
+
+.fig09-legend-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: center;
+  gap: 0.24rem 0.48rem;
+  min-width: 0;
+}
+
+.fig09-legend strong {
+  flex: 0 0 100%;
+  color: #e8c9a0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.fig09-legend span {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.fig09-legend i {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.58rem;
+  height: 0.58rem;
+  margin-right: 0.34rem;
+  border-radius: 2px;
+  background: var(--swatch);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.14);
+}
+
+.fig09-flow-swatch {
+  width: 1.35rem !important;
+  height: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border-top: solid #e8c9a0;
+  box-shadow: none !important;
+}
+
+.fig09-flow-thin {
+  border-top-width: 2px;
+  opacity: 0.56;
+}
+
+.fig09-flow-thick {
+  border-top-width: 6px;
+  opacity: 0.78;
+}
+
 .figure-side-layout + .chart-annotation {
   display: none;
 }
@@ -1204,6 +1307,12 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
     grid-template-columns: 1fr;
   }
 
+  .fig09-caption-row,
+  .fig09-copy,
+  .fig09-legend {
+    grid-template-columns: 1fr;
+  }
+
   .figure-copy .chart-annotation {
     max-width: 68ch;
   }
@@ -1415,6 +1524,27 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 #viz-yearmonth-heat {
   width: 100%;
   overflow: visible;
+}
+
+.fig09-chart-shell #viz-alluvial {
+  height: 100%;
+  overflow: hidden;
+}
+
+.fig09-chart-shell #viz-alluvial.vega-embed,
+.fig09-chart-shell #viz-alluvial .vega-embed {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.fig09-chart-shell #viz-alluvial.vega-embed svg,
+.fig09-chart-shell #viz-alluvial .vega-embed svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
 }
 
 #viz-state-radar .vega-embed {
