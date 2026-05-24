@@ -718,6 +718,28 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   margin: 0;
 }
 
+.fig03a-state-legend span[data-state],
+.fig03b-state-legend span[data-state] {
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  transition: background 0.15s, color 0.15s;
+}
+.fig03a-state-legend span[data-state]:hover,
+.fig03b-state-legend span[data-state]:hover {
+  background: rgba(232,201,160,0.1);
+  color: #e8c9a0;
+}
+
+.waffle-legend-row[data-state] {
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.15s;
+}
+.waffle-legend-row[data-state]:hover {
+  background: rgba(232,201,160,0.08);
+}
+
 .fig03a-state-legend i,
 .fig03b-state-legend i {
   display: inline-block;
