@@ -311,8 +311,10 @@
       const fc = col - c0, fr = row - r0;
       const v00 = demPixels[r0 * DEM_W + c0],       v10 = demPixels[r0 * DEM_W + c0 + 1];
       const v01 = demPixels[(r0+1) * DEM_W + c0],   v11 = demPixels[(r0+1) * DEM_W + c0 + 1];
-      // PNG normalised to actual max 1918m; multiply by 0.8 for ~2.5x vertical exaggeration
-      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.8;
+      // Scale to real-world proportions.
+      // Map width ≈ 4100 km → 1 world unit = 2050 km.
+      // True 1:1 for 1918 m max = 0.000935 units; ×50 exaggeration = 0.047.
+      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.047;
     }
 
     function heightToColor(h) {
