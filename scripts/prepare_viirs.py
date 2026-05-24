@@ -20,8 +20,8 @@ OUTDIR  = ROOT / "data"
 OUTDIR.mkdir(exist_ok=True)
 
 ZIPS = [
-    ROOT / "Fires from Space Australia.zip",
-    ROOT / "Australian Bush fire satellite data (NASA).zip",
+    OUTDIR / "Fires from Space Australia.zip",
+    OUTDIR / "Australian Bush fire satellite data (NASA).zip",
 ]
 
 # VIIRS files: archive (Aug-Oct) + NRT (Oct-Jan)
@@ -34,7 +34,7 @@ VIIRS_FILES = [
 
 # ── Bounding box filter ───────────────────────────────────────────────────
 AUS_BBOX = dict(lat_min=-44.0, lat_max=-10.0, lon_min=112.0, lon_max=154.0)
-DATE_START = "2019-08-01"
+DATE_START = "2019-01-01"
 DATE_END   = "2020-01-31"
 
 # ── State assignment (bounding-box method, same as prepare_data.py) ───────

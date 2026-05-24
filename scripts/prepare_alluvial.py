@@ -10,18 +10,37 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 
-SOURCE = DATA_DIR / "viirs_sample_map.csv"
 OUT = DATA_DIR / "alluvial_month_state_intensity.json"
+SOURCE = DATA_DIR / "viirs_sample_map.csv"
 
 STATE_ORDER = ["NSW", "QLD", "WA", "NT", "SA", "VIC"]
-MONTH_ORDER = ["2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01"]
+MONTH_ORDER = [
+    "2020-01",
+    "2019-02",
+    "2019-03",
+    "2019-04",
+    "2019-05",
+    "2019-06",
+    "2019-07",
+    "2019-08",
+    "2019-09",
+    "2019-10",
+    "2019-11",
+    "2019-12",
+]
 MONTH_LABEL = {
+    "2020-01": "Jan",
+    "2019-02": "Feb",
+    "2019-03": "Mar",
+    "2019-04": "Apr",
+    "2019-05": "May",
+    "2019-06": "Jun",
+    "2019-07": "Jul",
     "2019-08": "Aug",
     "2019-09": "Sep",
     "2019-10": "Oct",
     "2019-11": "Nov",
     "2019-12": "Dec",
-    "2020-01": "Jan",
 }
 INTENSITY_ORDER = ["Low", "Moderate", "High", "Severe", "Extreme"]
 INTENSITY_COLOR = {
@@ -32,12 +51,12 @@ INTENSITY_COLOR = {
     "Extreme": "#7f1d1d",
 }
 STATE_COLOR = {
-    "NSW": "#c94f44",
-    "QLD": "#b96f3a",
-    "WA": "#b8956a",
-    "NT": "#d0a34a",
-    "SA": "#7f8f6a",
-    "VIC": "#6f9a9a",
+    "NSW": "#D55E00",
+    "QLD": "#E69F00",
+    "WA": "#0072B2",
+    "NT": "#CC79A7",
+    "SA": "#009E73",
+    "VIC": "#56B4E9",
 }
 
 
@@ -74,13 +93,15 @@ def make_nodes(df: pd.DataFrame, chart_height: int, scale: float) -> list[dict]:
         else:
             counts = df.groupby("intensity").size().to_dict()
 
-        present = [item for item in order if counts.get(item, 0) > 0]
-        total_h = sum(counts[item] * scale for item in present)
-        gap = 16 if column != "intensity" else 18
+        present = list(order) if column == "month" else [item for item in order if counts.get(item, 0) > 0]
+        min_h = 3 if column == "month" else 6
+        gap = 22 if column == "month" else 16 if column != "intensity" else 18
+        heights = {item: max(counts.get(item, 0) * scale, min_h) for item in present}
+        total_h = sum(heights[item] for item in present)
         y = (chart_height - total_h - gap * (len(present) - 1)) / 2
         for item in present:
-            count = int(counts[item])
-            h = max(count * scale, 6)
+            count = int(counts.get(item, 0))
+            h = heights[item]
             label = MONTH_LABEL.get(item, item)
             nodes.append(
                 {
@@ -124,6 +145,8 @@ def make_links(df: pd.DataFrame, nodes: list[dict], scale: float) -> list[dict]:
                 "count": int(count),
                 "path": cubic_path(source["x1"], sy, target["x0"], ty),
                 "strokeWidth": round(thickness, 2),
+                "source_y": round(sy, 2),
+                "target_y": round(ty, 2),
                 "color": color,
                 "type": link_type,
                 "label": label,
@@ -150,7 +173,7 @@ def make_links(df: pd.DataFrame, nodes: list[dict], scale: float) -> list[dict]:
                 row["count"],
                 "#e8c9a0",
                 "month-state",
-                f"{MONTH_LABEL[row['month']]} -> {row['state']}",
+                f"{MONTH_LABEL.get(row['month'], row['month'])} -> {row['state']}",
             )
 
     state_intensity = (
@@ -186,17 +209,17 @@ def main() -> None:
 
     chart_height = 600
     total = len(df)
-    scale = (chart_height - 150) / total
+    scale = (chart_height - 300) / total
 
     nodes = make_nodes(df, chart_height, scale)
     links = make_links(df, nodes, scale)
 
     payload = {
         "meta": {
-            "source": "viirs_sample_map.csv",
+            "source": "viirs_sample_map.csv rebuilt from raw NASA VIIRS zip files in data/",
             "total": int(total),
             "scale": round(scale, 5),
-            "note": "Static alluvial layout: Month -> State -> FRP intensity. Link widths are proportional to sampled VIIRS detections.",
+            "note": "Static alluvial layout: Month -> State -> FRP intensity. Jan-Dec month labels are shown; months outside the local VIIRS source window have zero sampled detections.",
         },
         "nodes": nodes,
         "links": links,
