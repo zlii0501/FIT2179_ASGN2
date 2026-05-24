@@ -123,6 +123,35 @@ function embedChartFitHeight(selector, spec, opts = embedOpts, sizing = {}) {
   });
 }
 
+function embedChartFitWidth(selector, spec, opts = embedOpts, sizing = {}) {
+  const { offset = 0, minWidth = 300 } = sizing;
+  return loadChartSpec(spec).then(baseSpec => {
+    const targetEl = document.querySelector(selector);
+    const getW = () => {
+      const w = targetEl ? Math.floor(targetEl.getBoundingClientRect().width) - offset : minWidth;
+      return Math.max(minWidth, w || minWidth);
+    };
+    const fittedSpec = { ...baseSpec, width: getW() };
+    return vegaEmbed(selector, fittedSpec, opts).then(result => {
+      let frame = null;
+      const syncWidth = () => {
+        window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(() => {
+          result.view.width(getW()).runAsync();
+        });
+      };
+      result.view.tooltip(customTooltipHandler);
+      if (targetEl && 'ResizeObserver' in window) {
+        new ResizeObserver(syncWidth).observe(targetEl);
+      } else {
+        window.addEventListener('resize', syncWidth);
+      }
+      syncWidth();
+      return result;
+    });
+  });
+}
+
 function embedChartFitSize(selector, spec, opts = embedOpts, sizing = {}) {
   const {
     widthOffset = 0,
