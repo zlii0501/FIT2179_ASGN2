@@ -15,32 +15,20 @@ SOURCE = DATA_DIR / "viirs_sample_map.csv"
 
 STATE_ORDER = ["NSW", "QLD", "WA", "NT", "SA", "VIC"]
 MONTH_ORDER = [
-    "2020-01",
-    "2019-02",
-    "2019-03",
-    "2019-04",
-    "2019-05",
-    "2019-06",
-    "2019-07",
     "2019-08",
     "2019-09",
     "2019-10",
     "2019-11",
     "2019-12",
+    "2020-01",
 ]
 MONTH_LABEL = {
-    "2020-01": "Jan",
-    "2019-02": "Feb",
-    "2019-03": "Mar",
-    "2019-04": "Apr",
-    "2019-05": "May",
-    "2019-06": "Jun",
-    "2019-07": "Jul",
-    "2019-08": "Aug",
-    "2019-09": "Sep",
-    "2019-10": "Oct",
-    "2019-11": "Nov",
-    "2019-12": "Dec",
+    "2019-08": "Aug 2019",
+    "2019-09": "Sep 2019",
+    "2019-10": "Oct 2019",
+    "2019-11": "Nov 2019",
+    "2019-12": "Dec 2019",
+    "2020-01": "Jan 2020",
 }
 INTENSITY_ORDER = ["Low", "Moderate", "High", "Severe", "Extreme"]
 INTENSITY_COLOR = {
@@ -93,9 +81,9 @@ def make_nodes(df: pd.DataFrame, chart_height: int, scale: float) -> list[dict]:
         else:
             counts = df.groupby("intensity").size().to_dict()
 
-        present = list(order) if column == "month" else [item for item in order if counts.get(item, 0) > 0]
-        min_h = 3 if column == "month" else 6
-        gap = 22 if column == "month" else 16 if column != "intensity" else 18
+        present = [item for item in order if counts.get(item, 0) > 0]
+        min_h = 6
+        gap = 16 if column != "intensity" else 18
         heights = {item: max(counts.get(item, 0) * scale, min_h) for item in present}
         total_h = sum(heights[item] for item in present)
         y = (chart_height - total_h - gap * (len(present) - 1)) / 2
@@ -209,7 +197,7 @@ def main() -> None:
 
     chart_height = 600
     total = len(df)
-    scale = (chart_height - 300) / total
+    scale = (chart_height - 150) / total
 
     nodes = make_nodes(df, chart_height, scale)
     links = make_links(df, nodes, scale)
@@ -219,7 +207,7 @@ def main() -> None:
             "source": "viirs_sample_map.csv rebuilt from raw NASA VIIRS zip files in data/",
             "total": int(total),
             "scale": round(scale, 5),
-            "note": "Static alluvial layout: Month -> State -> FRP intensity. Jan-Dec month labels are shown; months outside the local VIIRS source window have zero sampled detections.",
+            "note": "Static alluvial layout: Month -> State -> FRP intensity. Month labels include years and reflect the months present in viirs_sample_map.csv.",
         },
         "nodes": nodes,
         "links": links,

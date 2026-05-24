@@ -26,8 +26,8 @@
     { "name": "monthCX", "update": "width * 0.131" },
     { "name": "stateCX", "update": "width * 0.500" },
     { "name": "frpCX",   "update": "width * 0.890" },
-    { "name": "plotTop", "update": "14" },
-    { "name": "plotScaleY", "update": "(height - 30) / 600" },
+    { "name": "plotTop", "update": "16" },
+    { "name": "plotScaleY", "update": "(height - 32) / 600" },
     { "name": "nodeHW",  "update": "round(10 * height / 610)" }
   ],
   "data": [
@@ -117,7 +117,7 @@
           "align": { "value": "center" },
           "baseline": { "value": "top" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 12 },
+          "fontSize": { "value": 12.5 },
           "fontWeight": { "value": "bold" },
           "letterSpacing": { "value": 2.5 },
           "fill": { "value": "#b8956a" }
@@ -203,7 +203,6 @@
           "y": { "field": "y0s" },
           "y2": { "field": "y1s" },
           "fillOpacity": [
-            { "test": "datum.count === 0", "value": 0.42 },
             { "test": "hoverNode === datum.id", "value": 1 },
             { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
             { "test": "hoverNode || hoverLink", "value": 0.38 },
@@ -220,7 +219,7 @@
           "text": { "field": "label" },
           "baseline": { "value": "middle" },
           "font": { "value": "Georgia" },
-          "fontSize": { "value": 11.2 },
+          "fontSize": { "value": 11.6 },
           "fontWeight": { "value": "bold" },
           "fill": { "value": "#f0dcc0" }
         },
@@ -245,7 +244,7 @@
           "text": { "signal": "format(datum.count, ',')" },
           "baseline": { "value": "middle" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 10.2 },
+          "fontSize": { "value": 10.6 },
           "fill": { "value": "#9ca3af" }
         },
         "update": {
@@ -253,7 +252,6 @@
           "y": { "signal": "datum.ycs + 9.5" },
           "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "fillOpacity": [
-            { "test": "datum.count === 0", "value": 0 },
             { "test": "datum.column === 'state'", "value": 0 },
             { "test": "hoverNode === datum.id", "value": 1 },
             { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
