@@ -598,24 +598,40 @@
         if (!geom) continue;
         const stateName = feature.properties?.STATE_NAME ?? '';
         const color = STATE_COLORS[stateName] ?? '#aaaaaa';
-        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.85, depthTest: false });
+        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.9 });
 
         const polys = geom.type === 'Polygon'
           ? [geom.coordinates]
           : geom.coordinates;           // MultiPolygon
 
+        // Subdivide each segment so the line samples heightAt frequently,
+        // hugging terrain undulations instead of cutting straight through.
+        const SEG_LEN = 0.015; // max world-unit length before subdividing
+        const LIFT    = 0.006; // small offset above terrain surface
+
         for (const poly of polys) {
           const outer = poly[0];
           if (!outer || outer.length < 3) continue;
           const verts = [];
-          for (const coord of outer) {
-            const [px, py] = project(coord);
-            verts.push(px, heightAt(px, py) + 0.008, -py);
+
+          for (let i = 0; i < outer.length; i++) {
+            const [ax, ay] = project(outer[i]);
+            const [bx, by] = project(outer[(i + 1) % outer.length]);
+            const dx = bx - ax, dy = by - ay;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const steps = Math.max(1, Math.ceil(dist / SEG_LEN));
+            for (let s = 0; s < steps; s++) {
+              const t = s / steps;
+              const x = ax + dx * t;
+              const y = ay + dy * t;
+              verts.push(x, heightAt(x, y) + LIFT, -y);
+            }
           }
+
           const geo = new THREE.BufferGeometry();
           geo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+          // Use LineLoop so the ring closes; last point auto-connects to first
           const line = new THREE.LineLoop(geo, mat);
-          line.renderOrder = 1;
           scene.add(line);
         }
       }

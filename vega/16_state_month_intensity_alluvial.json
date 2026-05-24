@@ -26,7 +26,8 @@
     { "name": "monthCX", "update": "width * 0.131" },
     { "name": "stateCX", "update": "width * 0.500" },
     { "name": "frpCX",   "update": "width * 0.890" },
-    { "name": "scaleY",  "update": "height / 610" },
+    { "name": "plotTop", "update": "4" },
+    { "name": "plotScaleY", "update": "(height - 20) / 530" },
     { "name": "nodeHW",  "update": "round(10 * height / 610)" }
   ],
   "data": [
@@ -53,12 +54,12 @@
         {
           "type": "formula",
           "as": "src_ys",
-          "expr": "datum.source_y * scaleY"
+          "expr": "plotTop + (datum.source_y - 35) * plotScaleY"
         },
         {
           "type": "formula",
           "as": "tgt_ys",
-          "expr": "datum.target_y * scaleY"
+          "expr": "plotTop + (datum.target_y - 35) * plotScaleY"
         },
         {
           "type": "formula",
@@ -68,7 +69,7 @@
         {
           "type": "formula",
           "as": "strokeWidthR",
-          "expr": "max(1.2, datum.strokeWidth * scaleY)"
+          "expr": "max(1.2, datum.strokeWidth * plotScaleY)"
         }
       ]
     },
@@ -84,9 +85,9 @@
         },
         { "type": "formula", "as": "x0r", "expr": "datum.cx - nodeHW" },
         { "type": "formula", "as": "x1r", "expr": "datum.cx + nodeHW" },
-        { "type": "formula", "as": "y0s", "expr": "datum.y0 * scaleY" },
-        { "type": "formula", "as": "y1s", "expr": "datum.y1 * scaleY" },
-        { "type": "formula", "as": "ycs", "expr": "datum.yc * scaleY" }
+        { "type": "formula", "as": "y0s", "expr": "plotTop + (datum.y0 - 35) * plotScaleY" },
+        { "type": "formula", "as": "y1s", "expr": "plotTop + (datum.y1 - 35) * plotScaleY" },
+        { "type": "formula", "as": "ycs", "expr": "plotTop + (datum.yc - 35) * plotScaleY" }
       ]
     },
     {
@@ -248,7 +249,7 @@
         },
         "update": {
           "x": { "signal": "datum.column === 'intensity' ? datum.x1r + 8 : datum.x0r - 8" },
-          "y": { "signal": "datum.ycs + 19" },
+          "y": { "signal": "datum.ycs + 14" },
           "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "fillOpacity": [
             { "test": "datum.column === 'state'", "value": 0 },
