@@ -1583,7 +1583,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-09-wide-card #viz-alluvial.vega-embed,
 .fig-09-wide-card #viz-alluvial .vega-embed {
-  max-width: 1120px;
+  max-width: none;
 }
 
 #viz-alluvial.vega-embed svg,

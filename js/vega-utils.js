@@ -122,3 +122,45 @@ function embedChartFitHeight(selector, spec, opts = embedOpts, sizing = {}) {
     });
   });
 }
+
+function embedChartFitSize(selector, spec, opts = embedOpts, sizing = {}) {
+  const {
+    widthOffset = 0,
+    heightOffset = 0,
+    minWidth = 300,
+    minHeight = 220
+  } = sizing;
+
+  return loadChartSpec(spec).then(baseSpec => {
+    const targetEl = document.querySelector(selector);
+    const getSize = () => {
+      const rect = targetEl?.getBoundingClientRect();
+      return {
+        width: Math.max(minWidth, Math.floor((rect?.width || minWidth) - widthOffset)),
+        height: Math.max(minHeight, Math.floor((rect?.height || minHeight) - heightOffset))
+      };
+    };
+    const initial = getSize();
+    const fittedSpec = { ...baseSpec, width: initial.width, height: initial.height };
+
+    return vegaEmbed(selector, fittedSpec, opts).then(result => {
+      let frame = null;
+      const syncSize = () => {
+        window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(() => {
+          const next = getSize();
+          result.view.width(next.width).height(next.height).runAsync();
+        });
+      };
+
+      result.view.tooltip(customTooltipHandler);
+      if (targetEl && 'ResizeObserver' in window) {
+        new ResizeObserver(syncSize).observe(targetEl);
+      } else {
+        window.addEventListener('resize', syncSize);
+      }
+      syncSize();
+      return result;
+    });
+  });
+}

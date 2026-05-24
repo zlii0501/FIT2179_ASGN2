@@ -271,7 +271,9 @@
       "strokeWidth": 21.79,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Aug -> NSW"
+      "label": "Aug -> NSW",
+      "source_y": 45.9,
+      "target_y": 45.9
     },
     {
       "source": "month:2019-08",
@@ -281,7 +283,9 @@
       "strokeWidth": 23.59,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Aug -> QLD"
+      "label": "Aug -> QLD",
+      "source_y": 68.6,
+      "target_y": 145.3
     },
     {
       "source": "month:2019-08",
@@ -291,7 +295,9 @@
       "strokeWidth": 11.62,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Aug -> WA"
+      "label": "Aug -> WA",
+      "source_y": 86.2,
+      "target_y": 288.0
     },
     {
       "source": "month:2019-08",
@@ -301,7 +307,9 @@
       "strokeWidth": 14.68,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Aug -> NT"
+      "label": "Aug -> NT",
+      "source_y": 99.3,
+      "target_y": 414.7
     },
     {
       "source": "month:2019-08",
@@ -311,7 +319,9 @@
       "strokeWidth": 1.2,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Aug -> SA"
+      "label": "Aug -> SA",
+      "source_y": 107.3,
+      "target_y": 510.3
     },
     {
       "source": "month:2019-08",
@@ -321,7 +331,9 @@
       "strokeWidth": 5.31,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Aug -> VIC"
+      "label": "Aug -> VIC",
+      "source_y": 110.5,
+      "target_y": 536.0
     },
     {
       "source": "month:2019-09",
@@ -331,7 +343,9 @@
       "strokeWidth": 13.42,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Sep -> NSW"
+      "label": "Sep -> NSW",
+      "source_y": 135.6,
+      "target_y": 63.5
     },
     {
       "source": "month:2019-09",
@@ -341,7 +355,9 @@
       "strokeWidth": 20.17,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Sep -> QLD"
+      "label": "Sep -> QLD",
+      "source_y": 152.4,
+      "target_y": 167.2
     },
     {
       "source": "month:2019-09",
@@ -351,7 +367,9 @@
       "strokeWidth": 11.26,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Sep -> WA"
+      "label": "Sep -> WA",
+      "source_y": 168.1,
+      "target_y": 299.5
     },
     {
       "source": "month:2019-09",
@@ -361,7 +379,9 @@
       "strokeWidth": 13.15,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Sep -> NT"
+      "label": "Sep -> NT",
+      "source_y": 180.3,
+      "target_y": 428.6
     },
     {
       "source": "month:2019-09",
@@ -371,7 +391,9 @@
       "strokeWidth": 1.2,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Sep -> SA"
+      "label": "Sep -> SA",
+      "source_y": 187.5,
+      "target_y": 511.5
     },
     {
       "source": "month:2019-09",
@@ -381,7 +403,9 @@
       "strokeWidth": 6.84,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Sep -> VIC"
+      "label": "Sep -> VIC",
+      "source_y": 191.5,
+      "target_y": 542.1
     },
     {
       "source": "month:2019-10",
@@ -391,7 +415,9 @@
       "strokeWidth": 10.36,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Oct -> NSW"
+      "label": "Oct -> NSW",
+      "source_y": 215.7,
+      "target_y": 75.4
     },
     {
       "source": "month:2019-10",
@@ -401,7 +427,9 @@
       "strokeWidth": 20.44,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Oct -> QLD"
+      "label": "Oct -> QLD",
+      "source_y": 231.1,
+      "target_y": 187.5
     },
     {
       "source": "month:2019-10",
@@ -411,7 +439,9 @@
       "strokeWidth": 17.11,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Oct -> WA"
+      "label": "Oct -> WA",
+      "source_y": 249.9,
+      "target_y": 313.7
     },
     {
       "source": "month:2019-10",
@@ -421,7 +451,9 @@
       "strokeWidth": 15.67,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Oct -> NT"
+      "label": "Oct -> NT",
+      "source_y": 266.3,
+      "target_y": 443.0
     },
     {
       "source": "month:2019-10",
@@ -431,7 +463,9 @@
       "strokeWidth": 1.2,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Oct -> SA"
+      "label": "Oct -> SA",
+      "source_y": 274.7,
+      "target_y": 512.7
     },
     {
       "source": "month:2019-10",
@@ -441,7 +475,9 @@
       "strokeWidth": 6.12,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Oct -> VIC"
+      "label": "Oct -> VIC",
+      "source_y": 278.4,
+      "target_y": 548.6
     },
     {
       "source": "month:2019-11",
@@ -451,7 +487,9 @@
       "strokeWidth": 9.64,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Nov -> NSW"
+      "label": "Nov -> NSW",
+      "source_y": 302.1,
+      "target_y": 85.4
     },
     {
       "source": "month:2019-11",
@@ -461,7 +499,9 @@
       "strokeWidth": 18.91,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Nov -> QLD"
+      "label": "Nov -> QLD",
+      "source_y": 316.3,
+      "target_y": 207.2
     },
     {
       "source": "month:2019-11",
@@ -471,7 +511,9 @@
       "strokeWidth": 23.68,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Nov -> WA"
+      "label": "Nov -> WA",
+      "source_y": 337.6,
+      "target_y": 334.1
     },
     {
       "source": "month:2019-11",
@@ -481,7 +523,9 @@
       "strokeWidth": 18.64,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Nov -> NT"
+      "label": "Nov -> NT",
+      "source_y": 358.8,
+      "target_y": 460.2
     },
     {
       "source": "month:2019-11",
@@ -491,7 +535,9 @@
       "strokeWidth": 1.2,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Nov -> SA"
+      "label": "Nov -> SA",
+      "source_y": 368.7,
+      "target_y": 513.9
     },
     {
       "source": "month:2019-11",
@@ -501,7 +547,9 @@
       "strokeWidth": 3.6,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Nov -> VIC"
+      "label": "Nov -> VIC",
+      "source_y": 371.1,
+      "target_y": 553.5
     },
     {
       "source": "month:2019-12",
@@ -511,7 +559,9 @@
       "strokeWidth": 13.87,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Dec -> NSW"
+      "label": "Dec -> NSW",
+      "source_y": 395.5,
+      "target_y": 97.1
     },
     {
       "source": "month:2019-12",
@@ -521,7 +571,9 @@
       "strokeWidth": 28.1,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Dec -> QLD"
+      "label": "Dec -> QLD",
+      "source_y": 416.5,
+      "target_y": 230.7
     },
     {
       "source": "month:2019-12",
@@ -531,7 +583,9 @@
       "strokeWidth": 36.47,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Dec -> WA"
+      "label": "Dec -> WA",
+      "source_y": 448.8,
+      "target_y": 364.1
     },
     {
       "source": "month:2019-12",
@@ -541,7 +595,9 @@
       "strokeWidth": 18.91,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Dec -> NT"
+      "label": "Dec -> NT",
+      "source_y": 476.5,
+      "target_y": 479.0
     },
     {
       "source": "month:2019-12",
@@ -551,7 +607,9 @@
       "strokeWidth": 2.79,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Dec -> SA"
+      "label": "Dec -> SA",
+      "source_y": 487.4,
+      "target_y": 515.9
     },
     {
       "source": "month:2019-12",
@@ -561,7 +619,9 @@
       "strokeWidth": 5.31,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Dec -> VIC"
+      "label": "Dec -> VIC",
+      "source_y": 491.4,
+      "target_y": 557.9
     },
     {
       "source": "month:2020-01",
@@ -571,7 +631,9 @@
       "strokeWidth": 13.42,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Jan -> NSW"
+      "label": "Jan -> NSW",
+      "source_y": 516.8,
+      "target_y": 110.8
     },
     {
       "source": "month:2020-01",
@@ -581,7 +643,9 @@
       "strokeWidth": 21.52,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Jan -> QLD"
+      "label": "Jan -> QLD",
+      "source_y": 534.2,
+      "target_y": 255.5
     },
     {
       "source": "month:2020-01",
@@ -591,7 +655,9 @@
       "strokeWidth": 9.01,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Jan -> WA"
+      "label": "Jan -> WA",
+      "source_y": 549.5,
+      "target_y": 386.9
     },
     {
       "source": "month:2020-01",
@@ -601,7 +667,9 @@
       "strokeWidth": 5.31,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Jan -> NT"
+      "label": "Jan -> NT",
+      "source_y": 556.7,
+      "target_y": 491.1
     },
     {
       "source": "month:2020-01",
@@ -611,7 +679,9 @@
       "strokeWidth": 1.26,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Jan -> SA"
+      "label": "Jan -> SA",
+      "source_y": 560.0,
+      "target_y": 518.0
     },
     {
       "source": "month:2020-01",
@@ -621,7 +691,9 @@
       "strokeWidth": 4.41,
       "color": "#e8c9a0",
       "type": "month-state",
-      "label": "Jan -> VIC"
+      "label": "Jan -> VIC",
+      "source_y": 562.8,
+      "target_y": 562.8
     },
     {
       "source": "state:NSW",
@@ -631,7 +703,9 @@
       "strokeWidth": 59.44,
       "color": "#ffd166",
       "type": "state-intensity",
-      "label": "NSW -> Low"
+      "label": "NSW -> Low",
+      "source_y": 64.7,
+      "target_y": 68.7
     },
     {
       "source": "state:NSW",
@@ -641,7 +715,9 @@
       "strokeWidth": 5.22,
       "color": "#f8961e",
       "type": "state-intensity",
-      "label": "NSW -> Moderate"
+      "label": "NSW -> Moderate",
+      "source_y": 97.0,
+      "target_y": 401.4
     },
     {
       "source": "state:NSW",
@@ -651,7 +727,9 @@
       "strokeWidth": 8.47,
       "color": "#f3722c",
       "type": "state-intensity",
-      "label": "NSW -> High"
+      "label": "NSW -> High",
+      "source_y": 103.9,
+      "target_y": 468.1
     },
     {
       "source": "state:NSW",
@@ -661,7 +739,9 @@
       "strokeWidth": 6.66,
       "color": "#d00000",
       "type": "state-intensity",
-      "label": "NSW -> Severe"
+      "label": "NSW -> Severe",
+      "source_y": 111.5,
+      "target_y": 528.1
     },
     {
       "source": "state:NSW",
@@ -671,7 +751,9 @@
       "strokeWidth": 2.7,
       "color": "#7f1d1d",
       "type": "state-intensity",
-      "label": "NSW -> Extreme"
+      "label": "NSW -> Extreme",
+      "source_y": 116.1,
+      "target_y": 557.6
     },
     {
       "source": "state:QLD",
@@ -681,7 +763,9 @@
       "strokeWidth": 109.06,
       "color": "#ffd166",
       "type": "state-intensity",
-      "label": "QLD -> Low"
+      "label": "QLD -> Low",
+      "source_y": 188.0,
+      "target_y": 153.0
     },
     {
       "source": "state:QLD",
@@ -691,7 +775,9 @@
       "strokeWidth": 14.41,
       "color": "#f8961e",
       "type": "state-intensity",
-      "label": "QLD -> Moderate"
+      "label": "QLD -> Moderate",
+      "source_y": 249.7,
+      "target_y": 411.2
     },
     {
       "source": "state:QLD",
@@ -701,7 +787,9 @@
       "strokeWidth": 8.19,
       "color": "#f3722c",
       "type": "state-intensity",
-      "label": "QLD -> High"
+      "label": "QLD -> High",
+      "source_y": 261.1,
+      "target_y": 476.4
     },
     {
       "source": "state:QLD",
@@ -711,7 +799,9 @@
       "strokeWidth": 1.2,
       "color": "#d00000",
       "type": "state-intensity",
-      "label": "QLD -> Severe"
+      "label": "QLD -> Severe",
+      "source_y": 265.7,
+      "target_y": 532.0
     },
     {
       "source": "state:QLD",
@@ -721,7 +811,9 @@
       "strokeWidth": 1.2,
       "color": "#7f1d1d",
       "type": "state-intensity",
-      "label": "QLD -> Extreme"
+      "label": "QLD -> Extreme",
+      "source_y": 266.9,
+      "target_y": 559.5
     },
     {
       "source": "state:WA",
@@ -731,7 +823,9 @@
       "strokeWidth": 77.9,
       "color": "#ffd166",
       "type": "state-intensity",
-      "label": "WA -> Low"
+      "label": "WA -> Low",
+      "source_y": 321.2,
+      "target_y": 246.4
     },
     {
       "source": "state:WA",
@@ -741,7 +835,9 @@
       "strokeWidth": 12.07,
       "color": "#f8961e",
       "type": "state-intensity",
-      "label": "WA -> Moderate"
+      "label": "WA -> Moderate",
+      "source_y": 366.2,
+      "target_y": 424.4
     },
     {
       "source": "state:WA",
@@ -751,7 +847,9 @@
       "strokeWidth": 15.31,
       "color": "#f3722c",
       "type": "state-intensity",
-      "label": "WA -> High"
+      "label": "WA -> High",
+      "source_y": 379.8,
+      "target_y": 488.2
     },
     {
       "source": "state:WA",
@@ -761,7 +859,9 @@
       "strokeWidth": 2.97,
       "color": "#d00000",
       "type": "state-intensity",
-      "label": "WA -> Severe"
+      "label": "WA -> Severe",
+      "source_y": 389.0,
+      "target_y": 534.1
     },
     {
       "source": "state:WA",
@@ -771,7 +871,9 @@
       "strokeWidth": 1.2,
       "color": "#7f1d1d",
       "type": "state-intensity",
-      "label": "WA -> Extreme"
+      "label": "WA -> Extreme",
+      "source_y": 391.1,
+      "target_y": 560.7
     },
     {
       "source": "state:NT",
@@ -781,7 +883,9 @@
       "strokeWidth": 63.22,
       "color": "#ffd166",
       "type": "state-intensity",
-      "label": "NT -> Low"
+      "label": "NT -> Low",
+      "source_y": 439.0,
+      "target_y": 317.0
     },
     {
       "source": "state:NT",
@@ -791,7 +895,9 @@
       "strokeWidth": 12.97,
       "color": "#f8961e",
       "type": "state-intensity",
-      "label": "NT -> Moderate"
+      "label": "NT -> Moderate",
+      "source_y": 477.1,
+      "target_y": 436.9
     },
     {
       "source": "state:NT",
@@ -801,7 +907,9 @@
       "strokeWidth": 8.74,
       "color": "#f3722c",
       "type": "state-intensity",
-      "label": "NT -> High"
+      "label": "NT -> High",
+      "source_y": 487.9,
+      "target_y": 500.2
     },
     {
       "source": "state:NT",
@@ -811,7 +919,9 @@
       "strokeWidth": 1.44,
       "color": "#d00000",
       "type": "state-intensity",
-      "label": "NT -> Severe"
+      "label": "NT -> Severe",
+      "source_y": 493.0,
+      "target_y": 536.3
     },
     {
       "source": "state:SA",
@@ -821,7 +931,9 @@
       "strokeWidth": 5.94,
       "color": "#ffd166",
       "type": "state-intensity",
-      "label": "SA -> Low"
+      "label": "SA -> Low",
+      "source_y": 512.7,
+      "target_y": 351.6
     },
     {
       "source": "state:SA",
@@ -831,7 +943,9 @@
       "strokeWidth": 1.2,
       "color": "#f8961e",
       "type": "state-intensity",
-      "label": "SA -> Moderate"
+      "label": "SA -> Moderate",
+      "source_y": 516.3,
+      "target_y": 444.0
     },
     {
       "source": "state:SA",
@@ -841,7 +955,9 @@
       "strokeWidth": 1.2,
       "color": "#f3722c",
       "type": "state-intensity",
-      "label": "SA -> High"
+      "label": "SA -> High",
+      "source_y": 517.5,
+      "target_y": 505.2
     },
     {
       "source": "state:SA",
@@ -851,7 +967,9 @@
       "strokeWidth": 1.2,
       "color": "#d00000",
       "type": "state-intensity",
-      "label": "SA -> Severe"
+      "label": "SA -> Severe",
+      "source_y": 518.7,
+      "target_y": 537.6
     },
     {
       "source": "state:SA",
@@ -861,7 +979,9 @@
       "strokeWidth": 1.2,
       "color": "#7f1d1d",
       "type": "state-intensity",
-      "label": "SA -> Extreme"
+      "label": "SA -> Extreme",
+      "source_y": 519.9,
+      "target_y": 561.9
     },
     {
       "source": "state:VIC",
@@ -871,7 +991,9 @@
       "strokeWidth": 26.21,
       "color": "#ffd166",
       "type": "state-intensity",
-      "label": "VIC -> Low"
+      "label": "VIC -> Low",
+      "source_y": 546.5,
+      "target_y": 367.7
     },
     {
       "source": "state:VIC",
@@ -881,7 +1003,9 @@
       "strokeWidth": 1.53,
       "color": "#f8961e",
       "type": "state-intensity",
-      "label": "VIC -> Moderate"
+      "label": "VIC -> Moderate",
+      "source_y": 560.4,
+      "target_y": 445.4
     },
     {
       "source": "state:VIC",
@@ -891,7 +1015,9 @@
       "strokeWidth": 1.8,
       "color": "#f3722c",
       "type": "state-intensity",
-      "label": "VIC -> High"
+      "label": "VIC -> High",
+      "source_y": 562.0,
+      "target_y": 506.7
     },
     {
       "source": "state:VIC",
@@ -901,7 +1027,9 @@
       "strokeWidth": 1.2,
       "color": "#d00000",
       "type": "state-intensity",
-      "label": "VIC -> Severe"
+      "label": "VIC -> Severe",
+      "source_y": 563.5,
+      "target_y": 538.8
     },
     {
       "source": "state:VIC",
@@ -911,7 +1039,9 @@
       "strokeWidth": 1.2,
       "color": "#7f1d1d",
       "type": "state-intensity",
-      "label": "VIC -> Extreme"
+      "label": "VIC -> Extreme",
+      "source_y": 564.7,
+      "target_y": 563.1
     }
   ]
 }

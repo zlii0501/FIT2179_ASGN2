@@ -1,10 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "description": "Month to state to FRP intensity alluvial diagram using precomputed static layout.",
-  "width": 940,
-  "height": 700,
-  "padding": { "left": 18, "right": 82, "top": 18, "bottom": 54 },
-  "autosize": { "type": "fit", "contains": "padding" },
+  "description": "Month to state to FRP intensity alluvial diagram — responsive column spacing.",
+  "width": 1100,
+  "height": 1050,
+  "padding": { "left": 8, "right": 40, "top": 10, "bottom": 18 },
+  "autosize": "none",
   "background": "transparent",
   "signals": [
     {
@@ -22,25 +22,86 @@
         { "events": "@node:mouseover", "update": "datum.id" },
         { "events": "@node:mouseout", "update": "null" }
       ]
-    }
+    },
+    { "name": "monthCX", "update": "width * 0.131" },
+    { "name": "stateCX", "update": "width * 0.500" },
+    { "name": "frpCX",   "update": "width * 0.890" },
+    { "name": "scaleY",  "update": "height / 700" },
+    { "name": "nodeHW",  "update": "round(11 * height / 700)" }
   ],
   "data": [
     {
       "name": "links",
-      "url": "data/alluvial_month_state_intensity.json?v=state-colors-20260524",
-      "format": { "type": "json", "property": "links" }
+      "url": "data/alluvial_month_state_intensity.json?v=fit-shell-20260524",
+      "format": { "type": "json", "property": "links" },
+      "transform": [
+        {
+          "type": "formula",
+          "as": "srcX1",
+          "expr": "datum.type === 'month-state' ? monthCX + nodeHW : stateCX + nodeHW"
+        },
+        {
+          "type": "formula",
+          "as": "tgtX0",
+          "expr": "datum.type === 'month-state' ? stateCX - nodeHW : frpCX - nodeHW"
+        },
+        {
+          "type": "formula",
+          "as": "midX",
+          "expr": "(datum.srcX1 + datum.tgtX0) / 2"
+        },
+        {
+          "type": "formula",
+          "as": "src_ys",
+          "expr": "datum.source_y * scaleY"
+        },
+        {
+          "type": "formula",
+          "as": "tgt_ys",
+          "expr": "datum.target_y * scaleY"
+        },
+        {
+          "type": "formula",
+          "as": "pathR",
+          "expr": "'M' + datum.srcX1 + ',' + datum.src_ys + ' C' + datum.midX + ',' + datum.src_ys + ' ' + datum.midX + ',' + datum.tgt_ys + ' ' + datum.tgtX0 + ',' + datum.tgt_ys"
+        },
+        {
+          "type": "formula",
+          "as": "strokeWidthR",
+          "expr": "max(1.2, datum.strokeWidth * scaleY)"
+        }
+      ]
     },
     {
       "name": "nodes",
-      "url": "data/alluvial_month_state_intensity.json?v=state-colors-20260524",
-      "format": { "type": "json", "property": "nodes" }
+      "url": "data/alluvial_month_state_intensity.json?v=fit-shell-20260524",
+      "format": { "type": "json", "property": "nodes" },
+      "transform": [
+        {
+          "type": "formula",
+          "as": "cx",
+          "expr": "datum.column === 'month' ? monthCX : datum.column === 'state' ? stateCX : frpCX"
+        },
+        { "type": "formula", "as": "x0r", "expr": "datum.cx - nodeHW" },
+        { "type": "formula", "as": "x1r", "expr": "datum.cx + nodeHW" },
+        { "type": "formula", "as": "y0s", "expr": "datum.y0 * scaleY" },
+        { "type": "formula", "as": "y1s", "expr": "datum.y1 * scaleY" },
+        { "type": "formula", "as": "ycs", "expr": "datum.yc * scaleY" }
+      ]
     },
     {
       "name": "columns",
       "values": [
-        { "x": 110, "label": "MONTH" },
-        { "x": 420, "label": "STATE" },
-        { "x": 710, "label": "FRP INTENSITY" }
+        { "label": "MONTH",         "colKey": "month" },
+        { "label": "STATE",         "colKey": "state" },
+        { "label": "FRP INTENSITY", "colKey": "intensity" }
+      ],
+      "transform": [
+        {
+          "type": "formula",
+          "as": "xr",
+          "expr": "datum.colKey === 'month' ? monthCX : datum.colKey === 'state' ? stateCX : frpCX"
+        }
       ]
     }
   ],
@@ -50,16 +111,18 @@
       "from": { "data": "columns" },
       "encode": {
         "enter": {
-          "x": { "field": "x" },
           "y": { "value": -2 },
           "text": { "field": "label" },
           "align": { "value": "center" },
           "baseline": { "value": "top" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 12 },
+          "fontSize": { "value": 19 },
           "fontWeight": { "value": "bold" },
-          "letterSpacing": { "value": 1.6 },
+          "letterSpacing": { "value": 2.5 },
           "fill": { "value": "#b8956a" }
+        },
+        "update": {
+          "x": { "field": "xr" }
         }
       }
     },
@@ -69,9 +132,8 @@
       "from": { "data": "links" },
       "encode": {
         "enter": {
-          "path": { "field": "path" },
           "stroke": { "field": "color" },
-          "strokeWidth": { "field": "strokeWidth" },
+          "strokeWidth": { "field": "strokeWidthR" },
           "strokeCap": { "value": "butt" },
           "fill": { "value": null },
           "aria": { "value": true },
@@ -83,6 +145,7 @@
           }
         },
         "update": {
+          "path": { "field": "pathR" },
           "strokeOpacity": [
             {
               "test": "hoverLink && datum.source === hoverLink.source && datum.target === hoverLink.target",
@@ -121,10 +184,6 @@
       "from": { "data": "nodes" },
       "encode": {
         "enter": {
-          "x": { "field": "x0" },
-          "x2": { "field": "x1" },
-          "y": { "field": "y0" },
-          "y2": { "field": "y1" },
           "cornerRadius": { "value": 3 },
           "fill": { "field": "color" },
           "stroke": { "value": "rgba(240,220,192,0.28)" },
@@ -138,6 +197,10 @@
           }
         },
         "update": {
+          "x": { "field": "x0r" },
+          "x2": { "field": "x1r" },
+          "y": { "field": "y0s" },
+          "y2": { "field": "y1s" },
           "fillOpacity": [
             { "test": "hoverNode === datum.id", "value": 1 },
             { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
@@ -152,17 +215,17 @@
       "from": { "data": "nodes" },
       "encode": {
         "enter": {
-          "x": { "signal": "datum.column === 'intensity' ? datum.x1 + 8 : datum.x0 - 8" },
-          "y": { "field": "yc" },
           "text": { "field": "label" },
-          "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "baseline": { "value": "middle" },
           "font": { "value": "Georgia" },
-          "fontSize": { "value": 12 },
+          "fontSize": { "value": 20 },
           "fontWeight": { "value": "bold" },
           "fill": { "value": "#f0dcc0" }
         },
         "update": {
+          "x": { "signal": "datum.column === 'intensity' ? datum.x1r + 8 : datum.x0r - 8" },
+          "y": { "field": "ycs" },
+          "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "fillOpacity": [
             { "test": "hoverNode === datum.id", "value": 1 },
             { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
@@ -177,16 +240,16 @@
       "from": { "data": "nodes" },
       "encode": {
         "enter": {
-          "x": { "signal": "datum.column === 'intensity' ? datum.x1 + 8 : datum.x0 - 8" },
-          "y": { "signal": "datum.yc + 14" },
           "text": { "signal": "format(datum.count, ',')" },
-          "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "baseline": { "value": "middle" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 10 },
+          "fontSize": { "value": 16 },
           "fill": { "value": "#9ca3af" }
         },
         "update": {
+          "x": { "signal": "datum.column === 'intensity' ? datum.x1r + 8 : datum.x0r - 8" },
+          "y": { "signal": "datum.ycs + 27" },
+          "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "fillOpacity": [
             { "test": "datum.column === 'state'", "value": 0 },
             { "test": "hoverNode === datum.id", "value": 1 },
