@@ -203,18 +203,29 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor('#060a12');
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.95;
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.target.set(0, 0, 0);
     controls.update();
 
-    // Ambient fill
-    const ambient = new THREE.AmbientLight('#ffffff', 0.7);
+    // Soft fill so shadow areas never go pure black
+    const ambient = new THREE.AmbientLight('#ffffff', 0.30);
     scene.add(ambient);
 
-    // Warm point light over the NSW coast fire cluster
-    const fireLight = new THREE.PointLight('#f97316', 1.5);
+    // Sky (pale blue) → ground (warm earth) hemisphere tint
+    const hemi = new THREE.HemisphereLight('#c8d8ff', '#5a3510', 0.55);
+    scene.add(hemi);
+
+    // Directional sun from the northeast at a low-ish angle (mimics late afternoon)
+    const sun = new THREE.DirectionalLight('#ffe4b0', 1.6);
+    sun.position.set(1.4, 2.2, 0.9);
+    scene.add(sun);
+
+    // Warm fire glow over the NSW coast cluster
+    const fireLight = new THREE.PointLight('#f97316', 1.4);
     fireLight.position.set(0.9, 0.8, -0.3);
     scene.add(fireLight);
 
@@ -223,9 +234,9 @@
      * ------------------------------------------------------------------ */
     const oceanGeo = new THREE.PlaneGeometry(6, 6);
     const oceanMat = new THREE.MeshStandardMaterial({
-      color: '#060a12',
-      roughness: 1,
-      metalness: 0
+      color: '#0a1a2e',
+      roughness: 0.55,
+      metalness: 0.15
     });
     const ocean = new THREE.Mesh(oceanGeo, oceanMat);
     ocean.rotation.x = -Math.PI / 2;
@@ -318,11 +329,10 @@
     }
 
     function heightToColor(h) {
-      // Thresholds tuned to real DEM with 0.8 scale: h=0.8 → 1918m
-      if (h < 0.04)  return new THREE.Color('#6aaa55'); // 0-96m   coastal green
-      if (h < 0.12)  return new THREE.Color('#c87c38'); // 96-288m  outback ochre
-      if (h < 0.25)  return new THREE.Color('#a06030'); // 288-600m highlands brown
-      return new THREE.Color('#c8a060');                // peaks — GDR / Snowy tan
+      if (h < 0.04)  return new THREE.Color('#78c060'); // coastal plains green
+      if (h < 0.12)  return new THREE.Color('#d68840'); // outback ochre
+      if (h < 0.25)  return new THREE.Color('#b07040'); // highlands brown
+      return new THREE.Color('#d8b870');                // peaks — GDR / Snowy tan
     }
 
     /* ------------------------------------------------------------------ *
@@ -575,7 +585,7 @@
       const material = new THREE.MeshStandardMaterial({
         vertexColors: true,
         flatShading: true,
-        roughness: 0.9,
+        roughness: 0.75,
         metalness: 0,
         side: THREE.DoubleSide
       });
@@ -740,7 +750,7 @@
 
         const dotMat = new THREE.PointsMaterial({
           vertexColors: true,
-          size: 0.008,
+          size: 0.013,
           sizeAttenuation: true
         });
 
