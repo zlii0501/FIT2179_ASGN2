@@ -216,7 +216,7 @@
       "from": { "data": "nodes" },
       "encode": {
         "enter": {
-          "text": { "field": "label" },
+          "text": { "signal": "datum.column === 'intensity' ? datum.label + ' ' + format(datum.count, ',') : datum.label" },
           "baseline": { "value": "middle" },
           "font": { "value": "Georgia" },
           "fontSize": { "value": 11.6 },
@@ -252,7 +252,7 @@
           "y": { "signal": "datum.ycs + 9.5" },
           "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "fillOpacity": [
-            { "test": "datum.column === 'state'", "value": 0 },
+            { "test": "datum.column === 'state' || datum.column === 'intensity'", "value": 0 },
             { "test": "hoverNode === datum.id", "value": 1 },
             { "test": "hoverLink && (datum.id === hoverLink.source || datum.id === hoverLink.target)", "value": 1 },
             { "test": "hoverNode || hoverLink", "value": 0.35 },
