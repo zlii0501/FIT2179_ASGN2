@@ -324,14 +324,16 @@
       const v01 = demPixels[(r0+1) * DEM_W + c0],   v11 = demPixels[(r0+1) * DEM_W + c0 + 1];
       // Scale to real-world proportions.
       // Map width ≈ 4100 km → 1 world unit = 2050 km.
-      // True 1:1 for 1918 m max = 0.000935 units; ×50 exaggeration = 0.047.
-      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.047;
+      // True 1:1 for 1918 m max = 0.000935 units; ×150 exaggeration = 0.14.
+      return (v00*(1-fc)*(1-fr) + v10*fc*(1-fr) + v01*(1-fc)*fr + v11*fc*fr) * 0.14;
     }
 
     function heightToColor(h) {
-      if (h < 0.04)  return new THREE.Color('#78c060'); // coastal plains green
-      if (h < 0.12)  return new THREE.Color('#d68840'); // outback ochre
-      if (h < 0.25)  return new THREE.Color('#b07040'); // highlands brown
+      // Thresholds calibrated to multiplier 0.14 (max world-h ≈ 0.14):
+      // 0.014 ≈ 200 m, 0.044 ≈ 600 m, 0.088 ≈ 1200 m
+      if (h < 0.014) return new THREE.Color('#78c060'); // coastal plains green
+      if (h < 0.044) return new THREE.Color('#d68840'); // outback ochre
+      if (h < 0.088) return new THREE.Color('#b07040'); // highlands brown
       return new THREE.Color('#d8b870');                // peaks — GDR / Snowy tan
     }
 

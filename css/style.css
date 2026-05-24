@@ -372,7 +372,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   flex-wrap: wrap;
   gap: 0.4rem 0.55rem;
   font-family: -apple-system, sans-serif;
-  font-size: clamp(0.94rem, 1.25vw, 1.08rem);
+  font-size: clamp(0.84rem, 1.08vw, 0.98rem);
   font-weight: 800;
   letter-spacing: 0;
   text-transform: none;
@@ -397,7 +397,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   background: rgba(248,150,30,0.08);
   color: #ffd89a;
   font-family: 'Courier New', monospace;
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1;
@@ -1077,7 +1077,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   gap: 0.35rem 0.5rem;
   margin: 0 0 0.55rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0;
   line-height: 1.18;
@@ -1124,7 +1124,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-comparison-title .chart-title-text > span:last-child {
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 650;
 }
 

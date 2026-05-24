@@ -26,8 +26,8 @@
     { "name": "monthCX", "update": "width * 0.131" },
     { "name": "stateCX", "update": "width * 0.500" },
     { "name": "frpCX",   "update": "width * 0.890" },
-    { "name": "plotTop", "update": "4" },
-    { "name": "plotScaleY", "update": "(height - 20) / 530" },
+    { "name": "plotTop", "update": "16" },
+    { "name": "plotScaleY", "update": "(height - 32) / 530" },
     { "name": "nodeHW",  "update": "round(10 * height / 610)" }
   ],
   "data": [
@@ -112,7 +112,7 @@
       "from": { "data": "columns" },
       "encode": {
         "enter": {
-          "y": { "value": -2 },
+          "y": { "value": -8 },
           "text": { "field": "label" },
           "align": { "value": "center" },
           "baseline": { "value": "top" },
