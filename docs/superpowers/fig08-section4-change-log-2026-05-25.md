@@ -30,9 +30,11 @@ The layout requirements file was treated as a completed quality baseline, not a 
 - Expanded Fig. 14 calendar filtering, labels, and selected window opacity to six months.
 - Updated comparison JS chips and label calculations so the displayed window now ends in Jan instead of Nov.
 - Updated script/spec cache-busting query strings for changed assets.
+- Added fixed mobile chart heights for Fig. 08 and Fig. 11 to prevent flex/ResizeObserver height feedback loops.
+- Expanded the Fig. 14/15 timeline handle hit area without changing the visible control size.
 
 ## Verification Notes
 
 - JSON validation passed for all touched Vega/Vega-Lite specs.
 - `git diff --check` passed for the edited files.
-- Browser screenshot regression is required after these edits and should check desktop and mobile views for Fig. 08 and all Chapter 4 figures.
+- Browser screenshot regression checked desktop and mobile views after the follow-up mobile sizing fix.

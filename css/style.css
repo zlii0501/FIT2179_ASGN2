@@ -2085,6 +2085,13 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   box-shadow: 0 0 0 3px rgba(255,255,255,0.08), 0 8px 18px rgba(0,0,0,0.32);
 }
 
+.calendar-handle::before {
+  content: '';
+  position: absolute;
+  inset: -11px;
+  border-radius: 50%;
+}
+
 .calendar-timeline.handles-overlap .calendar-handle-a {
   transform: translateX(-82%);
 }
@@ -2917,6 +2924,18 @@ input[type=range] {
 
   .fig10-chart-shell {
     flex: 0 0 380px;
+  }
+
+  #viz-bubble {
+    flex: 0 0 270px;
+    height: 270px;
+    overflow: hidden;
+  }
+
+  #viz-annual-area {
+    flex: 0 0 300px;
+    height: 300px;
+    overflow: hidden;
   }
 
   .month-controls {
