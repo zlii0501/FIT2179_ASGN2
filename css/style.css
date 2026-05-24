@@ -15,6 +15,7 @@
   --fire-glow: rgba(255,100,0,0.15);
   --page-max:  1240px;
   --page-pad:  2rem;
+  --paragraph-font-size: 0.72rem;
 }
 
 html { scroll-behavior: smooth; }
@@ -2855,4 +2856,16 @@ input[type=range] {
   text-transform: uppercase;
   letter-spacing: 1px;
   line-height: 1.35;
+}
+
+/* === UNIFIED PARAGRAPH SIZE === */
+p.chapter-narrative.chapter-narrative,
+p.chart-annotation.chart-annotation,
+p.chart-annotation.compact-p.compact-p,
+.fig09-copy p.chart-annotation.chart-annotation,
+.fig10-copy p.chart-annotation.chart-annotation,
+p.fig-comparison-note.fig-comparison-note,
+p.fig01-ann-intro.fig01-ann-intro,
+p.fig01-ann-analysis.fig01-ann-analysis {
+  font-size: var(--paragraph-font-size);
 }
