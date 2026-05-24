@@ -11,7 +11,7 @@ embedChartFitHeight('#viz-daynight', 'vega/07_daynight_bullet.json?v=fit-height-
 embedChart('#viz-bubble', 'vega/11_bubble.json?v=card-fit-20260521', embedOpts);
 
 /* VIZ 16 — Month -> State -> Intensity Alluvial (Vega spec loaded from file) */
-embedChartFitSize('#viz-alluvial', 'vega/16_state_month_intensity_alluvial.json?v=fit-shell-20260524', embedOpts, {
+embedChartFitSize('#viz-alluvial', 'vega/16_state_month_intensity_alluvial.json?v=text-sm-wider-20260524', embedOpts, {
   minWidth: 520,
   minHeight: 260
 });

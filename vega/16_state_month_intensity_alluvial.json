@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "description": "Month to state to FRP intensity alluvial diagram — responsive column spacing.",
-  "width": 1100,
+  "width": 1210,
   "height": 1050,
   "padding": { "left": 8, "right": 40, "top": 10, "bottom": 18 },
   "autosize": "none",
@@ -26,8 +26,8 @@
     { "name": "monthCX", "update": "width * 0.131" },
     { "name": "stateCX", "update": "width * 0.500" },
     { "name": "frpCX",   "update": "width * 0.890" },
-    { "name": "scaleY",  "update": "height / 700" },
-    { "name": "nodeHW",  "update": "round(11 * height / 700)" }
+    { "name": "scaleY",  "update": "height / 610" },
+    { "name": "nodeHW",  "update": "round(10 * height / 610)" }
   ],
   "data": [
     {
@@ -116,7 +116,7 @@
           "align": { "value": "center" },
           "baseline": { "value": "top" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 19 },
+          "fontSize": { "value": 15 },
           "fontWeight": { "value": "bold" },
           "letterSpacing": { "value": 2.5 },
           "fill": { "value": "#b8956a" }
@@ -218,7 +218,7 @@
           "text": { "field": "label" },
           "baseline": { "value": "middle" },
           "font": { "value": "Georgia" },
-          "fontSize": { "value": 20 },
+          "fontSize": { "value": 15 },
           "fontWeight": { "value": "bold" },
           "fill": { "value": "#f0dcc0" }
         },
@@ -243,12 +243,12 @@
           "text": { "signal": "format(datum.count, ',')" },
           "baseline": { "value": "middle" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 16 },
+          "fontSize": { "value": 12 },
           "fill": { "value": "#9ca3af" }
         },
         "update": {
           "x": { "signal": "datum.column === 'intensity' ? datum.x1r + 8 : datum.x0r - 8" },
-          "y": { "signal": "datum.ycs + 27" },
+          "y": { "signal": "datum.ycs + 19" },
           "align": { "signal": "datum.column === 'intensity' ? 'left' : 'right'" },
           "fillOpacity": [
             { "test": "datum.column === 'state'", "value": 0 },

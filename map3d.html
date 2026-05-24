@@ -867,7 +867,9 @@
       const MIN_PHI       = 5  * Math.PI / 180;
       const MAX_PHI       = 85 * Math.PI / 180;
       const PINCH_THRESH  = 0.12;   // thumb-index distance below this = pinching
-      const K_PAN         = 1.8;    // pan speed (scales with camRadius)
+      const K_PAN         = 2.5;    // pan left/right speed (scales with camRadius)
+      const K_PAN_V       = 3.5;    // pan forward/back speed (larger: vertical hand range is smaller)
+      const PAN_DEAD      = 0.004;  // per-frame deadband — ignore sub-threshold jitter
       const PAN_LIMIT     = 1.5;    // max orbit-center offset from origin
 
       // Camera spherical coords, initialised from scene camera
@@ -921,10 +923,9 @@
         return Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
       }
 
-      // Point: only index finger extended, others curled
+      // Point: index extended; ring + pinky curled (middle allowed either way)
       function isPointing(lm) {
         return lm[8].y  < lm[6].y  &&   // index extended
-               lm[12].y > lm[10].y &&   // middle curled
                lm[16].y > lm[14].y &&   // ring curled
                lm[20].y > lm[18].y;     // pinky curled
       }
@@ -973,13 +974,18 @@
           if (p_ptX !== null) {
             const dx = e_ptX - p_ptX;
             const dy = e_ptY - p_ptY;
-            const speed = camRadius * K_PAN;
-            // Camera right and forward vectors projected onto XZ plane
-            const rX =  Math.cos(camTheta), rZ = -Math.sin(camTheta);
-            const fX = -Math.sin(camTheta), fZ = -Math.cos(camTheta);
-            panX += dx * speed * rX - dy * speed * fX;
-            panZ += dx * speed * rZ - dy * speed * fZ;
-            updateCamera();
+            // Deadband: skip sub-threshold micro-movements
+            const adx = Math.abs(dx), ady = Math.abs(dy);
+            if (adx > PAN_DEAD || ady > PAN_DEAD) {
+              // Camera right and forward vectors projected onto XZ plane
+              const rX =  Math.cos(camTheta), rZ = -Math.sin(camTheta);
+              const fX = -Math.sin(camTheta), fZ = -Math.cos(camTheta);
+              const sH = camRadius * K_PAN;    // horizontal speed
+              const sV = camRadius * K_PAN_V;  // vertical (fwd/back) speed
+              panX += (adx > PAN_DEAD ? dx * sH * rX : 0) - (ady > PAN_DEAD ? dy * sV * fX : 0);
+              panZ += (adx > PAN_DEAD ? dx * sH * rZ : 0) - (ady > PAN_DEAD ? dy * sV * fZ : 0);
+              updateCamera();
+            }
           }
           p_ptX = e_ptX; p_ptY = e_ptY;
           p_palmX = null; p_palmY = null;
