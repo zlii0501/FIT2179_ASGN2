@@ -869,8 +869,6 @@
       const PINCH_THRESH  = 0.12;   // thumb-index distance below this = pinching
       const K_PAN         = 2.5;    // left/right pan speed (delta-based)
       const PAN_DEAD      = 0.004;  // horizontal deadband
-      const K_PAN_FWD     = 0.025;  // forward/back velocity gain per frame
-      const FWD_DEAD      = 0.12;   // Y dead-zone around 0.5 — no fwd/back in this band
       const PAN_LIMIT     = 1.5;    // max orbit-center offset from origin
 
       // Camera spherical coords, initialised from scene camera
@@ -972,11 +970,10 @@
           // ── ☝️ Point → pan orbit center in map plane ──────────
           e_ptX = ema(e_ptX, lm[9].x);
           e_ptY = ema(e_ptY, lm[9].y);
-          // Camera axes in XZ plane
-          const rX =  Math.cos(camTheta), rZ = -Math.sin(camTheta); // right
-          const fX = -Math.sin(camTheta), fZ = -Math.cos(camTheta); // forward
+          // Camera right vector in XZ plane
+          const rX =  Math.cos(camTheta), rZ = -Math.sin(camTheta);
 
-          // ── Left / right: delta-based ──────────────────────────
+          // Left/right: delta-based
           if (p_ptX !== null) {
             const dx = e_ptX - p_ptX;
             if (Math.abs(dx) > PAN_DEAD) {
@@ -985,22 +982,10 @@
             }
           }
 
-          // ── Forward / back: velocity from hand Y position ──────
-          // Hand raised above center (y < 0.5-FWD_DEAD) → move forward continuously.
-          // Hand lowered below center (y > 0.5+FWD_DEAD) → move backward.
-          // Dead zone in middle prevents drift when hand is roughly level.
-          const yDev = e_ptY - 0.5;
-          if (Math.abs(yDev) > FWD_DEAD) {
-            const vel = -(yDev - Math.sign(yDev) * FWD_DEAD) * K_PAN_FWD * camRadius;
-            panX += vel * fX;
-            panZ += vel * fZ;
-          }
-
           updateCamera();
-          const fwdHint = yDev < -FWD_DEAD ? ' ↑fwd' : yDev > FWD_DEAD ? ' ↓back' : '';
           p_ptX = e_ptX; p_ptY = e_ptY;
           p_palmX = null; p_palmY = null;
-          setStatus(`☝️ Pan${fwdHint}`, '#a78bfa');
+          setStatus('☝️ Pan', '#a78bfa');
 
         } else if (e_pinch < PINCH_THRESH) {
           // ── 🤏 Pinch → continuous velocity zoom ───────────────
