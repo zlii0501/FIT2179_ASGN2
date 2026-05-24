@@ -222,7 +222,7 @@
             "range": ["#f8961e", "#e74c3c", "#7f1d1d"]
           },
           "legend": {
-            "title": "Black Summer vs monthly median",
+            "title": "Times median",
             "orient": "bottom",
             "gradientLength": 180
           }

@@ -10,18 +10,26 @@
     { "name": "labelA1", "value": "Sep" },
     { "name": "labelA2", "value": "Oct" },
     { "name": "labelA3", "value": "Nov" },
+    { "name": "labelA4", "value": "Dec" },
+    { "name": "labelA5", "value": "Jan 2020" },
     { "name": "labelB0", "value": "Aug 2018" },
     { "name": "labelB1", "value": "Sep" },
     { "name": "labelB2", "value": "Oct" },
     { "name": "labelB3", "value": "Nov" },
+    { "name": "labelB4", "value": "Dec" },
+    { "name": "labelB5", "value": "Jan 2019" },
     { "name": "labelWeekA0", "value": 0 },
     { "name": "labelWeekA1", "value": 5 },
     { "name": "labelWeekA2", "value": 9 },
     { "name": "labelWeekA3", "value": 13 },
+    { "name": "labelWeekA4", "value": 18 },
+    { "name": "labelWeekA5", "value": 22 },
     { "name": "labelWeekB0", "value": 0 },
     { "name": "labelWeekB1", "value": 4 },
     { "name": "labelWeekB2", "value": 9 },
-    { "name": "labelWeekB3", "value": 13 }
+    { "name": "labelWeekB3", "value": 13 },
+    { "name": "labelWeekB4", "value": 17 },
+    { "name": "labelWeekB5", "value": 22 }
   ],
   "transform": [
     {
@@ -43,7 +51,7 @@
       "width": "container",
       "height": 118,
       "transform": [
-        { "filter": "datum.day_index >= gridStartA && datum.day_index < gridStartA + 126" },
+        { "filter": "datum.day_index >= gridStartA && datum.day_index < gridStartA + 189" },
         { "calculate": "datum.day_index - gridStartA", "as": "window_day" },
         { "calculate": "floor(datum.window_day / 7)", "as": "window_week" },
         { "calculate": "datum.window_week < 10 ? '0' + datum.window_week : '' + datum.window_week", "as": "window_week_key" }
@@ -63,13 +71,14 @@
           "scale": {
             "domain": [
               "00","01","02","03","04","05","06","07","08","09",
-              "10","11","12","13","14","15","16","17"
+              "10","11","12","13","14","15","16","17","18","19",
+              "20","21","22","23","24","25","26"
             ]
           },
           "axis": {
             "labelAngle": 0,
             "labelOverlap": false,
-            "labelExpr": "datum.value === ((labelWeekA0 < 10 ? '0' : '') + labelWeekA0) ? labelA0 : datum.value === ((labelWeekA1 < 10 ? '0' : '') + labelWeekA1) ? labelA1 : datum.value === ((labelWeekA2 < 10 ? '0' : '') + labelWeekA2) ? labelA2 : datum.value === ((labelWeekA3 < 10 ? '0' : '') + labelWeekA3) ? labelA3 : ''"
+            "labelExpr": "datum.value === ((labelWeekA0 < 10 ? '0' : '') + labelWeekA0) ? labelA0 : datum.value === ((labelWeekA1 < 10 ? '0' : '') + labelWeekA1) ? labelA1 : datum.value === ((labelWeekA2 < 10 ? '0' : '') + labelWeekA2) ? labelA2 : datum.value === ((labelWeekA3 < 10 ? '0' : '') + labelWeekA3) ? labelA3 : datum.value === ((labelWeekA4 < 10 ? '0' : '') + labelWeekA4) ? labelA4 : datum.value === ((labelWeekA5 < 10 ? '0' : '') + labelWeekA5) ? labelA5 : ''"
           }
         },
         "y": {
@@ -95,7 +104,7 @@
         },
         "opacity": {
           "condition": {
-            "test": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 122",
+            "test": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 184",
             "value": 0.95
           },
           "value": 0.2
@@ -120,7 +129,7 @@
       "width": "container",
       "height": 118,
       "transform": [
-        { "filter": "datum.day_index >= gridStartB && datum.day_index < gridStartB + 126" },
+        { "filter": "datum.day_index >= gridStartB && datum.day_index < gridStartB + 189" },
         { "calculate": "datum.day_index - gridStartB", "as": "window_day" },
         { "calculate": "floor(datum.window_day / 7)", "as": "window_week" },
         { "calculate": "datum.window_week < 10 ? '0' + datum.window_week : '' + datum.window_week", "as": "window_week_key" }
@@ -140,13 +149,14 @@
           "scale": {
             "domain": [
               "00","01","02","03","04","05","06","07","08","09",
-              "10","11","12","13","14","15","16","17"
+              "10","11","12","13","14","15","16","17","18","19",
+              "20","21","22","23","24","25","26"
             ]
           },
           "axis": {
             "labelAngle": 0,
             "labelOverlap": false,
-            "labelExpr": "datum.value === ((labelWeekB0 < 10 ? '0' : '') + labelWeekB0) ? labelB0 : datum.value === ((labelWeekB1 < 10 ? '0' : '') + labelWeekB1) ? labelB1 : datum.value === ((labelWeekB2 < 10 ? '0' : '') + labelWeekB2) ? labelB2 : datum.value === ((labelWeekB3 < 10 ? '0' : '') + labelWeekB3) ? labelB3 : ''"
+            "labelExpr": "datum.value === ((labelWeekB0 < 10 ? '0' : '') + labelWeekB0) ? labelB0 : datum.value === ((labelWeekB1 < 10 ? '0' : '') + labelWeekB1) ? labelB1 : datum.value === ((labelWeekB2 < 10 ? '0' : '') + labelWeekB2) ? labelB2 : datum.value === ((labelWeekB3 < 10 ? '0' : '') + labelWeekB3) ? labelB3 : datum.value === ((labelWeekB4 < 10 ? '0' : '') + labelWeekB4) ? labelB4 : datum.value === ((labelWeekB5 < 10 ? '0' : '') + labelWeekB5) ? labelB5 : ''"
           }
         },
         "y": {
@@ -172,7 +182,7 @@
         },
         "opacity": {
           "condition": {
-            "test": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 122",
+            "test": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 184",
             "value": 0.95
           },
           "value": 0.2

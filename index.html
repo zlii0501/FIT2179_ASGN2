@@ -156,15 +156,17 @@
         <div class="chart-card grid-span-4" data-layout-id="fig03-state-radar">
           <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile — relative footprint, energy, intensity, density and night activity</span></div>
           <div id="viz-state-radar"></div>
-          <div class="fig03b-state-legend" aria-label="State legend">
-            <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
-            <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
-            <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
-            <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
-            <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
-            <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
+          <div class="fig03b-caption-row">
+            <p class="chart-annotation compact-p">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
+            <div class="fig03b-state-legend" aria-label="State legend">
+              <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+              <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+              <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+              <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+              <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+              <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
+            </div>
           </div>
-          <p class="chart-annotation compact-p">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
         </div>
   </div>
 </section>
@@ -288,7 +290,12 @@
       <div class="chart-card grid-span-6" data-layout-id="fig08-bubble">
         <div class="chart-title"><span class="chart-number">Fig. 08</span><span class="chart-title-text">Where and when fires burned hottest — average fire intensity by state and month</span></div>
         <div id="viz-bubble"></div>
-        <p class="chart-annotation compact-p">Average intensity peaks in WA in Jan 2020 at 243.2 MW, while NSW carries the largest December detection load. Read colour as heat and each cell as a state-month snapshot of where fire power intensified.</p>
+        <div class="fig08-legend" aria-label="Fig. 08 legend">
+          <span><i class="fig08-size fig08-size-sm" aria-hidden="true"></i>Fewer detections</span>
+          <span><i class="fig08-size fig08-size-lg" aria-hidden="true"></i>More detections</span>
+          <span><i class="fig08-frp-ramp" aria-hidden="true"></i>Avg FRP low to high</span>
+        </div>
+        <p class="chart-annotation compact-p">Average intensity peaks in WA in Jan 2020 at 243.2 MW, while NSW carries the largest December detection load. Read colour as heat and bubble size as detections for each available state-month snapshot.</p>
       </div>
     <div class="chart-card grid-span-12 fig-09-wide-card" data-layout-id="fig09-alluvial">
       <div class="chart-title"><span class="chart-number">Fig. 09</span><span class="chart-title-text">Fire pathways &mdash; month to state to FRP intensity</span></div>
@@ -368,9 +375,9 @@
       </p>
     </div>
     <div class="chart-card grid-span-8" data-layout-id="fig11-annual-area">
-      <div class="chart-title"><span class="chart-number">Fig. 11</span><span class="chart-title-text">Estimated Fire Area by Season &mdash; 2019-20 dwarfs every prior year</span></div>
+      <div class="chart-title"><span class="chart-number">Fig. 11</span><span class="chart-title-text">Estimated Fire Area by Season &mdash; 2019-20 tops every prior year</span></div>
       <div id="viz-annual-area"></div>
-      <p class="chart-annotation">Each dot is one Aug-to-Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019-20 sits far above all others — a gap no previous season has come close to closing.</p>
+      <p class="chart-annotation">Each dot is one Aug-to-Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019-20 sits above the historical field, edging past the severe 2012-13 season rather than blending into the old range.</p>
     </div>
     <div class="chart-card grid-span-12" data-layout-id="fig12-raincloud">
       <div class="chart-title"><span class="chart-number">Fig. 12</span><span class="chart-title-text">Historical Distribution Raincloud &mdash; Black Summer against normal months</span></div>
@@ -381,7 +388,19 @@
         </div>
         <div id="viz-yearmonth-heat"></div>
       </div>
-      <p class="chart-annotation compact-p">Grey marks show each month's 2005-2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km2 against a historical December maximum of 28,469.3 km2.</p>
+      <div class="raincloud-caption-row">
+        <p id="raincloud-caption" class="chart-annotation compact-p">Grey marks show each month's 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².</p>
+        <div class="raincloud-legend" aria-label="Fig. 12 colour legend">
+          <div class="raincloud-legend-item">
+            <span class="raincloud-legend-swatch raincloud-legend-hist"></span>
+            Historical range (2005–18)
+          </div>
+          <div class="raincloud-legend-item">
+            <span class="raincloud-legend-swatch raincloud-legend-bs"></span>
+            Black Summer (2019–20)
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Hexbin map -->
     <div class="chart-card grid-span-12" data-layout-id="fig13-hexbin">
@@ -486,10 +505,10 @@
 <script src="js/vega-utils.js?v=fit-size-20260524"></script>
 <script src="js/basic-charts.js?v=state-hover-20260522"></script>
 <script src="js/month-explorer.js?v=fig05-firepower-bottom-20260523"></script>
-<script src="js/chart-embeds.js?v=intensity-inline-counts-20260524"></script>
-<script src="js/raincloud-detail.js?v=card-fit-20260521"></script>
+<script src="js/chart-embeds.js?v=fig08-section4-qa-20260525"></script>
+<script src="js/raincloud-detail.js?v=legend-caption-20260525"></script>
 <script src="js/hexbin-zoom.js?v=multi-fig-polish-20260522"></script>
-<script src="js/comparison.js?v=multi-fig-polish-20260522"></script>
+<script src="js/comparison.js?v=six-month-window-20260525"></script>
 
 </body>
 </html>

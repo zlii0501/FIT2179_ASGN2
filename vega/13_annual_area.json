@@ -65,7 +65,11 @@
       }
     },
     {
-      "transform": [{ "filter": "datum.is_black_summer" }],
+      "transform": [
+        {
+          "filter": "datum.is_black_summer === true || datum.is_black_summer === 'True'"
+        }
+      ],
       "mark": {
         "type": "text",
         "align": "left",

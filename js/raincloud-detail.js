@@ -2,9 +2,21 @@ const raincloudEl = document.getElementById('viz-yearmonth-heat');
 const raincloudToolbarEl = document.getElementById('raincloud-detail-toolbar');
 const raincloudBackEl = document.getElementById('raincloud-back');
 const raincloudTitleEl = document.getElementById('raincloud-detail-title');
+const raincloudCaptionEl = document.getElementById('raincloud-caption');
 let raincloudView = null;
 let raincloudMode = 'overview';
 let raincloudRenderToken = 0;
+
+const RAINCLOUD_CAPTION_OVERVIEW = 'Grey marks show each month’s 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².';
+
+function setRaincloudCaption(monthLabel) {
+  if (!raincloudCaptionEl) return;
+  if (!monthLabel) {
+    raincloudCaptionEl.textContent = RAINCLOUD_CAPTION_OVERVIEW;
+  } else {
+    raincloudCaptionEl.textContent = `Each dot is one year’s total fire area for ${monthLabel} across NSW, VIC, QLD, SA and TAS. Grey marks span the 2005–18 historical baseline; the red dot marks Black Summer’s ${monthLabel}. Click ‘Back to overview’ to compare all months.`;
+  }
+}
 
 function cloneSpec(spec) {
   return JSON.parse(JSON.stringify(spec));
@@ -31,7 +43,7 @@ async function swapRaincloud(makeSpec, afterEmbed) {
   if (raincloudEl) {
     raincloudEl.classList.add('is-raincloud-transitioning', 'is-raincloud-exit');
   }
-  await new Promise(resolve => window.setTimeout(resolve, reduceMotion ? 0 : 150));
+  await new Promise(resolve => window.setTimeout(resolve, reduceMotion ? 0 : 200));
   if (token !== raincloudRenderToken) return null;
 
   if (raincloudView) {
@@ -69,8 +81,9 @@ function attachRaincloudOverviewClick(view) {
 async function showRaincloudOverview() {
   raincloudMode = 'overview';
   setRaincloudToolbar(false);
+  setRaincloudCaption(null);
   await swapRaincloud(
-    () => 'vega/14_yearmonth_heat.json?v=card-fit-20260521',
+    () => 'vega/14_yearmonth_heat.json?v=times-median-20260525',
     attachRaincloudOverviewClick
   );
 }
@@ -78,7 +91,8 @@ async function showRaincloudOverview() {
 async function showRaincloudDetail(monthNum, monthLabel) {
   raincloudMode = 'detail';
   setRaincloudToolbar(true, monthLabel);
-  const response = await fetch('vega/14_yearmonth_detail.json?v=card-fit-20260521');
+  setRaincloudCaption(monthLabel);
+  const response = await fetch('vega/14_yearmonth_detail.json?v=detail-caption-20260525');
   const detailSpec = await response.json();
   await swapRaincloud(() => {
     const spec = cloneSpec(detailSpec);

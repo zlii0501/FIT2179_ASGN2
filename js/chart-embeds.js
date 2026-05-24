@@ -8,7 +8,10 @@ embedChartFitHeight('#viz-daynight', 'vega/07_daynight_bullet.json?v=fit-height-
 });
 
 /* VIZ 11 — Bubble Chart (loaded from file) */
-embedChart('#viz-bubble', 'vega/11_bubble.json?v=card-fit-20260521', embedOpts);
+embedChartFitHeight('#viz-bubble', 'vega/11_bubble.json?v=bubble-size-20260525', embedOpts, {
+  offset: 56,
+  minHeight: 260
+});
 
 /* VIZ 16 — Month -> State -> Intensity Alluvial (Vega spec loaded from file) */
 embedChartFitSize('#viz-alluvial', 'vega/16_state_month_intensity_alluvial.json?v=intensity-inline-counts-20260524', embedOpts, {
@@ -23,4 +26,7 @@ embedChartFitHeight('#viz-heatmatrix', 'vega/06_heatmatrix.json?v=fit-height-202
 });
 
 /* VIZ 9 — Hexbin map + state filter */
-embedChart('#viz-annual-area', 'vega/13_annual_area.json', embedOpts);
+embedChartFitHeight('#viz-annual-area', 'vega/13_annual_area.json?v=label-filter-20260525', embedOpts, {
+  offset: 58,
+  minHeight: 260
+});
