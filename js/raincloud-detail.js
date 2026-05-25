@@ -83,7 +83,7 @@ async function showRaincloudOverview() {
   setRaincloudToolbar(false);
   setRaincloudCaption(null);
   await swapRaincloud(
-    () => 'vega/14_yearmonth_heat.json?v=hierarchy-20260525',
+    () => 'vega/14_yearmonth_heat.json?v=fig12-stable-layout-20260525',
     attachRaincloudOverviewClick
   );
 }
@@ -92,7 +92,7 @@ async function showRaincloudDetail(monthNum, monthLabel) {
   raincloudMode = 'detail';
   setRaincloudToolbar(true, monthLabel);
   setRaincloudCaption(monthLabel);
-  const response = await fetch('vega/14_yearmonth_detail.json?v=detail-caption-20260525');
+  const response = await fetch('vega/14_yearmonth_detail.json?v=fig12-stable-layout-20260525');
   const detailSpec = await response.json();
   await swapRaincloud(() => {
     const spec = cloneSpec(detailSpec);

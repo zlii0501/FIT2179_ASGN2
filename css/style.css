@@ -1416,15 +1416,35 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   }
 }
 
+[data-layout-id="fig12-raincloud"] {
+  --raincloud-fixed-height: 286px;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.34fr) minmax(0, 1fr);
+  grid-template-areas:
+    "title title"
+    "copy chart";
+  column-gap: 1.1rem;
+  row-gap: 0.72rem;
+  align-items: stretch;
+}
+
+[data-layout-id="fig12-raincloud"] .chart-title {
+  grid-area: title;
+}
+
 .raincloud-shell {
+  grid-area: chart;
   position: relative;
   min-width: 0;
-  min-height: 272px;
+  height: var(--raincloud-fixed-height);
+  min-height: var(--raincloud-fixed-height);
+  overflow: hidden;
 }
 
 #viz-yearmonth-heat {
-  --raincloud-exit-y: -8px;
-  --raincloud-enter-y: 8px;
+  --raincloud-exit-y: 0;
+  --raincloud-enter-y: 0;
+  min-height: 100%;
   transform: translateY(0) scale(1);
   transform-origin: center top;
   opacity: 1;
@@ -1436,13 +1456,18 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   will-change: opacity, transform, filter;
 }
 
+#viz-yearmonth-heat.vega-embed,
+#viz-yearmonth-heat .vega-embed {
+  min-height: 100%;
+}
+
 #viz-yearmonth-heat.is-raincloud-transitioning {
   pointer-events: none;
 }
 
 #viz-yearmonth-heat.is-raincloud-exit {
   opacity: 0;
-  transform: translateY(var(--raincloud-exit-y)) scale(0.996);
+  transform: translateY(var(--raincloud-exit-y)) scale(1);
   filter: blur(4px);
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
@@ -1450,7 +1475,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 #viz-yearmonth-heat.is-raincloud-enter {
   opacity: 0;
-  transform: translateY(var(--raincloud-enter-y)) scale(0.996);
+  transform: translateY(var(--raincloud-enter-y)) scale(1);
   filter: blur(4px);
 }
 
@@ -1477,7 +1502,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .raincloud-detail-toolbar.is-raincloud-enter,
 .raincloud-detail-toolbar.is-raincloud-exit {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: none;
 }
 
 .raincloud-back {
@@ -1519,14 +1544,19 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .raincloud-caption-row {
+  grid-area: copy;
   display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  margin-top: 0.5rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+  height: var(--raincloud-fixed-height);
+  min-height: var(--raincloud-fixed-height);
+  margin-top: 0;
+  min-width: 0;
 }
 
 .raincloud-caption-row #raincloud-caption {
-  flex: 1 1 0;
+  flex: 0 1 auto;
   min-width: 0;
   margin: 0;
   padding: 0;
@@ -1537,6 +1567,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+  margin-top: auto;
   padding: 0.6rem 0.85rem;
   background: rgba(10,14,26,0.55);
   border: 1px solid rgba(255,255,255,0.07);
@@ -1553,6 +1584,32 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   gap: 0.55rem;
 }
 
+.raincloud-gradient-legend {
+  display: grid;
+  gap: 0.32rem;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.68rem;
+}
+
+.raincloud-gradient-legend i {
+  display: block;
+  width: 100%;
+  height: 12px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #f8d48a, #f97316, #dc2626, #7f1d1d);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.raincloud-gradient-legend b {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-dim);
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
 .raincloud-legend-swatch {
   display: inline-block;
   width: 28px;
@@ -1564,9 +1621,23 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .raincloud-legend-hist { background: #6b7280; }
 .raincloud-legend-bs   { background: #c0392b; }
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
+  [data-layout-id="fig12-raincloud"] {
+    --raincloud-fixed-height: 286px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "copy"
+      "chart";
+  }
+
   .raincloud-caption-row {
-    flex-direction: column;
+    height: auto;
+    min-height: 0;
+  }
+
+  .raincloud-legend {
+    margin-top: 0;
   }
 }
 

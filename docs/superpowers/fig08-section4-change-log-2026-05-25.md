@@ -49,3 +49,13 @@ The layout requirements file was treated as a completed quality baseline, not a 
 - Updated cache-busting query strings for the changed CSS, JS, and Vega assets.
 - Re-validated the touched JSON specs and ran `git diff --check`.
 - Browser screenshots checked Fig. 05, Fig. 08, Fig. 12, and Fig. 13 at desktop scale after the hierarchy pass.
+
+## Follow-up: Fig. 12 Stable Detail Layout
+
+- Reworked Fig. 12 into a stable two-column layout: the caption and legend occupy the left column, while the raincloud chart stays in the right column.
+- Fixed the Fig. 12 chart shell height so switching from overview to month detail does not resize the card or make surrounding content jump.
+- Moved the raincloud colour scale and range/Black Summer legend into the left column and pinned that legend block to the bottom so the explanatory diagram remains bottom-aligned beside the chart.
+- Kept the layout responsive by stacking the left copy/legend and chart on narrow screens while preserving a fixed chart height.
+- Removed the small vertical/scale motion from the overview/detail swap so the chart fades without visible jumping.
+- Tightened the fixed Fig. 12 content height to match the rendered graph height instead of leaving a taller empty card body.
+- Removed the Chapter 4 layout override that forced Fig. 12 to a 414px minimum card height, then tightened the following grid rows so Fig. 13 starts directly after the shorter card.

@@ -222,11 +222,7 @@
             "domain": [1, 8],
             "range": ["#f8d48a", "#f97316", "#dc2626", "#7f1d1d"]
           },
-          "legend": {
-            "title": "Times median",
-            "orient": "bottom",
-            "gradientLength": 180
-          }
+          "legend": null
         },
         "tooltip": [
           { "field": "year", "title": "Black Summer year" },

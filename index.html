@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=hierarchy-20260525">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=fig12-stable-layout-20260525">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=fig12-tight-card-20260525">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -391,6 +391,11 @@
       <div class="raincloud-caption-row">
         <p id="raincloud-caption" class="chart-annotation compact-p">Grey marks show each month's 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².</p>
         <div class="raincloud-legend" aria-label="Fig. 12 colour legend">
+          <div class="raincloud-gradient-legend" aria-label="Times median colour scale">
+            <span>Times median</span>
+            <i></i>
+            <b><span>1</span><span>8</span></b>
+          </div>
           <div class="raincloud-legend-item">
             <span class="raincloud-legend-swatch raincloud-legend-hist"></span>
             Historical range (2005–18)
@@ -506,7 +511,7 @@
 <script src="js/basic-charts.js?v=state-hover-20260522"></script>
 <script src="js/month-explorer.js?v=hierarchy-20260525"></script>
 <script src="js/chart-embeds.js?v=fig08-hierarchy-20260525"></script>
-<script src="js/raincloud-detail.js?v=fig12-hierarchy-20260525"></script>
+<script src="js/raincloud-detail.js?v=fig12-stable-layout-20260525"></script>
 <script src="js/hexbin-zoom.js?v=fig13-hierarchy-20260525"></script>
 <script src="js/comparison.js?v=six-month-window-20260525"></script>
 

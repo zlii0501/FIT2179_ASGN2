@@ -53,10 +53,7 @@
             "domain": ["Historical year", "Black Summer"],
             "range": ["rgba(156,163,175,0.62)", "#e74c3c"]
           },
-          "legend": {
-            "title": null,
-            "orient": "top-right"
-          }
+          "legend": null
         },
         "tooltip": [
           { "field": "year", "title": "Year" },
