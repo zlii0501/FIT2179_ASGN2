@@ -1417,7 +1417,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 [data-layout-id="fig12-raincloud"] {
-  --raincloud-fixed-height: 286px;
+  --raincloud-fixed-height: 255px;
   display: grid;
   grid-template-columns: minmax(230px, 0.34fr) minmax(0, 1fr);
   grid-template-areas:
@@ -1623,7 +1623,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 @media (max-width: 760px) {
   [data-layout-id="fig12-raincloud"] {
-    --raincloud-fixed-height: 286px;
+    --raincloud-fixed-height: 255px;
     grid-template-columns: 1fr;
     grid-template-areas:
       "title"

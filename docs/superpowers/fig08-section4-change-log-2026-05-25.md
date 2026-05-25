@@ -59,3 +59,4 @@ The layout requirements file was treated as a completed quality baseline, not a 
 - Removed the small vertical/scale motion from the overview/detail swap so the chart fades without visible jumping.
 - Tightened the fixed Fig. 12 content height to match the rendered graph height instead of leaving a taller empty card body.
 - Removed the Chapter 4 layout override that forced Fig. 12 to a 414px minimum card height, then tightened the following grid rows so Fig. 13 starts directly after the shorter card.
+- Reduced the Fig. 12 Vega view height and matching shell height so the graph container no longer leaves unused blank space below the plotted marks.

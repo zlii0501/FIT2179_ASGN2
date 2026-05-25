@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Stable raincloud-style distribution chart comparing Black Summer monthly fire area against historical months",
   "width": "container",
-  "height": 255,
+  "height": 230,
   "layer": [
     {
       "data": { "url": "data/hist_month_distribution.csv" },
