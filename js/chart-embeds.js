@@ -8,7 +8,7 @@ embedChartFitHeight('#viz-daynight', 'vega/07_daynight_bullet.json?v=fit-height-
 });
 
 /* VIZ 11 — Bubble Chart (loaded from file) */
-embedChartFitHeight('#viz-bubble', 'vega/11_bubble.json?v=bubble-size-20260525', embedOpts, {
+embedChartFitHeight('#viz-bubble', 'vega/11_bubble.json?v=hierarchy-20260525', embedOpts, {
   offset: 56,
   minHeight: 260
 });

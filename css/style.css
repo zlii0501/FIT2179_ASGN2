@@ -1022,8 +1022,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   flex: 0 0 auto;
   margin-right: 0.34rem;
   border-radius: 50%;
-  background: #cf7025;
-  box-shadow: 0 0 0 1px #0d1117;
+  background: #f97316;
+  box-shadow: 0 0 0 1px rgba(255,245,210,0.42), 0 0 10px rgba(249,115,22,0.18);
 }
 
 .fig08-size-sm {
@@ -1043,7 +1043,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   height: 0.58rem;
   margin-right: 0.34rem;
   border-radius: 999px;
-  background: linear-gradient(90deg, #e09848, #b85a22, #5a2410, #3d1a08);
+  background: linear-gradient(90deg, #9a6a37, #cf7025, #f97316, #dc2626, #f8d48a);
   box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
 }
 
@@ -2254,6 +2254,10 @@ input[type=range] {
   position: relative;
   overflow: hidden;
   min-width: 0;
+  background:
+    radial-gradient(circle at 72% 28%, rgba(248,150,30,0.08), transparent 38%),
+    linear-gradient(180deg, rgba(8,16,27,0.62), rgba(6,12,20,0.36));
+  border-radius: 6px;
 }
 
 .month-map-panel.is-zoom-active {

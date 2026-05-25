@@ -106,7 +106,7 @@ function animateHexbinSignals(view, targetSignals, duration, isCurrent) {
   });
 }
 
-embedChart('#viz-hexbin', 'vega/09_hexbin.json', embedOpts).then(result => {
+embedChart('#viz-hexbin', 'vega/09_hexbin.json?v=hierarchy-20260525', embedOpts).then(result => {
   const view = result.view;
   let activeState = 'ALL';
   let zoomToken = 0;

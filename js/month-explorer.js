@@ -187,9 +187,9 @@ function makeMonthInsetSpec(monthKey) {
         },
         "mark": {
           "type": "geoshape",
-          "fill": "#203748",
-          "stroke": "rgba(180,210,220,0.55)",
-          "strokeWidth": 0.8
+          "fill": "#152737",
+          "stroke": "rgba(180,210,220,0.38)",
+          "strokeWidth": 0.7
         }
       },
       {
@@ -201,7 +201,11 @@ function makeMonthInsetSpec(monthKey) {
             "as": "frp_bin"
           }
         ],
-        "mark": { "type": "circle" },
+        "mark": {
+          "type": "circle",
+          "stroke": "rgba(255,245,210,0.72)",
+          "strokeWidth": 0.35
+        },
         "encoding": {
           "longitude": { "field": "longitude", "type": "quantitative" },
           "latitude":  { "field": "latitude",  "type": "quantitative" },
@@ -228,10 +232,10 @@ function makeMonthInsetSpec(monthKey) {
               },
               {
                 "test": "hover_frp_bin === null",
-                "value": 0.76
+                "value": 0.82
               }
             ],
-            "value": 0.08
+            "value": 0.05
           },
           "tooltip": [
             { "field": "state",    "title": "State" },
@@ -269,9 +273,9 @@ const monthMapSpec = {
       },
       "mark": {
         "type": "geoshape",
-        "fill": "#182b3a",
-        "stroke": "rgba(180,210,220,0.55)",
-        "strokeWidth": 1
+        "fill": "#132433",
+        "stroke": "rgba(180,210,220,0.34)",
+        "strokeWidth": 0.85
       },
       "tooltip": [
         { "field": "properties.STATE_NAME", "title": "State" }
@@ -286,7 +290,11 @@ const monthMapSpec = {
           "as": "frp_bin"
         }
       ],
-      "mark": { "type": "circle" },
+      "mark": {
+        "type": "circle",
+        "stroke": "rgba(255,245,210,0.68)",
+        "strokeWidth": 0.32
+      },
       "encoding": {
         "longitude": { "field": "longitude", "type": "quantitative" },
         "latitude":  { "field": "latitude",  "type": "quantitative" },
@@ -312,10 +320,10 @@ const monthMapSpec = {
             },
             {
               "test": "hover_frp_bin === null",
-              "value": 0.72
+              "value": 0.82
             }
           ],
-          "value": 0.06
+          "value": 0.05
         },
         "tooltip": [
           { "field": "state",    "title": "State" },

@@ -102,13 +102,13 @@
       "name": "countColor",
       "type": "sqrt",
       "domain": [1, 41],
-      "range": ["#f6d89a", "#f59e0b", "#dc2626", "#7f1d1d"]
+      "range": ["#f8d48a", "#f97316", "#dc2626", "#7f1d1d"]
     },
     {
       "name": "fineCountColor",
       "type": "sqrt",
       "domain": [1, 22],
-      "range": ["#f6d89a", "#f59e0b", "#dc2626", "#7f1d1d"]
+      "range": ["#f8d48a", "#f97316", "#dc2626", "#7f1d1d"]
     }
   ],
   "marks": [
@@ -117,9 +117,9 @@
       "from": { "data": "states" },
       "encode": {
         "enter": {
-          "fill": { "value": "#162536" },
-          "stroke": { "value": "rgba(190,210,220,0.22)" },
-          "strokeWidth": { "value": 0.7 }
+          "fill": { "value": "#0f1c28" },
+          "stroke": { "value": "rgba(190,210,220,0.14)" },
+          "strokeWidth": { "value": 0.65 }
         }
       },
       "transform": [{ "type": "geoshape", "projection": "aus" }]
@@ -139,20 +139,20 @@
         },
         "update": {
           "fill": [
-            { "test": "datum.properties.count === 0", "value": "#203142" },
+            { "test": "datum.properties.count === 0", "value": "#172635" },
             { "scale": "countColor", "field": "properties.count" }
           ],
           "fillOpacity": [
-            { "test": "datum.properties.count === 0", "signal": "0.34 * coarseBinFade" },
-            { "signal": "0.94 * coarseBinFade" }
+            { "test": "datum.properties.count === 0", "signal": "0.18 * coarseBinFade" },
+            { "signal": "0.97 * coarseBinFade" }
           ],
           "stroke": [
-            { "test": "datum.properties.count === 0", "value": "rgba(190,210,220,0.18)" },
-            { "value": "rgba(17,24,39,0.78)" }
+            { "test": "datum.properties.count === 0", "value": "rgba(190,210,220,0.09)" },
+            { "value": "rgba(8,13,22,0.9)" }
           ],
           "strokeWidth": [
-            { "test": "datum.properties.count === 0", "value": 0.35 },
-            { "value": 0.25 }
+            { "test": "datum.properties.count === 0", "value": 0.3 },
+            { "value": 0.32 }
           ],
           "strokeOpacity": { "signal": "coarseBinFade" }
         }
@@ -174,15 +174,15 @@
         },
         "update": {
           "fill": [
-            { "test": "datum.properties.count === 0", "value": "#203142" },
+            { "test": "datum.properties.count === 0", "value": "#172635" },
             { "scale": "fineCountColor", "field": "properties.count" }
           ],
           "fillOpacity": [
-            { "signal": "(datum.properties.count === 0 ? 0.3 : 0.94) * (datum.properties.state === visibleStateB ? fineBinFadeB : fineBinFadeA)" }
+            { "signal": "(datum.properties.count === 0 ? 0.16 : 0.97) * (datum.properties.state === visibleStateB ? fineBinFadeB : fineBinFadeA)" }
           ],
           "stroke": [
-            { "test": "datum.properties.count === 0", "value": "rgba(190,210,220,0.16)" },
-            { "value": "rgba(17,24,39,0.74)" }
+            { "test": "datum.properties.count === 0", "value": "rgba(190,210,220,0.08)" },
+            { "value": "rgba(8,13,22,0.86)" }
           ],
           "strokeWidth": [
             { "test": "datum.properties.count === 0", "value": 0.22 },
@@ -200,8 +200,8 @@
       "encode": {
         "enter": {
           "fill": { "value": "transparent" },
-          "stroke": { "value": "rgba(210,225,230,0.38)" },
-          "strokeWidth": { "value": 0.75 }
+          "stroke": { "value": "rgba(210,225,230,0.26)" },
+          "strokeWidth": { "value": 0.65 }
         }
       },
       "transform": [{ "type": "geoshape", "projection": "aus" }]
@@ -309,12 +309,12 @@
         },
         "update": {
           "fill": [
-            { "test": "datum.empty", "value": "#203142" },
+            { "test": "datum.empty", "value": "#172635" },
             { "test": "binResolution === 'fine'", "scale": "fineCountColor", "field": "fineCount" },
             { "scale": "countColor", "field": "coarseCount" }
           ],
           "fillOpacity": [
-            { "test": "datum.empty", "value": 0.34 },
+            { "test": "datum.empty", "value": 0.24 },
             { "value": 1 }
           ]
         }

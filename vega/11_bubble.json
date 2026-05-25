@@ -13,9 +13,9 @@
   "mark": {
     "type": "circle",
     "filled": true,
-    "opacity": 0.9,
-    "stroke": "#0d1117",
-    "strokeWidth": 1.1
+    "opacity": 0.94,
+    "stroke": "rgba(255,245,210,0.58)",
+    "strokeWidth": 0.7
   },
   "encoding": {
     "x": {
@@ -54,7 +54,7 @@
       "scale": {
         "domain": [0, 250],
         "clamp": true,
-        "range": ["#e09848", "#cf7025", "#b85a22", "#8a3c12", "#5a2410", "#3d1a08"]
+        "range": ["#9a6a37", "#cf7025", "#f97316", "#dc2626", "#991b1b", "#f8d48a"]
       },
       "legend": null
     },

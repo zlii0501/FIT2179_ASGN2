@@ -38,3 +38,14 @@ The layout requirements file was treated as a completed quality baseline, not a 
 - JSON validation passed for all touched Vega/Vega-Lite specs.
 - `git diff --check` passed for the edited files.
 - Browser screenshot regression checked desktop and mobile views after the follow-up mobile sizing fix.
+
+## Follow-up: Colour Hierarchy and Figure-Ground
+
+- Verified Fig. 05 uses the `latitude` and `longitude` CSV fields expected by the Vega-Lite map encoding, then checked the point map in browser so detections land on the Australia basemap.
+- Strengthened Fig. 05 figure-ground contrast by darkening the state ground, reducing boundary emphasis, and adding a subtle map-panel ground while keeping all FRP intensity bins at the same baseline opacity.
+- Strengthened Fig. 08 visual hierarchy by making the bubble colour ramp and size legend carry stronger warm foreground contrast.
+- Strengthened Fig. 12 by pushing historical min/max, IQR, median, and dot marks into muted grey/tan background layers while increasing Black Summer rule, point size, stroke, and warm colour contrast.
+- Strengthened Fig. 13 by darkening the map ground and empty bins, lowering their opacity, and increasing the warm count-bin ramp so active fire corridors read as the figure.
+- Updated cache-busting query strings for the changed CSS, JS, and Vega assets.
+- Re-validated the touched JSON specs and ran `git diff --check`.
+- Browser screenshots checked Fig. 05, Fig. 08, Fig. 12, and Fig. 13 at desktop scale after the hierarchy pass.

@@ -83,7 +83,7 @@ async function showRaincloudOverview() {
   setRaincloudToolbar(false);
   setRaincloudCaption(null);
   await swapRaincloud(
-    () => 'vega/14_yearmonth_heat.json?v=times-median-20260525',
+    () => 'vega/14_yearmonth_heat.json?v=hierarchy-20260525',
     attachRaincloudOverviewClick
   );
 }

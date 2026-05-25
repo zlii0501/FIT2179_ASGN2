@@ -39,8 +39,8 @@
       "data": { "url": "data/hist_month_distribution.csv" },
       "mark": {
         "type": "rule",
-        "stroke": "rgba(156,163,175,0.28)",
-        "strokeWidth": 1.2
+        "stroke": "rgba(156,163,175,0.22)",
+        "strokeWidth": 1
       },
       "encoding": {
         "x": {
@@ -72,8 +72,8 @@
       "mark": {
         "type": "rect",
         "cornerRadius": 7,
-        "fill": "rgba(156,163,175,0.24)",
-        "stroke": "rgba(232,201,160,0.16)",
+        "fill": "rgba(156,163,175,0.18)",
+        "stroke": "rgba(232,201,160,0.12)",
         "strokeWidth": 0.8
       },
       "encoding": {
@@ -103,9 +103,9 @@
       "data": { "url": "data/hist_month_distribution.csv" },
       "mark": {
         "type": "tick",
-        "color": "#e8c9a0",
-        "thickness": 2,
-        "size": 22
+        "color": "rgba(232,201,160,0.72)",
+        "thickness": 1.7,
+        "size": 20
       },
       "encoding": {
         "x": {
@@ -138,8 +138,8 @@
       "mark": {
         "type": "circle",
         "filled": true,
-        "size": 34,
-        "color": "rgba(156,163,175,0.58)"
+        "size": 28,
+        "color": "rgba(156,163,175,0.38)"
       },
       "encoding": {
         "x": {
@@ -169,8 +169,8 @@
       "mark": {
         "type": "rule",
         "stroke": "#e74c3c",
-        "strokeWidth": 1.8,
-        "opacity": 0.55
+        "strokeWidth": 2.4,
+        "opacity": 0.78
       },
       "encoding": {
         "x": {
@@ -197,9 +197,10 @@
       "mark": {
         "type": "circle",
         "filled": true,
-        "size": 150,
-        "stroke": "#f0dcc0",
-        "strokeWidth": 1.4
+        "size": 185,
+        "opacity": 0.96,
+        "stroke": "#fff0d0",
+        "strokeWidth": 2.1
       },
       "encoding": {
         "x": {
@@ -219,7 +220,7 @@
           "type": "quantitative",
           "scale": {
             "domain": [1, 8],
-            "range": ["#f8961e", "#e74c3c", "#7f1d1d"]
+            "range": ["#f8d48a", "#f97316", "#dc2626", "#7f1d1d"]
           },
           "legend": {
             "title": "Times median",
