@@ -8,38 +8,37 @@
   }
   [data-layout-id="ch1-lede"] {
     order: 1;
-    grid-column: 1 / span 4;
-    grid-row: 1 / span 6;
+    grid-column: 1 / -1;
+    grid-row: 1 / span 5;
     align-self: stretch;
-    min-height: 276px;
+    min-height: 180px;
   }
   [data-layout-id="fig02-waffle"] {
     order: 2;
     grid-column: 5 / span 8;
-    grid-row: 1 / span 10;
+    grid-row: 6 / span 10;
     align-self: stretch;
     min-height: 460px;
   }
   [data-layout-id="fig03-state-radar"] {
     order: 3;
     grid-column: 1 / span 4;
-    grid-row: 7 / span 12;
-    align-self: start;
-    height: calc(100% - 38px);
-    min-height: 514px;
+    grid-row: 6 / span 10;
+    align-self: stretch;
+    min-height: 460px;
   }
   [data-layout-id="fig03-state-stream"] {
     order: 4;
-    grid-column: 5 / span 8;
-    grid-row: 11 / span 8;
+    grid-column: 1 / -1;
+    grid-row: 16;
     align-self: start;
-    height: calc(100% - 38px);
-    min-height: 330px;
+    height: auto;
+    min-height: 0;
   }
   [data-layout-id="fig01-causes"] {
     order: 5;
     grid-column: 1 / -1;
-    grid-row: 19 / span 13;
+    grid-row: 24 / span 13;
     align-self: stretch;
     min-height: 598px;
   }
@@ -51,22 +50,22 @@
   }
   [data-layout-id="ch2-lede"] {
     order: 1;
-    grid-column: 1 / span 4;
-    grid-row: 1 / span 8;
+    grid-column: 1 / -1;
+    grid-row: 1 / span 5;
     align-self: stretch;
-    min-height: 368px;
+    min-height: 180px;
   }
   [data-layout-id="fig04-timeseries"] {
     order: 2;
     grid-column: 5 / span 8;
-    grid-row: 1 / span 8;
+    grid-row: 6 / span 8;
     align-self: stretch;
     min-height: 368px;
   }
   [data-layout-id="fig05-month-map"] {
     order: 3;
     grid-column: 1 / -1;
-    grid-row: 9 / span 10;
+    grid-row: 14 / span 10;
     align-self: start;
     min-height: 0;
   }
@@ -78,16 +77,15 @@
   }
   [data-layout-id="ch3-lede"] {
     order: 1;
-    grid-column: 1 / span 4;
-    grid-row: 1 / span 7;
-    align-self: start;
-    height: 350px;
-    min-height: 350px;
+    grid-column: 1 / -1;
+    grid-row: 1 / span 5;
+    align-self: stretch;
+    min-height: 180px;
   }
   [data-layout-id="fig06-frp-density"] {
     order: 2;
     grid-column: 5 / span 8;
-    grid-row: 1 / span 7;
+    grid-row: 6 / span 7;
     align-self: start;
     height: 350px;
     min-height: 350px;
@@ -95,7 +93,7 @@
   [data-layout-id="fig07-daynight"] {
     order: 3;
     grid-column: 1 / span 4;
-    grid-row: 7 / span 11;
+    grid-row: 12 / span 11;
     align-self: stretch;
     margin-top: 24px;
     min-height: 460px;
@@ -103,7 +101,7 @@
   [data-layout-id="fig10-heatmatrix"] {
     order: 4;
     grid-column: 5 / span 8;
-    grid-row: 7 / span 11;
+    grid-row: 12 / span 11;
     align-self: stretch;
     margin-top: 24px;
     min-height: 460px;
@@ -111,14 +109,14 @@
   [data-layout-id="fig09-alluvial"] {
     order: 5;
     grid-column: 1 / span 7;
-    grid-row: 18 / span 9;
+    grid-row: 23 / span 9;
     align-self: stretch;
     min-height: 414px;
   }
   [data-layout-id="fig08-bubble"] {
     order: 6;
     grid-column: 8 / span 5;
-    grid-row: 18 / span 9;
+    grid-row: 23 / span 9;
     align-self: stretch;
     min-height: 414px;
   }
@@ -130,36 +128,36 @@
   }
   [data-layout-id="ch4-lede"] {
     order: 1;
-    grid-column: 1 / span 4;
-    grid-row: 1 / span 9;
+    grid-column: 1 / -1;
+    grid-row: 1 / span 5;
     align-self: stretch;
-    min-height: 414px;
+    min-height: 180px;
   }
   [data-layout-id="fig11-annual-area"] {
     order: 2;
     grid-column: 5 / span 8;
-    grid-row: 1 / span 9;
+    grid-row: 6 / span 9;
     align-self: stretch;
     min-height: 414px;
   }
   [data-layout-id="fig12-raincloud"] {
     order: 3;
     grid-column: 1 / -1;
-    grid-row: 10 / span 7;
+    grid-row: 15 / span 7;
     align-self: start;
     min-height: 0;
   }
   [data-layout-id="fig13-hexbin"] {
     order: 4;
     grid-column: 1 / -1;
-    grid-row: 17 / span 10;
+    grid-row: 22 / span 10;
     align-self: stretch;
     min-height: 460px;
   }
   [data-layout-id="fig14-comparison"] {
     order: 5;
     grid-column: 1 / -1;
-    grid-row: 27 / span 17;
+    grid-row: 32 / span 17;
     align-self: stretch;
     min-height: 782px;
   }
