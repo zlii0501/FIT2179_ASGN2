@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig10-natural-20260526">
+  <link rel="stylesheet" href="css/style.css?v=fig05-nopad-20260526">
   <link rel="stylesheet" href="css/layout-overrides.css?v=fig11-autoheight-20260526">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -168,10 +168,11 @@
               <span role="button" tabindex="0" data-driver="Climate change signal"><img class="fig01-driver-icon" src="icon/climate_change_signal.png?v=20260522" alt="">Climate change signal</span>
             </div>
             <div id="fig01-annotation" class="fig01-annotation" data-driver="all">
-              <!-- <p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence. By season's end, roughly 18.6 million hectares had burned and nearly three billion animals were killed or displaced.</p> -->
-              <p class="fig01-ann-analysis">Click any driver in the legend to explore its role and share. The icon grid shows each factor's relative weight — larger shares reflect greater contribution to the conditions that made Black Summer possible.</p>
-            </div>
-          </div>
+<p class="fig01-ann-cta">↑ Click a driver in the legend to explore its role. Larger icon shares reflect greater contribution to the conditions that made Black Summer possible.</p>            
+              <p class="fig01-ann-intro">Six conditions made Black Summer Australia’s worst fire season, burning 18.6 million hectares.</p>
+
+</div>
+</div>
           <div id="viz-causes-waffle"></div>
         </div>
       </div>
@@ -201,7 +202,7 @@
       <div class="fig04-content-row">
         <div class="fig04-caption-col 左边文字">
           <p class="chart-annotation compact-p">Daily detections track the historical rhythm through October, then diverge sharply in November and surge through December and early January. The peak lands on 4 Jan 2020 with 7,342 detections — a single day exceeding anything in the 2005–2018 record.</p>
-          <p class="chart-annotation compact-p">The season opened deceptively: August and September sat near the ten-year norm. By late October the gap had become unmistakable, and Black Summer surpassed the historical daily ceiling 23 times in December alone.</p>
+          <!-- <p class="chart-annotation compact-p">The season opened deceptively: August and September sat near the ten-year norm. By late October the gap had become unmistakable, and Black Summer surpassed the historical daily ceiling 23 times in December alone.</p> -->
           <div class="fig04-line-legend" aria-label="Line style legend">
             <span><i class="fig04-line-swatch fig04-line-solid" aria-hidden="true"></i>Black Summer daily detections</span>
             <span><i class="fig04-line-swatch fig04-line-dashed" aria-hidden="true"></i>Historical daily average</span>
@@ -231,35 +232,36 @@
               </div>
             </div>
           </div>
-          <div class="month-map-panel">
-            <div id="viz-month-map"></div>
-            <div class="size-legend map-legend month-size-legend" aria-label="Point size legend">
-              <div class="frp-legend-title">Point Size</div>
-              <div class="size-legend-row">
-                <span class="size-dot size-dot-sm" aria-hidden="true"></span>
-                <span>50 MW</span>
+          <div class="fig05-map-col">
+            <div class="month-map-panel">
+              <div id="viz-month-map"></div>
+              <div class="size-legend map-legend month-size-legend" aria-label="Point size legend">
+                <div class="frp-legend-title">Point Size</div>
+                <div class="size-legend-row">
+                  <span class="size-dot size-dot-sm" aria-hidden="true"></span>
+                  <span>50 MW</span>
+                </div>
+                <div class="size-legend-row">
+                  <span class="size-dot size-dot-md" aria-hidden="true"></span>
+                  <span>250 MW</span>
+                </div>
+                <div class="size-legend-row">
+                  <span class="size-dot size-dot-lg" aria-hidden="true"></span>
+                  <span>500+ MW</span>
+                </div>
               </div>
-              <div class="size-legend-row">
-                <span class="size-dot size-dot-md" aria-hidden="true"></span>
-                <span>250 MW</span>
+              <div class="map-legend-stack" aria-label="Map legends">
+                <div class="frp-legend map-legend" aria-label="Fire radiative power legend">
+                  <div class="frp-legend-title">Fire Power</div>
+                  <div id="frp-legend-items" class="frp-legend-items"></div>
+                </div>
               </div>
-              <div class="size-legend-row">
-                <span class="size-dot size-dot-lg" aria-hidden="true"></span>
-                <span>500+ MW</span>
-              </div>
+              <div class="month-zoom-lens" aria-hidden="true"></div>
             </div>
-            <div class="map-legend-stack" aria-label="Map legends">
-              <div class="frp-legend map-legend" aria-label="Fire radiative power legend">
-                <div class="frp-legend-title">Fire Power</div>
-                <div id="frp-legend-items" class="frp-legend-items"></div>
-              </div>
+            <div class="month-controls">
+              <div class="month-control-title">Month</div>
+              <div id="month-selector" class="month-selector"></div>
             </div>
-            <div class="month-zoom-lens" aria-hidden="true"></div>
-          </div>
-        </div>
-        <div class="month-controls">
-          <div class="month-control-title">Month</div>
-          <div id="month-selector" class="month-selector">
           </div>
         </div>
       </div>
@@ -649,7 +651,7 @@
 <script src="js/ui.js"></script>
 <script src="js/vega-utils.js?v=fit-size-20260524"></script>
 <script src="js/basic-charts.js?v=state-hover-20260522"></script>
-<script src="js/month-explorer.js?v=hierarchy-20260525"></script>
+<script src="js/month-explorer.js?v=fitsize-20260526"></script>
 <script src="js/chart-embeds.js?v=fig07-left-column-20260526"></script>
 <script src="js/raincloud-detail.js?v=fig12-stable-layout-20260525"></script>
 <script src="js/hexbin-zoom.js?v=fig13-hierarchy-20260525"></script>

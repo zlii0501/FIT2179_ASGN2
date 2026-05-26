@@ -50,32 +50,27 @@ initCh1LegendHover();
 
 /* VIZ 15 — Fire Causes Icon Waffle with interactive legend */
 const causesAnnotations = {
-  '': `<p class="fig01-ann-intro">Six conditions converged to produce Australia's most destructive fire season. No single driver explains Black Summer — their simultaneous presence overwhelmed every natural and human defence.</p>
-       <p class="fig01-ann-analysis">Click a driver in the legend to explore its role. Larger icon shares reflect greater contribution to the conditions that made Black Summer possible.</p>`,
+  '': `<p class="fig01-ann-cta">↑ Click a driver in the legend to explore its role. Larger icon shares reflect greater contribution to the conditions that made Black Summer possible.</p>            
+              <p class="fig01-ann-intro">Six conditions made Black Summer Australia’s worst fire season, burning 18.6 million hectares.</p>
+`,
 
   'Prolonged drought': `<p class="fig01-ann-intro">Three consecutive years of rainfall deficits dried soils and river systems across eastern Australia before a single fire was lit.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">22 %</span><span>of the icon grid — the largest single share</span></div>
-       <p class="fig01-ann-analysis">Drought removed the landscape's capacity to resist fire. Without it, the other five drivers would have produced a far more typical season.</p>`,
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">22 %</span><span>of the icon grid — the largest single share</span></div>`,
 
-  'Record heat': `<p class="fig01-ann-intro">Australia recorded its hottest year ever in 2019, peaking at a national daily record of 41.9 °C on 18 December.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">18 %</span><span>of the grid — second only to drought</span></div>
-       <p class="fig01-ann-analysis">Heat desiccated fuels in hours and pushed fire behaviour indices beyond what suppression models were designed to handle.</p>`,
+  'Record heat': `<p class="fig01-ann-intro">Australia's hottest year on record peaked at a national daily temperature of 41.9 °C on 18 December 2019 — desiccating fuels and breaking every prior benchmark.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">18 %</span><span>of the grid — second only to drought</span></div>`,
 
   'Dry fuels': `<p class="fig01-ann-intro">Years of drought loaded forests and grasslands with cured, dead vegetation — fuel moisture reached levels not seen since records began.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">17 %</span><span>of the grid — season-long vulnerability</span></div>
-       <p class="fig01-ann-analysis">Once ignited, fires burned with intensity that outpaced suppression capacity. Dry fuels acted as a force multiplier on every other driver.</p>`,
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">17 %</span><span>of the grid — season-long vulnerability</span></div>`,
 
-  'Extreme fire weather': `<p class="fig01-ann-intro">Heat, low humidity, and strong winds combined to produce simultaneous catastrophic fire danger ratings across multiple states — unprecedented in the historical record.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">16 %</span><span>of the grid — broke all response frameworks</span></div>
-       <p class="fig01-ann-analysis">Resources built for one or two state emergencies faced eight or nine at once. Containment was functionally impossible on the worst days.</p>`,
+  'Extreme fire weather': `<p class="fig01-ann-intro">Simultaneous catastrophic fire danger ratings across multiple states were unprecedented — extreme heat, low humidity, and strong winds struck everywhere at once.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">16 %</span><span>of the grid — broke all response frameworks</span></div>`,
 
-  'Dry lightning': `<p class="fig01-ann-intro">Lightning with little or no rain ignited fires across remote terrain before crews could reach them, seeding the season's largest fires.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">14 %</span><span>of the grid — the ignition trigger</span></div>
-       <p class="fig01-ann-analysis">Remote ignitions are the hardest to suppress early. In a season where every escaped fire became a megafire, each strike seeded a major disaster.</p>`,
+  'Dry lightning': `<p class="fig01-ann-intro">Lightning with little or no rain ignited fires across remote terrain before crews could reach them, seeding the season's most destructive blazes.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">14 %</span><span>of the grid — the ignition trigger</span></div>`,
 
-  'Climate change signal': `<p class="fig01-ann-intro">Attribution science links human-caused warming to the heightened probability of these fire-weather conditions — the only driver with a clear future trajectory.</p>
-       <div class="fig01-ann-stat"><span class="fig01-ann-pct">13 %</span><span>of the grid — smallest share, biggest future risk</span></div>
-       <p class="fig01-ann-analysis">Conditions were at least 30 % more likely due to climate change. Every other driver is being amplified by the same warming trend.</p>`
+  'Climate change signal': `<p class="fig01-ann-intro">Attribution science links human-caused warming to the heightened probability of these fire conditions — the only driver that keeps intensifying with each passing year.</p>
+       <div class="fig01-ann-stat"><span class="fig01-ann-pct">13 %</span><span>of the grid — smallest share, biggest future risk</span></div>`
 };
 
 embedChart('#viz-causes-waffle', 'vega/15_fire_causes_waffle.json?v=png-icons-20260522', embedOpts).then(result => {
