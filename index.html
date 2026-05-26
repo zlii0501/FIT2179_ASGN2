@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=4col-lower-20260526">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=lede-fullrow-20260526">
+  <link rel="stylesheet" href="css/style.css?v=fig10-natural-20260526">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=fig11-autoheight-20260526">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -35,6 +35,7 @@
       <span class="stat-label">Peak Fire Power (MW)</span>
     </div>
   </div>
+
 </header>
 
 <!-- NAV DOTS -->
@@ -44,6 +45,7 @@
   <button class="nav-dot" data-target="ch2" title="When?"></button>
   <button class="nav-dot" data-target="ch3" title="How Intense?"></button>
   <button class="nav-dot" data-target="ch4" title="Legacy"></button>
+  <button class="nav-dot" data-target="ch5" title="3D Map"></button>
 </nav>
 
 <!-- ===== CHAPTER 1: WHERE ===== -->
@@ -59,11 +61,26 @@
           to watch how the crisis spread and peaked month by month.
         </p>
       </div>
-      <div class="chart-card grid-span-8" data-layout-id="fig02-waffle">
-        <div class="chart-title"><span class="chart-number">Fig. 02</span><span class="chart-title-text">One Nation, One Crisis — each flame is 1% of all detections, coloured by state</span></div>
-        <div class="waffle-chart-layout">
-          <div class="waffle-note-row">
-            <p class="chart-annotation">51 of the 100 flames belong to NSW — a state filling more than half the nation's fire parliament. The remaining 49 are spread across five other states, yet the disparity goes beyond geography: NSW fires were concentrated in densely forested coastal ranges, making each detection more destructive than the diffuse savanna burns that account for WA's and NT's shares.</p>
+      <div class="ch1-side-row">
+        <div class="chart-card" data-layout-id="fig03-state-radar">
+          <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile — relative footprint, energy, intensity, density and night activity</span></div>
+          <div id="viz-state-radar"></div>
+          <div class="左边文字">
+            <div class="fig03b-state-legend" aria-label="State legend">
+              <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+              <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+              <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+              <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+              <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+              <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
+            </div>
+            <p class="chart-annotation compact-p fig03b-para">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
+          </div>
+        </div>
+        <div class="chart-card" data-layout-id="fig02-waffle">
+          <div class="chart-title"><span class="chart-number">Fig. 02</span><span class="chart-title-text">One Nation, One Crisis — each flame is 1% of all detections, coloured by state</span></div>
+          <div class="ch1-card-text">
+            <p class="chart-annotation">51 of the 100 flames belong to NSW — a state filling more than half the nation's fire parliament. The remaining 49 are spread across five other states, yet the disparity goes beyond geography: NSW fires were concentrated in densely forested coastal ranges.</p>
             <div class="waffle-legend-table" aria-label="State detection share legend">
               <div class="waffle-legend-column">
                 <div class="waffle-legend-row waffle-legend-head">
@@ -114,61 +131,50 @@
           <div id="viz-waffle"></div>
         </div>
       </div>
-        <div class="chart-card grid-span-4" data-layout-id="fig01-causes">
-          <div class="chart-title"><span class="chart-number">Fig. 01</span><span class="chart-title-text">A Perfect Storm — the six interlocking conditions that made Black Summer possible</span></div>
-          <div class="fig01-causes-layout">
-            <div class="fig01-causes-copy">
-              <p class="chart-annotation">Three years of drought, record-breaking heat, and an El Niño-like climate signal primed the landscape; when lightning struck tinder-dry forests under extreme fire weather, the result was inevitable.</p>
-              <p class="chart-annotation">Australia recorded its driest year in 2019, with soil moisture at historic lows. Vegetation that normally recovers between fire seasons never did — by spring, forests across the east were loaded with dead fuel ready to ignite.</p>
-              <p class="chart-annotation">December 2019 set a new national temperature record of 41.9 °C. Simultaneous extreme fire danger ratings across multiple states were unprecedented, stretching suppression resources beyond capacity.</p>
-              <p class="chart-annotation">Climate scientists attributed the heightened fire-weather risk directly to long-term warming. Black Summer was not a single disaster but a signal: the conditions it took to produce this season will become increasingly ordinary.</p>
-              <div class="fig01-driver-legend" id="fig01-driver-legend" aria-label="Driver legend">
-                <span role="button" tabindex="0" data-driver="Prolonged drought"><img class="fig01-driver-icon" src="icon/prolonged_drought.png?v=20260522" alt="">Prolonged drought</span>
-                <span role="button" tabindex="0" data-driver="Record heat"><img class="fig01-driver-icon" src="icon/record_heat.png?v=20260522" alt="">Record heat</span>
-                <span role="button" tabindex="0" data-driver="Dry fuels"><img class="fig01-driver-icon" src="icon/dry_fuels.png?v=20260522" alt="">Dry fuels</span>
-                <span role="button" tabindex="0" data-driver="Extreme fire weather"><img class="fig01-driver-icon" src="icon/extreme_fire_weather.png?v=20260522" alt="">Extreme fire weather</span>
-                <span role="button" tabindex="0" data-driver="Dry lightning"><img class="fig01-driver-icon" src="icon/dry_lightning.png?v=20260522" alt="">Dry lightning</span>
-                <span role="button" tabindex="0" data-driver="Climate change signal"><img class="fig01-driver-icon" src="icon/climate_change_signal.png?v=20260522" alt="">Climate change signal</span>
-              </div>
-              <div id="fig01-annotation" class="fig01-annotation" data-driver="all">
-                <p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence. By season's end, roughly 18.6 million hectares had burned and nearly three billion animals were killed or displaced.</p>
-                <p class="fig01-ann-analysis">Click any driver in the legend to explore its role and share. The icon grid shows each factor's relative weight — larger shares reflect greater contribution to the conditions that made Black Summer possible.</p>
-              </div>
+      <div class="chart-card" data-layout-id="fig03-state-stream">
+        <div class="chart-title"><span class="chart-number">Fig. 03A</span><span class="chart-title-text">Month by Month, State by State — how each region's fires rose and fell across the season</span></div>
+        <div class="ch1-card-row">
+          <div class="fig03a-caption-col">
+            <p class="左边文字 chart-annotation compact-p">NSW and Victoria drove the east-coast surge — NSW detections climbed from ~2,800 in September to a season peak in December 2019, while Victoria ignited rapidly in late December. Queensland contributed most heavily in the early months.</p>
+            <!-- <p class="左边文字 chart-annotation compact-p">The Northern Territory and Western Australia dominated mid-year totals through tropical savanna burns, then faded as the dry season ended. South Australia remained subdued until a brief January 2020 flare as extreme heat spread westward from Victoria.</p> -->
+            <div class="fig03a-state-legend" aria-label="State legend">
+              <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+              <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+              <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+              <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+              <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+              <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
             </div>
-            <div id="viz-causes-waffle"></div>
           </div>
-        </div>
-        <div class="chart-card grid-span-8" data-layout-id="fig03-state-stream">
-          <div class="chart-title"><span class="chart-number">Fig. 03A</span><span class="chart-title-text">Month by Month, State by State — how each region's fires rose and fell across the season</span></div>
-          <div class="fig03a-content-row">
-            <div class="fig03a-caption-col">
-              <p class="chart-annotation compact-p">NSW and Victoria drove the east-coast surge — NSW detections climbed from ~2,800 in September to a season peak in December 2019, while Victoria ignited rapidly in late December. Queensland contributed most heavily in the early months.</p>
-              <p class="chart-annotation compact-p">The Northern Territory and Western Australia dominated mid-year totals through tropical savanna burns, then faded as the dry season ended. South Australia remained subdued until a brief January 2020 flare as extreme heat spread westward from Victoria.</p>
-              <div class="fig03a-state-legend" aria-label="State legend">
-                <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
-                <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
-                <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
-                <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
-                <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
-                <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
-              </div>
-            </div>
+          <div class="ch1-card-viz">
             <div id="viz-state-bar"></div>
           </div>
         </div>
-        <div class="chart-card grid-span-4" data-layout-id="fig03-state-radar">
-          <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile — relative footprint, energy, intensity, density and night activity</span></div>
-          <div id="viz-state-radar"></div>
-          <div class="fig03b-state-legend" aria-label="State legend">
-            <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
-            <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
-            <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
-            <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
-            <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
-            <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
+      </div>
+      <div class="chart-card" data-layout-id="fig01-causes">
+        <div class="chart-title"><span class="chart-number">Fig. 01</span><span class="chart-title-text">A Perfect Storm — the six interlocking conditions that made Black Summer possible</span></div>
+        <div class="fig01-causes-layout">
+          <div class="fig01-causes-copy 左边文字">
+            <p class="chart-annotation">Three years of drought, record-breaking heat, and an El Niño-like climate signal primed the landscape; when lightning struck tinder-dry forests under extreme fire weather, the result was inevitable.</p>
+            <p class="chart-annotation">Australia recorded its driest year in 2019, with soil moisture at historic lows. Vegetation that normally recovers between fire seasons never did — by spring, forests across the east were loaded with dead fuel ready to ignite.</p>
+            <!-- <p class="chart-annotation">December 2019 set a new national temperature record of 41.9 °C. Simultaneous extreme fire danger ratings across multiple states were unprecedented, stretching suppression resources beyond capacity.</p>
+            <p class="chart-annotation">Climate scientists attributed the heightened fire-weather risk directly to long-term warming. Black Summer was not a single disaster but a signal: the conditions it took to produce this season will become increasingly ordinary.</p> -->
+            <div class="fig01-driver-legend" id="fig01-driver-legend" aria-label="Driver legend">
+              <span role="button" tabindex="0" data-driver="Prolonged drought"><img class="fig01-driver-icon" src="icon/prolonged_drought.png?v=20260522" alt="">Prolonged drought</span>
+              <span role="button" tabindex="0" data-driver="Record heat"><img class="fig01-driver-icon" src="icon/record_heat.png?v=20260522" alt="">Record heat</span>
+              <span role="button" tabindex="0" data-driver="Dry fuels"><img class="fig01-driver-icon" src="icon/dry_fuels.png?v=20260522" alt="">Dry fuels</span>
+              <span role="button" tabindex="0" data-driver="Extreme fire weather"><img class="fig01-driver-icon" src="icon/extreme_fire_weather.png?v=20260522" alt="">Extreme fire weather</span>
+              <span role="button" tabindex="0" data-driver="Dry lightning"><img class="fig01-driver-icon" src="icon/dry_lightning.png?v=20260522" alt="">Dry lightning</span>
+              <span role="button" tabindex="0" data-driver="Climate change signal"><img class="fig01-driver-icon" src="icon/climate_change_signal.png?v=20260522" alt="">Climate change signal</span>
+            </div>
+            <div id="fig01-annotation" class="fig01-annotation" data-driver="all">
+              <!-- <p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence. By season's end, roughly 18.6 million hectares had burned and nearly three billion animals were killed or displaced.</p> -->
+              <p class="fig01-ann-analysis">Click any driver in the legend to explore its role and share. The icon grid shows each factor's relative weight — larger shares reflect greater contribution to the conditions that made Black Summer possible.</p>
+            </div>
           </div>
-          <p class="chart-annotation compact-p fig03b-para">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
+          <div id="viz-causes-waffle"></div>
         </div>
+      </div>
   </div>
 </section>
 
@@ -190,10 +196,10 @@
       </p>
     </div>
     <!-- Time series -->
-    <div class="chart-card grid-span-8" data-layout-id="fig04-timeseries">
+    <div class="chart-card grid-span-12" data-layout-id="fig04-timeseries">
       <div class="chart-title"><span class="chart-number">Fig. 04</span><span class="chart-title-text">Daily Fire Detections — Aug 2019 to Jan 2020, against the 2005–2018 average</span></div>
       <div class="fig04-content-row">
-        <div class="fig04-caption-col">
+        <div class="fig04-caption-col 左边文字">
           <p class="chart-annotation compact-p">Daily detections track the historical rhythm through October, then diverge sharply in November and surge through December and early January. The peak lands on 4 Jan 2020 with 7,342 detections — a single day exceeding anything in the 2005–2018 record.</p>
           <p class="chart-annotation compact-p">The season opened deceptively: August and September sat near the ten-year norm. By late October the gap had become unmistakable, and Black Summer surpassed the historical daily ceiling 23 times in December alone.</p>
           <div class="fig04-line-legend" aria-label="Line style legend">
@@ -210,7 +216,7 @@
       <div class="month-explorer">
         <!-- Large map -->
         <div class="fig05-main">
-          <div class="fig05-info-panel">
+          <div class="fig05-info-panel 左边文字">
             <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
             <div class="fig05-caption-row">
               <p class="chart-annotation compact-p" id="month-map-paragraph">December 2019 is the season's spatial rupture point: active fires crowd the NSW–QLD border, then run down the south-east coast into Gippsland. Use the Hotspot Zoom view to inspect the clusters where high fire power and dense detections overlap.</p>
@@ -288,9 +294,9 @@
         </div>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig07-daynight">
-        <div class="chart-title"><span class="chart-number">Fig. 07</span><span class="chart-title-text">When fires burn — each state's daytime share against a 50/50 baseline</span></div>
+        <div class="chart-title 左边文字"><span class="chart-number">Fig. 07</span><span class="chart-title-text">When fires burn — each state's daytime share against a 50/50 baseline</span></div>
         <div id="viz-daynight"></div>
-        <p class="chart-annotation compact-p">NT, SA and WA are strongly daytime-skewed, while NSW sits close to balance because major fire activity persisted into the night. The 50% marker separates ordinary day-night rhythm from sustained fire behaviour.</p>
+        <p class="chart-annotation compact-p 左边文字">NT, SA and WA are strongly daytime-skewed, while NSW sits close to balance because major fire activity persisted into the night. The 50% marker separates ordinary day-night rhythm from sustained fire behaviour.</p>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig08-bubble">
         <div class="chart-title"><span class="chart-number">Fig. 08</span><span class="chart-title-text">Where and when fires burned hottest — average fire intensity by state and month</span></div>
@@ -388,10 +394,10 @@
         burns dominated in August–September, while southern fires intensified through December–January.
       </p>
     </div>
-    <div class="chart-card grid-span-8" data-layout-id="fig11-annual-area">
+    <div class="chart-card grid-span-12" data-layout-id="fig11-annual-area">
       <div class="chart-title"><span class="chart-number">Fig. 11</span><span class="chart-title-text">Estimated Fire Area by Season &mdash; 2019-20 tops every prior year</span></div>
       <div class="fig11-content-row">
-        <div class="fig11-caption-col">
+        <div class="fig11-caption-col 左边文字">
           <p class="chart-annotation">Each dot is one Aug-to-Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019-20 sits above the historical field, edging past the severe 2012-13 season rather than blending into the old range.</p>
           <p class="chart-annotation">The 2012–13 season was the previous record holder, visible as a labelled outlier above the historical cluster. Black Summer exceeded it by a wide margin — a gap that is apparent without any annotation. Every other year in the record sits comfortably below the 2012–13 mark; 2019–20 clears it entirely, reflecting a scale of destruction that overwhelmed standard firefighting capacity.</p>
           <p class="chart-annotation">No upward trend is visible in the historical seasons — fires varied from year to year with no clear direction. Black Summer was not the product of a gradual escalation; it arrived as a sharp discontinuity.</p>
@@ -412,7 +418,7 @@
         </div>
         <div id="viz-yearmonth-heat"></div>
       </div>
-      <div class="raincloud-caption-row">
+      <div class="raincloud-caption-row 左边文字">
         <p id="raincloud-caption" class="chart-annotation compact-p">Grey marks show each month's 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².</p>
         <div class="raincloud-legend" aria-label="Fig. 12 colour legend">
           <div class="raincloud-gradient-legend" aria-label="Times median colour scale">
@@ -502,14 +508,14 @@
           <section class="fig-comparison-panel fig-comparison-panel-14a" aria-labelledby="fig-14a-title">
             <div class="linked-panel-title linked-panel-title-compact" id="fig-14a-title">
               <span class="chart-number chart-number-sub">Fig. 14A</span>
-              <span class="chart-title-text">Day by day, the nation burned</span>
+              <span class="chart-title-text" id="fig-14a-title-text">Daily detections — Aug 2019–Jan 2020</span>
             </div>
             <div id="viz-calendar-a" class="fig-comparison-viz"></div>
           </section>
           <section class="fig-comparison-panel fig-comparison-panel-14b" aria-labelledby="fig-14b-title">
             <div class="linked-panel-title linked-panel-title-compact" id="fig-14b-title">
               <span class="chart-number chart-number-sub">Fig. 14B</span>
-              <span class="chart-title-text">The prior season as baseline</span>
+              <span class="chart-title-text" id="fig-14b-title-text">Daily detections — Aug 2018–Jan 2019</span>
             </div>
             <div id="viz-calendar-b" class="fig-comparison-viz"></div>
           </section>
@@ -534,19 +540,20 @@
                   </div>
                 </div>
               </aside>
-              <p class="chart-annotation fig-comparison-note">Fig. 14 shows the national daily calendar; Fig. 15 shows WA's monthly FRP rhythm. Read across each row to compare the same window, then down to contrast Black Summer against the baseline.</p>
+              <p class="chart-annotation fig-comparison-note">Fig. 14 maps each day as a calendar cell coloured by nationwide hotspot count — look for the deep-red cluster across Dec 2019–Jan 2020. Fig. 15 encodes WA's monthly average fire radiative power as a radial chart: each concentric ring is one month in the window, and arc length reflects intensity. Drag handle A or B above to shift either window across any season from 2005 onward.</p>
+              <p class="comparison-ic-footnote">Each window spans 6 months (Aug–Jan). Fire area is derived from official perimeter records; detection counts are VIIRS satellite hotspots. Drag either handle to explore any season back to 2005.</p>
             </div>
             <section class="fig-comparison-panel fig-comparison-panel-15a" aria-labelledby="fig-15a-title">
               <div class="linked-panel-title linked-panel-title-compact" id="fig-15a-title">
                 <span class="chart-number chart-number-sub">Fig. 15A</span>
-                <span class="chart-title-text">Western Australia's fire rhythm</span>
+                <span class="chart-title-text" id="fig-15a-title-text">WA fire rhythm — Aug 2019–Jan 2020</span>
               </div>
               <div id="viz-overlay-a" class="fig-comparison-viz"></div>
             </section>
             <section class="fig-comparison-panel fig-comparison-panel-15b" aria-labelledby="fig-15b-title">
               <div class="linked-panel-title linked-panel-title-compact" id="fig-15b-title">
                 <span class="chart-number chart-number-sub">Fig. 15B</span>
-                <span class="chart-title-text">WA rhythm in the baseline year</span>
+                <span class="chart-title-text" id="fig-15b-title-text">WA fire rhythm — Aug 2018–Jan 2019</span>
               </div>
               <div id="viz-overlay-b" class="fig-comparison-viz"></div>
             </section>
@@ -606,6 +613,31 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- ===== CHAPTER 5: 3D MAP ===== -->
+<section class="chapter" id="ch5">
+  <div class="chapter-body">
+    <div class="chapter-lede" style="grid-column: 1/-1; padding: 0 0 1rem 0;">
+      <div class="chapter-label">Chapter 5 &middot; Explore</div>
+      <h2 class="chapter-title">Fire across the landscape — an interactive 3D view</h2>
+      <p class="chapter-narrative">
+        Rotate, zoom and pan across the continent to see where fire detections cluster. Each point is a VIIRS satellite hotspot; height and colour encode fire radiative power.
+      </p>
+    </div>
+    <div class="chart-card" style="grid-column: 1/-1; padding: 0; overflow: hidden;">
+      <iframe
+        src="map3d.html"
+        title="Black Summer 3D fire map"
+        width="100%"
+        style="display: block; border: none; height: 80vh; min-height: 480px;"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ===== FOOTER ===== -->
 <footer>
   <span>Data sources: NASA FIRMS MODIS (Kaggle) &middot; data.gov.au 2019-20 Bushfire Boundaries &middot; WA Government SLIP 2025</span>
@@ -618,7 +650,7 @@
 <script src="js/vega-utils.js?v=fit-size-20260524"></script>
 <script src="js/basic-charts.js?v=state-hover-20260522"></script>
 <script src="js/month-explorer.js?v=hierarchy-20260525"></script>
-<script src="js/chart-embeds.js?v=fig08-hierarchy-20260525"></script>
+<script src="js/chart-embeds.js?v=fig07-left-column-20260526"></script>
 <script src="js/raincloud-detail.js?v=fig12-stable-layout-20260525"></script>
 <script src="js/hexbin-zoom.js?v=fig13-hierarchy-20260525"></script>
 <script src="js/comparison.js?v=ab-highlights-20260526"></script>
