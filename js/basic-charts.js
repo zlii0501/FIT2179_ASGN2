@@ -139,7 +139,7 @@ const timeseriesSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 180,
-  "padding": {"top": 4, "right": 5, "bottom": 8, "left": 5},
+  "padding": 0,
   "data": { "url": "data/fire_daily.csv" },
   "layer": [
     {

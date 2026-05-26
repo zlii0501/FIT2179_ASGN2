@@ -20,9 +20,9 @@ embedChartFitSize('#viz-alluvial', 'vega/16_state_month_intensity_alluvial.json?
 });
 
 /* VIZ 6 - State escalation dumbbell (loaded from file) */
-embedChartFitHeight('#viz-heatmatrix', 'vega/06_heatmatrix.json?v=fit-height-20260523', embedOpts, {
-  offset: 42,
-  minHeight: 280
+embedChartFitHeight('#viz-heatmatrix', 'vega/06_heatmatrix.json?v=fig10-natural-20260526', embedOpts, {
+  offset: 43,
+  minHeight: 150
 });
 
 /* VIZ 13 — Annual area connected dot plot */
