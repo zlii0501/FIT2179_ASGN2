@@ -3,6 +3,7 @@
   "description": "Dumbbell chart showing fire detection escalation from August to December by state",
   "width": "container",
   "height": 280,
+  "padding": 0,
   "data": {"url": "data/fire_monthly_state.csv"},
   "transform": [
     {"filter": "datum.month === '2019-08' || datum.month === '2019-12'"},

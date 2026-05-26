@@ -3,6 +3,7 @@
   "description": "Stable raincloud-style distribution chart comparing Black Summer monthly fire area against historical months",
   "width": "container",
   "height": 230,
+  "padding": 0,
   "layer": [
     {
       "data": { "url": "data/hist_month_distribution.csv" },

@@ -3,6 +3,7 @@
   "description": "Connected dot plot of southeast Australian fire area by bushfire season",
   "width": "container",
   "height": 220,
+  "padding": 0,
   "data": { "url": "data/hist_annual.csv" },
   "layer": [
     {

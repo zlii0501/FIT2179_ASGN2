@@ -18,6 +18,7 @@
     "x": {
       "field": "month",
       "type": "ordinal",
+      "scale": {"padding": 0},
       "axis": {
         "labelExpr": "{'2019-08':'Aug 2019','2019-09':'Sep 2019','2019-10':'Oct 2019','2019-11':'Nov 2019','2019-12':'Dec 2019','2020-01':'Jan 2020'}[datum.value] || datum.value",
         "title": null,
