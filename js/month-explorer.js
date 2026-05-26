@@ -337,7 +337,7 @@ const monthMapSpec = {
   ]
 };
 
-embedChart('#viz-month-map', monthMapSpec, embedOpts).then(result => {
+embedChartFitHeight('#viz-month-map', monthMapSpec, embedOpts, { offset: 0, minHeight: 320 }).then(result => {
   monthMapView = result.view;
   updateZoomLens();
 });
