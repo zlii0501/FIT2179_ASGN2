@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig12-tight-container-20260525">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=fig12-tight-card-20260525">
+  <link rel="stylesheet" href="css/style.css?v=4col-lower-20260526">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=lede-fullrow-20260526">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -63,7 +63,7 @@
         <div class="chart-title"><span class="chart-number">Fig. 02</span><span class="chart-title-text">One Nation, One Crisis — each flame is 1% of all detections, coloured by state</span></div>
         <div class="waffle-chart-layout">
           <div class="waffle-note-row">
-            <p class="chart-annotation">51 of the 100 flames belong to NSW — a single state filling more than half the nation's fire parliament. The remaining 49 are spread across five other states.</p>
+            <p class="chart-annotation">51 of the 100 flames belong to NSW — a state filling more than half the nation's fire parliament. The remaining 49 are spread across five other states, yet the disparity goes beyond geography: NSW fires were concentrated in densely forested coastal ranges, making each detection more destructive than the diffuse savanna burns that account for WA's and NT's shares.</p>
             <div class="waffle-legend-table" aria-label="State detection share legend">
               <div class="waffle-legend-column">
                 <div class="waffle-legend-row waffle-legend-head">
@@ -131,7 +131,7 @@
                 <span role="button" tabindex="0" data-driver="Climate change signal"><img class="fig01-driver-icon" src="icon/climate_change_signal.png?v=20260522" alt="">Climate change signal</span>
               </div>
               <div id="fig01-annotation" class="fig01-annotation" data-driver="all">
-                <p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence.</p>
+                <p class="fig01-ann-intro">Six interlocking conditions converged to produce the most destructive fire season in Australia's recorded history. No single driver explains Black Summer — it was their simultaneous presence that overwhelmed every natural and human defence. By season's end, roughly 18.6 million hectares had burned and nearly three billion animals were killed or displaced.</p>
                 <p class="fig01-ann-analysis">Click any driver in the legend to explore its role and share. The icon grid shows each factor's relative weight — larger shares reflect greater contribution to the conditions that made Black Summer possible.</p>
               </div>
             </div>
@@ -140,33 +140,34 @@
         </div>
         <div class="chart-card grid-span-8" data-layout-id="fig03-state-stream">
           <div class="chart-title"><span class="chart-number">Fig. 03A</span><span class="chart-title-text">Month by Month, State by State — how each region's fires rose and fell across the season</span></div>
-          <div id="viz-state-bar"></div>
-          <div class="fig03a-caption-row">
-            <p class="chart-annotation compact-p">NSW and Victoria drove the east-coast surge — NSW detections climbed from around 2,800 in September to a season peak in December 2019, while Victoria's fires ignited rapidly in late December. Queensland's contribution was heavier in the early months.</p>
-            <div class="fig03a-state-legend" aria-label="State legend">
-              <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
-              <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
-              <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
-              <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
-              <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
-              <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
+          <div class="fig03a-content-row">
+            <div class="fig03a-caption-col">
+              <p class="chart-annotation compact-p">NSW and Victoria drove the east-coast surge — NSW detections climbed from ~2,800 in September to a season peak in December 2019, while Victoria ignited rapidly in late December. Queensland contributed most heavily in the early months.</p>
+              <p class="chart-annotation compact-p">The Northern Territory and Western Australia dominated mid-year totals through tropical savanna burns, then faded as the dry season ended. South Australia remained subdued until a brief January 2020 flare as extreme heat spread westward from Victoria.</p>
+              <div class="fig03a-state-legend" aria-label="State legend">
+                <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+                <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+                <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+                <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+                <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+                <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
+              </div>
             </div>
+            <div id="viz-state-bar"></div>
           </div>
         </div>
         <div class="chart-card grid-span-4" data-layout-id="fig03-state-radar">
           <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile — relative footprint, energy, intensity, density and night activity</span></div>
           <div id="viz-state-radar"></div>
-          <div class="fig03b-caption-row">
-            <p class="chart-annotation compact-p">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
-            <div class="fig03b-state-legend" aria-label="State legend">
-              <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
-              <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
-              <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
-              <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
-              <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
-              <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
-            </div>
+          <div class="fig03b-state-legend" aria-label="State legend">
+            <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
+            <span data-state="QLD"><i style="--swatch:#E69F00"></i>QLD</span>
+            <span data-state="WA"><i style="--swatch:#0072B2"></i>WA</span>
+            <span data-state="NT"><i style="--swatch:#CC79A7"></i>NT</span>
+            <span data-state="SA"><i style="--swatch:#009E73"></i>SA</span>
+            <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
           </div>
+          <p class="chart-annotation compact-p fig03b-para">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
         </div>
   </div>
 </section>
@@ -191,13 +192,16 @@
     <!-- Time series -->
     <div class="chart-card grid-span-8" data-layout-id="fig04-timeseries">
       <div class="chart-title"><span class="chart-number">Fig. 04</span><span class="chart-title-text">Daily Fire Detections — Aug 2019 to Jan 2020, against the 2005–2018 average</span></div>
-      <div id="viz-timeseries"></div>
-      <div class="fig04-caption-row">
-        <p class="chart-annotation compact-p">Daily detections pass the historical rhythm in November, then surge through December and early January. The sharpest spike lands on 4 Jan 2020 with 7,342 detections, marking where Black Summer breaks from the 2005-2018 baseline.</p>
-        <div class="fig04-line-legend" aria-label="Line style legend">
-          <span><i class="fig04-line-swatch fig04-line-solid" aria-hidden="true"></i>Black Summer daily detections</span>
-          <span><i class="fig04-line-swatch fig04-line-dashed" aria-hidden="true"></i>Historical daily average</span>
+      <div class="fig04-content-row">
+        <div class="fig04-caption-col">
+          <p class="chart-annotation compact-p">Daily detections track the historical rhythm through October, then diverge sharply in November and surge through December and early January. The peak lands on 4 Jan 2020 with 7,342 detections — a single day exceeding anything in the 2005–2018 record.</p>
+          <p class="chart-annotation compact-p">The season opened deceptively: August and September sat near the ten-year norm. By late October the gap had become unmistakable, and Black Summer surpassed the historical daily ceiling 23 times in December alone.</p>
+          <div class="fig04-line-legend" aria-label="Line style legend">
+            <span><i class="fig04-line-swatch fig04-line-solid" aria-hidden="true"></i>Black Summer daily detections</span>
+            <span><i class="fig04-line-swatch fig04-line-dashed" aria-hidden="true"></i>Historical daily average</span>
+          </div>
         </div>
+        <div id="viz-timeseries"></div>
       </div>
     </div>
     <!-- Monthly Explorer -->
@@ -273,7 +277,8 @@
         <div class="chart-title"><span class="chart-number">Fig. 06</span><span class="chart-title-text">Fire energy distribution — most fires burn quietly, but a handful are catastrophic</span></div>
         <div class="fig06-content-row">
           <div class="fig06-caption-row">
-            <p class="chart-annotation compact-p">Most detections sit at low FRP values, but the long right tail shows why averages can hide danger: only a small number of fires exceed 800 MW, yet those outliers dominate the season's energy story.</p>
+            <p class="chart-annotation compact-p">Most detections cluster at low FRP values — the curve peaks sharply near zero and falls away fast. But the long right tail tells a different story: a small fraction of fires exceed 500 MW, releasing so much energy they dominate total heat output despite being rare.</p>
+            <p class="chart-annotation compact-p">The mean of 89 MW sits well to the right of the distribution peak, pulled upward by extreme outliers — a reminder that average intensity understates the worst of Black Summer.</p>
             <div class="fig06-legend" aria-label="Fig. 06 legend">
               <span><i class="fig06-density-swatch" aria-hidden="true"></i>Detection density</span>
               <span><i class="fig06-mean-swatch" aria-hidden="true"></i>Mean FRP, 89 MW</span>
@@ -290,12 +295,21 @@
       <div class="chart-card grid-span-6" data-layout-id="fig08-bubble">
         <div class="chart-title"><span class="chart-number">Fig. 08</span><span class="chart-title-text">Where and when fires burned hottest — average fire intensity by state and month</span></div>
         <div id="viz-bubble"></div>
-        <div class="fig08-legend" aria-label="Fig. 08 legend">
-          <span><i class="fig08-size fig08-size-sm" aria-hidden="true"></i>Fewer detections</span>
-          <span><i class="fig08-size fig08-size-lg" aria-hidden="true"></i>More detections</span>
-          <span><i class="fig08-frp-ramp" aria-hidden="true"></i>Avg FRP low to high</span>
+        <div class="fig08-footer">
+          <p class="chart-annotation compact-p">NSW carries the largest December detection load; WA and NT dominate the early months through tropical savanna burns. Each cell is coloured by detection count — darker cells indicate fewer fires, brighter cells mark the season's hottest clusters.</p>
+          <div class="fig08-legend" aria-label="Fig. 08 legend">
+            <div class="fig08-frp-legend">
+              <span class="fig08-frp-legend-title">Number of fire detections</span>
+              <div class="fig08-size-legend">
+                <i class="fig08-count-ramp" aria-hidden="true"></i>
+                <div class="fig08-size-labels">
+                  <span class="fig08-size-label">0</span>
+                  <span class="fig08-size-label">45,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="chart-annotation compact-p">Average intensity peaks in WA in Jan 2020 at 243.2 MW, while NSW carries the largest December detection load. Read colour as heat and bubble size as detections for each available state-month snapshot.</p>
       </div>
     <div class="chart-card grid-span-12 fig-09-wide-card" data-layout-id="fig09-alluvial">
       <div class="chart-title"><span class="chart-number">Fig. 09</span><span class="chart-title-text">Fire pathways &mdash; month to state to FRP intensity</span></div>
@@ -339,7 +353,7 @@
       </div>
       <div class="fig10-caption-row">
         <div class="fig10-copy">
-          <p class="chart-annotation">Each line connects a state's August and December detection counts, turning the seasonal build-up into a direction-of-change comparison. Longer horizontal jumps show where fire activity accelerated most sharply.</p>
+          <p class="chart-annotation">Each line connects a state's August and December detection counts, turning the seasonal build-up into a direction-of-change view. Longer jumps mark where fire activity accelerated most sharply.</p>
           <p class="chart-annotation">NSW moved furthest, with December far beyond the field. Queensland also climbed as spring fire weather worsened, while NT and WA receded as their savanna dry season wound down.</p>
         </div>
         <div class="fig10-legend" aria-label="Fig. 10 legend">
@@ -376,8 +390,18 @@
     </div>
     <div class="chart-card grid-span-8" data-layout-id="fig11-annual-area">
       <div class="chart-title"><span class="chart-number">Fig. 11</span><span class="chart-title-text">Estimated Fire Area by Season &mdash; 2019-20 tops every prior year</span></div>
-      <div id="viz-annual-area"></div>
-      <p class="chart-annotation">Each dot is one Aug-to-Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019-20 sits above the historical field, edging past the severe 2012-13 season rather than blending into the old range.</p>
+      <div class="fig11-content-row">
+        <div class="fig11-caption-col">
+          <p class="chart-annotation">Each dot is one Aug-to-Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019-20 sits above the historical field, edging past the severe 2012-13 season rather than blending into the old range.</p>
+          <p class="chart-annotation">The 2012–13 season was the previous record holder, visible as a labelled outlier above the historical cluster. Black Summer exceeded it by a wide margin — a gap that is apparent without any annotation. Every other year in the record sits comfortably below the 2012–13 mark; 2019–20 clears it entirely, reflecting a scale of destruction that overwhelmed standard firefighting capacity.</p>
+          <p class="chart-annotation">No upward trend is visible in the historical seasons — fires varied from year to year with no clear direction. Black Summer was not the product of a gradual escalation; it arrived as a sharp discontinuity.</p>
+          <div class="fig11-legend" aria-label="Fig. 11 legend">
+            <span><i class="fig11-dot fig11-dot-bs" aria-hidden="true"></i>Black Summer 2019–20</span>
+            <span><i class="fig11-dot fig11-dot-hist" aria-hidden="true"></i>Historical seasons</span>
+          </div>
+        </div>
+        <div id="viz-annual-area"></div>
+      </div>
     </div>
     <div class="chart-card grid-span-12" data-layout-id="fig12-raincloud">
       <div class="chart-title"><span class="chart-number">Fig. 12</span><span class="chart-title-text">Historical Distribution Raincloud &mdash; Black Summer against normal months</span></div>
@@ -410,8 +434,44 @@
     <!-- Hexbin map -->
     <div class="chart-card grid-span-12" data-layout-id="fig13-hexbin">
       <div class="chart-title"><span class="chart-number">Fig. 13</span><span class="chart-title-text">Where Fire Hit Hardest &mdash; spatial bin map, 2019-20 season</span></div>
-      <div id="viz-hexbin"></div>
-      <p class="chart-annotation compact-p">Each hexagon groups nearby VIIRS detections, making dense corridors visible without hiding empty land. Use the state buttons to shift from the national pattern to finer clusters along the east coast and the northern WA-NT fire belt.</p>
+      <div class="fig13-body">
+        <div class="fig13-info-panel">
+          <p class="chart-annotation compact-p">Each hexagon groups nearby VIIRS detections, making dense corridors visible without hiding empty land. Use the state buttons inside the chart to shift from the national pattern to finer clusters along the east coast and the northern WA-NT fire belt.</p>
+          <div class="fig13-legend" aria-label="Fig. 13 colour legend">
+            <div class="fig13-legend-title">Detections / bin</div>
+            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#172635;opacity:0.4;"></span><span>No data</span></div>
+            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#f8d48a;"></span><span>Low (1)</span></div>
+            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#f97316;"></span><span>Medium (≈12)</span></div>
+            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#dc2626;"></span><span>High (≈24)</span></div>
+            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#7f1d1d;"></span><span>Very high (41+)</span></div>
+          </div>
+        </div>
+        <div class="fig13-map-panel">
+          <div id="viz-hexbin"></div>
+        </div>
+        <div class="fig13-state-btns" id="hexbin-state-btns" aria-label="Filter by state">
+          <div class="fig13-state-btns-title">State</div>
+          <button type="button" class="hexbin-state-btn is-active" data-state="ALL">ALL</button>
+          <button type="button" class="hexbin-state-btn" data-state="NSW">NSW</button>
+          <button type="button" class="hexbin-state-btn" data-state="QLD">QLD</button>
+          <button type="button" class="hexbin-state-btn" data-state="WA">WA</button>
+          <button type="button" class="hexbin-state-btn" data-state="NT">NT</button>
+          <button type="button" class="hexbin-state-btn" data-state="SA">SA</button>
+          <button type="button" class="hexbin-state-btn" data-state="VIC">VIC</button>
+          <button type="button" class="hexbin-state-btn" data-state="TAS">TAS</button>
+        </div>
+        <div class="fig13-infoboard" id="hexbin-infoboard" aria-live="polite">
+          <div class="fig13-ib-name" id="hexbin-ib-name">All States</div>
+          <dl class="fig13-ib-stats">
+            <div class="fig13-ib-row"><dt>Detections</dt><dd id="hexbin-ib-total">199,354</dd></div>
+            <div class="fig13-ib-row"><dt>Share</dt><dd id="hexbin-ib-share">100%</dd></div>
+            <div class="fig13-ib-row"><dt>Avg FRP</dt><dd id="hexbin-ib-frp">89 MW</dd></div>
+            <div class="fig13-ib-row"><dt>Peak month</dt><dd id="hexbin-ib-peak">Dec 2019</dd></div>
+            <div class="fig13-ib-row"><dt>Density</dt><dd id="hexbin-ib-density">—</dd></div>
+          </dl>
+          <p class="fig13-ib-blurb" id="hexbin-ib-blurb">NSW and Victoria drove the catastrophic east-coast fires. WA and NT were dominated by their annual savanna burn cycle — high in number but lower in destructive intensity than the south-east forest fires.</p>
+        </div>
+      </div>
     </div>
     <div class="chart-card grid-span-12 fig-comparison-card" data-layout-id="fig14-comparison">
       <div class="fig-comparison-controlbar">
@@ -455,25 +515,27 @@
           </section>
         </div>
         <div class="fig-comparison-lower-row" aria-label="Figure 14 and Figure 15 legends with Figure 15 rhythm">
-          <div class="fig-comparison-lower-left">
-            <aside class="fig-comparison-legend-panel" aria-label="Combined legends for Fig. 14 and Fig. 15">
-              <div class="fig-comparison-legend-section">
-                <span class="fig-comparison-legend-kicker">Fig. 14</span>
-                <strong>Daily detections</strong>
-                <div class="fig-comparison-legend-body">
-                  <div class="fig-comparison-gradient fig-comparison-gradient-calendar" aria-hidden="true"></div>
-                  <div class="fig-comparison-legend-scale"><span>3,000</span><span>0</span></div>
+            <div class="fig-comparison-left-col">
+              <aside class="fig-comparison-legend-panel" aria-label="Combined legends for Fig. 14 and Fig. 15">
+                <div class="fig-comparison-legend-section">
+                  <span class="fig-comparison-legend-kicker">Fig. 14</span>
+                  <strong>Daily detections</strong>
+                  <div class="fig-comparison-legend-body">
+                    <div class="fig-comparison-gradient fig-comparison-gradient-calendar" aria-hidden="true"></div>
+                    <div class="fig-comparison-legend-scale"><span>0</span><span>3,000</span></div>
+                  </div>
                 </div>
-              </div>
-              <div class="fig-comparison-legend-section">
-                <span class="fig-comparison-legend-kicker">Fig. 15</span>
-                <strong>WA average FRP</strong>
-                <div class="fig-comparison-legend-body">
-                  <div class="fig-comparison-gradient fig-comparison-gradient-frp" aria-hidden="true"></div>
-                  <div class="fig-comparison-legend-scale"><span>330 MW</span><span>50 MW</span></div>
+                <div class="fig-comparison-legend-section">
+                  <span class="fig-comparison-legend-kicker">Fig. 15</span>
+                  <strong>WA average FRP</strong>
+                  <div class="fig-comparison-legend-body">
+                    <div class="fig-comparison-gradient fig-comparison-gradient-frp" aria-hidden="true"></div>
+                    <div class="fig-comparison-legend-scale"><span>50 MW</span><span>330 MW</span></div>
+                  </div>
                 </div>
-              </div>
-            </aside>
+              </aside>
+              <p class="chart-annotation fig-comparison-note">Fig. 14 shows the national daily calendar; Fig. 15 shows WA's monthly FRP rhythm. Read across each row to compare the same window, then down to contrast Black Summer against the baseline.</p>
+            </div>
             <section class="fig-comparison-panel fig-comparison-panel-15a" aria-labelledby="fig-15a-title">
               <div class="linked-panel-title linked-panel-title-compact" id="fig-15a-title">
                 <span class="chart-number chart-number-sub">Fig. 15A</span>
@@ -481,8 +543,6 @@
               </div>
               <div id="viz-overlay-a" class="fig-comparison-viz"></div>
             </section>
-          </div>
-          <div class="fig-comparison-lower-right">
             <section class="fig-comparison-panel fig-comparison-panel-15b" aria-labelledby="fig-15b-title">
               <div class="linked-panel-title linked-panel-title-compact" id="fig-15b-title">
                 <span class="chart-number chart-number-sub">Fig. 15B</span>
@@ -490,8 +550,56 @@
               </div>
               <div id="viz-overlay-b" class="fig-comparison-viz"></div>
             </section>
-            <p class="chart-annotation fig-comparison-note">Fig. 14 keeps the national daily calendar view; Fig. 15 keeps the WA monthly FRP rhythm. Read across each row to compare the same season window, then down the columns to contrast Black Summer against the prior year.</p>
-          </div>
+            <div class="fig-comparison-infocard" id="comparison-infocard" aria-live="polite">
+              <!-- A / B header row -->
+              <div class="comparison-ic-heads">
+                <div class="comparison-ic-head">
+                  <span class="comparison-ic-chip comparison-ic-chip-a">A</span>
+                  <div class="comparison-ic-head-text">
+                    <div class="comparison-ic-label" id="comparison-ic-label-a">Black Summer</div>
+                    <div class="comparison-ic-season" id="comparison-ic-season-a">Aug 2019–Jan 2020</div>
+                  </div>
+                </div>
+                <div class="comparison-ic-head comparison-ic-head-b">
+                  <span class="comparison-ic-chip comparison-ic-chip-b">B</span>
+                  <div class="comparison-ic-head-text comparison-ic-head-text-b">
+                    <div class="comparison-ic-label" id="comparison-ic-label-b">Moderate season</div>
+                    <div class="comparison-ic-season" id="comparison-ic-season-b">Aug 2018–Jan 2019</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Bar metrics -->
+              <div class="comparison-ic-metrics">
+                <div class="comparison-ic-metric">
+                  <div class="comparison-ic-metric-label">Fire area</div>
+                  <div class="comparison-ic-bars">
+                    <div class="comparison-ic-bar comparison-ic-bar-a" id="comparison-ic-bar-area-a" style="width:100%"></div>
+                    <div class="comparison-ic-bar comparison-ic-bar-b" id="comparison-ic-bar-area-b" style="width:37%"></div>
+                  </div>
+                  <div class="comparison-ic-vals">
+                    <span class="comparison-ic-val-a" id="comparison-ic-area-a">144,236 km²</span>
+                    <span class="comparison-ic-ratio" id="comparison-ic-ratio-area">A ×2.7</span>
+                    <span class="comparison-ic-val-b" id="comparison-ic-area-b">53,201 km²</span>
+                  </div>
+                </div>
+                <div class="comparison-ic-metric">
+                  <div class="comparison-ic-metric-label">Detections</div>
+                  <div class="comparison-ic-bars">
+                    <div class="comparison-ic-bar comparison-ic-bar-a" id="comparison-ic-bar-count-a" style="width:100%"></div>
+                    <div class="comparison-ic-bar comparison-ic-bar-b" id="comparison-ic-bar-count-b" style="width:34%"></div>
+                  </div>
+                  <div class="comparison-ic-vals">
+                    <span class="comparison-ic-val-a" id="comparison-ic-count-a">83,176</span>
+                    <span class="comparison-ic-ratio" id="comparison-ic-ratio-count">A ×3.0</span>
+                    <span class="comparison-ic-val-b" id="comparison-ic-count-b">28,151</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Similarity badge — shown when seasons are close in scale -->
+              <div class="comparison-ic-similar" id="comparison-ic-similar" hidden>≈ Comparable fire seasons</div>
+              <!-- Dynamic comparison note -->
+              <p class="comparison-ic-note" id="comparison-ic-note">Black Summer was 2.7× more active than this baseline — covering nearly three times the fire area and generating three times as many satellite detections over the same window.</p>
+            </div>
         </div>
       </div>
     </div>
@@ -513,7 +621,7 @@
 <script src="js/chart-embeds.js?v=fig08-hierarchy-20260525"></script>
 <script src="js/raincloud-detail.js?v=fig12-stable-layout-20260525"></script>
 <script src="js/hexbin-zoom.js?v=fig13-hierarchy-20260525"></script>
-<script src="js/comparison.js?v=six-month-window-20260525"></script>
+<script src="js/comparison.js?v=ab-highlights-20260526"></script>
 
 </body>
 </html>
