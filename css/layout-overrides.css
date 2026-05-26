@@ -10,11 +10,12 @@
 .chapter-body.chapter-grid {
   display: flex;
   flex-wrap: wrap;
-  align-items: stretch;
+  align-items: flex-start;
   gap: var(--layout-card-gap);
 }
 
 .chapter-grid > [data-layout-id] {
+  align-self: flex-start;
   margin: var(--layout-card-margin);
   min-width: 0;
 }
@@ -25,6 +26,20 @@
 
 .chapter-grid > .chapter-lede {
   padding: var(--layout-card-padding);
+}
+
+[data-layout-id="fig07-daynight"] #viz-daynight {
+  flex: 0 0 320px;
+  height: 320px;
+  min-height: 0;
+  max-height: 320px;
+}
+
+[data-layout-id="fig10-heatmatrix"] .fig10-chart-shell {
+  flex: 0 0 360px;
+  height: 360px;
+  min-height: 0;
+  max-height: 360px;
 }
 
 @media (min-width: 861px) {
