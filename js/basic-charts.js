@@ -118,10 +118,10 @@ const dailyDateAxis = {
   title: "Date",
   format: "%d %b",
   tickCount: { "interval": "week", "step": 2 },
-  labelAngle: -35,
-  labelPadding: 6,
+  labelAngle: 0,
+  labelPadding: 3,
   labelOverlap: "greedy",
-  titlePadding: 22
+  titlePadding: 16
 };
 
 const dailyCountAxis = {
@@ -139,6 +139,7 @@ const timeseriesSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
   "height": 180,
+  "padding": {"top": 4, "right": 5, "bottom": 8, "left": 5},
   "data": { "url": "data/fire_daily.csv" },
   "layer": [
     {

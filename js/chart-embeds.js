@@ -25,8 +25,5 @@ embedChartFitHeight('#viz-heatmatrix', 'vega/06_heatmatrix.json?v=fit-height-202
   minHeight: 280
 });
 
-/* VIZ 9 — Hexbin map + state filter */
-embedChartFitHeight('#viz-annual-area', 'vega/13_annual_area.json?v=label-filter-20260525', embedOpts, {
-  offset: 58,
-  minHeight: 260
-});
+/* VIZ 13 — Annual area connected dot plot */
+embedChart('#viz-annual-area', 'vega/13_annual_area.json?v=fixed-height-20260525', embedOpts);
