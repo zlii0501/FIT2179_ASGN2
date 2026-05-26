@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a static, single-page data visualisation assignment for FIT2179 (Monash University, 2026). The page tells the story of Australia's "Black Summer" bushfire season (2019–2020) through 15 interactive Vega/Vega-Lite charts embedded in a dark-themed scrollytelling layout.
 
-There is no build step, no package manager, and no test suite. All files are served directly from the filesystem or a local web server.
+There is no build step, no package manager, and no test suite. All files are served directly from the filesystem or a local web server. The page is hosted on GitHub Pages.
 
 ## Running the Project
 
@@ -22,7 +22,36 @@ npx http-server -p 8080
 
 Then visit `http://localhost:8080`.
 
-`layout-editor.html` and `grapesjs-editor.html` are development-only tools for adjusting the grid layout; they are not part of the final submission.
+`layout-editor.html`, `grapesjs-editor.html`, `map3d.html`, and `fire-preview.html` are development-only tools/prototypes and are not part of the final submission.
+
+## Data Preparation Scripts
+
+The `data/` directory contains pre-built files committed to the repo. Regenerate them only when the raw source data changes:
+
+```bash
+python scripts/prepare_data.py        # MODIS aggregate CSVs (fire_daily.csv, fire_monthly_state.csv, etc.)
+python scripts/prepare_viirs.py       # VIIRS sample CSVs (viirs_sample_map.csv, viirs_wa.csv)
+python scripts/prepare_historical.py  # Historical wildfire baseline CSVs (hist_*.csv)
+python scripts/prepare_hexbins.py     # Hexagonal bin GeoJSON grids (hex_bins.geojson, hex_bins_fine.geojson)
+python scripts/prepare_alluvial.py    # Pre-computed alluvial layout JSON
+```
+
+Raw source data (NASA MODIS/VIIRS ZIPs, `Historical_Wildfires.csv`, `package_show*.json`) lives outside `data/` and is not committed. `prepare_hexbin_map.py` generates `fire_hexbin_map.json`.
+
+Two distinct data sources power different charts:
+- **MODIS-derived aggregates** (`fire_*.csv`, `hist_*.csv`): daily totals, FRP density, day/night counts — used by timeline, density, bullet, and historical charts.
+- **VIIRS 375 m point samples** (`viirs_*.csv`, `hex_bins*.geojson`): actual fire locations — used by the monthly explorer map, hexbin spatial map, and WA polar clock. VIIRS includes October 2019 which MODIS data lacks.
+
+## Page Structure
+
+| Section | ID | Chapter |
+|---|---|---|
+| Hero | `#top` | Animated stat counters (199,417 detections / 6 months / 6 states / 11,164 MW peak) |
+| Chapter 1 | `#ch1` | Where — fire parliament, state streamgraph, fire causes waffle |
+| Chapter 2 | `#ch2` | When — daily time-series with historical baseline, monthly VIIRS map explorer |
+| Chapter 3 | `#ch3` | How Intense — FRP density, day/night bullet, bubble, alluvial, dumbbell |
+| Chapter 4 | `#ch4` | Legacy — historical area, raincloud, hexbin map, calendar heatmap, WA polar clock |
+| Chapter 5 | `#ch5` | 3D Map prototype (dev only) |
 
 ## Architecture
 
@@ -102,3 +131,9 @@ Query strings on `<script src>` and `<link href>` tags (e.g. `?v=fig03-polish-20
 - All Vega charts use `embedOpts` from `vega-utils.js` (SVG renderer, no action buttons, dark config, custom tooltip).
 - The `vlConfig` object in `vega-utils.js` is the single source of truth for chart typography and axis colours — do not override these inside individual Vega specs.
 - Charts that must fill a variable-height container use `embedChartFitHeight` / `embedChartFitSize` rather than a hardcoded `height` in their spec.
+
+## Reference Docs
+
+- `docs/chart-audit-2026-05-07.md` — per-chart QA audit (labels, axes, hover, clipping, encoding fit). Read this before making chart changes.
+- `docs/superpowers/specs/` — design specs for the layout and 3D map prototype.
+- `CHANGELOG.md` — running log of changes by date.
