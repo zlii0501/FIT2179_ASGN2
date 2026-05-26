@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fire GLB Preview</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #060a12; }
+    canvas { display: block; position: fixed; top: 0; left: 0; width: 100% !important; height: 100% !important; }
+    #ui {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      font-family: Georgia, serif; color: #e8c9a0;
+    }
+    #loading {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-size: 14px; opacity: 0.6; letter-spacing: 0.08em;
+    }
+    #hint {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      font-size: 12px; opacity: 0.45; letter-spacing: 0.07em; white-space: nowrap;
+    }
+    #info {
+      position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+      font-size: 12px; opacity: 0.5; letter-spacing: 0.06em; white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <div id="loading">Loading model…</div>
+    <div id="info" style="display:none">looping_stylized_fire.glb — 3 flame layers + sparks + looping animation</div>
+    <div id="hint">拖动旋转 · 滚轮缩放</div>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls }  from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader }     from 'three/addons/loaders/GLTFLoader.js';
+
+    /* ── renderer ───────────────────────────────────────────────────── */
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setClearColor('#060a12');
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+    document.body.insertBefore(renderer.domElement, document.getElementById('ui'));
+
+    const scene  = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.01, 200);
+    camera.position.set(0, 1.8, 5);
+    camera.lookAt(0, 0.6, 0);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.target.set(0, 0.6, 0);
+    controls.update();
+
+    /* ── scene lighting ─────────────────────────────────────────────── */
+    scene.add(new THREE.AmbientLight('#ffffff', 0.18));
+    scene.add(new THREE.HemisphereLight('#c8d8ff', '#5a3510', 0.3));
+
+    /* ── ground ─────────────────────────────────────────────────────── */
+    const ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(30, 30),
+      new THREE.MeshStandardMaterial({ color: '#0e0804', roughness: 1 })
+    );
+    ground.rotation.x = -Math.PI / 2;
+    scene.add(ground);
+
+    /* ── fire positions: [x, z, scale] ─────────────────────────────── */
+    const fireLayout = [
+      [ 0,    0,   1.00],   // main centre
+      [-1.5,  0.4, 0.72],
+      [ 1.6, -0.3, 0.78],
+      [-0.5, -1.3, 0.58],
+      [ 2.3,  0.8, 0.62],
+      [-2.4, -0.5, 0.65],
+      [ 0.3,  1.7, 0.52],
+      [-1.9,  1.5, 0.48],
+      [ 1.1, -1.6, 0.55],
+    ];
+
+    const mixers = [];
+    const loadingEl = document.getElementById('loading');
+    const infoEl    = document.getElementById('info');
+
+    const loader = new GLTFLoader();
+    loader.load(
+      'data/looping_stylized_fire.glb',
+
+      (gltf) => {
+        const template = gltf.scene;
+        const clips    = gltf.animations;
+        console.log('[fire-preview] loaded, animations:', clips.map(c => c.name));
+
+        for (const [x, z, s] of fireLayout) {
+          /* Clone the scene — track names match node names so AnimationMixer
+             can resolve targets by name within the cloned hierarchy. */
+          const instance = template.clone(true);
+          instance.position.set(x, 0, z);
+          instance.scale.setScalar(s);
+
+          /* Random starting rotation so fires don't all face same way */
+          instance.rotation.y = Math.random() * Math.PI * 2;
+
+          scene.add(instance);
+
+          if (clips.length > 0) {
+            const mixer = new THREE.AnimationMixer(instance);
+            const action = mixer.clipAction(clips[0]);
+            action.play();
+            /* Stagger start time so fires are out of phase */
+            mixer.setTime(Math.random() * clips[0].duration);
+            mixers.push(mixer);
+          }
+        }
+
+        loadingEl.style.display = 'none';
+        infoEl.style.display    = 'block';
+      },
+
+      (xhr) => {
+        if (xhr.total) {
+          loadingEl.textContent = `Loading… ${Math.round(xhr.loaded / xhr.total * 100)}%`;
+        }
+      },
+
+      (err) => {
+        console.error('[fire-preview] load error', err);
+        loadingEl.textContent = 'Load failed — check console';
+      }
+    );
+
+    /* ── animation loop ─────────────────────────────────────────────── */
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const dt = clock.getDelta();
+      for (const m of mixers) m.update(dt);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    });
+  </script>
+</body>
+</html>

@@ -64,25 +64,26 @@
       z-index: 30;
     }
 
-    /* Back-to-story link */
-    #back-link {
+    /* Camera toggle button */
+    #cam-toggle {
       position: fixed;
       top: 20px;
       left: 24px;
       z-index: 40;
       color: var(--text);
-      text-decoration: none;
-      font-size: 1rem;
-      letter-spacing: 0.03em;
-      padding: 8px 14px;
-      background: rgba(6, 10, 18, 0.55);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      padding: 7px 14px;
+      background: rgba(6, 10, 18, 0.65);
       border: 1px solid rgba(232, 201, 160, 0.25);
       border-radius: 4px;
-      transition: color 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
-    #back-link:hover {
-      color: #fff;
-      border-color: var(--accent);
+    #cam-toggle:hover { color: #fff; border-color: var(--accent); }
+    #cam-toggle.cam-on {
+      border-color: rgba(192,57,43,0.7);
+      color: #f87171;
     }
 
     /* Webcam preview thumbnail (task 3 populates contents) */
@@ -302,12 +303,12 @@
       letter-spacing: 0.06em;
       text-align: center;
     }
-    .gmenu-holdbar-wrap {
+    .gmenu-holdbar-wrap, .tutorial-holdbar-wrap {
       width: 160px; height: 3px;
       background: rgba(232,201,160,0.1);
       border-radius: 2px; overflow: hidden;
     }
-    .gmenu-holdbar {
+    .gmenu-holdbar, .tutorial-holdbar {
       height: 100%; width: 0%;
       background: rgba(192,57,43,0.7);
       border-radius: 2px;
@@ -325,8 +326,8 @@
   <!-- Three.js renderer target -->
   <canvas id="scene-canvas"></canvas>
 
-  <!-- Navigation back to the main story -->
-  <a id="back-link" href="index.html">&larr; Return to story</a>
+  <!-- Camera toggle -->
+  <button id="cam-toggle" type="button">📷 开启手势</button>
 
   <!-- Webcam preview + gesture badge (task 3) -->
   <div id="webcam-preview"></div>
@@ -458,6 +459,7 @@
       </div><!-- .tutorial-grid -->
       <div class="tutorial-footer">
         <span class="tutorial-note">共需 8 张手势照片 (#1–#8)，拍摄后替换各占位框</span>
+        <div class="tutorial-holdbar-wrap"><div class="tutorial-holdbar" id="tutorial-holdbar"></div></div>
         <button class="tutorial-btn" id="tutorial-got-it">知道了</button>
       </div>
     </div>
@@ -471,7 +473,7 @@
       <div class="gmenu-item"        data-idx="2">场景设置</div>
       <div class="gmenu-item"        data-idx="3">退出菜单</div>
     </div>
-    <div class="gmenu-hint">左右移动选择 · ✌️ 保持确认</div>
+    <div class="gmenu-hint">✊ 握拳选择 · ✌️ 保持确认</div>
     <div class="gmenu-holdbar-wrap"><div class="gmenu-holdbar" id="gmenu-holdbar"></div></div>
   </div>
 
@@ -1322,20 +1324,22 @@
       let e_ptX = null, e_ptY = null, p_ptX = null, p_ptY = null;
       // Shared spin velocity — carries over between pinch+spin and thumb-spin
       let _spinVel = 0;
+      // Gesture hysteresis — track current state so switching requires larger thresholds
+      let _gestureState = 'idle'; // 'orbit' | 'spin' | 'pan' | 'zoom' | 'idle'
 
       // ── Gesture menu state ───────────────────────────────────
       const _gmenu      = document.getElementById('gesture-menu');
       const _gmenuItems = Array.from(_gmenu.querySelectorAll('.gmenu-item'));
       const _gmenuBar   = document.getElementById('gmenu-holdbar');
-      let menuOpen      = false;
-      let menuSelIdx    = 1;
-      let thumbUpFrames = 0;
+      let menuOpen        = false;
+      let menuSelIdx      = 1;
+      let thumbUpFrames   = 0;
+      let menuEnterFrames = 0;   // counts up after menu opens; confirm disabled until threshold
       let tutorialCloseFrames = 0;
-      let menuNavCooldown = 0;
       const MENU_OPEN_FRAMES      = 50;  // ~0.8 s at 60 fps
-      const MENU_CONFIRM_FRAMES   = 60;  // ~1.0 s
+      const MENU_ENTER_DELAY      = 60;  // ~1.0 s after open before confirm is active
+      const MENU_CONFIRM_FRAMES   = 60;  // ~1.0 s hold to confirm
       const TUTORIAL_CLOSE_FRAMES = 90;  // ~1.5 s hold to dismiss tutorial
-      const MENU_NAV_COOLDOWN     = 25;  // ~0.4 s between steps
 
       function ema(prev, v) { return prev === null ? v : prev + ALPHA * (v - prev); }
 
@@ -1364,12 +1368,12 @@
         _gmenuItems.forEach((el, i) => el.classList.toggle('active', i === menuSelIdx));
       }
       function openMenu() {
-        menuOpen = true; thumbUpFrames = 0;
+        menuOpen = true; thumbUpFrames = 0; menuEnterFrames = 0;
         gmenuSelect(1);
         _gmenu.classList.add('open');
       }
       function closeMenu() {
-        menuOpen = false; thumbUpFrames = 0; menuNavCooldown = 0;
+        menuOpen = false; thumbUpFrames = 0; menuEnterFrames = 0;
         _gmenu.classList.remove('open');
         _gmenuBar.style.width = '0%';
       }
@@ -1441,8 +1445,8 @@
         e_pinch = e_palmX = e_palmY = p_pinch = p_palmX = p_palmY = null;
         e_ptX = e_ptY = p_ptX = p_ptY = null;
         _spinVel = 0;
-        tutorialCloseFrames = 0;   // cancel any in-progress tutorial dismiss
-        menuNavCooldown = 0;
+        _gestureState = 'idle';
+        tutorialCloseFrames = 0;
       }
 
       function onResults(results) {
@@ -1461,21 +1465,24 @@
 
         // When the tutorial overlay is visible, gestures only close it — no map control.
         if (!document.getElementById('tutorial-overlay').classList.contains('hidden')) {
-          const extCntRaw = countExtended(handsList[0]);
-          const pinchRaw  = pinchDist(handsList[0]);
-          const wantClose = extCntRaw >= 3 || pinchRaw < PINCH_THRESH;
-          if (wantClose) {
+          const lmT = handsList[0];
+
+          // ✌️ peace sign held for 1.5 s → 知道了
+          const _tBar = document.getElementById('tutorial-holdbar');
+          if (isPeace(lmT)) {
             tutorialCloseFrames++;
             const pct = Math.min(tutorialCloseFrames / TUTORIAL_CLOSE_FRAMES * 100, 100);
-            setStatus(`✋ 保持关闭教程… ${Math.round(pct)}%`, '#a78bfa');
+            _tBar.style.width = pct + '%';
+            setStatus(`✌️ 保持关闭教程… ${Math.round(pct)}%`, '#a78bfa');
             if (tutorialCloseFrames >= TUTORIAL_CLOSE_FRAMES) {
-              document.getElementById('tutorial-overlay').classList.add('hidden');
-              localStorage.setItem('map3d_tutorial_seen', '1');
+              _tBar.style.width = '0%';
+              document.getElementById('tutorial-got-it').click();
               tutorialCloseFrames = 0;
             }
           } else {
             tutorialCloseFrames = 0;
-            setStatus('● 教程中');
+            _tBar.style.width = '0%';
+            setStatus('● 教程中  ✌️ 长按关闭');
           }
           return;
         }
@@ -1494,8 +1501,11 @@
 
         // ── Menu open: route all gestures to menu control ──────────────
         if (menuOpen) {
-          if (_isPeace) {
-            menuPalmRefX = null;  // reset anchor so navigation re-anchors after confirm
+          menuEnterFrames++;
+          const _confirmReady = menuEnterFrames >= MENU_ENTER_DELAY;
+
+          if (_isPeace && _confirmReady) {
+            // ✌️ hold → confirm selected item (only after entry delay)
             thumbUpFrames++;
             _gmenuBar.style.width = Math.min(thumbUpFrames / MENU_CONFIRM_FRAMES * 100, 100) + '%';
             if (thumbUpFrames >= MENU_CONFIRM_FRAMES) {
@@ -1503,28 +1513,23 @@
             } else {
               setStatus(`✌️ 确认: ${_gmenuItems[menuSelIdx].textContent}`, '#fbbf24');
             }
+          } else if (_isPeace && !_confirmReady) {
+            // Too soon after opening — ignore ✌️, show countdown
+            const waitPct = Math.round(menuEnterFrames / MENU_ENTER_DELAY * 100);
+            setStatus(`菜单准备中… ${waitPct}%`, '#6b7280');
+          } else if (extCnt === 0 && e_palmX !== null) {
+            // Fist navigation — mirrored: invert X so hand-right = screen-right
+            thumbUpFrames = Math.max(0, thumbUpFrames - 3); // decay, don't hard reset
+            _gmenuBar.style.width = (thumbUpFrames / MENU_CONFIRM_FRAMES * 100) + '%';
+            const n = _gmenuItems.length;
+            const newIdx = Math.min(Math.floor((1 - e_palmX) * n), n - 1);
+            gmenuSelect(newIdx);
+            setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   ✊ 移动手到对应区域`, '#fbbf24');
           } else {
-            // Non-peace gesture — navigate only when fist (extCnt === 0); menu stays open
-            thumbUpFrames = 0; _gmenuBar.style.width = '0%';
-            if (extCnt === 0 && e_palmX !== null) {
-              if (menuPalmRefX === null) {
-                menuPalmRefX = e_palmX;  // anchor on first frame
-              } else {
-                const STEP_THRESH = 0.13;
-                const delta = e_palmX - menuPalmRefX;
-                if (delta > STEP_THRESH) {
-                  gmenuSelect(Math.max(menuSelIdx - 1, 0));
-                  menuPalmRefX = e_palmX;
-                } else if (delta < -STEP_THRESH) {
-                  gmenuSelect(Math.min(menuSelIdx + 1, _gmenuItems.length - 1));
-                  menuPalmRefX = e_palmX;
-                }
-              }
-              setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   ← → 握拳滑动`, '#fbbf24');
-            } else {
-              menuPalmRefX = null;  // open palm — release anchor, no navigation
-              setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   握拳后左右滑动`, '#fbbf24');
-            }
+            // Other gesture — decay slowly so detection flicker doesn't wipe progress
+            thumbUpFrames = Math.max(0, thumbUpFrames - 2);
+            _gmenuBar.style.width = (thumbUpFrames / MENU_CONFIRM_FRAMES * 100) + '%';
+            setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   握拳选择 · ✌️ 确认`, '#fbbf24');
           }
           p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
@@ -1551,14 +1556,20 @@
         thumbUpFrames = 0;
         if (!menuOpen) { _gmenu.classList.remove('open'); _gmenuBar.style.width = '0%'; }
 
-        if (extCnt === 0) {
-          const thumbDx  = lm[4].x - lm[2].x; // signed: negative = thumb pointing screen-right (mirrored)
+        // Hysteresis: when in orbit, require harder thresholds to switch to another gesture
+        const _inOrbit      = _gestureState === 'orbit';
+        const _spinThresh   = _inOrbit ? THUMB_SIDE_THRESH * 2.5 : THUMB_SIDE_THRESH;
+        const _fistExtLimit = _inOrbit ? 1 : 0;  // tolerate 1 slightly-raised finger while orbiting
+        const _pinchThresh  = _inOrbit ? PINCH_THRESH * 0.70 : PINCH_THRESH;
+
+        if (extCnt <= _fistExtLimit) {
+          const thumbDx  = lm[4].x - lm[2].x;
           const thumbAbs = Math.abs(thumbDx);
 
-          if (thumbAbs > THUMB_SIDE_THRESH) {
+          if (thumbAbs > _spinThresh) {
             // ── 👍← / →👍 Fist + thumb sideways → continuous spin ──────
-            // _spinVel lerps toward the target so speed carries over from pinch+spin.
-            const excess = thumbAbs - THUMB_SIDE_THRESH;
+            _gestureState = 'spin';
+            const excess = thumbAbs - _spinThresh;
             const spinTarget = Math.sign(thumbDx) * excess * K_THUMB_SPIN;
             _spinVel += (spinTarget - _spinVel) * SPIN_LERP;
             camTheta += _spinVel;
@@ -1569,6 +1580,7 @@
 
           } else {
             // ── ✊ Fist → grab-and-drag orbit ────────────────────────────
+            _gestureState = 'orbit';
             _spinVel *= SPIN_DECAY;
             if (p_palmX !== null) {
               camTheta += (e_palmX - p_palmX) * K_ORBIT_H;
@@ -1582,12 +1594,10 @@
 
         } else if (isPointing(lm)) {
           // ── ☝️ Point → pan orbit center in map plane ──────────
+          _gestureState = 'pan';
           e_ptX = ema(e_ptX, lm[9].x);
           e_ptY = ema(e_ptY, lm[9].y);
-          // Camera right vector in XZ plane
           const rX =  Math.cos(camTheta), rZ = -Math.sin(camTheta);
-
-          // Left/right: delta-based
           if (p_ptX !== null) {
             const dx = e_ptX - p_ptX;
             if (Math.abs(dx) > PAN_DEAD) {
@@ -1595,26 +1605,25 @@
               panZ += dx * camRadius * K_PAN * rZ;
             }
           }
-
           updateCamera();
           p_ptX = e_ptX; p_ptY = e_ptY;
           p_palmX = null; p_palmY = null;
           _spinVel *= SPIN_DECAY;
           setStatus('☝️ Pan', '#a78bfa');
 
-        } else if (e_pinch < PINCH_THRESH) {
-          // ── 🤏 Pinch → velocity zoom + spin if hand drifts sideways ──
+        } else if (e_pinch < _pinchThresh) {
+          // ── 🤏 Pinch → zoom; move hand to orbit (same delta logic as fist) ──
+          if (_gestureState !== 'zoom') { p_palmX = null; p_palmY = null; } // reset on entry to avoid jump
+          _gestureState = 'zoom';
           const vel = (PINCH_NEUTRAL - e_pinch) * K_ZOOM_VEL;
           camRadius *= (1 - vel);
-          // Spin: if palm X strays past threshold from centre, lerp _spinVel toward target
-          const palmExcess = e_palmX - 0.5;
-          const spinTarget = Math.abs(palmExcess) > PINCH_SPIN_THRESH
-            ? (palmExcess - Math.sign(palmExcess) * PINCH_SPIN_THRESH) * K_PINCH_SPIN
-            : 0;
-          _spinVel += (spinTarget - _spinVel) * SPIN_LERP;
-          camTheta += _spinVel;
+          if (p_palmX !== null) {
+            camTheta += (e_palmX - p_palmX) * K_ORBIT_H;
+            camPhi   -= (e_palmY - p_palmY) * K_ORBIT_V;
+          }
+          p_palmX = e_palmX; p_palmY = e_palmY;
+          _spinVel *= SPIN_DECAY;
           updateCamera();
-          p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
           const dir   = vel >  0.002 ? '▲ in'
                       : vel < -0.002 ? '▼ out' : '● hold';
@@ -1623,6 +1632,7 @@
 
         } else {
           // ── ✋ Open palm → idle, safe to reposition ────────────
+          _gestureState = 'idle';
           p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
           _spinVel *= SPIN_DECAY;
@@ -1653,6 +1663,10 @@
         width: 320,
         height: 240
       });
+
+      // Exposed so the toggle button can start/stop
+      window._mpCamera = mpCamera;
+
       mpCamera.start().then(() => {
         preview.style.display  = 'block';
         video.style.position   = 'static';
@@ -1728,8 +1742,45 @@
       .then(() => { buildCityPins(); return loadFireData(); })
       .then((points) => buildFlames(points))
       .catch((err) => console.error('[map3d] init error', err));
-    initGestures();
     animate();
+
+    // ── Camera toggle ────────────────────────────────────────────────
+    (function () {
+      const btn = document.getElementById('cam-toggle');
+      const preview = document.getElementById('webcam-preview');
+      const statusBadge = document.getElementById('gesture-status');
+      let camActive = false;
+
+      btn.addEventListener('click', () => {
+        if (!camActive) {
+          // Turn on — init gestures, then show tutorial
+          camActive = true;
+          btn.textContent = '📷 关闭手势';
+          btn.classList.add('cam-on');
+          statusBadge.style.display = '';
+          initGestures();
+          // Always show tutorial when camera is first turned on
+          localStorage.removeItem('map3d_tutorial_seen');
+          document.getElementById('tutorial-overlay').classList.remove('hidden');
+        } else {
+          // Turn off — stop camera and hide gesture UI
+          camActive = false;
+          btn.textContent = '📷 开启手势';
+          btn.classList.remove('cam-on');
+          if (window._mpCamera) {
+            window._mpCamera.stop();
+            window._mpCamera = null;
+          }
+          preview.style.display = 'none';
+          statusBadge.style.display = 'none';
+          document.getElementById('tutorial-overlay').classList.add('hidden');
+          document.getElementById('gesture-menu').classList.remove('open');
+        }
+      });
+
+      // Hide gesture UI until camera is turned on
+      statusBadge.style.display = 'none';
+    })();
 
     // ── Tutorial popup ───────────────────────────────────────────────
     (function () {
