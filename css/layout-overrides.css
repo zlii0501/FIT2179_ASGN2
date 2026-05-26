@@ -4,7 +4,7 @@
   .chapter-grid-ch1 {
     grid-auto-rows: 46px;
     grid-auto-flow: row;
-    row-gap: 6px;
+    row-gap: 10px;
   }
   [data-layout-id="ch1-lede"] {
     order: 1;
@@ -47,7 +47,7 @@
   .chapter-grid-ch2 {
     grid-auto-rows: 46px;
     grid-auto-flow: row;
-    row-gap: 6px;
+    row-gap: 10px;
   }
   [data-layout-id="ch2-lede"] {
     order: 1;
@@ -74,7 +74,7 @@
   .chapter-grid-ch3 {
     grid-auto-rows: 46px;
     grid-auto-flow: row;
-    row-gap: 6px;
+    row-gap: 10px;
   }
   [data-layout-id="ch3-lede"] {
     order: 1;
@@ -97,6 +97,7 @@
     grid-column: 1 / span 4;
     grid-row: 7 / span 11;
     align-self: stretch;
+    margin-top: 24px;
     min-height: 460px;
   }
   [data-layout-id="fig10-heatmatrix"] {
@@ -104,6 +105,7 @@
     grid-column: 5 / span 8;
     grid-row: 7 / span 11;
     align-self: stretch;
+    margin-top: 24px;
     min-height: 460px;
   }
   [data-layout-id="fig09-alluvial"] {
@@ -124,7 +126,7 @@
   .chapter-grid-ch4 {
     grid-auto-rows: 46px;
     grid-auto-flow: row;
-    row-gap: 6px;
+    row-gap: 10px;
   }
   [data-layout-id="ch4-lede"] {
     order: 1;
