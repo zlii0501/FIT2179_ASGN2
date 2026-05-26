@@ -13,12 +13,12 @@
   --accent2:   #e74c3c;
   --border:    rgba(255,255,255,0.06);
   --fire-glow: rgba(255,100,0,0.15);
-  --page-max:  1240px;
+  --page-max:  calc(1087px + 5.25rem);
   --page-pad:  2rem;
   --paragraph-font-size: 0.72rem;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 20.8px; }
 
 body {
   background: var(--bg);
@@ -136,7 +136,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 /* === CHAPTER SECTIONS === */
 .chapter {
-  padding: 2rem 0;
+  padding: 1rem 0 2rem;
   border-top: 1px solid var(--fire-glow);
 }
 
@@ -188,7 +188,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .chapter-lede {
   grid-column: span 4;
   min-width: 0;
-  padding: 1rem 0.25rem 1rem 0;
+  padding: 0 0.25rem 1rem 0;
 }
 
 .chapter-lede .chapter-label {
@@ -595,8 +595,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 [data-layout-id="fig01-causes"] .fig01-causes-layout {
   display: grid;
-  grid-template-columns: minmax(190px, 0.32fr) minmax(0, 0.66fr);
-  gap: 1.05rem;
+  grid-template-columns: minmax(190px, 0.33fr) minmax(0, 0.67fr);
+  /* gap: 1.05rem; */
   align-items: stretch;
 }
 
@@ -771,6 +771,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   flex: 0 0 auto;
 }
 
+[data-layout-id="fig02-waffle"] .chart-title,
+[data-layout-id="fig03-state-radar"] .chart-title {
+  margin-bottom: 0;
+}
+
 [data-layout-id="fig03-state-radar"] {
   display: flex;
   flex-direction: column;
@@ -781,12 +786,42 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   min-height: 0;
 }
 
-.fig03a-content-row {
-  display: grid;
-  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 0.72fr);
+/* Fixed-width right viz column */
+.右边图 {
+  width: 696px;
+  flex: 0 0 696px;
+  min-width: 0;
+}
+
+/* Fixed-width left text column shared by Fig 03A and Fig 03B */
+.左边文字 {
+  width: 348px;
+  flex: 0 0 180px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+}
+
+.ch1-card-text {
+  margin-bottom: 0.75rem;
+}
+
+/* Shared layout: text left, viz right — used by Fig 03A */
+.ch1-card-row {
+  display: flex;
   gap: 0.82rem;
-  flex: 0 0 auto;
+  align-items: flex-start;
   min-height: 0;
+}
+.ch1-card-row .ch1-card-viz {
+  flex: 0 0 652px;
+  width: 652px;
+  min-width: 0;
+  margin-left: calc(0.5rem + 6px);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  padding-left: 2rem;
 }
 
 .fig03a-caption-col {
@@ -851,7 +886,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig04-content-row {
   display: grid;
-  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 0.72fr);
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
   align-items: stretch;
   gap: 0.82rem;
   flex: 0 0 auto;
@@ -1394,6 +1429,14 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   margin-top: 0.44rem;
 }
 
+@media (min-width: 861px) {
+  [data-layout-id="fig10-heatmatrix"] .fig10-chart-shell {
+    flex: 0 0 250px;
+    height: 250px;
+    max-height: 250px;
+  }
+}
+
 .fig10-copy {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1495,7 +1538,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-comparison-card {
   display: grid;
-  gap: 1.25rem;
+  gap: 0;
 }
 
 .fig-comparison-controlbar {
@@ -1538,14 +1581,14 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-comparison-grid {
   display: grid;
-  gap: 1rem;
+  gap: 0;
   align-items: start;
 }
 
 .fig-comparison-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0;
   min-width: 0;
   align-items: start;
 }
@@ -1554,14 +1597,14 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig-comparison-lower-row {
   display: grid;
   grid-template-columns: minmax(180px, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) minmax(180px, 1.3fr);
-  gap: 1rem;
+  gap: 0;
   align-items: stretch;
 }
 
 .fig-comparison-left-col {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0;
   min-width: 0;
 }
 
@@ -2307,10 +2350,25 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 #viz-state-bar .vega-embed svg,
 #viz-timeseries .vega-embed svg {
   display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 #viz-timeseries {
+  width: 100%;
+  min-width: 0;
   line-height: 0;
+}
+
+/* Fig 01, 04, 10, 11, 12 — 642 px right-aligned chart viz */
+[data-layout-id="fig01-causes"] #viz-causes-waffle,
+[data-layout-id="fig04-timeseries"] #viz-timeseries,
+[data-layout-id="fig10-heatmatrix"] .fig10-chart-shell,
+[data-layout-id="fig11-annual-area"] #viz-annual-area,
+[data-layout-id="fig12-raincloud"] #viz-yearmonth-heat {
+  width: 642px;
+  margin-left: auto;
 }
 
 #viz-overlay .vega-embed {
