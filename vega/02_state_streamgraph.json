@@ -3,6 +3,7 @@
   "description": "Streamgraph of monthly fire detection counts by Australian state",
   "width": "container",
   "height": 176,
+  "padding": {"top": 5, "right": 5, "bottom": 0, "left": 5},
   "background": "transparent",
   "params": [{"name": "hoveredState", "value": ""}],
   "data": {
@@ -21,9 +22,9 @@
         "labelExpr": "{'2019-08':'Aug 2019','2019-09':'Sep 2019','2019-10':'Oct 2019','2019-11':'Nov 2019','2019-12':'Dec 2019','2020-01':'Jan 2020'}[datum.value] || datum.value",
         "title": null,
         "grid": false,
-        "labelAngle": -35,
+        "labelAngle": 0,
         "labelFontSize": 10,
-        "labelLimit": 80
+        "labelLimit": 100
       }
     },
     "y": {

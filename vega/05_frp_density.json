@@ -3,6 +3,7 @@
   "description": "KDE density curve of Fire Radiative Power (FRP) distribution",
   "width": "container",
   "height": 220,
+  "padding": {"top": 5, "right": 5, "bottom": 0, "left": 5},
   "background": "transparent",
   "data": {
     "url": "data/fire_sample_map.csv"

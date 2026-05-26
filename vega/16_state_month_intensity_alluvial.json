@@ -3,7 +3,7 @@
   "description": "Month to state to FRP intensity alluvial diagram — responsive column spacing.",
   "width": 1210,
   "height": 1050,
-  "padding": { "left": 8, "right": 40, "top": 10, "bottom": 18 },
+  "padding": { "left": 8, "right": 40, "top": 10, "bottom": 4 },
   "autosize": "none",
   "background": "transparent",
   "signals": [
@@ -26,8 +26,8 @@
     { "name": "monthCX", "update": "width * 0.131" },
     { "name": "stateCX", "update": "width * 0.500" },
     { "name": "frpCX",   "update": "width * 0.890" },
-    { "name": "plotTop", "update": "16" },
-    { "name": "plotScaleY", "update": "(height - 32) / 600" },
+    { "name": "plotScaleY", "update": "(height - 32) / 520" },
+    { "name": "plotTop", "update": "10 - 46 * plotScaleY" },
     { "name": "nodeHW",  "update": "round(10 * height / 610)" }
   ],
   "data": [
@@ -244,7 +244,7 @@
           "text": { "signal": "format(datum.count, ',')" },
           "baseline": { "value": "middle" },
           "font": { "value": "Courier New" },
-          "fontSize": { "value": 10.6 },
+          "fontSize": { "value": 13 },
           "fill": { "value": "#9ca3af" }
         },
         "update": {

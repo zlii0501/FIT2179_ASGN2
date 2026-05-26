@@ -37,7 +37,7 @@
           "field": "count",
           "type": "quantitative",
           "title": "Fire detections (sqrt scale)",
-          "scale": {"type": "sqrt", "domainMin": 0},
+          "scale": {"type": "sqrt", "domainMin": 0, "domainMax": 50000},
           "axis": {"format": "~s"}
         },
         "y": {
@@ -63,7 +63,7 @@
           "field": "count",
           "type": "quantitative",
           "title": "Fire detections (sqrt scale)",
-          "scale": {"type": "sqrt", "domainMin": 0},
+          "scale": {"type": "sqrt", "domainMin": 0, "domainMax": 50000},
           "axis": {"format": "~s"}
         },
         "y": {
@@ -106,7 +106,7 @@
         "x": {
           "field": "count",
           "type": "quantitative",
-          "scale": {"type": "sqrt", "domainMin": 0}
+          "scale": {"type": "sqrt", "domainMin": 0, "domainMax": 50000}
         },
         "y": {
           "field": "state",

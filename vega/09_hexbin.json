@@ -6,11 +6,7 @@
   "background": "transparent",
   "signals": [
     { "name": "selectedState", "value": "ALL" },
-    {
-      "name": "requestedState",
-      "value": "ALL",
-      "on": [{ "events": "@stateButton:click", "update": "datum.state" }]
-    },
+    { "name": "requestedState", "value": "ALL" },
     { "name": "visibleStateA", "value": "ALL" },
     { "name": "visibleStateB", "value": "" },
     { "name": "binResolution", "value": "coarse" },
@@ -18,8 +14,8 @@
     { "name": "fineBinFadeA", "value": 0 },
     { "name": "fineBinFadeB", "value": 0 },
     { "name": "mapScale", "value": 680 },
-    { "name": "mapTx", "value": 395 },
-    { "name": "mapTy", "value": 230 }
+    { "name": "mapTx", "value": 470 },
+    { "name": "mapTy", "value": 250 }
   ],
   "projections": [
     {
@@ -71,29 +67,6 @@
           "type": "filter",
           "expr": "binResolution === 'fine' && (visibleStateA === 'ALL' || datum.properties.state === visibleStateA || datum.properties.state === visibleStateB)"
         }
-      ]
-    },
-    {
-      "name": "stateFilters",
-      "values": [
-        { "label": "ALL", "state": "ALL", "y": 58 },
-        { "label": "NSW", "state": "NSW", "y": 98 },
-        { "label": "QLD", "state": "QLD", "y": 138 },
-        { "label": "WA", "state": "WA", "y": 178 },
-        { "label": "NT", "state": "NT", "y": 218 },
-        { "label": "SA", "state": "SA", "y": 258 },
-        { "label": "VIC", "state": "VIC", "y": 298 },
-        { "label": "TAS", "state": "TAS", "y": 338 }
-      ]
-    },
-    {
-      "name": "legendBins",
-      "values": [
-        { "coarseLabel": "no data", "fineLabel": "no data", "coarseCount": 0, "fineCount": 0, "y": 402, "empty": true },
-        { "coarseLabel": "1", "fineLabel": "1", "coarseCount": 1, "fineCount": 1, "y": 421, "empty": false },
-        { "coarseLabel": "12", "fineLabel": "6", "coarseCount": 12, "fineCount": 6, "y": 440, "empty": false },
-        { "coarseLabel": "24", "fineLabel": "12", "coarseCount": 24, "fineCount": 12, "y": 459, "empty": false },
-        { "coarseLabel": "41", "fineLabel": "22", "coarseCount": 41, "fineCount": 22, "y": 478, "empty": false }
       ]
     }
   ],
@@ -205,137 +178,6 @@
         }
       },
       "transform": [{ "type": "geoshape", "projection": "aus" }]
-    },
-    {
-      "type": "text",
-      "encode": {
-        "enter": {
-          "x": { "value": 804 },
-          "y": { "value": 30 },
-          "text": { "value": "FILTER STATE" },
-          "align": { "value": "center" },
-          "font": { "value": "Courier New" },
-          "fontSize": { "value": 12 },
-          "fontWeight": { "value": "bold" },
-          "fill": { "value": "#9ca3af" }
-        }
-      }
-    },
-    {
-      "name": "stateButton",
-      "type": "rect",
-      "from": { "data": "stateFilters" },
-      "encode": {
-        "enter": {
-          "x": { "value": 744 },
-          "x2": { "value": 864 },
-          "y": { "signal": "datum.y - 17" },
-          "y2": { "signal": "datum.y + 17" },
-          "cornerRadius": { "value": 6 },
-          "cursor": { "value": "pointer" },
-          "aria": { "value": true },
-          "description": { "signal": "datum.state === 'ALL' ? 'Show all states' : 'Zoom to ' + datum.state" },
-          "tooltip": { "signal": "datum.state === 'ALL' ? 'Show all states' : 'Zoom to ' + datum.state" }
-        },
-        "update": {
-          "fill": [
-            { "test": "selectedState === datum.state", "value": "#374151" },
-            { "value": "rgba(17,24,39,0.8)" }
-          ],
-          "stroke": [
-            { "test": "selectedState === datum.state", "value": "#dc2626" },
-            { "value": "rgba(232,201,160,0.2)" }
-          ],
-          "strokeWidth": [
-            { "test": "selectedState === datum.state", "value": 1.5 },
-            { "value": 0.8 }
-          ]
-        }
-      }
-    },
-    {
-      "type": "text",
-      "interactive": false,
-      "from": { "data": "stateFilters" },
-      "encode": {
-        "enter": {
-          "x": { "value": 804 },
-          "y": { "field": "y" },
-          "text": { "field": "label" },
-          "align": { "value": "center" },
-          "baseline": { "value": "middle" },
-          "font": { "value": "Courier New" },
-          "fontSize": { "value": 14 },
-          "fontWeight": { "value": "bold" },
-          "fill": { "value": "#f0dcc0" },
-          "cursor": { "value": "pointer" }
-        },
-        "update": {
-          "fillOpacity": [
-            { "test": "selectedState === datum.state", "value": 1 },
-            { "value": 0.65 }
-          ]
-        }
-      }
-    },
-    {
-      "type": "text",
-      "encode": {
-        "enter": {
-          "x": { "value": 804 },
-          "y": { "value": 381 },
-          "align": { "value": "center" },
-          "font": { "value": "Courier New" },
-          "fontSize": { "value": 11 },
-          "fontWeight": { "value": "bold" },
-          "fill": { "value": "#6b7280" }
-        },
-        "update": {
-          "text": { "signal": "binResolution === 'fine' ? 'FINE DETECTIONS / BIN' : 'DETECTIONS / BIN'" }
-        }
-      }
-    },
-    {
-      "type": "rect",
-      "from": { "data": "legendBins" },
-      "encode": {
-        "enter": {
-          "x": { "value": 744 },
-          "x2": { "value": 864 },
-          "y": { "signal": "datum.y - 8" },
-          "y2": { "signal": "datum.y + 8" },
-          "stroke": { "value": "rgba(190,210,220,0.18)" },
-          "strokeWidth": { "value": 0.6 }
-        },
-        "update": {
-          "fill": [
-            { "test": "datum.empty", "value": "#172635" },
-            { "test": "binResolution === 'fine'", "scale": "fineCountColor", "field": "fineCount" },
-            { "scale": "countColor", "field": "coarseCount" }
-          ],
-          "fillOpacity": [
-            { "test": "datum.empty", "value": 0.24 },
-            { "value": 1 }
-          ]
-        }
-      }
-    },
-    {
-      "type": "text",
-      "from": { "data": "legendBins" },
-      "encode": {
-        "enter": {
-          "x": { "value": 874 },
-          "y": { "field": "y" },
-          "font": { "value": "Courier New" },
-          "fontSize": { "value": 11 },
-          "baseline": { "value": "middle" },
-          "fill": { "value": "#9ca3af" }
-        },
-        "update": {
-          "text": { "signal": "binResolution === 'fine' ? datum.fineLabel : datum.coarseLabel" }
-        }
-      }
     }
   ]
 }

@@ -95,40 +95,6 @@
           }
         },
         {
-          "transform": [{ "filter": "datum.month_order === 0" }],
-          "mark": {
-            "type": "text",
-            "align": "left",
-            "baseline": "top",
-            "font": "sans-serif",
-            "fontSize": 12,
-            "fontWeight": "bold",
-            "fill": "#f0dcc0"
-          },
-          "encoding": {
-            "x": { "value": 0 },
-            "y": { "value": 0 },
-            "text": { "field": "window_title" }
-          }
-        },
-        {
-          "transform": [{ "filter": "datum.month_order === 0" }],
-          "mark": {
-            "type": "text",
-            "align": "left",
-            "baseline": "top",
-            "font": "sans-serif",
-            "fontSize": 10,
-            "fontWeight": "bold",
-            "fill": "#fca5a5"
-          },
-          "encoding": {
-            "x": { "value": 0 },
-            "y": { "value": 18 },
-            "text": { "value": "Diagram A" }
-          }
-        },
-        {
           "mark": {
             "type": "point",
             "shape": "square",
@@ -263,40 +229,6 @@
               { "field": "detection_count", "title": "Detections", "format": "," },
               { "field": "period", "title": "Period" }
             ]
-          }
-        },
-        {
-          "transform": [{ "filter": "datum.month_order === 0" }],
-          "mark": {
-            "type": "text",
-            "align": "left",
-            "baseline": "top",
-            "font": "sans-serif",
-            "fontSize": 12,
-            "fontWeight": "bold",
-            "fill": "#f0dcc0"
-          },
-          "encoding": {
-            "x": { "value": 0 },
-            "y": { "value": 0 },
-            "text": { "field": "window_title" }
-          }
-        },
-        {
-          "transform": [{ "filter": "datum.month_order === 0" }],
-          "mark": {
-            "type": "text",
-            "align": "left",
-            "baseline": "top",
-            "font": "sans-serif",
-            "fontSize": 10,
-            "fontWeight": "bold",
-            "fill": "#e8c9a0"
-          },
-          "encoding": {
-            "x": { "value": 0 },
-            "y": { "value": 18 },
-            "text": { "value": "Diagram B" }
           }
         },
         {

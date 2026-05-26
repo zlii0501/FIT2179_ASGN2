@@ -3,7 +3,7 @@
   "description": "Radar profile comparing each state's relative Black Summer fire footprint, energy, intensity, density, and night activity.",
   "width": 292,
   "height": 292,
-  "padding": {"left": 28, "top": 24, "right": 28, "bottom": 16},
+  "padding": {"left": 28, "top": 6, "right": 28, "bottom": 16},
   "params": [
     {"name": "hoveredState", "value": ""}
   ],

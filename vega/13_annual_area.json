@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Connected dot plot of southeast Australian fire area by bushfire season",
   "width": "container",
-  "height": 280,
+  "height": 220,
   "data": { "url": "data/hist_annual.csv" },
   "layer": [
     {
@@ -18,7 +18,7 @@
           "type": "ordinal",
           "sort": { "field": "season_start", "order": "ascending" },
           "title": "Bushfire season (Aug-Jan)",
-          "axis": { "labelAngle": -35, "labelFontSize": 10 }
+          "axis": { "labelAngle": 0, "labelFontSize": 10 }
         },
         "y": {
           "field": "total_fire_area_km2",
@@ -49,11 +49,11 @@
           "title": "Estimated fire area (km2)"
         },
         "color": {
-          "condition": { "test": "datum.is_black_summer", "value": "#e74c3c" },
+          "condition": { "test": "datum.is_black_summer === true || datum.is_black_summer === 'True'", "value": "#e74c3c" },
           "value": "#8f9aa8"
         },
         "size": {
-          "condition": { "test": "datum.is_black_summer", "value": 220 },
+          "condition": { "test": "datum.is_black_summer === true || datum.is_black_summer === 'True'", "value": 220 },
           "value": 90
         },
         "tooltip": [
@@ -66,29 +66,66 @@
     },
     {
       "transform": [
-        {
-          "filter": "datum.is_black_summer === true || datum.is_black_summer === 'True'"
-        }
+        { "filter": "datum.is_black_summer === true || datum.is_black_summer === 'True'" },
+        { "calculate": "'Black Summer'", "as": "bs_label" },
+        { "calculate": "format(datum.total_fire_area_km2, ',.0f') + ' km²'", "as": "bs_value" }
       ],
       "mark": {
         "type": "text",
-        "align": "left",
-        "baseline": "middle",
-        "dx": -82,
-        "dy": -18,
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -30,
         "font": "sans-serif",
-        "fontSize": 11,
+        "fontSize": 12.5,
         "fontWeight": "bold",
         "fill": "#f0dcc0"
       },
       "encoding": {
-        "x": {
-          "field": "year",
-          "type": "ordinal",
-          "sort": { "field": "season_start", "order": "ascending" }
-        },
+        "x": { "field": "year", "type": "ordinal", "sort": { "field": "season_start", "order": "ascending" } },
         "y": { "field": "total_fire_area_km2", "type": "quantitative" },
-        "text": { "field": "total_fire_area_km2", "type": "quantitative", "format": ",.0f" }
+        "text": { "field": "bs_label" }
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.is_black_summer === true || datum.is_black_summer === 'True'" },
+        { "calculate": "format(datum.total_fire_area_km2, ',.0f') + ' km²'", "as": "bs_value" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -18,
+        "font": "sans-serif",
+        "fontSize": 10.5,
+        "fontWeight": "normal",
+        "fill": "#e74c3c"
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "ordinal", "sort": { "field": "season_start", "order": "ascending" } },
+        "y": { "field": "total_fire_area_km2", "type": "quantitative" },
+        "text": { "field": "bs_value" }
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.year === '2012-13'" },
+        { "calculate": "format(datum.total_fire_area_km2, ',.0f') + ' km²'", "as": "note_val" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -8,
+        "font": "sans-serif",
+        "fontSize": 9.5,
+        "fontWeight": "normal",
+        "fill": "rgba(156,163,175,0.65)"
+      },
+      "encoding": {
+        "x": { "field": "year", "type": "ordinal", "sort": { "field": "season_start", "order": "ascending" } },
+        "y": { "field": "total_fire_area_km2", "type": "quantitative" },
+        "text": { "field": "note_val" }
       }
     }
   ],
