@@ -147,6 +147,172 @@
     #gesture-guide .row { display: flex; gap: 6px; }
     #gesture-guide .icon { flex: 0 0 22px; text-align: center; }
     #gesture-guide .desc { opacity: 0.85; }
+
+    /* ── Tutorial popup ─────────────────────────────────────────── */
+    #tutorial-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(6, 10, 18, 0.90);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    #tutorial-overlay.hidden { display: none; }
+
+    .tutorial-modal {
+      background: #0d1520;
+      border: 1px solid rgba(232, 201, 160, 0.18);
+      border-radius: 8px;
+      width: min(94vw, 860px);
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+    }
+    .tutorial-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(232, 201, 160, 0.1);
+      flex-shrink: 0;
+    }
+    .tutorial-header h2 {
+      margin: 0; font-size: 14px; letter-spacing: 0.08em; color: #e8c9a0;
+      font-weight: normal;
+    }
+    .tutorial-close-btn {
+      background: none; border: none; color: #e8c9a0;
+      font-size: 17px; cursor: pointer; opacity: 0.55;
+      padding: 2px 6px; border-radius: 3px; line-height: 1;
+      transition: opacity 0.15s;
+    }
+    .tutorial-close-btn:hover { opacity: 1; }
+
+    .tutorial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 12px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .gesture-card {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(232, 201, 160, 0.09);
+      border-radius: 5px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .gesture-photos {
+      display: flex; gap: 5px;
+      padding: 8px 8px 5px;
+      flex: 1;
+    }
+    .gesture-photo {
+      flex: 1;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px dashed rgba(232, 201, 160, 0.22);
+      border-radius: 4px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px;
+      padding: 8px 4px;
+      min-height: 90px;
+    }
+    .gesture-photo .ph-cam  { font-size: 20px; opacity: 0.25; }
+    .gesture-photo .ph-num  { font-size: 9px; color: rgba(232,201,160,0.4); letter-spacing:0.05em; }
+    .gesture-photo .ph-desc { font-size: 9px; color: rgba(232,201,160,0.55); text-align:center; line-height:1.4; }
+    .gesture-photo img      { width:100%; height:100%; object-fit:cover; border-radius:3px; display:block; }
+
+    .gesture-info {
+      padding: 5px 9px 9px;
+      border-top: 1px solid rgba(232,201,160,0.07);
+    }
+    .gesture-title { display:flex; align-items:center; gap:5px; margin-bottom:3px; }
+    .gesture-title .gi { font-size:15px; }
+    .gesture-title strong { font-size:11px; color:#e8c9a0; letter-spacing:0.04em; }
+    .gesture-desc { font-size:10px; color:rgba(232,201,160,0.6); line-height:1.5; margin:0; }
+
+    .tutorial-footer {
+      padding: 9px 16px 12px;
+      border-top: 1px solid rgba(232,201,160,0.1);
+      display: flex; justify-content: flex-end; align-items: center;
+      gap: 10px; flex-shrink: 0;
+    }
+    .tutorial-note { font-size: 10px; color: rgba(232,201,160,0.4); flex: 1; }
+    .tutorial-btn {
+      background: rgba(192,57,43,0.12);
+      border: 1px solid rgba(192,57,43,0.35);
+      color: #e8c9a0; padding: 6px 18px;
+      border-radius: 4px; font-size: 11.5px;
+      letter-spacing: 0.05em; cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .tutorial-btn:hover { background:rgba(192,57,43,0.28); border-color:rgba(192,57,43,0.65); }
+
+    #tutorial-help-btn {
+      position: fixed; top: 20px; right: 24px; z-index: 50;
+      background: rgba(6,10,18,0.65);
+      border: 1px solid rgba(232,201,160,0.2);
+      border-radius: 50%; color: #e8c9a0;
+      font-size: 13px; width: 30px; height: 30px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-family: inherit; transition: border-color 0.2s, color 0.2s;
+    }
+    #tutorial-help-btn:hover { border-color: var(--accent); color:#fff; }
+
+    /* ── Gesture menu overlay ────────────────────────────────────── */
+    #gesture-menu {
+      position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+      z-index: 180;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    #gesture-menu.open { display: flex; }
+    .gmenu-items {
+      display: flex; gap: 6px;
+      background: rgba(6,10,18,0.92);
+      border: 1px solid rgba(232,201,160,0.2);
+      border-radius: 8px;
+      padding: 8px 10px;
+      backdrop-filter: blur(8px);
+    }
+    .gmenu-item {
+      padding: 8px 22px;
+      border-radius: 5px;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      color: rgba(232,201,160,0.5);
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      user-select: none;
+      min-width: 70px;
+      text-align: center;
+    }
+    .gmenu-item.active {
+      color: #e8c9a0;
+      background: rgba(192,57,43,0.18);
+      border-color: rgba(192,57,43,0.5);
+    }
+    .gmenu-hint {
+      font-size: 9.5px;
+      color: rgba(232,201,160,0.35);
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+    .gmenu-holdbar-wrap {
+      width: 160px; height: 3px;
+      background: rgba(232,201,160,0.1);
+      border-radius: 2px; overflow: hidden;
+    }
+    .gmenu-holdbar {
+      height: 100%; width: 0%;
+      background: rgba(192,57,43,0.7);
+      border-radius: 2px;
+      transition: width 0.08s linear;
+    }
   </style>
 </head>
 <body>
@@ -167,13 +333,147 @@
   <div id="gesture-guide" role="tooltip">
     <h4>Gesture Controls</h4>
     <div class="row"><span class="icon">✊</span><span class="desc">Fist + move — Orbit camera</span></div>
+    <div class="row"><span class="icon">👍</span><span class="desc">Fist + thumb sideways — Spin (farther = faster)</span></div>
     <div class="row"><span class="icon">🤏</span><span class="desc">Pinch tight — Zoom in</span></div>
     <div class="row"><span class="icon">🤏</span><span class="desc">Relax pinch — Zoom out</span></div>
     <div class="row"><span class="icon">☝️</span><span class="desc">Point finger — Pan view</span></div>
 
     <div class="row"><span class="icon">✋</span><span class="desc">Open palm — Safe reposition</span></div>
+    <div class="row"><span class="icon">✌️</span><span class="desc">Peace sign (hold 1.5s) — Open menu</span></div>
   </div>
   <div id="gesture-status">Gestures: off</div>
+
+  <!-- Tutorial / help button -->
+  <button id="tutorial-help-btn" title="手势教程">?</button>
+
+  <!-- Tutorial popup -->
+  <div id="tutorial-overlay" class="hidden">
+    <div class="tutorial-modal">
+      <div class="tutorial-header">
+        <h2>手势控制指南 — Gesture Guide</h2>
+        <button class="tutorial-close-btn" id="tutorial-close">✕</button>
+      </div>
+      <div class="tutorial-grid">
+
+        <!-- 1 Orbit -->
+        <div class="gesture-card">
+          <div class="gesture-photos">
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #1</span>
+              <span class="ph-desc">握紧拳头<br>手心朝摄像头</span>
+            </div>
+          </div>
+          <div class="gesture-info">
+            <div class="gesture-title"><span class="gi">✊</span><strong>轨道旋转</strong></div>
+            <p class="gesture-desc">握拳后上下左右移动手部，旋转地图视角</p>
+          </div>
+        </div>
+
+        <!-- 2 Spin -->
+        <div class="gesture-card">
+          <div class="gesture-photos">
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #2</span>
+              <span class="ph-desc">握拳<br>大拇指向右</span>
+            </div>
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #3</span>
+              <span class="ph-desc">握拳<br>大拇指向左</span>
+            </div>
+          </div>
+          <div class="gesture-info">
+            <div class="gesture-title"><span class="gi">👍</span><strong>持续旋转</strong></div>
+            <p class="gesture-desc">握拳时拇指横向伸出，越伸越快；向右 / 向左</p>
+          </div>
+        </div>
+
+        <!-- 3 Zoom -->
+        <div class="gesture-card">
+          <div class="gesture-photos">
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #4</span>
+              <span class="ph-desc">拇指尖<br>贴近食指尖</span>
+            </div>
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #5</span>
+              <span class="ph-desc">拇指食指<br>轻轻张开</span>
+            </div>
+          </div>
+          <div class="gesture-info">
+            <div class="gesture-title"><span class="gi">🤏</span><strong>缩放</strong></div>
+            <p class="gesture-desc">捏紧 → 放大；放松 → 缩小</p>
+          </div>
+        </div>
+
+        <!-- 4 Zoom + Spin -->
+        <div class="gesture-card">
+          <div class="gesture-photos">
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #6</span>
+              <span class="ph-desc">捏合手势<br>手臂向侧方偏移</span>
+            </div>
+          </div>
+          <div class="gesture-info">
+            <div class="gesture-title"><span class="gi">🤏</span><strong>缩放 + 旋转</strong></div>
+            <p class="gesture-desc">捏合状态下手部向左/右偏移，同时缩放并旋转</p>
+          </div>
+        </div>
+
+        <!-- 5 Pan -->
+        <div class="gesture-card">
+          <div class="gesture-photos">
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #7</span>
+              <span class="ph-desc">只伸出食指<br>其余弯曲</span>
+            </div>
+          </div>
+          <div class="gesture-info">
+            <div class="gesture-title"><span class="gi">☝️</span><strong>平移</strong></div>
+            <p class="gesture-desc">食指单独伸出，左右移动平移地图</p>
+          </div>
+        </div>
+
+        <!-- 6 Menu + Scene Settings -->
+        <div class="gesture-card">
+          <div class="gesture-photos">
+            <div class="gesture-photo">
+              <span class="ph-cam">📷</span>
+              <span class="ph-num">照片 #8</span>
+              <span class="ph-desc">握拳<br>大拇指朝上</span>
+            </div>
+          </div>
+          <div class="gesture-info">
+            <div class="gesture-title"><span class="gi">✌️</span><strong>快捷菜单</strong></div>
+            <p class="gesture-desc">伸出食指和中指（✌️）保持 1.5 秒开菜单；菜单内可重置 / 开关教程 / 切换深浅色场景</p>
+          </div>
+        </div>
+
+      </div><!-- .tutorial-grid -->
+      <div class="tutorial-footer">
+        <span class="tutorial-note">共需 8 张手势照片 (#1–#8)，拍摄后替换各占位框</span>
+        <button class="tutorial-btn" id="tutorial-got-it">知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gesture quick-menu (thumbs-up hold) -->
+  <div id="gesture-menu">
+    <div class="gmenu-items">
+      <div class="gmenu-item active" data-idx="0">重置</div>
+      <div class="gmenu-item"        data-idx="1">教程</div>
+      <div class="gmenu-item"        data-idx="2">场景设置</div>
+      <div class="gmenu-item"        data-idx="3">退出菜单</div>
+    </div>
+    <div class="gmenu-hint">左右移动选择 · ✌️ 保持确认</div>
+    <div class="gmenu-holdbar-wrap"><div class="gmenu-holdbar" id="gmenu-holdbar"></div></div>
+  </div>
 
   <!-- MediaPipe (classic scripts — must be non-module for CDN globals) -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
@@ -182,6 +482,7 @@
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader }    from 'three/addons/loaders/GLTFLoader.js';
 
     /* ------------------------------------------------------------------ *
      * Scene bootstrap
@@ -209,7 +510,24 @@
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.target.set(0, 0, 0);
+    controls.minPolarAngle = 0;
+    controls.maxPolarAngle = Math.PI / 2 - 0.12;
+    controls.zoomSpeed = 0.5;
     controls.update();
+
+    // ── Zoom-spin: scroll while cursor is past threshold → also rotate ──
+    let _zoomMouseX      = window.innerWidth / 2;
+    let _zoomRotateDelta = 0;
+    const ZOOM_ROT_THRESHOLD = 140;   // px from canvas centre before spin kicks in
+    const ZOOM_ROT_SPEED     = 0.00013; // radians per excess-pixel per scroll tick
+
+    renderer.domElement.addEventListener('mousemove', (e) => { _zoomMouseX = e.clientX; });
+    renderer.domElement.addEventListener('wheel', (e) => {
+      const excess = _zoomMouseX - window.innerWidth / 2;
+      if (Math.abs(excess) > ZOOM_ROT_THRESHOLD) {
+        _zoomRotateDelta += (excess - Math.sign(excess) * ZOOM_ROT_THRESHOLD) * ZOOM_ROT_SPEED;
+      }
+    }, { passive: true });
 
     // Soft fill so shadow areas never go pure black
     const ambient = new THREE.AmbientLight('#ffffff', 0.30);
@@ -234,14 +552,15 @@
      * ------------------------------------------------------------------ */
     const oceanGeo = new THREE.PlaneGeometry(6, 6);
     const oceanMat = new THREE.MeshStandardMaterial({
-      color: '#0a1a2e',
-      roughness: 0.55,
-      metalness: 0.15
+      color: '#111827',  // matches page background — ground disappears into it
+      roughness: 1.0,
+      metalness: 0.0
     });
     const ocean = new THREE.Mesh(oceanGeo, oceanMat);
     ocean.rotation.x = -Math.PI / 2;
     ocean.position.y = -0.02;
-    scene.add(ocean);
+    // ocean removed — background colour already matches, no floor plane needed
+    // scene.add(ocean);
 
     /* ------------------------------------------------------------------ *
      * Projection: lon/lat -> normalised [-1, 1] space (Mercator-ish)
@@ -331,10 +650,39 @@
     function heightToColor(h) {
       // Thresholds calibrated to multiplier 0.14 (max world-h ≈ 0.14):
       // 0.014 ≈ 200 m, 0.044 ≈ 600 m, 0.088 ≈ 1200 m
-      if (h < 0.014) return new THREE.Color('#78c060'); // coastal plains green
-      if (h < 0.044) return new THREE.Color('#d68840'); // outback ochre
-      if (h < 0.088) return new THREE.Color('#b07040'); // highlands brown
-      return new THREE.Color('#d8b870');                // peaks — GDR / Snowy tan
+      if (isDarkTheme) {
+        if (h < 0.014) return new THREE.Color('#1a2a1a');
+        if (h < 0.044) return new THREE.Color('#2a1f0e');
+        if (h < 0.088) return new THREE.Color('#3a2810');
+        return new THREE.Color('#4a3820');
+      } else {
+        if (h < 0.014) return new THREE.Color('#78c060');
+        if (h < 0.044) return new THREE.Color('#d68840');
+        if (h < 0.088) return new THREE.Color('#b07040');
+        return new THREE.Color('#d8b870');
+      }
+    }
+
+    function applyTerrainTheme() {
+      if (_terrainColorAttr) {
+        const col = _terrainColorAttr;
+        // 3 verts per flat-shaded triangle, each triangle has the same color
+        for (let i = 0; i < col.count; i += 3) {
+          // Average world-Y of the 3 verts to get height input
+          const geom = col.array; // direct typed array access for speed
+          // positions were packed in the same order: pos attribute
+          const pos = _terrainColorAttr._posAttr;
+          const avgH = (pos.getY(i) + pos.getY(i+1) + pos.getY(i+2)) / 3;
+          const c = heightToColor(avgH);
+          col.setXYZ(i,   c.r, c.g, c.b);
+          col.setXYZ(i+1, c.r, c.g, c.b);
+          col.setXYZ(i+2, c.r, c.g, c.b);
+        }
+        col.needsUpdate = true;
+      }
+      oceanMat.color.set(isDarkTheme ? '#111827' : '#1a4a7a');
+      renderer.setClearColor(isDarkTheme ? '#111827' : '#c8d4e0');
+      document.documentElement.style.setProperty('--bg', isDarkTheme ? '#111827' : '#c8d4e0');
     }
 
     /* ------------------------------------------------------------------ *
@@ -587,15 +935,22 @@
       const material = new THREE.MeshStandardMaterial({
         vertexColors: true,
         flatShading: true,
-        roughness: 0.75,
+        roughness: 0.9,
         metalness: 0,
         side: THREE.DoubleSide
       });
 
       const terrain = new THREE.Mesh(geometry, material);
       scene.add(terrain);
+      // Store refs so applyTerrainTheme() can re-colour without rebuilding
+      _terrainColorAttr = geometry.attributes.color;
+      _terrainColorAttr._posAttr = geometry.attributes.position;
 
       // ---- State boundary lines ----------------------------------------
+      // Keyed by state name; each entry holds centroid + all Line objects for that state.
+      // Used in animate() to sort by camera distance so the nearest state's border wins.
+      const stateBorderGroups = {};
+
       const STATE_COLORS = {
         'New South Wales':        '#D55E00',
         'Victoria':               '#56B4E9',
@@ -612,7 +967,14 @@
         if (!geom) continue;
         const stateName = feature.properties?.STATE_NAME ?? '';
         const color = STATE_COLORS[stateName] ?? '#aaaaaa';
-        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.9 });
+        // depthWrite:false prevents co-planar shared borders from z-fighting;
+        // renderOrder is updated each frame so the nearest state always renders last (on top).
+        const mat = new THREE.LineBasicMaterial({ color, linewidth: 1, transparent: true, opacity: 0.9, depthWrite: false });
+
+        if (!stateBorderGroups[stateName]) {
+          stateBorderGroups[stateName] = { sumX: 0, sumY: 0, sumZ: 0, n: 0, lines: [] };
+        }
+        const group = stateBorderGroups[stateName];
 
         const polys = geom.type === 'Polygon'
           ? [geom.coordinates]
@@ -636,9 +998,12 @@
             const steps = Math.max(1, Math.ceil(dist / SEG_LEN));
             for (let s = 0; s < steps; s++) {
               const t = s / steps;
-              const x = ax + dx * t;
-              const y = ay + dy * t;
-              verts.push(x, heightAt(x, y) + LIFT, -y);
+              // Round to 4 dp so both sides of a shared edge compute identical coords → same heightAt()
+              const x = Math.round((ax + dx * t) * 10000) / 10000;
+              const y = Math.round((ay + dy * t) * 10000) / 10000;
+              const worldY = heightAt(x, y) + LIFT;
+              verts.push(x, worldY, -y);
+              group.sumX += x; group.sumY += worldY; group.sumZ += -y; group.n++;
             }
           }
 
@@ -647,7 +1012,73 @@
           // Use LineLoop so the ring closes; last point auto-connects to first
           const line = new THREE.LineLoop(geo, mat);
           scene.add(line);
+          group.lines.push(line);
         }
+      }
+
+      // Pre-compute per-state centroid Vector3 for distance sorting in animate().
+      _borderGroupList = Object.values(stateBorderGroups).map(g => ({
+        centroid: new THREE.Vector3(g.sumX / g.n, g.sumY / g.n, g.sumZ / g.n),
+        lines: g.lines,
+      }));
+
+      // ---- State name labels (horizontal, parallel to ground) -----------
+      const STATE_ABBR = {
+        'New South Wales': 'NSW', 'Victoria': 'VIC', 'Queensland': 'QLD',
+        'South Australia': 'SA', 'Western Australia': 'WA', 'Tasmania': 'TAS',
+        'Northern Territory': 'NT', 'Australian Capital Territory': 'ACT',
+      };
+      // Use bounding-box centre from raw GeoJSON coords — much closer to geographic centre
+      // than the border-vertex average (which is biased by long coastlines).
+      for (const feature of geojson.features) {
+        const stateName = feature.properties?.STATE_NAME ?? '';
+        const abbr = STATE_ABBR[stateName];
+        if (!abbr || !feature.geometry) continue;
+
+        const polys = feature.geometry.type === 'Polygon'
+          ? [feature.geometry.coordinates]
+          : feature.geometry.coordinates;
+
+        let minX = Infinity, maxX = -Infinity, minPY = Infinity, maxPY = -Infinity;
+        for (const poly of polys) {
+          for (const coord of poly[0]) {
+            const [px, py] = project(coord);
+            if (px < minX) minX = px; if (px > maxX) maxX = px;
+            if (py < minPY) minPY = py; if (py > maxPY) maxPY = py;
+          }
+        }
+        const cx  = (minX + maxX) / 2;
+        const cpy = (minPY + maxPY) / 2; // projected Y → Three.js Z = -cpy
+        const labelY = heightAt(cx, cpy) + 0.06;
+
+        // Scale label width to 65% of the state's bbox width, clamped sensibly
+        const bboxW = maxX - minX;
+        const planeW = Math.max(0.18, Math.min(0.72, bboxW * 0.65));
+        const planeH = planeW * 0.22;
+
+        // Canvas — large font, stroke outline for readability over flames/terrain
+        const CW = 512, CH = 128;
+        const cv = document.createElement('canvas'); cv.width = CW; cv.height = CH;
+        const ctx = cv.getContext('2d');
+        ctx.clearRect(0, 0, CW, CH);
+        ctx.font = 'bold 72px Georgia, serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+        ctx.strokeText(abbr, CW / 2, CH / 2);
+        ctx.fillStyle = 'rgba(232,201,160,0.95)';
+        ctx.fillText(abbr, CW / 2, CH / 2);
+
+        const mat = new THREE.MeshBasicMaterial({
+          map: new THREE.CanvasTexture(cv), transparent: true,
+          depthWrite: false, side: THREE.DoubleSide,
+        });
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(planeW, planeH), mat);
+        plane.rotation.x = -Math.PI / 2;
+        plane.position.set(cx, labelY, -cpy);
+        plane.renderOrder = 10;
+        scene.add(plane);
+        _stateLabels.push(plane);
       }
       // ------------------------------------------------------------------
 
@@ -690,191 +1121,161 @@
     }
 
     /* ------------------------------------------------------------------ *
-     * Flame geometry constants
+     * GLB fire model — loaded once, cloned per fire point
      * ------------------------------------------------------------------ */
-    const RADIAL_SEGS = 8;
-    const HEIGHT_SEGS = 6;
-    const SWAY_AMP = 0.012;
-    const SWAY_FREQ = 3.5;
+    const fireMixers = [];
+    let fireTemplate = null;
+    let fireClip     = null;
 
-    function flameColor(t) {
-      if (t < 0.4)  return new THREE.Color('#7f1d1d').lerp(new THREE.Color('#ef4444'), t / 0.4);
-      if (t < 0.7)  return new THREE.Color('#ef4444').lerp(new THREE.Color('#f97316'), (t - 0.4) / 0.3);
-      if (t < 0.9)  return new THREE.Color('#f97316').lerp(new THREE.Color('#fbbf24'), (t - 0.7) / 0.2);
-      return new THREE.Color('#fde68a');
+    // ── Scene theme ─────────────────────────────────────────────────
+    let isDarkTheme = true;
+    let _terrainColorAttr = null; // BufferAttribute ref for live re-colouring
+    let _borderGroupList = [];
+    const _stateLabels   = [];
+
+    function loadFireModel() {
+      return new Promise((resolve) => {
+        new GLTFLoader().load(
+          'models/fire_model.glb',
+          (gltf) => {
+            // Remove the preview camera node so it doesn't appear in the scene
+            gltf.scene.traverse((child) => {
+              if (child.isCamera) child.removeFromParent();
+            });
+            fireTemplate = gltf.scene;
+            fireClip     = gltf.animations[0] ?? null;
+            console.log('[map3d] fire model loaded, clip:', fireClip?.name);
+            resolve();
+          },
+          null,
+          (err) => {
+            console.warn('[map3d] fire model load failed:', err);
+            resolve(); // non-fatal — fall back to dots
+          }
+        );
+      });
     }
 
     /* ------------------------------------------------------------------ *
-     * Build flames and fire dots from loaded fire points
+     * Build fire instances from loaded fire points
      * ------------------------------------------------------------------ */
-    const flameGeometries = [];
+    /* ------------------------------------------------------------------ *
+     * City pin sprites — always face camera (THREE.Sprite)
+     * ------------------------------------------------------------------ */
+    const CITIES = [
+      { name: 'Sydney',    lat: -33.87, lon: 151.21 },
+      { name: 'Melbourne', lat: -37.81, lon: 144.96 },
+      { name: 'Brisbane',  lat: -27.47, lon: 153.03 },
+      { name: 'Perth',     lat: -31.95, lon: 115.86 },
+      { name: 'Adelaide',  lat: -34.93, lon: 138.60 },
+      { name: 'Darwin',    lat: -12.46, lon: 130.85 },
+      { name: 'Hobart',    lat: -42.88, lon: 147.33 },
+      { name: 'Canberra',  lat: -35.28, lon: 149.13 },
+    ];
+
+    function buildCityPins() {
+      const PIN_H = 0.09; // stem height above terrain
+
+      for (const { name, lat, lon } of CITIES) {
+        const [px, py] = project([lon, lat]);
+        const ty = heightAt(px, py);
+
+        // Vertical stem — anchored at terrain, always upright
+        const stemGeo = new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(px, ty + 0.002, -py),
+          new THREE.Vector3(px, ty + PIN_H,  -py),
+        ]);
+        const stem = new THREE.Line(stemGeo,
+          new THREE.LineBasicMaterial({ color: '#e05030', depthTest: true }));
+        stem.renderOrder = 4;
+        scene.add(stem);
+
+        // Label sprite at top of stem — always faces camera
+        const cv = document.createElement('canvas'); cv.width = 192; cv.height = 52;
+        const ctx = cv.getContext('2d');
+        ctx.clearRect(0, 0, 192, 52);
+        // pin-head dot
+        ctx.beginPath(); ctx.arc(14, 26, 9, 0, Math.PI * 2);
+        ctx.fillStyle = '#e05030'; ctx.fill();
+        ctx.beginPath(); ctx.arc(14, 26, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff'; ctx.fill();
+        // city name
+        ctx.font = 'bold 18px Georgia, serif';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(0,0,0,0.9)'; ctx.shadowBlur = 5;
+        ctx.fillStyle = 'rgba(232,201,160,0.97)';
+        ctx.fillText(name, 28, 26);
+
+        const sprite = new THREE.Sprite(
+          new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(cv), depthTest: true, sizeAttenuation: true })
+        );
+        sprite.scale.set(0.192, 0.052, 1); // match canvas aspect 192:52
+        // Position the sprite centre at the tip of the stem
+        sprite.position.set(px, ty + PIN_H + 0.026, -py);
+        sprite.renderOrder = 5;
+        scene.add(sprite);
+      }
+    }
 
     function buildFlames(points) {
-      // Sort by frp descending; top 1000 get animated flames, rest get dots
       points.sort((a, b) => b.frp - a.frp);
-      const flamePoints = points.slice(0, 1000);
-      const dotPoints   = points.slice(1000, 3000);
 
-      // ---- Flat dots for lower-FRP points --------------------------------
+      // Top 400 highest-FRP points get the animated GLB model
+      const modelPoints = fireTemplate ? points.slice(0,  400) : [];
+      const dotPoints   =                points.slice(modelPoints.length);
+
+      // ---- GLB instances for high-FRP fires ---------------------------------
+      for (const { lat, lon, frp } of modelPoints) {
+        const [px, py] = project([lon, lat]);
+        const terrainY = heightAt(px, py);
+
+        // Scale: log-normalised FRP → model height ~0.025–0.055 world units
+        const frpScale   = Math.log(frp + 1) / Math.log(500);
+        const modelScale = frpScale * 0.032;
+
+        const instance = fireTemplate.clone(true);
+        instance.position.set(px, terrainY, -py);
+        instance.scale.setScalar(modelScale);
+        // Random yaw so fires don't all face the same direction
+        instance.rotation.y = Math.random() * Math.PI * 2;
+        scene.add(instance);
+
+        if (fireClip) {
+          const mixer  = new THREE.AnimationMixer(instance);
+          const action = mixer.clipAction(fireClip);
+          action.play();
+          // Stagger phase so fires flicker independently
+          mixer.setTime(Math.random() * fireClip.duration);
+          fireMixers.push(mixer);
+        }
+      }
+      console.log(`[map3d] placed ${modelPoints.length} GLB fire instances`);
+
+      // ---- Glow dots for remaining lower-FRP points -------------------------
       if (dotPoints.length > 0) {
-        const dotGeo = new THREE.BufferGeometry();
         const posArr = new Float32Array(dotPoints.length * 3);
         const colArr = new Float32Array(dotPoints.length * 3);
-
-        // FRP range within the dot tier for colour lerp
-        const dotFrpMax = dotPoints[0].frp;
-        const dotFrpMin = dotPoints[dotPoints.length - 1].frp;
-        const dotFrpRange = dotFrpMax - dotFrpMin || 1;
-
-        const colLow  = new THREE.Color('#f97316');
-        const colHigh = new THREE.Color('#ef4444');
+        const frpMax = dotPoints[0].frp, frpMin = dotPoints[dotPoints.length - 1].frp;
+        const frpRange = frpMax - frpMin || 1;
+        const cLow  = new THREE.Color('#f97316');
+        const cHigh = new THREE.Color('#ef4444');
 
         for (let i = 0; i < dotPoints.length; i++) {
           const { lat, lon, frp } = dotPoints[i];
           const [px, py] = project([lon, lat]);
-          const worldX = px;
-          const worldY = heightAt(px, py) + 0.01;
-          const worldZ = -py;
-
-          posArr[i * 3]     = worldX;
-          posArr[i * 3 + 1] = worldY;
-          posArr[i * 3 + 2] = worldZ;
-
-          const t = (frp - dotFrpMin) / dotFrpRange;
-          const col = colLow.clone().lerp(colHigh, t);
-          colArr[i * 3]     = col.r;
-          colArr[i * 3 + 1] = col.g;
-          colArr[i * 3 + 2] = col.b;
+          posArr[i*3]   = px;
+          posArr[i*3+1] = heightAt(px, py) + 0.008;
+          posArr[i*3+2] = -py;
+          const col = cLow.clone().lerp(cHigh, (frp - frpMin) / frpRange);
+          colArr[i*3] = col.r; colArr[i*3+1] = col.g; colArr[i*3+2] = col.b;
         }
-
+        const dotGeo = new THREE.BufferGeometry();
         dotGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
         dotGeo.setAttribute('color',    new THREE.BufferAttribute(colArr, 3));
-
-        const dotMat = new THREE.PointsMaterial({
-          vertexColors: true,
-          size: 0.013,
-          sizeAttenuation: true
-        });
-
-        scene.add(new THREE.Points(dotGeo, dotMat));
+        scene.add(new THREE.Points(dotGeo, new THREE.PointsMaterial({
+          vertexColors: true, size: 0.013, sizeAttenuation: true
+        })));
         console.log(`[map3d] added ${dotPoints.length} fire dots`);
-      }
-
-      // ---- Animated flame cones for top-1000 FRP points ------------------
-      for (let i = 0; i < flamePoints.length; i++) {
-        const { lat, lon, frp } = flamePoints[i];
-        const [px, py] = project([lon, lat]);
-        const worldX = px;
-        const terrainY = heightAt(px, py) + 0.01;
-        const worldZ = -py;
-
-        const frpScale = Math.log(frp + 1) / Math.log(500);
-        const baseRadius = frpScale * 0.008;
-        const flameHeight = frpScale * 0.04;
-        const phaseI = (i * 2.399963) % (Math.PI * 2);
-
-        // Build per-vertex positions and colours
-        // Layout: (HEIGHT_SEGS + 1) rings × RADIAL_SEGS vertices
-        const totalVerts = (HEIGHT_SEGS + 1) * RADIAL_SEGS;
-        const posData = new Float32Array(totalVerts * 3);
-        const colData = new Float32Array(totalVerts * 3);
-
-        for (let s = 0; s <= HEIGHT_SEGS; s++) {
-          const t = s / HEIGHT_SEGS;
-          const radius = baseRadius * (1 - t);
-          const yPos   = flameHeight * t;
-          const col    = flameColor(t);
-
-          for (let r = 0; r < RADIAL_SEGS; r++) {
-            const angle = (r / RADIAL_SEGS) * Math.PI * 2;
-            const vi = s * RADIAL_SEGS + r;
-
-            posData[vi * 3]     = Math.cos(angle) * radius;
-            posData[vi * 3 + 1] = yPos;
-            posData[vi * 3 + 2] = Math.sin(angle) * radius;
-
-            colData[vi * 3]     = col.r;
-            colData[vi * 3 + 1] = col.g;
-            colData[vi * 3 + 2] = col.b;
-          }
-        }
-
-        // Build index buffer: quads between adjacent rings + tip fan
-        const indices = [];
-        // Quads for rings 0 to HEIGHT_SEGS-2 (stops before the tip ring)
-        for (let s = 0; s < HEIGHT_SEGS - 1; s++) {
-          for (let r = 0; r < RADIAL_SEGS; r++) {
-            const rNext = (r + 1) % RADIAL_SEGS;
-            const v00 = s * RADIAL_SEGS + r;
-            const v10 = s * RADIAL_SEGS + rNext;
-            const v01 = (s + 1) * RADIAL_SEGS + r;
-            const v11 = (s + 1) * RADIAL_SEGS + rNext;
-            indices.push(v00, v10, v01);
-            indices.push(v10, v11, v01);
-          }
-        }
-        // Tip fan: last ring (HEIGHT_SEGS-1) to tip ring (HEIGHT_SEGS)
-        const tipRingStart = (HEIGHT_SEGS - 1) * RADIAL_SEGS;
-        const tipRing = HEIGHT_SEGS * RADIAL_SEGS;
-        for (let r = 0; r < RADIAL_SEGS; r++) {
-          const rNext = (r + 1) % RADIAL_SEGS;
-          indices.push(tipRingStart + r, tipRingStart + rNext, tipRing + r);
-        }
-
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute('position', new THREE.BufferAttribute(posData, 3));
-        geometry.setAttribute('color',    new THREE.BufferAttribute(colData, 3));
-        geometry.setIndex(indices);
-
-        const material = new THREE.MeshBasicMaterial({
-          vertexColors: true,
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.9
-        });
-
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(worldX, terrainY, worldZ);
-        scene.add(mesh);
-
-        flameGeometries.push({
-          geo: geometry,
-          mesh,
-          baseX: worldX,
-          baseY: terrainY,
-          baseZ: worldZ,
-          frpScale,
-          phaseI,
-          origPositions: posData.slice()
-        });
-      }
-
-      console.log(`[map3d] built ${flameGeometries.length} flame meshes`);
-    }
-
-    /* ------------------------------------------------------------------ *
-     * Flame sway animation
-     * ------------------------------------------------------------------ */
-    function animateFlames(t) {
-      for (const flame of flameGeometries) {
-        const pos  = flame.geo.attributes.position;
-        const orig = flame.origPositions;
-        const totalVerts = pos.count;
-
-        for (let vi = 0; vi < totalVerts; vi++) {
-          const ring    = Math.floor(vi / RADIAL_SEGS);
-          const s       = ring;
-          const segFrac = s / HEIGHT_SEGS;
-
-          const taper = Math.pow(segFrac, 0.5);
-
-          const swayX = SWAY_AMP * Math.sin(SWAY_FREQ * segFrac * t + flame.phaseI) * taper * flame.frpScale;
-          const swayZ = SWAY_AMP * Math.cos(SWAY_FREQ * segFrac * t * 0.7 + flame.phaseI + Math.PI / 3) * taper * flame.frpScale;
-
-          pos.setX(vi, orig[vi * 3]     + swayX);
-          pos.setZ(vi, orig[vi * 3 + 2] + swayZ);
-        }
-        flame.geo.attributes.position.needsUpdate = true;
       }
     }
 
@@ -891,12 +1292,18 @@
       const ALPHA         = 0.25;   // EMA smoothing (lower = smoother)
       const K_ORBIT_H     = 3.5;
       const K_ORBIT_V     = 2.0;
-      const K_ZOOM_VEL    = 0.40;   // velocity zoom gain per frame
+      const K_ZOOM_VEL    = 0.16;   // velocity zoom gain per frame
       const PINCH_NEUTRAL = 0.065;  // pinch tightness at which zoom velocity = 0
-      const MIN_R         = 1.0,  MAX_R   = 7.0;
+      const MIN_R         = 1.0,  MAX_R   = 4.5;
       const MIN_PHI       = 5  * Math.PI / 180;
       const MAX_PHI       = 85 * Math.PI / 180;
       const PINCH_THRESH  = 0.12;   // thumb-index distance below this = pinching
+      const PINCH_SPIN_THRESH = 0.04; // palm X offset from centre (0.5) that triggers spin-while-zoom
+      const K_PINCH_SPIN  = 0.18;   // rad per unit excess per frame
+      const THUMB_SIDE_THRESH = PINCH_SPIN_THRESH; // same as zoom-spin threshold
+      const K_THUMB_SPIN  = 0.42;   // rad per unit excess — higher than pinch spin
+      const SPIN_LERP     = 0.28;   // lerp factor toward spin target each frame
+      const SPIN_DECAY    = 0.80;   // velocity multiplier when no spin gesture active
       const K_PAN         = 2.5;    // left/right pan speed (delta-based)
       const PAN_DEAD      = 0.004;  // horizontal deadband
       const PAN_LIMIT     = 1.5;    // max orbit-center offset from origin
@@ -913,6 +1320,22 @@
       // Pan state (orbit-center offset in world XZ)
       let panX = 0, panZ = 0;
       let e_ptX = null, e_ptY = null, p_ptX = null, p_ptY = null;
+      // Shared spin velocity — carries over between pinch+spin and thumb-spin
+      let _spinVel = 0;
+
+      // ── Gesture menu state ───────────────────────────────────
+      const _gmenu      = document.getElementById('gesture-menu');
+      const _gmenuItems = Array.from(_gmenu.querySelectorAll('.gmenu-item'));
+      const _gmenuBar   = document.getElementById('gmenu-holdbar');
+      let menuOpen      = false;
+      let menuSelIdx    = 1;
+      let thumbUpFrames = 0;
+      let tutorialCloseFrames = 0;
+      let menuNavCooldown = 0;
+      const MENU_OPEN_FRAMES      = 50;  // ~0.8 s at 60 fps
+      const MENU_CONFIRM_FRAMES   = 60;  // ~1.0 s
+      const TUTORIAL_CLOSE_FRAMES = 90;  // ~1.5 s hold to dismiss tutorial
+      const MENU_NAV_COOLDOWN     = 25;  // ~0.4 s between steps
 
       function ema(prev, v) { return prev === null ? v : prev + ALPHA * (v - prev); }
 
@@ -935,6 +1358,37 @@
         updateCamera();
       }
 
+      function gmenuSelect(idx) {
+        const n = _gmenuItems.length;
+        menuSelIdx = ((idx % n) + n) % n;
+        _gmenuItems.forEach((el, i) => el.classList.toggle('active', i === menuSelIdx));
+      }
+      function openMenu() {
+        menuOpen = true; thumbUpFrames = 0;
+        gmenuSelect(1);
+        _gmenu.classList.add('open');
+      }
+      function closeMenu() {
+        menuOpen = false; thumbUpFrames = 0; menuNavCooldown = 0;
+        _gmenu.classList.remove('open');
+        _gmenuBar.style.width = '0%';
+      }
+      function gmenuConfirm() {
+        const sel = menuSelIdx;
+        closeMenu();
+        if (sel === 0) resetCamera();
+        if (sel === 1) {
+          const ov = document.getElementById('tutorial-overlay');
+          ov.classList.toggle('hidden'); // open if hidden, close if visible
+        }
+        if (sel === 2) {
+          isDarkTheme = !isDarkTheme;
+          applyTerrainTheme();
+          setStatus(`场景: ${isDarkTheme ? '深色' : '浅色'}`, '#60a5fa');
+        }
+        // sel === 3: 退出菜单 — closeMenu() already called above, nothing else needed
+      }
+
       function setStatus(text, color) {
         statusBadge.textContent = text;
         statusBadge.style.borderColor = color || 'rgba(232,201,160,0.25)';
@@ -952,16 +1406,43 @@
         return Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
       }
 
-      // Point: index extended; ring + pinky curled (middle allowed either way)
+      // Point: index extended, middle + ring + pinky curled
       function isPointing(lm) {
         return lm[8].y  < lm[6].y  &&   // index extended
+               lm[12].y > lm[10].y &&   // middle curled (prevents peace sign triggering pan)
                lm[16].y > lm[14].y &&   // ring curled
                lm[20].y > lm[18].y;     // pinky curled
+      }
+
+      // Peace: index + middle extended, ring + pinky curled
+      function isPeace(lm) {
+        return lm[8].y  < lm[6].y  &&   // index extended
+               lm[12].y < lm[10].y &&   // middle extended
+               lm[16].y > lm[14].y &&   // ring curled
+               lm[20].y > lm[18].y;     // pinky curled
+      }
+
+      // Horizontal pointing for menu navigation (index tip displaced sideways from index MCP)
+      // Coordinates are in unmirrored image space; mirrored display flips screen appearance.
+      function isPointingMenuLeft(lm) {
+        return (lm[8].x - lm[5].x) > 0.10 &&  // tip right of MCP in image = left on mirrored screen
+               lm[12].y > lm[10].y &&
+               lm[16].y > lm[14].y &&
+               lm[20].y > lm[18].y;
+      }
+      function isPointingMenuRight(lm) {
+        return (lm[5].x - lm[8].x) > 0.10 &&  // tip left of MCP in image = right on mirrored screen
+               lm[12].y > lm[10].y &&
+               lm[16].y > lm[14].y &&
+               lm[20].y > lm[18].y;
       }
 
       function clearAll() {
         e_pinch = e_palmX = e_palmY = p_pinch = p_palmX = p_palmY = null;
         e_ptX = e_ptY = p_ptX = p_ptY = null;
+        _spinVel = 0;
+        tutorialCloseFrames = 0;   // cancel any in-progress tutorial dismiss
+        menuNavCooldown = 0;
       }
 
       function onResults(results) {
@@ -969,11 +1450,35 @@
 
         if (handsList.length === 0) {
           clearAll();
-          controls.enabled = true;
+          // Keep map locked while menu or tutorial overlay is open
+          if (!menuOpen && document.getElementById('tutorial-overlay').classList.contains('hidden')) {
+            controls.enabled = true;
+          }
           setStatus('● Detecting');
           return;
         }
         controls.enabled = false;
+
+        // When the tutorial overlay is visible, gestures only close it — no map control.
+        if (!document.getElementById('tutorial-overlay').classList.contains('hidden')) {
+          const extCntRaw = countExtended(handsList[0]);
+          const pinchRaw  = pinchDist(handsList[0]);
+          const wantClose = extCntRaw >= 3 || pinchRaw < PINCH_THRESH;
+          if (wantClose) {
+            tutorialCloseFrames++;
+            const pct = Math.min(tutorialCloseFrames / TUTORIAL_CLOSE_FRAMES * 100, 100);
+            setStatus(`✋ 保持关闭教程… ${Math.round(pct)}%`, '#a78bfa');
+            if (tutorialCloseFrames >= TUTORIAL_CLOSE_FRAMES) {
+              document.getElementById('tutorial-overlay').classList.add('hidden');
+              localStorage.setItem('map3d_tutorial_seen', '1');
+              tutorialCloseFrames = 0;
+            }
+          } else {
+            tutorialCloseFrames = 0;
+            setStatus('● 教程中');
+          }
+          return;
+        }
 
         // ── SINGLE-HAND GESTURES ─────────────────────────────
         const lm     = handsList[0];
@@ -984,17 +1489,96 @@
         e_palmX = ema(e_palmX, lm[9].x);
         e_palmY = ema(e_palmY, lm[9].y);
 
-        if (extCnt === 0) {
-          // ── ✊ Fist → grab-and-drag orbit ──────────────────────
-          // Checked BEFORE pinch so a closed fist never triggers zoom.
-          if (p_palmX !== null) {
-            camTheta += (e_palmX - p_palmX) * K_ORBIT_H;
-            camPhi   -= (e_palmY - p_palmY) * K_ORBIT_V;
-            updateCamera();
+        // Peace-sign detection (index + middle extended, ring + pinky curled) — menu open/confirm
+        const _isPeace = isPeace(lm);
+
+        // ── Menu open: route all gestures to menu control ──────────────
+        if (menuOpen) {
+          if (_isPeace) {
+            menuPalmRefX = null;  // reset anchor so navigation re-anchors after confirm
+            thumbUpFrames++;
+            _gmenuBar.style.width = Math.min(thumbUpFrames / MENU_CONFIRM_FRAMES * 100, 100) + '%';
+            if (thumbUpFrames >= MENU_CONFIRM_FRAMES) {
+              gmenuConfirm();
+            } else {
+              setStatus(`✌️ 确认: ${_gmenuItems[menuSelIdx].textContent}`, '#fbbf24');
+            }
+          } else {
+            // Non-peace gesture — navigate only when fist (extCnt === 0); menu stays open
+            thumbUpFrames = 0; _gmenuBar.style.width = '0%';
+            if (extCnt === 0 && e_palmX !== null) {
+              if (menuPalmRefX === null) {
+                menuPalmRefX = e_palmX;  // anchor on first frame
+              } else {
+                const STEP_THRESH = 0.13;
+                const delta = e_palmX - menuPalmRefX;
+                if (delta > STEP_THRESH) {
+                  gmenuSelect(Math.max(menuSelIdx - 1, 0));
+                  menuPalmRefX = e_palmX;
+                } else if (delta < -STEP_THRESH) {
+                  gmenuSelect(Math.min(menuSelIdx + 1, _gmenuItems.length - 1));
+                  menuPalmRefX = e_palmX;
+                }
+              }
+              setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   ← → 握拳滑动`, '#fbbf24');
+            } else {
+              menuPalmRefX = null;  // open palm — release anchor, no navigation
+              setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   握拳后左右滑动`, '#fbbf24');
+            }
           }
-          p_palmX = e_palmX; p_palmY = e_palmY;
+          p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
-          setStatus('✊ Orbit', '#60a5fa');
+          return; // skip normal gesture logic
+        }
+
+        // ── Peace-sign hold → open menu (pre-open phase) ─────────────────
+        if (_isPeace) {
+          thumbUpFrames++;
+          const pct = Math.min(thumbUpFrames / MENU_OPEN_FRAMES * 100, 100);
+          _gmenuBar.style.width = pct + '%';
+          _gmenu.classList.add('open'); // show preview with holdbar
+          if (thumbUpFrames >= MENU_OPEN_FRAMES) {
+            openMenu();
+          } else {
+            setStatus(`✌️ 保持打开菜单… ${Math.round(pct)}%`, '#fbbf24');
+          }
+          _spinVel *= SPIN_DECAY;
+          p_palmX = null; p_palmY = null;
+          e_ptX = e_ptY = p_ptX = p_ptY = null;
+          return;
+        }
+        // Peace sign gone — cancel pre-open
+        thumbUpFrames = 0;
+        if (!menuOpen) { _gmenu.classList.remove('open'); _gmenuBar.style.width = '0%'; }
+
+        if (extCnt === 0) {
+          const thumbDx  = lm[4].x - lm[2].x; // signed: negative = thumb pointing screen-right (mirrored)
+          const thumbAbs = Math.abs(thumbDx);
+
+          if (thumbAbs > THUMB_SIDE_THRESH) {
+            // ── 👍← / →👍 Fist + thumb sideways → continuous spin ──────
+            // _spinVel lerps toward the target so speed carries over from pinch+spin.
+            const excess = thumbAbs - THUMB_SIDE_THRESH;
+            const spinTarget = Math.sign(thumbDx) * excess * K_THUMB_SPIN;
+            _spinVel += (spinTarget - _spinVel) * SPIN_LERP;
+            camTheta += _spinVel;
+            updateCamera();
+            p_palmX = null; p_palmY = null;
+            const dir = thumbDx < 0 ? '→' : '←';
+            setStatus(`👍 Spin ${dir}`, '#fbbf24');
+
+          } else {
+            // ── ✊ Fist → grab-and-drag orbit ────────────────────────────
+            _spinVel *= SPIN_DECAY;
+            if (p_palmX !== null) {
+              camTheta += (e_palmX - p_palmX) * K_ORBIT_H;
+              camPhi   -= (e_palmY - p_palmY) * K_ORBIT_V;
+              updateCamera();
+            }
+            p_palmX = e_palmX; p_palmY = e_palmY;
+            setStatus('✊ Orbit', '#60a5fa');
+          }
+          e_ptX = e_ptY = p_ptX = p_ptY = null;
 
         } else if (isPointing(lm)) {
           // ── ☝️ Point → pan orbit center in map plane ──────────
@@ -1015,12 +1599,20 @@
           updateCamera();
           p_ptX = e_ptX; p_ptY = e_ptY;
           p_palmX = null; p_palmY = null;
+          _spinVel *= SPIN_DECAY;
           setStatus('☝️ Pan', '#a78bfa');
 
         } else if (e_pinch < PINCH_THRESH) {
-          // ── 🤏 Pinch → continuous velocity zoom ───────────────
+          // ── 🤏 Pinch → velocity zoom + spin if hand drifts sideways ──
           const vel = (PINCH_NEUTRAL - e_pinch) * K_ZOOM_VEL;
           camRadius *= (1 - vel);
+          // Spin: if palm X strays past threshold from centre, lerp _spinVel toward target
+          const palmExcess = e_palmX - 0.5;
+          const spinTarget = Math.abs(palmExcess) > PINCH_SPIN_THRESH
+            ? (palmExcess - Math.sign(palmExcess) * PINCH_SPIN_THRESH) * K_PINCH_SPIN
+            : 0;
+          _spinVel += (spinTarget - _spinVel) * SPIN_LERP;
+          camTheta += _spinVel;
           updateCamera();
           p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
@@ -1033,6 +1625,7 @@
           // ── ✋ Open palm → idle, safe to reposition ────────────
           p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
+          _spinVel *= SPIN_DECAY;
           setStatus('✋ Idle — free to reposition');
         }
       }
@@ -1092,20 +1685,70 @@
     const clock = new THREE.Clock();
     function animate() {
       requestAnimationFrame(animate);
-      const elapsed = clock.getElapsedTime();
+      const dt = clock.getDelta();
+
+      // Apply any zoom-spin delta: rotate camera around target's Y axis
+      if (_zoomRotateDelta !== 0) {
+        const tgt = controls.target;
+        const rel = camera.position.clone().sub(tgt);
+        const c = Math.cos(_zoomRotateDelta), s = Math.sin(_zoomRotateDelta);
+        camera.position.set(
+          rel.x * c - rel.z * s + tgt.x,
+          camera.position.y,
+          rel.x * s + rel.z * c + tgt.z
+        );
+        _zoomRotateDelta = 0;
+      }
+
       if (controls.enabled) controls.update();
-      animateFlames(elapsed);
+      for (const m of fireMixers) m.update(dt);
+
+      // Sort border groups farthest→closest so the nearest state's border paints on top.
+      _borderGroupList.sort((a, b) =>
+        b.centroid.distanceToSquared(camera.position) - a.centroid.distanceToSquared(camera.position)
+      );
+      _borderGroupList.forEach((g, i) => g.lines.forEach(l => { l.renderOrder = i; }));
+
+      // State label visibility: hide when camera is too close or viewing at a shallow angle.
+      for (const label of _stateLabels) {
+        const dx = camera.position.x - label.position.x;
+        const dz = camera.position.z - label.position.z;
+        const horizDist  = Math.sqrt(dx * dx + dz * dz);
+        const vertDiff   = camera.position.y - label.position.y;
+        const elevAngle  = Math.atan2(vertDiff, horizDist); // radians above horizontal
+        label.visible = horizDist > 0.45 && elevAngle > 0.48; // ~28° minimum elevation
+      }
+
       renderer.render(scene, camera);
     }
 
     // Kick everything off.
     loadDEM()
-      .then(() => buildTerrain())
-      .then(() => loadFireData())
+      .then(() => Promise.all([buildTerrain(), loadFireModel()]))
+      .then(() => { buildCityPins(); return loadFireData(); })
       .then((points) => buildFlames(points))
       .catch((err) => console.error('[map3d] init error', err));
     initGestures();
     animate();
+
+    // ── Tutorial popup ───────────────────────────────────────────────
+    (function () {
+      const overlay  = document.getElementById('tutorial-overlay');
+      const close    = document.getElementById('tutorial-close');
+      const gotIt    = document.getElementById('tutorial-got-it');
+      const helpBtn  = document.getElementById('tutorial-help-btn');
+
+      function show() { overlay.classList.remove('hidden'); }
+      function hide() { overlay.classList.add('hidden'); localStorage.setItem('map3d_tutorial_seen', '1'); }
+
+      close.addEventListener('click', hide);
+      gotIt.addEventListener('click', hide);
+      helpBtn.addEventListener('click', show);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) hide(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { hide(); } });
+
+      if (!localStorage.getItem('map3d_tutorial_seen')) show();
+    })();
   </script>
 </body>
 </html>

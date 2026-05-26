@@ -33,9 +33,9 @@ Then visit `http://localhost:8080`.
 1. `js/layout-runtime.js` — reads a localStorage draft (key `blackSummerLayoutDraft.v1`) and applies saved grid overrides to `[data-layout-id]` elements at runtime. Used in conjunction with the layout editor.
 2. `js/ui.js` — hero counter animations and nav-dot scrollspy.
 3. `js/vega-utils.js` — shared `embedOpts`, `vlConfig` (dark-theme Vega config), and `embedChart()` wrapper that attaches a custom tooltip handler to every chart.
-4. `js/basic-charts.js` — embeds the simpler charts (Figs 01–04, 08 time-series) inline; contains the Fig 01 interactive driver-legend logic.
+4. `js/basic-charts.js` — embeds Figs 01–03 from spec files plus the Fig 04 daily time-series as an inline Vega-Lite spec; contains the Fig 01 interactive driver-legend logic and the cross-chart `broadcastStateHover()` that links hover across Figs 02, 03A, 03B.
 5. `js/month-explorer.js` — Fig 05 monthly map with zoom-lens inset, month selector buttons, and FRP filter.
-6. `js/chart-embeds.js` — embeds the remaining standalone Vega specs (Figs 05–09, 11, 16).
+6. `js/chart-embeds.js` — embeds the remaining standalone Vega specs (Figs 06–09, 11) using `embedChartFitHeight` / `embedChartFitSize` for responsive sizing.
 7. `js/raincloud-detail.js` — Fig 12 raincloud drill-down (overview ↔ detail toggle).
 8. `js/hexbin-zoom.js` — Fig 13 animated hexbin map with state-filter buttons.
 9. `js/comparison.js` — Fig 14/15 comparison panels with draggable season-window handles; uses `embedComposedPanel()` to extract individual panels from a multi-panel Vega spec.
@@ -52,6 +52,7 @@ Figure-to-spec mapping:
 | Fig 02 | `vega/01_waffle.json` |
 | Fig 03A | `vega/02_state_streamgraph.json` |
 | Fig 03B | `vega/03_state_radar.json` |
+| Fig 04 | inline `timeseriesSpec` in `js/basic-charts.js` |
 | Fig 05 | `vega/09_choropleth.json` (main map) |
 | Fig 06 | `vega/05_frp_density.json` |
 | Fig 07 | `vega/07_daynight_bullet.json` |
@@ -63,6 +64,16 @@ Figure-to-spec mapping:
 | Fig 13 | `vega/09_hexbin.json` |
 | Fig 14/15 | `vega/12_calendar.json` / `vega/10_wa_overlay.json` |
 
+### Vega utilities (`js/vega-utils.js`)
+
+Beyond `embedChart()`, the file exports three responsive variants that bind a `ResizeObserver` to keep the chart sized to its container:
+
+- `embedChartFitHeight(selector, spec, opts, { offset, minHeight })` — syncs chart height to container, used for tall charts in constrained cards.
+- `embedChartFitWidth(selector, spec, opts, { offset, minWidth })` — syncs chart width.
+- `embedChartFitSize(selector, spec, opts, { widthOffset, heightOffset, minWidth, minHeight })` — syncs both dimensions; used for the alluvial chart.
+
+`loadChartSpec(spec)` fetches and deep-copies a JSON spec from a URL (or returns a clone if already an object), used internally by the responsive helpers.
+
 ### Styling
 
 `css/style.css` defines all design tokens as CSS custom properties on `:root` and contains the full dark-theme styles (background `#111827`, primary text `#e8c9a0`, accent `#c0392b`).
@@ -71,10 +82,11 @@ Figure-to-spec mapping:
 
 ### Data files (`data/`)
 
-CSV and GeoJSON files consumed directly by Vega specs:
+CSV and GeoJSON files consumed directly by Vega specs or JS:
 
 - `fire_*.csv` — VIIRS satellite detection data for the 2019–20 season (aggregated by state, month, FRP bin, day/night, etc.)
-- `hist_*.csv` — historical 2005–2018 baseline data for comparison charts
+- `hist_*.csv` — historical 2005–2018 baseline data for comparison charts; `hist_daily_continuous.csv` is consumed directly by `comparison.js` to build the timeline sparkline.
+- `viirs_sample_map.csv`, `viirs_wa.csv` — VIIRS point samples for map charts.
 - `australia_states.geojson`, `fire_boundaries.geojson` — map geometry
 - `hex_bins.geojson`, `hex_bins_fine.geojson` — pre-computed hexagonal bins for Fig 13
 - `alluvial_month_state_intensity.json`, `fire_hexbin_map.json` — pre-aggregated JSON for the alluvial and hexbin charts
@@ -89,3 +101,4 @@ Query strings on `<script src>` and `<link href>` tags (e.g. `?v=fig03-polish-20
 - **Chart titles** follow the pattern: `<span class="chart-number">Fig. NN</span><span class="chart-title-text">…</span>`.
 - All Vega charts use `embedOpts` from `vega-utils.js` (SVG renderer, no action buttons, dark config, custom tooltip).
 - The `vlConfig` object in `vega-utils.js` is the single source of truth for chart typography and axis colours — do not override these inside individual Vega specs.
+- Charts that must fill a variable-height container use `embedChartFitHeight` / `embedChartFitSize` rather than a hardcoded `height` in their spec.
