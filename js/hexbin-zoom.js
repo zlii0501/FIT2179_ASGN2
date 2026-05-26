@@ -1,5 +1,40 @@
+const hexbinStateInfo = {
+  ALL: {
+    name: 'All States', total: '199,354', share: '100%', frp: '89 MW', peak: 'Dec 2019', density: '—',
+    blurb: 'NSW dominated with 50.9% of detections along the coastal ranges. WA and NT added high-count savanna burns at lower per-event intensity. SA and VIC recorded under 1% of detections yet produced the season\'s most destructive individual events.'
+  },
+  NSW: {
+    name: 'New South Wales', total: '101,516', share: '50.9%', frp: '76 MW', peak: 'Dec 2019', density: '126.8 / 1k km²',
+    blurb: 'Half of all national detections fell in the coastal ranges and tablelands. The fire corridor extended from the Queensland border to the Victorian Alps. At 126.8 per 1,000 km², NSW recorded six times the density of the next closest state.'
+  },
+  QLD: {
+    name: 'Queensland', total: '34,158', share: '17.1%', frp: '50 MW', peak: 'Dec 2019', density: '19.7 / 1k km²',
+    blurb: 'Fires peaked in December as dry conditions pushed south from the tropics. Activity centred on inland ranges where lightning ignited fires through dry grass. Low average FRP of 50 MW reflects open woodland burns rather than high-intensity forest fires.'
+  },
+  WA: {
+    name: 'Western Australia', total: '33,964', share: '17.0%', frp: '117 MW', peak: 'Dec 2019', density: '13.4 / 1k km²',
+    blurb: 'WA recorded the highest average FRP at 117 MW, driven by Kimberley and Pilbara savanna fires. Detection density was moderate at 13.4 per 1,000 km² despite the largest land area. Dispersed seasonal burns rather than the concentrated east-coast corridors.'
+  },
+  NT: {
+    name: 'Northern Territory', total: '26,037', share: '13.1%', frp: '61 MW', peak: 'Aug 2019', density: '19.3 / 1k km²',
+    blurb: 'The NT peaked in August–September, well before the south-east crisis. Savanna fires are managed by Indigenous rangers using cultural burning. The 2019 season saw above-average intensity due to heavy grass growth after the wet 2018–19 monsoon.'
+  },
+  SA: {
+    name: 'South Australia', total: '2,834', share: '1.4%', frp: '93 MW', peak: 'Dec 2019', density: '2.9 / 1k km²',
+    blurb: 'SA recorded few detections but high average intensity at 93 MW. The Kangaroo Island fires of January 2020 burned 210,000 hectares and killed an estimated 25,000 koalas. Despite its low count, SA produced the season\'s most ecologically significant events.'
+  },
+  VIC: {
+    name: 'Victoria', total: '845', share: '0.4%', frp: '56 MW', peak: 'Jan 2020', density: '3.7 / 1k km²',
+    blurb: 'Victoria had the fewest detections but the most destructive fires per event. East Gippsland alpine forests drove extreme pyroconvection under heavy fuel loads. January 2020 prompted Australia\'s first peacetime military deployment to a natural disaster.'
+  },
+  TAS: {
+    name: 'Tasmania', total: '< 50', share: '< 0.1%', frp: '—', peak: '—', density: '—',
+    blurb: 'Tasmania recorded negligible detections across the 2019–20 season. Its cooler, wetter climate insulated it from the drought and heat that devastated the mainland. Minor fire activity occurred in remote areas but was insignificant compared to any other state.'
+  }
+};
+
 const hexbinZoomTargets = {
-  ALL: { scale: 680,    tx: 395,    ty: 230 },
+  ALL: { scale: 680,    tx: 470,    ty: 250 },
   NSW: { scale: 2137.9, tx: -110.1, ty: 6.0 },
   QLD: { scale: 1220.8, tx: 120.3,  ty: 407.9 },
   WA:  { scale: 1009.5, tx: 589.9,  ty: 294.1 },
@@ -204,7 +239,28 @@ embedChart('#viz-hexbin', 'vega/09_hexbin.json?v=hierarchy-20260525', embedOpts)
     });
   }
 
-  view.addSignalListener('requestedState', (name, value) => {
-    focusHexbinState(value);
+  function setHexbinBtnActive(state) {
+    document.querySelectorAll('#hexbin-state-btns .hexbin-state-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.state === state);
+    });
+  }
+
+  function updateHexbinInfoBoard(state) {
+    const info = hexbinStateInfo[state] || hexbinStateInfo.ALL;
+    document.getElementById('hexbin-ib-name').textContent    = info.name;
+    document.getElementById('hexbin-ib-total').textContent   = info.total;
+    document.getElementById('hexbin-ib-share').textContent   = info.share;
+    document.getElementById('hexbin-ib-frp').textContent     = info.frp;
+    document.getElementById('hexbin-ib-peak').textContent    = info.peak;
+    document.getElementById('hexbin-ib-density').textContent = info.density;
+    document.getElementById('hexbin-ib-blurb').textContent   = info.blurb;
+  }
+
+  document.querySelectorAll('#hexbin-state-btns .hexbin-state-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setHexbinBtnActive(btn.dataset.state);
+      updateHexbinInfoBoard(btn.dataset.state);
+      focusHexbinState(btn.dataset.state);
+    });
   });
 });
