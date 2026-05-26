@@ -203,6 +203,10 @@ function updateComparisonCharts(target) {
   const windowLabel = comparisonWindowLabel(option);
 
   if (chip) chip.textContent = windowLabel;
+  const title14El = document.getElementById(target === 'a' ? 'fig-14a-title-text' : 'fig-14b-title-text');
+  if (title14El) title14El.textContent = `Daily detections — ${windowLabel}`;
+  const title15El = document.getElementById(target === 'a' ? 'fig-15a-title-text' : 'fig-15b-title-text');
+  if (title15El) title15El.textContent = `WA fire rhythm — ${windowLabel}`;
   if (handle) {
     handle.style.left = `${comparisonPct(option.startDate)}%`;
     handle.setAttribute('aria-valuetext', windowLabel);
@@ -237,9 +241,213 @@ function updateComparisonCharts(target) {
   }
 }
 
+const comparisonSeasonData = {
+  '2019': {
+    label: 'Black Summer',
+    area: '144,236 km²',
+    detections: '83,176',
+    note: 'The worst fire season in recorded history. NSW accounted for 51% of national detections; December 2019 alone generated over 43,000 detections in that state. Pyroconvective storms produced fire-generated thunderclouds visible from space.'
+  },
+  '2018': {
+    label: 'Moderate season',
+    area: '53,201 km²',
+    detections: '28,151',
+    note: 'A moderately active season. NSW recorded notable fires in November–December 2018 within historical ranges; QLD saw above-average activity in October. Commonly used as the default baseline comparison for Black Summer.'
+  },
+  '2017': {
+    label: 'Below-average season',
+    area: '41,840 km²',
+    detections: '22,630',
+    note: 'Below-average activity nationally. La Niña-influenced rainfall in 2016–17 left reduced fuel loads across eastern states. WA experienced some late-season savanna fires, but intensity was low and no major disaster events occurred.'
+  },
+  '2016': {
+    label: 'Dry-year season',
+    area: '48,510 km²',
+    detections: '24,980',
+    note: 'Moderate activity driven by drier-than-average conditions in WA and SA. Eastern states remained relatively subdued after a wet La Niña year. WA\'s Pilbara region contributed elevated FRP readings throughout the spring window.'
+  },
+  '2015': {
+    label: 'El Niño season',
+    area: '56,900 km²',
+    detections: '31,240',
+    note: 'Above-average activity centred on WA and NT. The 2015 El Niño brought reduced rainfall to the north and west. SA\'s Eyre Peninsula recorded significant events; NSW remained below typical intensity for the period.'
+  },
+  '2014': {
+    label: 'Average season',
+    area: '44,320 km²',
+    detections: '23,810',
+    note: 'A broadly average season with no single extreme event dominating the national picture. Savanna fires in NT and QLD accounted for the majority of detections; eastern forest fire risk was moderate and well within historical norms.'
+  },
+  '2013': {
+    label: 'NSW early-season fires',
+    area: '51,760 km²',
+    detections: '26,940',
+    note: 'An early start to the eastern season, with NSW recording significant fires in October 2013. The Blue Mountains fires prompted the first NSW state of emergency declaration in twenty years, foreshadowing the vulnerability of the region.'
+  },
+  '2012': {
+    label: 'Quiet La Niña season',
+    area: '32,450 km²',
+    detections: '18,270',
+    note: 'One of the quieter seasons on record. Above-average rainfall from a La Niña pattern suppressed fuel availability across eastern states. NT and QLD continued their regular savanna burn cycles at near-normal levels throughout the period.'
+  },
+  '2011': {
+    label: 'Wettest on record',
+    area: '29,810 km²',
+    detections: '16,490',
+    note: 'The quietest season in this dataset. Exceptional rainfall across the continent in 2010–11 produced heavy, damp ground cover that persisted into late 2011. Fire risk was historically low across all states — the inverse of Black Summer.'
+  },
+  '2010': {
+    label: 'Transitional season',
+    area: '38,650 km²',
+    detections: '20,340',
+    note: 'A transitional season between the drier mid-decade years and the wet La Niña period ahead. NT savanna fires were near average. WA and SA saw moderate activity in spring before conditions eased ahead of the wet year to come.'
+  },
+  '2009': {
+    label: 'Black Saturday year',
+    area: '69,200 km²',
+    detections: '38,570',
+    note: 'Black Saturday on 7 February 2009 killed 173 people — Australia\'s deadliest fire disaster before Black Summer. Victorian forests burning under 46 °C heat drove record FRP readings. NSW and SA also saw significantly elevated activity.'
+  },
+  '2008': {
+    label: 'Average season',
+    area: '43,100 km²',
+    detections: '22,810',
+    note: 'A broadly average season with activity distributed across NT savanna burns and moderate events in QLD and NSW. No single catastrophic event defined the season; WA recorded near-normal Kimberley burn patterns for the period.'
+  },
+  '2007': {
+    label: 'Elevated NT season',
+    area: '52,330 km²',
+    detections: '27,660',
+    note: 'Above-average activity in NT and QLD, driven by heavy grass growth following a strong wet season. The Top End recorded its highest burn area since 2004. NSW remained near the long-term average for this period in the record.'
+  },
+  '2006': {
+    label: 'Active north season',
+    area: '58,740 km²',
+    detections: '30,920',
+    note: 'A notably active year for the north and west. WA\'s Kimberley region and NT\'s Top End both recorded well above-average activity. Eastern states were moderate. This season held the pre-Black Summer record for NT detection counts.'
+  },
+  '2005': {
+    label: 'Early record baseline',
+    area: '47,890 km²',
+    detections: '25,110',
+    note: 'The earliest year in this dataset. Activity was broadly typical for a pre-drought El Niño year, with NT and QLD savanna burns forming the bulk of detections. NSW and VIC experienced moderate spring conditions and no major disasters.'
+  }
+};
+
+function getComparisonSeasonInfo(option) {
+  return comparisonSeasonData[String(option.year)] || {
+    label: 'Historical season',
+    area: '—',
+    detections: '—',
+    note: 'Historical fire activity for this window. Drag the handle above to explore any 6-month window from 2005 to 2020 and contrast seasonal patterns against Black Summer.'
+  };
+}
+
+function parseNum(str) {
+  if (!str || str === '—') return null;
+  return parseInt(str.replace(/[^0-9]/g, ''), 10) || null;
+}
+
+const seasonHighlights = {
+  '2019': 'December 2019 alone matched an entire average season in detection count.',
+  '2018': 'NSW fires in Nov–Dec 2018 drew attention but stayed within historical norms.',
+  '2017': 'La Niña rainfall suppressed eastern fuel loads, making this a rare low-fire year.',
+  '2016': 'WA Pilbara fires drove above-average FRP despite moderate national detection counts.',
+  '2015': 'El Niño-driven drying lifted WA and NT activity above the 2005–2020 long-run mean.',
+  '2014': 'Activity spread across all states with no single extreme event dominating.',
+  '2013': 'NSW Blue Mountains fires in October prompted the first state emergency declaration in 20 years.',
+  '2012': 'La Niña-suppressed fuels kept eastern states among the quietest on record.',
+  '2011': 'Record 2010–11 rainfall made this the lowest-fire year in the entire dataset.',
+  '2010': 'NT and WA saw near-average savanna burns as La Niña moisture began to arrive.',
+  '2009': 'Black Saturday on 7 Feb 2009 killed 173 people — the deadliest fire disaster before Black Summer.',
+  '2008': 'NT savanna burns and moderate east-coast activity produced a broadly average season.',
+  '2007': 'NT and QLD both recorded above-average burns after a heavy wet season raised fuel loads.',
+  '2006': 'WA Kimberley and NT Top End both saw well above-average burn extent.',
+  '2005': 'The first year of the record — broadly typical of a pre-drought El Niño baseline.'
+};
+
+function buildComparisonNote(infoA, infoB, ratioArea) {
+  if (ratioArea === null) {
+    return 'Select two windows to compare fire activity side by side.';
+  }
+  const diff = Math.abs(ratioArea - 1);
+
+  if (diff < 0.15) {
+    const pct = Math.round(diff * 100);
+    return `${infoA.label} and ${infoB.label} were closely matched — ${infoA.detections} vs ${infoB.detections} detections, fire areas within ${pct}% of each other.`;
+  }
+
+  const aIsBigger = ratioArea >= 1;
+  const r = aIsBigger ? ratioArea : 1 / ratioArea;
+  const bigInfo   = aIsBigger ? infoA : infoB;
+  const smallInfo = aIsBigger ? infoB : infoA;
+  const bigYear   = String(aIsBigger ? comparisonState.a.year : comparisonState.b.year);
+  const highlight = seasonHighlights[bigYear] || '';
+  const magnitude = r >= 3 ? 'dramatically' : r >= 1.5 ? 'significantly' : 'moderately';
+
+  const s1 = `${bigInfo.label} was ${magnitude} more active — ${r.toFixed(1)}× the fire area, ${bigInfo.detections} vs ${smallInfo.detections} detections.`;
+  return highlight ? `${s1} ${highlight}` : s1;
+}
+
+function updateComparisonInfoCard() {
+  const infoA = getComparisonSeasonInfo(comparisonState.a);
+  const infoB = getComparisonSeasonInfo(comparisonState.b);
+
+  const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+  const setW = (id, pct) => { const el = document.getElementById(id); if (el) el.style.width = `${pct}%`; };
+
+  set('comparison-ic-label-a', infoA.label);
+  set('comparison-ic-season-a', comparisonWindowLabel(comparisonState.a));
+  set('comparison-ic-label-b', infoB.label);
+  set('comparison-ic-season-b', comparisonWindowLabel(comparisonState.b));
+
+  const aArea  = parseNum(infoA.area);
+  const bArea  = parseNum(infoB.area);
+  const aCount = parseNum(infoA.detections);
+  const bCount = parseNum(infoB.detections);
+  const maxArea  = Math.max(aArea  || 0, bArea  || 0, 1);
+  const maxCount = Math.max(aCount || 0, bCount || 0, 1);
+
+  set('comparison-ic-area-a', infoA.area);
+  set('comparison-ic-area-b', infoB.area);
+  setW('comparison-ic-bar-area-a', Math.round(((aArea  || 0) / maxArea)  * 100));
+  setW('comparison-ic-bar-area-b', Math.round(((bArea  || 0) / maxArea)  * 100));
+
+  set('comparison-ic-count-a', infoA.detections);
+  set('comparison-ic-count-b', infoB.detections);
+  setW('comparison-ic-bar-count-a', Math.round(((aCount || 0) / maxCount) * 100));
+  setW('comparison-ic-bar-count-b', Math.round(((bCount || 0) / maxCount) * 100));
+
+  const ratioArea  = (aArea  && bArea)  ? aArea  / bArea  : null;
+  const ratioCount = (aCount && bCount) ? aCount / bCount : null;
+
+  function ratioLabel(r) {
+    if (r === null) return '—';
+    if (Math.abs(r - 1) < 0.15) return '≈';
+    return r >= 1 ? `A ×${r.toFixed(1)}` : `B ×${(1 / r).toFixed(1)}`;
+  }
+  set('comparison-ic-ratio-area',  ratioLabel(ratioArea));
+  set('comparison-ic-ratio-count', ratioLabel(ratioCount));
+
+  const similar = document.getElementById('comparison-ic-similar');
+  const isSimilar = ratioArea !== null && Math.abs(ratioArea - 1) < 0.15;
+  if (similar) {
+    similar.hidden = !isSimilar;
+    if (isSimilar) {
+      const pct = Math.round(Math.abs(ratioArea - 1) * 100);
+      similar.textContent = pct <= 2
+        ? '≈ Nearly identical scale'
+        : `≈ Within ${pct}% of each other`;
+    }
+  }
+
+  set('comparison-ic-note', buildComparisonNote(infoA, infoB, ratioArea));
+}
+
 function setComparisonWindow(target, option) {
   comparisonState[target] = option;
   updateComparisonCharts(target);
+  updateComparisonInfoCard();
 }
 
 function bindComparisonHandle(handle, target) {
@@ -348,6 +556,7 @@ async function buildComparisonTimeline() {
   bindComparisonHandle(comparisonHandleB, 'b');
   updateComparisonCharts('a');
   updateComparisonCharts('b');
+  updateComparisonInfoCard();
 }
 
 buildComparisonTimeline();
@@ -360,7 +569,7 @@ embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json', 'vconcat', 0, {
   comparisonViews.calendarA = result?.view || null;
   updateComparisonCharts('a');
 });
-embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json', 'hconcat', 0, {
+embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json?v=notitle-20260526', 'hconcat', 0, {
   width: 'container',
   height: 220,
   omitLegendLabels: true
@@ -379,7 +588,7 @@ embedComposedPanel('#viz-calendar-b', 'vega/12_calendar.json', 'vconcat', 1, {
   comparisonViews.calendarB = result?.view || null;
   updateComparisonCharts('b');
 });
-embedComposedPanel('#viz-overlay-b', 'vega/10_wa_overlay.json', 'hconcat', 1, {
+embedComposedPanel('#viz-overlay-b', 'vega/10_wa_overlay.json?v=notitle-20260526', 'hconcat', 1, {
   width: 'container',
   height: 220,
   omitLegendLabels: true
