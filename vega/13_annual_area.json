@@ -19,7 +19,8 @@
           "type": "ordinal",
           "sort": { "field": "season_start", "order": "ascending" },
           "title": "Bushfire season (Aug-Jan)",
-          "axis": { "labelAngle": 0, "labelFontSize": 10 }
+          "axis": { "labelAngle": 0, "labelFontSize": 10, "labelExpr": "slice(datum.label, 0, 4)" },
+          "scale": { "paddingInner": 0.3 }
         },
         "y": {
           "field": "total_fire_area_km2",

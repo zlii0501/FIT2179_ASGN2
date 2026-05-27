@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig10-shell-fill-20260527">
+  <link rel="stylesheet" href="css/style.css?v=fig13-fixedcard-20260528">
   <link rel="stylesheet" href="css/layout-overrides.css?v=fig08-391px-20260527">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -306,20 +306,18 @@
       <div class="chart-card grid-span-6" data-layout-id="fig08-bubble">
         <div class="chart-title"><span class="chart-number">Fig. 08</span><span class="chart-title-text">Where and when fires burned hottest — average fire intensity by state and month</span></div>
         <div id="viz-bubble"></div>
-        <div class="fig08-footer">
-          <p class="chart-annotation compact-p">NSW carries the largest December detection load; WA and NT dominate the early months through tropical savanna burns. Each cell is coloured by detection count — darker cells indicate fewer fires, brighter cells mark the season's hottest clusters.</p>
-          <div class="fig08-legend" aria-label="Fig. 08 legend">
-            <div class="fig08-frp-legend">
-              <span class="fig08-frp-legend-title">Number of fire detections</span>
-              <div class="fig08-size-legend">
-                <i class="fig08-count-ramp" aria-hidden="true"></i>
-                <div class="fig08-size-labels">
-                  <span class="fig08-size-label">0</span>
-                  <span class="fig08-size-label">45,000</span>
-                </div>
-              </div>
+        <div class="fig08-legend" aria-label="Fig. 08 legend">
+          <div class="fig08-frp-legend">
+            <span class="fig08-frp-legend-title">Number of fire detections</span>
+            <div class="fig08-size-legend">
+              <span class="fig08-size-label">0</span>
+              <i class="fig08-count-ramp" aria-hidden="true"></i>
+              <span class="fig08-size-label">45,000</span>
             </div>
           </div>
+        </div>
+        <div class="fig08-footer">
+          <p class="chart-annotation compact-p">NSW dominates December by a wide margin; WA and NT lead the early months through tropical savanna burns. Brighter cells mark the season's hottest clusters — SA and Victoria remain quiet until a sharp late-December spike.</p>
         </div>
       </div>
     <div class="chart-card grid-span-12 fig-09-wide-card" data-layout-id="fig09-alluvial">
@@ -405,42 +403,47 @@
     <div class="chart-card grid-span-12" data-layout-id="fig11-annual-area">
       <div class="chart-title"><span class="chart-number">Fig. 11</span><span class="chart-title-text">Estimated Fire Area by Season &mdash; 2019-20 tops every prior year</span></div>
       <div class="fig11-content-row">
-        <div class="fig11-caption-col 左边文字">
-          <p class="chart-annotation">Each dot is one Aug-to-Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019-20 sits above the historical field, edging past the severe 2012-13 season rather than blending into the old range.</p>
-          <p class="chart-annotation">The 2012–13 season was the previous record holder, visible as a labelled outlier above the historical cluster. Black Summer exceeded it by a wide margin — a gap that is apparent without any annotation. Every other year in the record sits comfortably below the 2012–13 mark; 2019–20 clears it entirely, reflecting a scale of destruction that overwhelmed standard firefighting capacity.</p>
-          <p class="chart-annotation">No upward trend is visible in the historical seasons — fires varied from year to year with no clear direction. Black Summer was not the product of a gradual escalation; it arrived as a sharp discontinuity.</p>
+        <div class="fig11-caption-col">
+          <p class="chart-annotation compact-p 左边文字">Each dot is one Aug–Jan season across NSW, VIC, QLD, SA and TAS. The red dot for 2019–20 clears every prior year — including the 2012–13 record — by a visible margin.</p>
+          <p class="chart-annotation compact-p 左边文字">No upward trend precedes it. Black Summer arrived as a sharp discontinuity, not the end of a long climb. The decade before 2019 varied year to year with no clear direction — the crisis gave no warning in the historical pattern.</p>
           <div class="fig11-legend" aria-label="Fig. 11 legend">
             <span><i class="fig11-dot fig11-dot-bs" aria-hidden="true"></i>Black Summer 2019–20</span>
             <span><i class="fig11-dot fig11-dot-hist" aria-hidden="true"></i>Historical seasons</span>
+            <span><i class="fig11-line-swatch" aria-hidden="true"></i>Season trend</span>
           </div>
         </div>
-        <div id="viz-annual-area"></div>
+        <div class="fig11-viz-col">
+          <div id="viz-annual-area"></div>
+        </div>
       </div>
     </div>
     <div class="chart-card grid-span-12" data-layout-id="fig12-raincloud">
       <div class="chart-title"><span class="chart-number">Fig. 12</span><span class="chart-title-text">Historical Distribution Raincloud &mdash; Black Summer against normal months</span></div>
-      <div class="raincloud-shell">
-        <div id="raincloud-detail-toolbar" class="raincloud-detail-toolbar" hidden>
-          <button type="button" id="raincloud-back" class="raincloud-back">Back to overview</button>
-          <span id="raincloud-detail-title"></span>
+      <div class="fig12-content-row">
+        <div class="raincloud-caption-row">
+          <p id="raincloud-caption" class=" 左边文字 chart-annotation compact-p">Grey marks show each month's 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².</p>
+          <div class="raincloud-legend" aria-label="Fig. 12 colour legend">
+            <div class="raincloud-gradient-legend" aria-label="Times median colour scale">
+              <span>Times median</span>
+              <b><span>1</span><i></i><span>8</span></b>
+            </div>
+            <div class="raincloud-legend-item">
+              <span class="raincloud-legend-swatch raincloud-legend-hist"></span>
+              Historical range (2005–18)
+            </div>
+            <div class="raincloud-legend-item">
+              <span class="raincloud-legend-swatch raincloud-legend-bs"></span>
+              Black Summer (2019–20)
+            </div>
+          </div>
         </div>
-        <div id="viz-yearmonth-heat"></div>
-      </div>
-      <div class="raincloud-caption-row 左边文字">
-        <p id="raincloud-caption" class="chart-annotation compact-p">Grey marks show each month's 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².</p>
-        <div class="raincloud-legend" aria-label="Fig. 12 colour legend">
-          <div class="raincloud-gradient-legend" aria-label="Times median colour scale">
-            <span>Times median</span>
-            <i></i>
-            <b><span>1</span><span>8</span></b>
-          </div>
-          <div class="raincloud-legend-item">
-            <span class="raincloud-legend-swatch raincloud-legend-hist"></span>
-            Historical range (2005–18)
-          </div>
-          <div class="raincloud-legend-item">
-            <span class="raincloud-legend-swatch raincloud-legend-bs"></span>
-            Black Summer (2019–20)
+        <div class="fig12-viz-col">
+          <div class="raincloud-shell">
+            <div id="raincloud-detail-toolbar" class="raincloud-detail-toolbar" hidden>
+              <button type="button" id="raincloud-back" class="raincloud-back">Back to overview</button>
+              <span id="raincloud-detail-title"></span>
+            </div>
+            <div id="viz-yearmonth-heat"></div>
           </div>
         </div>
       </div>
@@ -449,41 +452,55 @@
     <div class="chart-card grid-span-12" data-layout-id="fig13-hexbin">
       <div class="chart-title"><span class="chart-number">Fig. 13</span><span class="chart-title-text">Where Fire Hit Hardest &mdash; spatial bin map, 2019-20 season</span></div>
       <div class="fig13-body">
-        <div class="fig13-info-panel">
-          <p class="chart-annotation compact-p">Each hexagon groups nearby VIIRS detections, making dense corridors visible without hiding empty land. Use the state buttons inside the chart to shift from the national pattern to finer clusters along the east coast and the northern WA-NT fire belt.</p>
-          <div class="fig13-legend" aria-label="Fig. 13 colour legend">
-            <div class="fig13-legend-title">Detections / bin</div>
-            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#172635;opacity:0.4;"></span><span>No data</span></div>
-            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#f8d48a;"></span><span>Low (1)</span></div>
-            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#f97316;"></span><span>Medium (≈12)</span></div>
-            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#dc2626;"></span><span>High (≈24)</span></div>
-            <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#7f1d1d;"></span><span>Very high (41+)</span></div>
+        <div class="fig13-left-panel">
+          <div class="fig13-infoboard" id="hexbin-infoboard" aria-live="polite">
+            <div class="fig13-ib-name" id="hexbin-ib-name">All States</div>
+            <dl class="fig13-ib-stats">
+              <div class="fig13-ib-row"><dt>Detections</dt><dd id="hexbin-ib-total">199,354</dd></div>
+              <div class="fig13-ib-row"><dt>Share</dt><dd id="hexbin-ib-share">100%</dd></div>
+              <div class="fig13-ib-row"><dt>Avg FRP</dt><dd id="hexbin-ib-frp">89 MW</dd></div>
+              <div class="fig13-ib-row"><dt>Peak month</dt><dd id="hexbin-ib-peak">Dec 2019</dd></div>
+              <div class="fig13-ib-row"><dt>Density</dt><dd id="hexbin-ib-density">—</dd></div>
+            </dl>
+            <p class="fig13-ib-blurb" id="hexbin-ib-blurb">NSW and Victoria drove the catastrophic east-coast fires. WA and NT were dominated by their annual savanna burn cycle — high in number but lower in destructive intensity than the south-east forest fires.</p>
+          </div>
+          <div class="fig13-state-btns" id="hexbin-state-btns" aria-label="Filter by state">
+            <div class="fig13-state-btns-title">State</div>
+            <button type="button" class="hexbin-state-btn is-active" data-state="ALL">ALL</button>
+            <button type="button" class="hexbin-state-btn" data-state="NSW">NSW</button>
+            <button type="button" class="hexbin-state-btn" data-state="QLD">QLD</button>
+            <button type="button" class="hexbin-state-btn" data-state="WA">WA</button>
+            <button type="button" class="hexbin-state-btn" data-state="NT">NT</button>
+            <button type="button" class="hexbin-state-btn" data-state="SA">SA</button>
+            <button type="button" class="hexbin-state-btn" data-state="VIC">VIC</button>
+            <button type="button" class="hexbin-state-btn" data-state="TAS">TAS</button>
           </div>
         </div>
         <div class="fig13-map-panel">
           <div id="viz-hexbin"></div>
-        </div>
-        <div class="fig13-state-btns" id="hexbin-state-btns" aria-label="Filter by state">
-          <div class="fig13-state-btns-title">State</div>
-          <button type="button" class="hexbin-state-btn is-active" data-state="ALL">ALL</button>
-          <button type="button" class="hexbin-state-btn" data-state="NSW">NSW</button>
-          <button type="button" class="hexbin-state-btn" data-state="QLD">QLD</button>
-          <button type="button" class="hexbin-state-btn" data-state="WA">WA</button>
-          <button type="button" class="hexbin-state-btn" data-state="NT">NT</button>
-          <button type="button" class="hexbin-state-btn" data-state="SA">SA</button>
-          <button type="button" class="hexbin-state-btn" data-state="VIC">VIC</button>
-          <button type="button" class="hexbin-state-btn" data-state="TAS">TAS</button>
-        </div>
-        <div class="fig13-infoboard" id="hexbin-infoboard" aria-live="polite">
-          <div class="fig13-ib-name" id="hexbin-ib-name">All States</div>
-          <dl class="fig13-ib-stats">
-            <div class="fig13-ib-row"><dt>Detections</dt><dd id="hexbin-ib-total">199,354</dd></div>
-            <div class="fig13-ib-row"><dt>Share</dt><dd id="hexbin-ib-share">100%</dd></div>
-            <div class="fig13-ib-row"><dt>Avg FRP</dt><dd id="hexbin-ib-frp">89 MW</dd></div>
-            <div class="fig13-ib-row"><dt>Peak month</dt><dd id="hexbin-ib-peak">Dec 2019</dd></div>
-            <div class="fig13-ib-row"><dt>Density</dt><dd id="hexbin-ib-density">—</dd></div>
-          </dl>
-          <p class="fig13-ib-blurb" id="hexbin-ib-blurb">NSW and Victoria drove the catastrophic east-coast fires. WA and NT were dominated by their annual savanna burn cycle — high in number but lower in destructive intensity than the south-east forest fires.</p>
+          <div class="fig13-overlay-col">
+            <div class="fig13-legend" aria-label="Fig. 13 colour legend">
+              <div class="fig13-legend-title">Detections / bin</div>
+              <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#172635;opacity:0.4;"></span><span>No data</span></div>
+              <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#f8d48a;"></span><span>Low (1)</span></div>
+              <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#f97316;"></span><span>Medium (≈12)</span></div>
+              <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#dc2626;"></span><span>High (≈24)</span></div>
+              <div class="fig13-legend-item"><span class="fig13-swatch" style="background:#7f1d1d;"></span><span>Very high (41+)</span></div>
+            </div>
+            <div class="fig13-hover-card" id="hexbin-hover-card" aria-live="polite">
+              <div class="fig13-hc-guide">Hover a hexagon to explore bin details</div>
+              <div class="fig13-hc-data">
+                <div class="fig13-hc-header">
+                  <span class="fig13-hc-state" id="hexbin-hc-state">—</span>
+                </div>
+                <dl class="fig13-hc-stats">
+                  <div class="fig13-hc-row"><dt>Count</dt><dd id="hexbin-hc-count">—</dd></div>
+                  <div class="fig13-hc-row"><dt>FRP (MW)</dt><dd id="hexbin-hc-frp">—</dd></div>
+                  <div class="fig13-hc-row"><dt>Peak</dt><dd id="hexbin-hc-month">—</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -660,7 +677,7 @@
 <script src="js/month-explorer.js?v=fitsize-20260526"></script>
 <script src="js/chart-embeds.js?v=fig07-left-column-20260526"></script>
 <script src="js/raincloud-detail.js?v=fig12-stable-layout-20260525"></script>
-<script src="js/hexbin-zoom.js?v=fig13-hierarchy-20260525"></script>
+<script src="js/hexbin-zoom.js?v=fig13-notip-20260528"></script>
 <script src="js/comparison.js?v=ab-highlights-20260526"></script>
 
 </body>

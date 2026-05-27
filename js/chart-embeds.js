@@ -23,4 +23,4 @@ embedChartFitHeight('#viz-heatmatrix', 'vega/06_heatmatrix.json?v=fig10-natural-
 });
 
 /* VIZ 13 — Annual area connected dot plot */
-embedChart('#viz-annual-area', 'vega/13_annual_area.json?v=fixed-height-20260525', embedOpts);
+embedChart('#viz-annual-area', 'vega/13_annual_area.json?v=container-20260527', embedOpts);

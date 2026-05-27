@@ -34,7 +34,7 @@ const hexbinStateInfo = {
 };
 
 const hexbinZoomTargets = {
-  ALL: { scale: 680,    tx: 470,    ty: 250 },
+  ALL: { scale: 680,    tx: 320,    ty: 250 },
   NSW: { scale: 2137.9, tx: -110.1, ty: 6.0 },
   QLD: { scale: 1220.8, tx: 120.3,  ty: 407.9 },
   WA:  { scale: 1009.5, tx: 589.9,  ty: 294.1 },
@@ -141,10 +141,11 @@ function animateHexbinSignals(view, targetSignals, duration, isCurrent) {
   });
 }
 
-embedChart('#viz-hexbin', 'vega/09_hexbin.json?v=hierarchy-20260525', embedOpts).then(result => {
+embedChart('#viz-hexbin', 'vega/09_hexbin.json?v=hover-highlight-20260528', embedOpts).then(result => {
   const view = result.view;
   let activeState = 'ALL';
   let zoomToken = 0;
+  setHexbinProjection(view, hexbinZoomTargets.ALL);
 
   async function focusHexbinState(targetState) {
     if (!hexbinZoomTargets[targetState] || targetState === activeState) return;
@@ -262,5 +263,26 @@ embedChart('#viz-hexbin', 'vega/09_hexbin.json?v=hierarchy-20260525', embedOpts)
       updateHexbinInfoBoard(btn.dataset.state);
       focusHexbinState(btn.dataset.state);
     });
+  });
+
+  const hoverCard  = document.getElementById('hexbin-hover-card');
+  const hcState    = document.getElementById('hexbin-hc-state');
+  const hcCount    = document.getElementById('hexbin-hc-count');
+  const hcFrp      = document.getElementById('hexbin-hc-frp');
+  const hcMonth    = document.getElementById('hexbin-hc-month');
+
+  view.addEventListener('mouseover', (_, item) => {
+    if (!item || !item.datum || !item.datum.properties) return;
+    const p = item.datum.properties;
+    if (!p.count || p.count === 0) return;
+    hcState.textContent  = hexbinStateInfo[p.state] ? hexbinStateInfo[p.state].name : p.state;
+    hcCount.textContent  = p.count.toLocaleString();
+    hcFrp.textContent    = p.avg_frp != null ? p.avg_frp.toFixed(1) + ' MW' : '—';
+    hcMonth.textContent  = p.month || '—';
+    hoverCard.classList.add('is-hovered');
+  });
+
+  view.addEventListener('mouseout', () => {
+    hoverCard.classList.remove('is-hovered');
   });
 });
