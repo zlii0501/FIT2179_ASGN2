@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig05-nopad-20260526">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=fig11-autoheight-20260526">
+  <link rel="stylesheet" href="css/style.css?v=fig10-shell-fill-20260527">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=fig08-391px-20260527">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -218,9 +218,9 @@
         <!-- Large map -->
         <div class="fig05-main">
           <div class="fig05-info-panel 左边文字">
-            <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
+            <p class="chart-annotation 左边文字" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
             <div class="fig05-caption-row">
-              <p class="chart-annotation compact-p" id="month-map-paragraph">December 2019 is the season's spatial rupture point: active fires crowd the NSW–QLD border, then run down the south-east coast into Gippsland. Use the Hotspot Zoom view to inspect the clusters where high fire power and dense detections overlap.</p>
+              <p class="chart-annotation compact-p 左边文字" id="month-map-paragraph">December 2019 is the season's spatial rupture point: active fires crowd the NSW–QLD border, then run down the south-east coast into Gippsland. Use the Hotspot Zoom view to inspect the clusters where high fire power and dense detections overlap.</p>
               <div class="month-inset" aria-label="Zoomed hotspot map">
                 <div class="month-inset-head">
                   <div class="month-inset-heading">
@@ -287,16 +287,19 @@
           <div class="fig06-caption-row">
             <p class="chart-annotation compact-p">Most detections cluster at low FRP values — the curve peaks sharply near zero and falls away fast. But the long right tail tells a different story: a small fraction of fires exceed 500 MW, releasing so much energy they dominate total heat output despite being rare.</p>
             <p class="chart-annotation compact-p">The mean of 89 MW sits well to the right of the distribution peak, pulled upward by extreme outliers — a reminder that average intensity understates the worst of Black Summer.</p>
+            <p class="chart-annotation compact-p">Fires above 1,000 MW occurred dozens of times across the season — events that overwhelm suppression capacity and generate their own weather. In prior years, detections at that threshold were measured in single digits.</p>
+          </div>
+          <div class="fig06-chart-wrap">
+            <div id="viz-frp-hist"></div>
             <div class="fig06-legend" aria-label="Fig. 06 legend">
               <span><i class="fig06-density-swatch" aria-hidden="true"></i>Detection density</span>
               <span><i class="fig06-mean-swatch" aria-hidden="true"></i>Mean FRP, 89 MW</span>
             </div>
           </div>
-          <div id="viz-frp-hist"></div>
         </div>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig07-daynight">
-        <div class="chart-title 左边文字"><span class="chart-number">Fig. 07</span><span class="chart-title-text">When fires burn — each state's daytime share against a 50/50 baseline</span></div>
+        <div class="chart-title 左边文字"><span class="chart-number">Fig. 07</span><span class="chart-title-text">Day vs Night — each state's daytime fire share</span></div>
         <div id="viz-daynight"></div>
         <p class="chart-annotation compact-p 左边文字">NT, SA and WA are strongly daytime-skewed, while NSW sits close to balance because major fire activity persisted into the night. The 50% marker separates ordinary day-night rhythm from sustained fire behaviour.</p>
       </div>
@@ -356,18 +359,21 @@
     </div>
     <div class="chart-card grid-span-12" data-layout-id="fig10-heatmatrix">
       <div class="chart-title"><span class="chart-number">Fig. 10</span><span class="chart-title-text">The season ramps up — change in fire detections from August to December</span></div>
-      <div class="fig10-chart-shell">
-        <div id="viz-heatmatrix"></div>
-      </div>
-      <div class="fig10-caption-row">
-        <div class="fig10-copy">
-          <p class="chart-annotation">Each line connects a state's August and December detection counts, turning the seasonal build-up into a direction-of-change view. Longer jumps mark where fire activity accelerated most sharply.</p>
-          <p class="chart-annotation">NSW moved furthest, with December far beyond the field. Queensland also climbed as spring fire weather worsened, while NT and WA receded as their savanna dry season wound down.</p>
+      <div class="fig10-content-row">
+        <div class="fig10-caption-col">
+          <p class="chart-annotation compact-p 左边文字">Each line connects a state's August and December detection counts, turning the seasonal build-up into a direction-of-change view. Longer jumps mark where fire activity accelerated most sharply.</p>
+          <p class="chart-annotation compact-p 左边文字">NSW moved furthest, with December far beyond the field. Queensland also climbed as spring fire weather worsened, while NT and WA receded as their savanna dry season wound down.</p>
+          <p class="chart-annotation compact-p 左边文字">Victoria stands apart — near-zero in August, then erupting by December. That speed of escalation, not raw volume, is what made Victorian fires so difficult to contain in the final weeks of 2019.</p>
         </div>
-        <div class="fig10-legend" aria-label="Fig. 10 legend">
-          <span><i class="fig10-dot fig10-dot-aug" aria-hidden="true"></i>Aug 2019</span>
-          <span><i class="fig10-dot fig10-dot-dec" aria-hidden="true"></i>Dec 2019</span>
-          <span><i class="fig10-line-swatch" aria-hidden="true"></i>State change</span>
+        <div class="fig10-viz-col">
+          <div class="fig10-chart-shell">
+            <div id="viz-heatmatrix"></div>
+            <div class="fig10-legend" aria-label="Fig. 10 legend">
+              <span><i class="fig10-dot fig10-dot-aug" aria-hidden="true"></i>Aug 2019</span>
+              <span><i class="fig10-dot fig10-dot-dec" aria-hidden="true"></i>Dec 2019</span>
+              <span><i class="fig10-line-swatch" aria-hidden="true"></i>State change</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
