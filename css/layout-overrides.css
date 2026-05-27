@@ -79,39 +79,40 @@
     order: 2;
     grid-column: 5 / span 8;
     grid-row: 2;
-    align-self: start;
-    height: 350px;
-    min-height: 350px;
+    align-self: stretch;
+    height: auto;
+    min-height: 0;
   }
   [data-layout-id="fig07-daynight"] {
     order: 3;
     grid-column: 1 / span 4;
-    grid-row: 2 / span 2;
-    align-self: start;
+    grid-row: 2;
+    align-self: stretch;
     width: 391px;
-    height: calc(350px + 0.55rem + 392px);
+    height: auto;
     margin-top: 0;
     min-height: 0;
   }
   [data-layout-id="fig10-heatmatrix"] {
     order: 4;
-    grid-column: 5 / span 8;
+    grid-column: 1 / -1;
     grid-row: 3;
     align-self: start;
     height: auto;
     margin-top: 0;
     min-height: 0;
   }
-  [data-layout-id="fig09-alluvial"] {
+  [data-layout-id="fig08-bubble"] {
     order: 5;
-    grid-column: 1 / span 7;
+    grid-column: 1 / span 4;
     grid-row: 4;
     align-self: stretch;
+    width: 391px;
     min-height: 414px;
   }
-  [data-layout-id="fig08-bubble"] {
+  [data-layout-id="fig09-alluvial"] {
     order: 6;
-    grid-column: 8 / span 5;
+    grid-column: 5 / span 8;
     grid-row: 4;
     align-self: stretch;
     min-height: 414px;

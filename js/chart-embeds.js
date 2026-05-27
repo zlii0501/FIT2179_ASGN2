@@ -2,10 +2,7 @@
 embedChart('#viz-frp-hist', 'vega/05_frp_density.json', embedOpts);
 
 /* VIZ 7 — Day/Night Bullet Chart (loaded from file) */
-embedChartFitHeight('#viz-daynight', 'vega/07_daynight_bullet.json?v=fit-height-20260523', embedOpts, {
-  offset: 10,
-  minHeight: 280
-});
+embedChart('#viz-daynight', 'vega/07_daynight_bullet.json?v=fit-height-20260523', embedOpts);
 
 /* VIZ 11 — Bubble Chart (loaded from file) */
 embedChartFitHeight('#viz-bubble', 'vega/11_bubble.json?v=hierarchy-20260525', embedOpts, {
