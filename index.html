@@ -75,6 +75,7 @@
               <span data-state="VIC"><i style="--swatch:#56B4E9"></i>VIC</span>
             </div>
             <p class="chart-annotation compact-p fig03b-para">Each axis is scaled relative to the state that scored highest on that metric. NSW dominates raw detections and total energy; NT leads on night activity due to savanna fire behaviour; WA shows the highest detection density per area in its northern fire zones.</p>
+            <p class="chart-annotation compact-p fig03b-para">Victoria's profile is strikingly unbalanced: low footprint and detection count, yet very high intensity. Its fires burned in dense, energy-rich mountain ash forests — fewer ignitions, but each one releasing far more energy per square kilometre.</p>
           </div>
         </div>
         <div class="chart-card" data-layout-id="fig02-waffle">
@@ -157,6 +158,7 @@
           <div class="fig01-causes-copy 左边文字">
             <p class="chart-annotation">Three years of drought, record-breaking heat, and an El Niño-like climate signal primed the landscape; when lightning struck tinder-dry forests under extreme fire weather, the result was inevitable.</p>
             <p class="chart-annotation">Australia recorded its driest year in 2019, with soil moisture at historic lows. Vegetation that normally recovers between fire seasons never did — by spring, forests across the east were loaded with dead fuel ready to ignite.</p>
+            <p class="chart-annotation">On 18 December 2019, Australia's national temperature record was shattered at 41.9°C. Simultaneous extreme fire danger ratings across NSW, Victoria, and South Australia were unprecedented — a multi-front emergency that overwhelmed aerial and ground suppression capacity at the same time.</p>
             <!-- <p class="chart-annotation">December 2019 set a new national temperature record of 41.9 °C. Simultaneous extreme fire danger ratings across multiple states were unprecedented, stretching suppression resources beyond capacity.</p>
             <p class="chart-annotation">Climate scientists attributed the heightened fire-weather risk directly to long-term warming. Black Summer was not a single disaster but a signal: the conditions it took to produce this season will become increasingly ordinary.</p> -->
             <div class="fig01-driver-legend" id="fig01-driver-legend" aria-label="Driver legend">
@@ -192,6 +194,8 @@
         Australia and the Northern Territory. Then came the east-coast drought, and the numbers kept
         climbing: 41,308 in October, 47,138 in November, and a catastrophic 81,412 in December — five
         times the August total and far above anything recorded in the same months between 2005 and 2018.
+      </p>
+      <p class="chapter-narrative">
         Use the daily chart to trace how fast the crisis built, then select a month on the map below to
         see exactly where the fires were burning.
       </p>
@@ -202,6 +206,7 @@
       <div class="fig04-content-row">
         <div class="fig04-caption-col 左边文字">
           <p class="chart-annotation compact-p">Daily detections track the historical rhythm through October, then diverge sharply in November and surge through December and early January. The peak lands on 4 Jan 2020 with 7,342 detections — a single day exceeding anything in the 2005–2018 record.</p>
+          <p class="chart-annotation compact-p">The break from the historical average begins in late October 2019. By December, the daily count was running 4–5 times the 2005–2018 average for the same time of year — a gap that widened with every passing week.</p>
           <div class="fig04-line-legend" aria-label="Line style legend">
             <span><i class="fig04-line-swatch fig04-line-solid" aria-hidden="true"></i>Black Summer daily detections</span>
             <span><i class="fig04-line-swatch fig04-line-dashed" aria-hidden="true"></i>Historical daily average</span>
@@ -219,8 +224,8 @@
           <div class="fig05-info-panel">
             <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections.<br><br></p>
             <div class="fig05-caption-row">
-              <p class="chart-annotation compact-p 左边文字" id="month-map-paragraph">December 2019 is the season's spatial rupture point: fires stretched from the Queensland border to East Gippsland, concentrated along the NSW coast and tablelands. At 81,412 detections, this month alone accounts for over 40% of the season.
-Use the Hotspot Zoom to inspect where high fire power and dense detections overlap.</p>
+              <p class="chart-annotation compact-p 左边文字" id="month-map-paragraph">December 2019 is the season's spatial rupture point: fires stretched from the Queensland border to East Gippsland, concentrated along the NSW coast and tablelands. At 81,412 detections, this month alone accounts for over 40% of the season.</p>
+              <p class="chart-annotation compact-p 左边文字">Use the Hotspot Zoom to inspect where high fire power and dense detections overlap.</p>
               <div class="month-inset" aria-label="Zoomed hotspot map">
                 <div class="month-inset-head">
                   <div class="month-inset-heading">
@@ -278,7 +283,10 @@ Use the Hotspot Zoom to inspect where high fire power and dense detections overl
       <div class="chapter-label">Chapter 3 &middot; How Intense</div>
       <h2 class="chapter-title">How powerful were these fires?</h2>
       <p class="chapter-narrative">
-        Fire Radiative Power (FRP) measures how much energy a fire pumps into the atmosphere every second — think of it as the fire's wattage. The average detection during Black Summer was 89 MW, roughly the output of a small power station. Yet the season's peak hit 11,164 MW: the equivalent of ten large coal power stations roaring at full capacity at once, all from a single fire cluster.
+        Fire Radiative Power (FRP) measures how much energy a fire releases per second — the fire's wattage. Across 199,417 detections during Black Summer, the mean was 89 MW: roughly the output of a small power station, enough to sustain a fire too large for ground crews to control.
+      </p>
+      <p class="chapter-narrative">
+        Yet the season peaked at 11,164 MW in a single cluster — the equivalent of ten large coal power stations firing simultaneously, generating its own wind and weather.
       </p>
     </div>
       <div class="chart-card grid-span-8" data-layout-id="fig06-frp-density">
@@ -302,6 +310,7 @@ Use the Hotspot Zoom to inspect where high fire power and dense detections overl
         <div class="chart-title 左边文字"><span class="chart-number">Fig. 07</span><span class="chart-title-text">Day vs Night — each state's daytime fire share</span></div>
         <div id="viz-daynight"></div>
         <p class="chart-annotation compact-p 左边文字">NT, SA and WA are strongly daytime-skewed, while NSW sits close to balance because major fire activity persisted into the night. The 50% marker separates ordinary day-night rhythm from sustained fire behaviour.</p>
+        <p class="chart-annotation compact-p 左边文字">Victoria and Queensland show intermediate values — more night burning than the tropical north, but less than NSW. Night-burning fires are especially dangerous: aerial water-bombing is grounded after dark, leaving ground crews as the only line of defence.</p>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig08-bubble">
         <div class="chart-title"><span class="chart-number">Fig. 08</span><span class="chart-title-text">Where and when fires burned hottest — average fire intensity by state and month</span></div>
@@ -318,6 +327,7 @@ Use the Hotspot Zoom to inspect where high fire power and dense detections overl
         </div>
         <div class="fig08-footer">
           <p class="chart-annotation compact-p">NSW dominates December by a wide margin; WA and NT lead the early months through tropical savanna burns. Brighter cells mark the season's hottest clusters — SA and Victoria remain quiet until a sharp late-December spike.</p>
+          <p class="chart-annotation compact-p">Read the chart diagonally: the high-intensity signal moves from top-left to bottom-right, as cooler savanna burns in the north give way to the catastrophic south-eastern forest fires of December.</p>
         </div>
       </div>
     <div class="chart-card grid-span-12 fig-09-wide-card" data-layout-id="fig09-alluvial">
@@ -328,6 +338,7 @@ Use the Hotspot Zoom to inspect where high fire power and dense detections overl
       <div class="fig09-caption-row">
         <div class="fig09-copy">
           <p class="chart-annotation">This alluvial view follows sampled VIIRS detections from month, through state, into FRP intensity class. Wider ribbons mean more detections; the thick December-to-NSW stream shows how the crisis concentrated into the south-east with a larger share of high and severe fire-power observations.</p>
+          <p class="chart-annotation">August and September flows are dominated by WA and NT routing almost entirely through the "Low" intensity band — a structural contrast with October through December, when ribbons thicken into "High", "Severe", and "Extreme" as south-eastern forests ignited.</p>
         </div>
         <div class="fig09-legend" aria-label="Fig. 09 legend">
           <div class="fig09-legend-group fig09-legend-flow">
@@ -387,11 +398,10 @@ Use the Hotspot Zoom to inspect where high fire power and dense detections overl
       <div class="chapter-label">Chapter 4 &middot; Legacy</div>
       <h2 class="chapter-title">Nothing in the record books comes close</h2>
       <p class="chapter-narrative">
-        Fifteen years of fire data make one thing clear: 2019-20 was not just a bad season — it was in
-        a category of its own. The dot plot and raincloud chart show how far October through December 2019
-        exceeded anything recorded since 2005. Zoom out to the map and calendar, and the geography and
-        timing of that destruction snaps into focus: NSW bore the heaviest concentration of fire, and
-        December was the single most intense month the country has seen on record.
+        Fifteen years of fire data make one thing clear: 2019–20 was not just a bad season — it was in a category of its own. October, November, and December 2019 each exceeded every prior historical maximum recorded since 2005.
+      </p>
+      <p class="chapter-narrative">
+        The dot plot and raincloud chart quantify how far the season broke records. Zoom to the hexbin map and calendar: NSW bore the heaviest fire concentration, and December was the single most intense month on record.
       </p>
       <p class="chapter-narrative" hidden>
         Historical wildfire records put the season into context. Black Summer stands out sharply
@@ -422,6 +432,7 @@ Use the Hotspot Zoom to inspect where high fire power and dense detections overl
       <div class="fig12-content-row">
         <div class="raincloud-caption-row">
           <p id="raincloud-caption" class=" 左边文字 chart-annotation compact-p">Grey marks show each month's 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².</p>
+          <p class=" 左边文字 chart-annotation compact-p">November 2019 was the first month to substantially breach the historical ceiling. By December, colour encoding shows fire area running at nearly 4× the historical median — a typical season registers 1–1.5×.</p>
           <div class="raincloud-legend" aria-label="Fig. 12 colour legend">
             <div class="raincloud-gradient-legend" aria-label="Times median colour scale">
               <span>Times median</span>
