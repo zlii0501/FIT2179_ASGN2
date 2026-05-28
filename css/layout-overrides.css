@@ -8,6 +8,7 @@
   [data-layout-id="ch1-lede"] {
     grid-column: 1 / -1;
     align-self: start;
+    height: 211px;
   }
   .ch1-side-row {
     grid-column: 1 / -1;
@@ -18,21 +19,21 @@
   }
   .ch1-side-row [data-layout-id="fig03-state-radar"] {
     flex: 0 0 391px;
-    min-height: 460px;
+    height: 708px;
   }
   .ch1-side-row [data-layout-id="fig02-waffle"] {
     flex: 0 0 696px;
-    min-height: 460px;
+    height: 708px;
   }
   [data-layout-id="fig03-state-stream"] {
     grid-column: 1 / -1;
     align-self: start;
-    height: auto;
+    height: 282px;
   }
   [data-layout-id="fig01-causes"] {
     grid-column: 1 / -1;
-    align-self: stretch;
-    min-height: 598px;
+    align-self: start;
+    height: 726px;
   }
   /* Chapter 2 - When */
   .chapter-grid-ch2 {
@@ -45,22 +46,21 @@
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    min-height: 0;
-  } 
+    height: 236px;
+  }
   [data-layout-id="fig04-timeseries"] {
     order: 2;
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    height: auto;
-    min-height: 0;
+    height: 321px;
   }
   [data-layout-id="fig05-month-map"] {
     order: 3;
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    min-height: 0;
+    height: 630px;
   }
   /* Chapter 3 - How Intense */
   .chapter-grid-ch3 {
@@ -73,49 +73,46 @@
     grid-column: 1 / -1;
     grid-row: 1;
     align-self: start;
-    min-height: 0;
+    height: 211px;
   }
   [data-layout-id="fig06-frp-density"] {
     order: 2;
     grid-column: 5 / span 8;
     grid-row: 2;
-    align-self: stretch;
-    height: auto;
-    min-height: 0;
+    align-self: start;
+    height: 564px;
   }
   [data-layout-id="fig07-daynight"] {
     order: 3;
     grid-column: 1 / span 4;
     grid-row: 2;
-    align-self: stretch;
+    align-self: start;
     width: 391px;
-    height: auto;
+    height: 564px;
     margin-top: 0;
-    min-height: 0;
   }
   [data-layout-id="fig10-heatmatrix"] {
     order: 4;
     grid-column: 1 / -1;
     grid-row: 3;
     align-self: start;
-    height: auto;
+    height: 327px;
     margin-top: 0;
-    min-height: 0;
   }
   [data-layout-id="fig08-bubble"] {
     order: 5;
     grid-column: 1 / span 4;
     grid-row: 4;
-    align-self: stretch;
+    align-self: start;
     width: 391px;
-    min-height: 414px;
+    height: 600px;
   }
   [data-layout-id="fig09-alluvial"] {
     order: 6;
     grid-column: 5 / span 8;
     grid-row: 4;
-    align-self: stretch;
-    min-height: 414px;
+    align-self: start;
+    height: 600px;
   }
   /* Chapter 4 - Legacy */
   .chapter-grid-ch4 {
@@ -128,36 +125,35 @@
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    min-height: 0;
+    height: 211px;
   }
   [data-layout-id="fig11-annual-area"] {
     order: 2;
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    height: auto;
-    min-height: 0;
+    height: 358px;
   }
   [data-layout-id="fig12-raincloud"] {
     order: 3;
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    min-height: 0;
+    height: 346px;
   }
   [data-layout-id="fig13-hexbin"] {
     order: 4;
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    min-height: 0;
+    height: 471px;
   }
   [data-layout-id="fig14-comparison"] {
     order: 5;
     grid-column: 1 / -1;
     grid-row: auto;
-    align-self: stretch;
-    min-height: 782px;
+    align-self: start;
+    height: 882px;
   }
 }
 
@@ -168,6 +164,7 @@
     order: initial !important;
     align-self: auto !important;
     min-height: auto !important;
+    height: auto !important;
   }
   .ch1-side-row {
     flex-direction: column;

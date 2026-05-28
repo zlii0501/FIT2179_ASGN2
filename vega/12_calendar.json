@@ -102,13 +102,7 @@
             "gradientLength": 180
           }
         },
-        "opacity": {
-          "condition": {
-            "test": "datum.day_index >= selectedStartA && datum.day_index < selectedStartA + 184",
-            "value": 0.95
-          },
-          "value": 0.2
-        },
+        "opacity": { "value": 1 },
         "tooltip": [
           { "field": "day_label", "title": "Date" },
           { "field": "period", "title": "Period" },
@@ -180,13 +174,7 @@
             "gradientLength": 180
           }
         },
-        "opacity": {
-          "condition": {
-            "test": "datum.day_index >= selectedStartB && datum.day_index < selectedStartB + 184",
-            "value": 0.95
-          },
-          "value": 0.2
-        },
+        "opacity": { "value": 1 },
         "tooltip": [
           { "field": "day_label", "title": "Date" },
           { "field": "period", "title": "Period" },

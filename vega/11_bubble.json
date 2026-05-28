@@ -44,7 +44,7 @@
         "type": "sqrt",
         "domain": [0, 45000],
         "clamp": true,
-        "range": ["#9a6a37", "#cf7025", "#f97316", "#dc2626", "#991b1b", "#7f1d1d"]
+        "range": ["#fff5f0", "#fcbba1", "#fb6a4a", "#de2d26", "#a50f15"]
       },
       "legend": null
     },

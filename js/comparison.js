@@ -426,8 +426,6 @@ function updateComparisonInfoCard() {
     if (Math.abs(r - 1) < 0.15) return '≈';
     return r >= 1 ? `A ×${r.toFixed(1)}` : `B ×${(1 / r).toFixed(1)}`;
   }
-  set('comparison-ic-ratio-area',  ratioLabel(ratioArea));
-  set('comparison-ic-ratio-count', ratioLabel(ratioCount));
 
   const similar = document.getElementById('comparison-ic-similar');
   const isSimilar = ratioArea !== null && Math.abs(ratioArea - 1) < 0.15;
@@ -561,7 +559,7 @@ async function buildComparisonTimeline() {
 
 buildComparisonTimeline();
 
-embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json', 'vconcat', 0, {
+embedComposedPanel('#viz-calendar-a', 'vega/12_calendar.json?v=no-fade-20260528', 'vconcat', 0, {
   width: 'container',
   height: 100,
   encoding: { color: { legend: null } }
@@ -577,7 +575,7 @@ embedComposedPanel('#viz-overlay-a', 'vega/10_wa_overlay.json?v=notitle-20260526
   comparisonViews.overlayA = result?.view || null;
   updateComparisonCharts('a');
 });
-embedComposedPanel('#viz-calendar-b', 'vega/12_calendar.json', 'vconcat', 1, {
+embedComposedPanel('#viz-calendar-b', 'vega/12_calendar.json?v=no-fade-20260528', 'vconcat', 1, {
   width: 'container',
   height: 100,
   encoding: {

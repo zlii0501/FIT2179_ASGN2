@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=fig13-fixedcard-20260528">
-  <link rel="stylesheet" href="css/layout-overrides.css?v=fig08-391px-20260527">
+  <link rel="stylesheet" href="css/style.css?v=compact-p-margin-20260528">
+  <link rel="stylesheet" href="css/layout-overrides.css?v=hardcode-heights-20260528">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -202,7 +202,6 @@
       <div class="fig04-content-row">
         <div class="fig04-caption-col 左边文字">
           <p class="chart-annotation compact-p">Daily detections track the historical rhythm through October, then diverge sharply in November and surge through December and early January. The peak lands on 4 Jan 2020 with 7,342 detections — a single day exceeding anything in the 2005–2018 record.</p>
-          <!-- <p class="chart-annotation compact-p">The season opened deceptively: August and September sat near the ten-year norm. By late October the gap had become unmistakable, and Black Summer surpassed the historical daily ceiling 23 times in December alone.</p> -->
           <div class="fig04-line-legend" aria-label="Line style legend">
             <span><i class="fig04-line-swatch fig04-line-solid" aria-hidden="true"></i>Black Summer daily detections</span>
             <span><i class="fig04-line-swatch fig04-line-dashed" aria-hidden="true"></i>Historical daily average</span>
@@ -217,10 +216,11 @@
       <div class="month-explorer">
         <!-- Large map -->
         <div class="fig05-main">
-          <div class="fig05-info-panel 左边文字">
-            <p class="chart-annotation 左边文字" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections</p>
+          <div class="fig05-info-panel">
+            <p class="chart-annotation" id="month-map-note">Showing: December 2019 — the peak month with 81,412 detections.<br><br></p>
             <div class="fig05-caption-row">
-              <p class="chart-annotation compact-p 左边文字" id="month-map-paragraph">December 2019 is the season's spatial rupture point: active fires crowd the NSW–QLD border, then run down the south-east coast into Gippsland. Use the Hotspot Zoom view to inspect the clusters where high fire power and dense detections overlap.</p>
+              <p class="chart-annotation compact-p 左边文字" id="month-map-paragraph">December 2019 is the season's spatial rupture point: fires stretched from the Queensland border to East Gippsland, concentrated along the NSW coast and tablelands. At 81,412 detections, this month alone accounts for over 40% of the season.
+Use the Hotspot Zoom to inspect where high fire power and dense detections overlap.</p>
               <div class="month-inset" aria-label="Zoomed hotspot map">
                 <div class="month-inset-head">
                   <div class="month-inset-heading">
@@ -564,14 +564,21 @@
                     <div class="fig-comparison-legend-scale"><span>50 MW</span><span>330 MW</span></div>
                   </div>
                 </div>
-              </aside>
-              <p class="chart-annotation fig-comparison-note">Fig. 14 maps each day as a calendar cell coloured by nationwide hotspot count — look for the deep-red cluster across Dec 2019–Jan 2020. Fig. 15 encodes WA's monthly average fire radiative power as a radial chart: each concentric ring is one month in the window, and arc length reflects intensity. Drag handle A or B above to shift either window across any season from 2005 onward.</p>
               <p class="comparison-ic-footnote">Each window spans 6 months (Aug–Jan). Fire area is derived from official perimeter records; detection counts are VIIRS satellite hotspots. Drag either handle to explore any season back to 2005.</p>
+
+              </aside>
             </div>
             <section class="fig-comparison-panel fig-comparison-panel-15a" aria-labelledby="fig-15a-title">
               <div class="linked-panel-title linked-panel-title-compact" id="fig-15a-title">
                 <span class="chart-number chart-number-sub">Fig. 15A</span>
                 <span class="chart-title-text" id="fig-15a-title-text">WA fire rhythm — Aug 2019–Jan 2020</span>
+              </div>
+              <div class="comparison-ic-head comparison-ic-head-inline">
+                <span class="comparison-ic-chip comparison-ic-chip-a">A</span>
+                <div class="comparison-ic-head-text">
+                  <div class="comparison-ic-label" id="comparison-ic-label-a">Black Summer</div>
+                  <div class="comparison-ic-season" id="comparison-ic-season-a">Aug 2019–Jan 2020</div>
+                </div>
               </div>
               <div id="viz-overlay-a" class="fig-comparison-viz"></div>
             </section>
@@ -580,26 +587,16 @@
                 <span class="chart-number chart-number-sub">Fig. 15B</span>
                 <span class="chart-title-text" id="fig-15b-title-text">WA fire rhythm — Aug 2018–Jan 2019</span>
               </div>
+              <div class="comparison-ic-head comparison-ic-head-inline">
+                <span class="comparison-ic-chip comparison-ic-chip-b">B</span>
+                <div class="comparison-ic-head-text">
+                  <div class="comparison-ic-label" id="comparison-ic-label-b">Moderate season</div>
+                  <div class="comparison-ic-season" id="comparison-ic-season-b">Aug 2018–Jan 2019</div>
+                </div>
+              </div>
               <div id="viz-overlay-b" class="fig-comparison-viz"></div>
             </section>
             <div class="fig-comparison-infocard" id="comparison-infocard" aria-live="polite">
-              <!-- A / B header row -->
-              <div class="comparison-ic-heads">
-                <div class="comparison-ic-head">
-                  <span class="comparison-ic-chip comparison-ic-chip-a">A</span>
-                  <div class="comparison-ic-head-text">
-                    <div class="comparison-ic-label" id="comparison-ic-label-a">Black Summer</div>
-                    <div class="comparison-ic-season" id="comparison-ic-season-a">Aug 2019–Jan 2020</div>
-                  </div>
-                </div>
-                <div class="comparison-ic-head comparison-ic-head-b">
-                  <span class="comparison-ic-chip comparison-ic-chip-b">B</span>
-                  <div class="comparison-ic-head-text comparison-ic-head-text-b">
-                    <div class="comparison-ic-label" id="comparison-ic-label-b">Moderate season</div>
-                    <div class="comparison-ic-season" id="comparison-ic-season-b">Aug 2018–Jan 2019</div>
-                  </div>
-                </div>
-              </div>
               <!-- Bar metrics -->
               <div class="comparison-ic-metrics">
                 <div class="comparison-ic-metric">
@@ -610,7 +607,6 @@
                   </div>
                   <div class="comparison-ic-vals">
                     <span class="comparison-ic-val-a" id="comparison-ic-area-a">144,236 km²</span>
-                    <span class="comparison-ic-ratio" id="comparison-ic-ratio-area">A ×2.7</span>
                     <span class="comparison-ic-val-b" id="comparison-ic-area-b">53,201 km²</span>
                   </div>
                 </div>
@@ -622,7 +618,6 @@
                   </div>
                   <div class="comparison-ic-vals">
                     <span class="comparison-ic-val-a" id="comparison-ic-count-a">83,176</span>
-                    <span class="comparison-ic-ratio" id="comparison-ic-ratio-count">A ×3.0</span>
                     <span class="comparison-ic-val-b" id="comparison-ic-count-b">28,151</span>
                   </div>
                 </div>
@@ -678,7 +673,7 @@
 <script src="js/chart-embeds.js?v=fig07-left-column-20260526"></script>
 <script src="js/raincloud-detail.js?v=fig12-stable-layout-20260525"></script>
 <script src="js/hexbin-zoom.js?v=fig13-notip-20260528"></script>
-<script src="js/comparison.js?v=ab-highlights-20260526"></script>
+<script src="js/comparison.js?v=no-fade-20260528"></script>
 
 </body>
 </html>

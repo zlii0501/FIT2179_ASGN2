@@ -357,6 +357,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 /* === CHART CARDS === */
 .chart-card {
+  position: relative;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0)),
     var(--bg-card);
@@ -388,9 +389,12 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .chart-number {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.75rem;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
-  flex: 0 0 auto;
   min-height: 1.28rem;
   padding: 0.12rem 0.38rem;
   border: 1px solid rgba(248,150,30,0.34);
@@ -588,7 +592,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .chart-annotation.compact-p {
-  margin-top: 0.45rem;
+  margin-top: 0;
   max-width: 80ch;
   font-size: 0.73rem;
   line-height: 1.4;
@@ -1555,7 +1559,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   height: 0.58rem;
   margin-right: 0;
   border-radius: 999px;
-  background: linear-gradient(90deg, #9a6a37, #cf7025, #f97316, #dc2626, #991b1b, #7f1d1d);
+  background: linear-gradient(90deg, #fff5f0, #fcbba1, #fb6a4a, #de2d26, #a50f15);
   box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
 }
 
@@ -1749,14 +1753,14 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .fig-comparison-grid {
   display: grid;
-  gap: 0;
+  gap: 0.75rem;
   align-items: start;
 }
 
 .fig-comparison-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
+  gap: 0.75rem;
   min-width: 0;
   align-items: start;
 }
@@ -1764,8 +1768,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 /* 4-column flat grid: [legend | 15A | 15B | infocard] */
 .fig-comparison-lower-row {
   display: grid;
-  grid-template-columns: minmax(180px, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) minmax(180px, 1.3fr);
-  gap: 0;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
   align-items: stretch;
 }
 
@@ -1866,10 +1870,14 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 /* Comparison infocard — bar-comparison redesign */
 .comparison-ic-heads {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   margin-bottom: 0.45rem;
+}
+
+.comparison-ic-head-inline {
+  margin: 0.3rem 0 0.4rem;
 }
 
 .comparison-ic-head {
@@ -1879,7 +1887,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .comparison-ic-head-b {
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 
 .comparison-ic-head-text {
@@ -1890,7 +1898,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 .comparison-ic-head-text-b {
-  text-align: right;
+  text-align: left;
 }
 
 .comparison-ic-chip {
@@ -2054,6 +2062,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .fig-comparison-panel-15b .linked-panel-title {
   min-height: 2.2rem;
   align-content: flex-start;
+}
+
+.fig-comparison-panel-15a .linked-panel-title,
+.fig-comparison-panel-15b .linked-panel-title {
+  display: none;
 }
 
 .fig-comparison-panel-15a,
@@ -3124,8 +3137,8 @@ input[type=range] {
 
 /* === FIG 05 CARD === */
 [data-layout-id="fig05-month-map"] {
-  height: 650px;
-  overflow: hidden;
+  height: 630px;
+  overflow: visible;
   display: flex;
   flex-direction: column;
 }
@@ -3133,7 +3146,7 @@ input[type=range] {
 [data-layout-id="fig05-month-map"] .month-explorer {
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 [data-layout-id="fig05-month-map"] .fig05-main {
@@ -3144,11 +3157,18 @@ input[type=range] {
 [data-layout-id="fig05-month-map"] .fig05-info-panel {
   min-height: 0;
   overflow: hidden;
+  /* gap: 0.4rem; */
 }
 
 [data-layout-id="fig05-month-map"] .fig05-caption-row {
   min-height: 0;
   overflow: hidden;
+  gap: 0.4rem;
+}
+
+[data-layout-id="fig05-month-map"] .fig05-info-panel p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 [data-layout-id="fig05-month-map"] .fig05-info-panel .month-inset {
@@ -3165,6 +3185,7 @@ input[type=range] {
   flex-direction: column;
   gap: 0.75rem;
   min-width: 0;
+  width: auto;
   border-left: 1px solid rgba(255, 255, 255, 0.12);
   padding-left: 2rem;
   margin-left: 1.3rem;
@@ -3181,8 +3202,9 @@ input[type=range] {
 .fig05-info-panel {
   display: flex;
   flex-direction: column;
-  gap: 0.72rem;
+  /* gap: 0.72rem; */
   min-width: 0;
+  width: 348px;
 }
 
 .month-map-panel {
@@ -3637,10 +3659,11 @@ input[type=range] {
 .month-btn {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  flex: 1;
+  width: 98px;
+  gap: 0.05rem;
+  flex: 0 0 auto;
   min-width: 0;
-  padding: 0.15rem 0.3rem;
+  padding: 0.1rem 0.45rem;
   background: var(--bg-dark);
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -3658,13 +3681,13 @@ input[type=range] {
 }
 .mb-label {
   font-family: Georgia, serif;
-  font-size: 0.67rem;
+  font-size: 0.6rem;
   color: #f0dcc0;
 }
 .month-btn.active .mb-label { color: var(--accent2); }
 .mb-count {
   font-family: 'Courier New', monospace;
-  font-size: 0.62rem;
+  font-size: 0.56rem;
   color: var(--text-muted);
 }
 
@@ -3696,8 +3719,8 @@ input[type=range] {
 
 .month-size-legend {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  top: 0rem;
+  right: 0rem;
   z-index: 2;
   min-width: 126px;
 }
