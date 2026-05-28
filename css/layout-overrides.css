@@ -53,7 +53,7 @@
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    height: 321px;
+    height: 330px;
   }
   [data-layout-id="fig05-month-map"] {
     order: 3;
