@@ -3,6 +3,13 @@
    Pointer events are disabled on the overlay so the chart underneath stays interactive.
    All callouts share one type-system so the look is uniform across charts.            */
 
+/* Any element that wraps a .chart-overlay becomes its positioning context.
+   Lets us drop overlays into a viz-area sub-container and still have
+   inset: 0 confine to that sub-container, not the whole chart card. */
+.chart-card :has(> .chart-overlay) {
+  position: relative;
+}
+
 .chart-overlay {
   position: absolute;
   inset: 0;
