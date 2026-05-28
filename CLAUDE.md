@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static, single-page data visualisation assignment for FIT2179 (Monash University, 2026). The page tells the story of Australia's "Black Summer" bushfire season (2019–2020) through 15 interactive Vega/Vega-Lite charts embedded in a dark-themed scrollytelling layout.
+This is a static, single-page data visualisation assignment for FIT2179 (Monash University, 2026), due **29 May 2026**. The page tells the story of Australia's "Black Summer" bushfire season (2019–2020) through 16 interactive Vega/Vega-Lite charts embedded in a dark-themed scrollytelling layout.
 
 There is no build step, no package manager, and no test suite. All files are served directly from the filesystem or a local web server. The page is hosted on GitHub Pages.
 
@@ -39,7 +39,7 @@ python scripts/prepare_alluvial.py    # Pre-computed alluvial layout JSON
 Raw source data (NASA MODIS/VIIRS ZIPs, `Historical_Wildfires.csv`, `package_show*.json`) lives outside `data/` and is not committed. `prepare_hexbin_map.py` generates `fire_hexbin_map.json`.
 
 Two distinct data sources power different charts:
-- **MODIS-derived aggregates** (`fire_*.csv`, `hist_*.csv`): daily totals, FRP density, day/night counts — used by timeline, density, bullet, and historical charts.
+- **MODIS-derived aggregates** (`fire_*.csv`, `hist_*.csv`): daily totals, FRP density, day/night counts — used by timeline, density, bullet, and historical charts. **MODIS data is missing October 2019**; the daily time-series therefore has a gap at the season start.
 - **VIIRS 375 m point samples** (`viirs_*.csv`, `hex_bins*.geojson`): actual fire locations — used by the monthly explorer map, hexbin spatial map, and WA polar clock. VIIRS includes October 2019 which MODIS data lacks.
 
 ## Page Structure
@@ -64,7 +64,7 @@ Two distinct data sources power different charts:
 3. `js/vega-utils.js` — shared `embedOpts`, `vlConfig` (dark-theme Vega config), and `embedChart()` wrapper that attaches a custom tooltip handler to every chart.
 4. `js/basic-charts.js` — embeds Figs 01–03 from spec files plus the Fig 04 daily time-series as an inline Vega-Lite spec; contains the Fig 01 interactive driver-legend logic and the cross-chart `broadcastStateHover()` that links hover across Figs 02, 03A, 03B.
 5. `js/month-explorer.js` — Fig 05 monthly map with zoom-lens inset, month selector buttons, and FRP filter.
-6. `js/chart-embeds.js` — embeds the remaining standalone Vega specs (Figs 06–09, 11) using `embedChartFitHeight` / `embedChartFitSize` for responsive sizing.
+6. `js/chart-embeds.js` — embeds the remaining standalone Vega specs (Figs 06–11) using `embedChart` / `embedChartFitHeight` / `embedChartFitSize` for responsive sizing.
 7. `js/raincloud-detail.js` — Fig 12 raincloud drill-down (overview ↔ detail toggle).
 8. `js/hexbin-zoom.js` — Fig 13 animated hexbin map with state-filter buttons.
 9. `js/comparison.js` — Fig 14/15 comparison panels with draggable season-window handles; uses `embedComposedPanel()` to extract individual panels from a multi-panel Vega spec.
@@ -75,23 +75,31 @@ Each `vega/*.json` file is a self-contained Vega or Vega-Lite spec. Charts that 
 
 Figure-to-spec mapping:
 
-| Figure | Spec file |
-|---|---|
-| Fig 01 | `vega/15_fire_causes_waffle.json` |
-| Fig 02 | `vega/01_waffle.json` |
-| Fig 03A | `vega/02_state_streamgraph.json` |
-| Fig 03B | `vega/03_state_radar.json` |
-| Fig 04 | inline `timeseriesSpec` in `js/basic-charts.js` |
-| Fig 05 | `vega/09_choropleth.json` (main map) |
-| Fig 06 | `vega/05_frp_density.json` |
-| Fig 07 | `vega/07_daynight_bullet.json` |
-| Fig 08 | `vega/11_bubble.json` |
-| Fig 09 | `vega/16_state_month_intensity_alluvial.json` |
-| Fig 10 | `vega/06_heatmatrix.json` |
-| Fig 11 | `vega/13_annual_area.json` |
-| Fig 12 | `vega/14_yearmonth_heat.json` / `vega/14_yearmonth_detail.json` |
-| Fig 13 | `vega/09_hexbin.json` |
-| Fig 14/15 | `vega/12_calendar.json` / `vega/10_wa_overlay.json` |
+> **Note:** JS comment numbers (`/* VIZ NN */`) in the source files reflect an older internal numbering and do not correspond to the `Fig NN` display numbers used here.
+
+| Figure | HTML element ID | Spec file |
+|---|---|---|
+| Fig 01 | `#viz-causes-waffle` | `vega/15_fire_causes_waffle.json` |
+| Fig 02 | `#viz-waffle` | `vega/01_waffle.json` |
+| Fig 03A | `#viz-state-bar` | `vega/02_state_streamgraph.json` |
+| Fig 03B | `#viz-state-radar` | `vega/03_state_radar.json` |
+| Fig 04 | `#viz-timeseries` | inline `timeseriesSpec` in `js/basic-charts.js` |
+| Fig 05 | `#viz-month-map` | `vega/09_choropleth.json` (main map) |
+| Fig 06 | `#viz-frp-hist` | `vega/05_frp_density.json` |
+| Fig 07 | `#viz-daynight` | `vega/07_daynight_bullet.json` |
+| Fig 08 | `#viz-bubble` | `vega/11_bubble.json` |
+| Fig 09 | `#viz-alluvial` | `vega/16_state_month_intensity_alluvial.json` |
+| Fig 10 | `#viz-heatmatrix` | `vega/06_heatmatrix.json` (dumbbell chart; filename is a legacy artefact) |
+| Fig 11 | `#viz-annual-area` | `vega/13_annual_area.json` |
+| Fig 12 | `#viz-yearmonth-heat` | `vega/14_yearmonth_heat.json` / `vega/14_yearmonth_detail.json` |
+| Fig 13 | `#viz-hexbin` | `vega/09_hexbin.json` |
+| Fig 14/15 | `#viz-calendar` / `#viz-overlay` | `vega/12_calendar.json` / `vega/10_wa_overlay.json` |
+
+### Comparison panels (`js/comparison.js`)
+
+`embedComposedPanel(selector, specUrl, composeKey, panelIndex, overrides)` extracts a single panel from a multi-panel Vega spec (the `hconcat`/`vconcat`/`layer` array identified by `composeKey`) and embeds it standalone, merging in `overrides` for per-panel customisation. Used to split `vega/12_calendar.json` and `vega/10_wa_overlay.json` into the Fig 14 and Fig 15 cards respectively.
+
+The draggable timeline handles in the comparison card manipulate Vega signals directly via `view.signal('seasonStart', …).run()`.
 
 ### Vega utilities (`js/vega-utils.js`)
 
@@ -137,3 +145,4 @@ Query strings on `<script src>` and `<link href>` tags (e.g. `?v=fig03-polish-20
 - `docs/chart-audit-2026-05-07.md` — per-chart QA audit (labels, axes, hover, clipping, encoding fit). Read this before making chart changes.
 - `docs/superpowers/specs/` — design specs for the layout and 3D map prototype.
 - `CHANGELOG.md` — running log of changes by date.
+- `update.md` — historical integration notes covering MODIS/VIIRS/Historical data mixing, MODIS October gap, and open follow-ups from the chart QA audit.
