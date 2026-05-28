@@ -1,0 +1,141 @@
+/* === Floating chart-annotation overlays ===
+   Overlay sits absolutely over a .chart-card (which is already position:relative).
+   Pointer events are disabled on the overlay so the chart underneath stays interactive.
+   All callouts share one type-system so the look is uniform across charts.            */
+
+.chart-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.chart-callout {
+  position: absolute;
+  pointer-events: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  max-width: 190px;
+  padding: 0.26rem 0.5rem 0.28rem 0.55rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  line-height: 1.22;
+  color: #f5e4cc;
+  background: rgba(15, 22, 36, 0.82);
+  border: 1px solid rgba(248, 150, 30, 0.36);
+  border-left: 2px solid #f8961e;
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.34);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  white-space: normal;
+}
+
+.chart-callout .callout-eyebrow {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c7a77e;
+}
+
+.chart-callout .callout-value {
+  font-family: "Courier New", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffd89a;
+  letter-spacing: 0.01em;
+}
+
+.chart-callout .callout-text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 500;
+  color: #e8c9a0;
+}
+
+/* Accent variants: red for peaks/critical, blue for cool/baseline */
+.chart-callout.is-accent {
+  border-left-color: #e74c3c;
+  border-color: rgba(231, 76, 60, 0.4);
+}
+.chart-callout.is-accent .callout-value {
+  color: #ff9b8a;
+}
+.chart-callout.is-cool {
+  border-left-color: #56B4E9;
+  border-color: rgba(86, 180, 233, 0.4);
+}
+.chart-callout.is-cool .callout-value {
+  color: #b6e0ff;
+}
+
+/* Optional connector line — anchors a callout to the data point.
+   Add child .callout-stem with data-dir="up|down|left|right" plus inline length. */
+.chart-callout .callout-stem {
+  position: absolute;
+  background: rgba(248, 150, 30, 0.55);
+  pointer-events: none;
+}
+.chart-callout .callout-stem[data-dir="down"] {
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  transform: translateX(-50%);
+}
+.chart-callout .callout-stem[data-dir="up"] {
+  left: 50%;
+  bottom: 100%;
+  width: 1px;
+  transform: translateX(-50%);
+}
+.chart-callout .callout-stem[data-dir="left"] {
+  right: 100%;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+.chart-callout .callout-stem[data-dir="right"] {
+  left: 100%;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+.chart-callout.is-accent .callout-stem {
+  background: rgba(231, 76, 60, 0.6);
+}
+.chart-callout.is-cool .callout-stem {
+  background: rgba(86, 180, 233, 0.6);
+}
+
+/* Tiny dot marker rendered on the callout corner */
+.chart-callout .callout-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f8961e;
+  box-shadow: 0 0 0 2px rgba(248, 150, 30, 0.22);
+}
+.chart-callout.is-accent .callout-dot { background: #e74c3c; box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.22); }
+.chart-callout.is-cool   .callout-dot { background: #56B4E9; box-shadow: 0 0 0 2px rgba(86, 180, 233, 0.22); }
+
+.chart-callout .callout-dot[data-pos="tl"] { top: -3px; left: -3px; }
+.chart-callout .callout-dot[data-pos="tr"] { top: -3px; right: -3px; }
+.chart-callout .callout-dot[data-pos="bl"] { bottom: -3px; left: -3px; }
+.chart-callout .callout-dot[data-pos="br"] { bottom: -3px; right: -3px; }
+
+/* Below ~860px the page stacks; keep callouts visible but compact */
+@media (max-width: 860px) {
+  .chart-callout {
+    max-width: 150px;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.4rem;
+  }
+  .chart-callout .callout-value { font-size: 0.72rem; }
+  .chart-callout .callout-eyebrow { font-size: 0.52rem; }
+}

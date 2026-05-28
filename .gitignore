@@ -20,6 +20,9 @@ server-*.log
 *-check.png
 choropleth-root-check.json
 
+# Per-chart annotation working folder (screenshots, helper scripts)
+.tmp_annot/
+
 # Raw/source data not required by the deployed GitHub Pages site
 *.zip
 *.xlsx
