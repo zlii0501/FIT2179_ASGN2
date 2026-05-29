@@ -78,10 +78,16 @@ function attachRaincloudOverviewClick(view) {
   });
 }
 
+function setRaincloudAnnotationsVisible(visible) {
+  const shell = raincloudEl?.closest('.raincloud-shell');
+  if (shell) shell.classList.toggle('hide-annotations', !visible);
+}
+
 async function showRaincloudOverview() {
   raincloudMode = 'overview';
   setRaincloudToolbar(false);
   setRaincloudCaption(null);
+  setRaincloudAnnotationsVisible(true);
   await swapRaincloud(
     () => 'vega/14_yearmonth_heat.json?v=fig12-tight-container-20260525',
     attachRaincloudOverviewClick
@@ -92,6 +98,7 @@ async function showRaincloudDetail(monthNum, monthLabel) {
   raincloudMode = 'detail';
   setRaincloudToolbar(true, monthLabel);
   setRaincloudCaption(monthLabel);
+  setRaincloudAnnotationsVisible(false);
   const response = await fetch('vega/14_yearmonth_detail.json?v=fig12-tight-container-20260525');
   const detailSpec = await response.json();
   await swapRaincloud(() => {

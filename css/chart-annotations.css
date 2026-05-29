@@ -18,9 +18,11 @@
   transition: opacity 0.18s ease;
 }
 
-/* Fig 13: hide the floating map annotations whenever a specific
-   state filter is active (i.e. anything other than ALL). */
-.fig13-map-panel.hide-annotations > .chart-overlay {
+/* Generic hook for charts with mode switches: any container that
+   wraps a .chart-overlay can fade it out by toggling .hide-annotations.
+   Used by Fig 13 (non-ALL state filter) and Fig 12 (raincloud detail
+   view). */
+.hide-annotations > .chart-overlay {
   opacity: 0;
 }
 
