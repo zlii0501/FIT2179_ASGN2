@@ -7,7 +7,7 @@ let raincloudView = null;
 let raincloudMode = 'overview';
 let raincloudRenderToken = 0;
 
-const RAINCLOUD_CAPTION_OVERVIEW = 'Grey marks show each month’s 2005–2018 range, while red marks trace Black Summer. November, December and January push far beyond the usual spread, with December 2019 reaching 62,015.8 km² against a historical December maximum of 28,469.3 km².';
+const RAINCLOUD_CAPTION_OVERVIEW = 'Grey marks: each month’s 2005–2018 range. Red marks: Black Summer. Nov, Dec and Jan break far beyond the usual spread.';
 
 function setRaincloudCaption(monthLabel) {
   if (!raincloudCaptionEl) return;

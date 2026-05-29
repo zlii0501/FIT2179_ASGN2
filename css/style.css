@@ -2152,7 +2152,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 [data-layout-id="fig12-raincloud"] {
-  --raincloud-fixed-height: 255px;
+  --raincloud-fixed-height: 290px;
   display: flex;
   flex-direction: column;
   gap: 0.72rem;
@@ -2369,7 +2369,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 @media (max-width: 760px) {
   [data-layout-id="fig12-raincloud"] {
-    --raincloud-fixed-height: 255px;
+    --raincloud-fixed-height: 290px;
   }
 
   .fig12-content-row {
