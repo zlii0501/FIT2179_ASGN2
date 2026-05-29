@@ -66,12 +66,6 @@
         <div class="chart-card" data-layout-id="fig03-state-radar">
           <div class="chart-title"><span class="chart-number">Fig. 03B</span><span class="chart-title-text">State Fire Profile — relative footprint, energy, intensity, density and night activity</span></div>
           <div id="viz-state-radar"></div>
-          <div class="chart-overlay" data-overlay-for="viz-state-radar" style="bottom: auto; height: 60%;">
-            <div class="chart-callout" style="top: 14%; right: 0.5%; max-width: 105px;">
-              <span class="callout-eyebrow">Biggest reach</span>
-              <span class="callout-text">NSW maxes Detections + Energy</span>
-            </div>
-          </div>
           <div class="左边文字">
             <div class="fig03b-state-legend" aria-label="State legend">
               <span data-state="NSW"><i style="--swatch:#D55E00"></i>NSW</span>
@@ -136,16 +130,6 @@
             </div>
           </div>
           <div id="viz-waffle"></div>
-          <div class="chart-overlay" data-overlay-for="viz-waffle">
-            <div class="chart-callout" style="top: 70%; left: 50%; transform: translateX(-50%); max-width: 230px; text-align: center; align-items: center;">
-              <span class="callout-eyebrow">How to read</span>
-              <span class="callout-text">1 flame ≈ 1% of detections (~1,994 fires)</span>
-            </div>
-            <div class="chart-callout is-accent" style="top: 95%; left: 50%; transform: translate(-50%, -100%); max-width: 200px; text-align: center; align-items: center;">
-              <span class="callout-eyebrow">Hidden in plain sight</span>
-              <span class="callout-text">VIC and SA together &lt; 2% of flames</span>
-            </div>
-          </div>
         </div>
       </div>
       <div class="chart-card" data-layout-id="fig03-state-stream">
@@ -165,17 +149,6 @@
           </div>
           <div class="ch1-card-viz">
             <div id="viz-state-bar"></div>
-            <div class="chart-overlay" data-overlay-for="viz-state-bar">
-              <div class="chart-callout is-cool" style="top: 12%; left: 6%; max-width: 170px;">
-                <span class="callout-eyebrow">Aug – Sep</span>
-                <span class="callout-text">WA + NT savanna burns dominate before the east-coast surge</span>
-              </div>
-              <div class="chart-callout is-accent" style="top: 8%; left: 65%; max-width: 180px;">
-                <span class="callout-eyebrow">December peak</span>
-                <span class="callout-value">81,412</span>
-                <span class="callout-text">NSW alone fills the orange bulge</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -239,7 +212,6 @@
         <div id="viz-timeseries"></div>
         <div class="chart-overlay" data-overlay-for="viz-timeseries">
           <div class="chart-callout is-accent" style="top: 24%; left: 46%; max-width: 150px;">
-            <span class="callout-eyebrow">Season peak</span>
             <span class="callout-value">~7,500</span>
             <span class="callout-text">single-day total, 5 Jan 2020</span>
           </div>
@@ -328,11 +300,9 @@
             <div id="viz-frp-hist"></div>
             <div class="chart-overlay" data-overlay-for="viz-frp-hist">
               <div class="chart-callout" style="top: 18%; left: 22%; max-width: 150px;">
-                <span class="callout-eyebrow">Density peak</span>
                 <span class="callout-text">Most fires burn at 5 – 30 MW — a small power plant's output</span>
               </div>
               <div class="chart-callout is-accent" style="top: 50%; left: 52%; max-width: 195px;">
-                <span class="callout-eyebrow">Off-chart</span>
                 <span class="callout-text">Axis stops at 800 MW; the season's peak fire reached 11,164 MW</span>
               </div>
             </div>
@@ -346,30 +316,11 @@
       <div class="chart-card grid-span-6" data-layout-id="fig07-daynight">
         <div class="chart-title 左边文字"><span class="chart-number">Fig. 07</span><span class="chart-title-text">Day vs Night — each state's daytime fire share</span></div>
         <div id="viz-daynight"></div>
-        <div class="chart-overlay" data-overlay-for="viz-daynight">
-          <div class="chart-callout is-accent" style="top: 22%; right: 0; max-width: 82px;">
-            <span class="callout-eyebrow">Outlier</span>
-            <span class="callout-value">52.8%</span>
-            <span class="callout-text">NSW: night-burning fires</span>
-          </div>
-          <div class="chart-callout is-tag" style="top: 64%; left: 15%; transform: translateX(-50%);">NT</div>
-          <div class="chart-callout is-tag" style="top: 64%; left: 29%; transform: translateX(-50%);">SA</div>
-          <div class="chart-callout is-tag" style="top: 64%; left: 42%; transform: translateX(-50%);">WA</div>
-          <div class="chart-callout is-tag" style="top: 64%; left: 56%; transform: translateX(-50%);">VIC</div>
-          <div class="chart-callout is-tag" style="top: 64%; left: 69%; transform: translateX(-50%);">QLD</div>
-          <div class="chart-callout is-tag" style="top: 64%; left: 83%; transform: translateX(-50%);">NSW</div>
-        </div>
         <p class="chart-annotation compact-p 左边文字">NT, SA and WA are strongly daytime-skewed, while NSW sits close to balance because major fire activity persisted into the night. The 50% marker separates ordinary day-night rhythm from sustained fire behaviour.</p>
       </div>
       <div class="chart-card grid-span-6" data-layout-id="fig08-bubble">
         <div class="chart-title"><span class="chart-number">Fig. 08</span><span class="chart-title-text">Where and when fires burned hottest — average fire intensity by state and month</span></div>
         <div id="viz-bubble"></div>
-        <div class="chart-overlay" data-overlay-for="viz-bubble">
-          <div class="chart-callout is-cool" style="top: 52%; left: 22%; max-width: 165px;">
-            <span class="callout-eyebrow">Quiet south</span>
-            <span class="callout-text">SA + VIC barely register until late-Dec</span>
-          </div>
-        </div>
         <div class="fig08-legend" aria-label="Fig. 08 legend">
           <div class="fig08-frp-legend">
             <span class="fig08-frp-legend-title">Number of fire detections</span>
@@ -430,16 +381,6 @@
         <div class="fig10-viz-col">
           <div class="fig10-chart-shell">
             <div id="viz-heatmatrix"></div>
-            <div class="chart-overlay" data-overlay-for="viz-heatmatrix">
-              <div class="chart-callout is-accent" style="top: 50%; left: 30%; max-width: 200px;">
-                <span class="callout-eyebrow">Longest jump</span>
-                <span class="callout-text">NSW: 3k in Aug → 43.8k in Dec (≈14× growth)</span>
-              </div>
-              <div class="chart-callout is-cool" style="top: 1%; left: 38%; max-width: 175px;">
-                <span class="callout-eyebrow">Reverse course</span>
-                <span class="callout-text">NT actually fell — savanna dry season ended</span>
-              </div>
-            </div>
             <div class="fig10-legend" aria-label="Fig. 10 legend">
               <span><i class="fig10-dot fig10-dot-aug" aria-hidden="true"></i>Aug 2019</span>
               <span><i class="fig10-dot fig10-dot-dec" aria-hidden="true"></i>Dec 2019</span>
@@ -490,11 +431,9 @@
           <div id="viz-annual-area"></div>
           <div class="chart-overlay" data-overlay-for="viz-annual-area">
             <div class="chart-callout is-cool" style="top: 64%; left: 30%; max-width: 140px;">
-              <span class="callout-eyebrow">Historical low</span>
               <span class="callout-text">2010 trough — fire area dipped under 20k km²</span>
             </div>
             <div class="chart-callout" style="top: 10%; left: 8%; max-width: 195px;">
-              <span class="callout-eyebrow">Pre-2019 pattern</span>
               <span class="callout-text">15 years of volatility — no upward trend, then a sharp discontinuity</span>
             </div>
           </div>
@@ -530,11 +469,9 @@
             <div id="viz-yearmonth-heat"></div>
             <div class="chart-overlay" data-overlay-for="viz-yearmonth-heat">
               <div class="chart-callout is-accent" style="top: 30%; left: 53%; max-width: 200px;">
-                <span class="callout-eyebrow">Off-the-chart</span>
                 <span class="callout-text">Only Dec + Jan break the historical envelope — red dots stretch far right</span>
               </div>
               <div class="chart-callout is-cool" style="top: 12%; left: 18%; max-width: 165px;">
-                <span class="callout-eyebrow">Off-season floor</span>
                 <span class="callout-text">Feb – Jul: historically near zero, Black Summer matches</span>
               </div>
             </div>
@@ -574,11 +511,9 @@
           <div id="viz-hexbin"></div>
           <div class="chart-overlay" data-overlay-for="viz-hexbin">
             <div class="chart-callout is-accent" style="top: 80%; left: 56%; max-width: 145px;">
-              <span class="callout-eyebrow">SE fire belt</span>
               <span class="callout-text">NSW &amp; Vic coast — densest, hottest hexbins</span>
             </div>
             <div class="chart-callout" style="top: 36%; left: 38%; max-width: 145px;">
-              <span class="callout-eyebrow">Interior</span>
               <span class="callout-text">Central deserts: no fuel, no detections</span>
             </div>
           </div>
