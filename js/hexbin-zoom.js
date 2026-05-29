@@ -244,6 +244,8 @@ embedChart('#viz-hexbin', 'vega/09_hexbin.json?v=hover-highlight-20260528', embe
     document.querySelectorAll('#hexbin-state-btns .hexbin-state-btn').forEach(btn => {
       btn.classList.toggle('is-active', btn.dataset.state === state);
     });
+    const mapPanel = document.querySelector('.fig13-map-panel');
+    if (mapPanel) mapPanel.classList.toggle('hide-annotations', state !== 'ALL');
   }
 
   function updateHexbinInfoBoard(state) {

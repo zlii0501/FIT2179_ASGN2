@@ -15,6 +15,13 @@
   inset: 0;
   pointer-events: none;
   z-index: 6;
+  transition: opacity 0.18s ease;
+}
+
+/* Fig 13: hide the floating map annotations whenever a specific
+   state filter is active (i.e. anything other than ALL). */
+.fig13-map-panel.hide-annotations > .chart-overlay {
+  opacity: 0;
 }
 
 .chart-callout {
