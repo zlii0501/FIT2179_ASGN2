@@ -204,6 +204,16 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .chapter-lede .chapter-narrative {
   padding-bottom: 0;
+  column-count: 2;
+  column-gap: 2.4rem;
+  column-rule: 1px solid rgba(232, 201, 160, 0.08);
+}
+
+@media (max-width: 860px) {
+  .chapter-lede .chapter-narrative {
+    column-count: 1;
+    column-rule: none;
+  }
 }
 
 .grid-span-4 { grid-column: span 4; }
