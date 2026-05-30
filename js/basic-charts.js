@@ -34,8 +34,8 @@ function initCh1LegendHover() {
   });
 }
 
-/* VIZ 1 — Flame Parliament Chart (loaded from file) */
-embedChart('#viz-waffle', 'vega/01_waffle.json?v=state-hover-20260522', embedOpts)
+/* VIZ 1 — Isotype waffle: 200 flames, each ≈1,000 detections */
+embedChart('#viz-waffle', 'vega/01_waffle.json?v=isotype-1k-20260530', embedOpts)
   .then(r => { ch1WaffleView = r.view; });
 
 /* VIZ 2 — State Streamgraph (loaded from file) */
