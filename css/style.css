@@ -3097,19 +3097,109 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   margin: 0 2rem;
 }
 
-/* === FOOTER === */
-footer {
+/* === REFERENCES METADATA TABLE === */
+.references-meta {
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
-  padding: 2rem;
+  padding: 1.2rem var(--page-pad) 1rem;
   margin-top: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-dim, rgba(232,201,160,0.62));
+}
+
+.references-head {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  font-family: -apple-system, sans-serif;
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.3);
+  gap: 0.6rem 1.4rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(232,201,160,0.14);
+}
+
+.references-head h3 {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #e8c9a0;
+}
+
+.references-author {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem 0.9rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+}
+
+.references-author strong {
+  color: #e8c9a0;
+  font-weight: 700;
+}
+
+.references-author-id,
+.references-author-date {
+  font-family: 'Courier New', monospace;
+  font-size: 0.74rem;
+  color: rgba(232,201,160,0.7);
+  letter-spacing: 0.02em;
+}
+
+.references-list {
+  list-style: decimal;
+  padding-left: 1.3rem;
+  margin: 0 0 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  column-gap: 1.6rem;
+  row-gap: 0.32rem;
+  font-size: 0.76rem;
+  line-height: 1.42;
+}
+
+.references-list li {
+  break-inside: avoid;
+  color: rgba(232,201,160,0.55);
+}
+
+.references-list li::marker {
+  color: rgba(232,201,160,0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.references-list a {
+  color: #d9bd91;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(232,201,160,0.22);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.references-list a:hover,
+.references-list a:focus-visible {
+  color: #ffd89a;
+  border-bottom-color: rgba(248,150,30,0.6);
+  outline: none;
+}
+
+.references-foot {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(232,201,160,0.08);
+  font-size: 0.72rem;
+  color: rgba(232,201,160,0.42);
+  text-align: right;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 860px) {
+  .references-meta { padding: 1rem 1rem 0.85rem; }
+  .references-head { flex-direction: column; align-items: flex-start; }
+  .references-list { grid-template-columns: 1fr; }
+  .references-foot { text-align: left; }
 }
 
 /* === SLIDER CONTROL === */
