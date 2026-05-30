@@ -4,15 +4,31 @@
   "height": 320,
   "padding": { "left": 0, "right": 8, "top": 4, "bottom": 4 },
   "params": [{"name": "hoveredState", "value": ""}],
-  "data": { "sequence": { "start": 0, "stop": 200, "as": "i" } },
+  "data": { "sequence": { "start": 0, "stop": 325, "as": "i" } },
   "transform": [
     {
-      "calculate": "datum.i < 102 ? 'NSW' : datum.i < 136 ? 'QLD' : datum.i < 170 ? 'WA' : datum.i < 196 ? 'NT' : datum.i < 199 ? 'SA' : 'VIC'",
+      "calculate": "datum.i < 125 ? 'NSW' : datum.i < 175 ? 'QLD' : datum.i < 225 ? 'WA' : datum.i < 275 ? 'NT' : datum.i < 300 ? 'SA' : 'VIC'",
       "as": "state"
     },
     {
-      "calculate": "datum.i < 102 ? datum.i : datum.i < 136 ? datum.i - 102 : datum.i < 170 ? datum.i - 136 : datum.i < 196 ? datum.i - 170 : datum.i < 199 ? datum.i - 196 : datum.i - 199",
+      "calculate": "datum.i < 125 ? datum.i : datum.i < 175 ? datum.i - 125 : datum.i < 225 ? datum.i - 175 : datum.i < 275 ? datum.i - 225 : datum.i < 300 ? datum.i - 275 : datum.i - 300",
       "as": "pos_in_state"
+    },
+    {
+      "calculate": "datum.state === 'NSW' ? 101 : datum.state === 'QLD' ? 34 : datum.state === 'WA' ? 33 : datum.state === 'NT' ? 26 : datum.state === 'SA' ? 2 : 0",
+      "as": "full_count"
+    },
+    {
+      "calculate": "datum.state === 'NSW' ? 0.569 : datum.state === 'QLD' ? 0.158 : datum.state === 'WA' ? 0.964 : datum.state === 'NT' ? 0.037 : datum.state === 'SA' ? 0.834 : 0.845",
+      "as": "frac_value"
+    },
+    {
+      "calculate": "datum.pos_in_state < datum.full_count ? 'full' : (datum.pos_in_state === datum.full_count ? 'fractional' : 'outline')",
+      "as": "cell_type"
+    },
+    {
+      "calculate": "datum.cell_type === 'full' ? 1 : (datum.cell_type === 'fractional' ? max(0.18, datum.frac_value) : 0)",
+      "as": "fill_opacity"
     },
     {
       "calculate": "datum.pos_in_state % 25",
@@ -31,12 +47,12 @@
       "as": "y"
     },
     {
-      "calculate": "datum.state === 'NSW' ? '101,569 detections · 51%' : datum.state === 'QLD' ? '34,158 detections · 17%' : datum.state === 'WA' ? '33,964 detections · 17%' : datum.state === 'NT' ? '26,037 detections · 13%' : datum.state === 'SA' ? '2,834 detections · 1.4%' : '845 detections · 0.4%'",
+      "calculate": "datum.state === 'NSW' ? '101,569 detections · 51.0%' : datum.state === 'QLD' ? '34,158 detections · 17.1%' : datum.state === 'WA' ? '33,964 detections · 17.0%' : datum.state === 'NT' ? '26,037 detections · 13.1%' : datum.state === 'SA' ? '2,834 detections · 1.4%' : '845 detections · 0.4%'",
       "as": "detail"
     },
     {
-      "calculate": "datum.state === 'NSW' ? 102 : datum.state === 'QLD' ? 34 : datum.state === 'WA' ? 34 : datum.state === 'NT' ? 26 : datum.state === 'SA' ? 3 : 1",
-      "as": "state_flames"
+      "calculate": "datum.state === 'NSW' ? '101.6 flames' : datum.state === 'QLD' ? '34.2 flames' : datum.state === 'WA' ? '34.0 flames' : datum.state === 'NT' ? '26.0 flames' : datum.state === 'SA' ? '2.8 flames' : '0.8 flames'",
+      "as": "flame_label"
     }
   ],
   "layer": [
@@ -44,10 +60,7 @@
       "mark": {
         "type": "point",
         "shape": "M0,-1.35 C0.42,-0.78 0.96,-0.34 0.92,0.36 C0.88,1.05 0.34,1.42 -0.2,1.42 C-0.88,1.42 -1.26,0.92 -1.12,0.28 C-1.0,-0.24 -0.62,-0.58 -0.48,-1.08 C-0.2,-0.76 -0.04,-0.44 0,-1.35 Z",
-        "filled": true,
-        "size": 200,
-        "stroke": "#111827",
-        "strokeWidth": 0.8
+        "size": 200
       },
       "encoding": {
         "x": {
@@ -62,7 +75,7 @@
           "scale": { "domain": [-0.5, 12.5], "reverse": true },
           "axis": null
         },
-        "color": {
+        "fill": {
           "field": "state",
           "type": "nominal",
           "scale": {
@@ -70,6 +83,31 @@
             "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
           },
           "legend": null
+        },
+        "fillOpacity": {
+          "field": "fill_opacity",
+          "type": "quantitative",
+          "scale": null,
+          "legend": null
+        },
+        "stroke": {
+          "condition": [
+            {"test": "datum.cell_type === 'outline'", "value": "rgba(232,201,160,0.32)"}
+          ],
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW", "QLD", "WA", "NT", "SA", "VIC"],
+            "range": ["#D55E00", "#E69F00", "#0072B2", "#CC79A7", "#009E73", "#56B4E9"]
+          },
+          "legend": null
+        },
+        "strokeWidth": {
+          "condition": [
+            {"test": "datum.cell_type === 'outline'", "value": 1.1},
+            {"test": "datum.cell_type === 'fractional'", "value": 1.4}
+          ],
+          "value": 0.8
         },
         "opacity": {
           "condition": [
@@ -80,8 +118,8 @@
         },
         "tooltip": [
           { "field": "state", "title": "State" },
-          { "field": "state_flames", "title": "Flames (~1k each)" },
-          { "field": "detail", "title": "Total" }
+          { "field": "flame_label", "title": "Total flames" },
+          { "field": "detail", "title": "Detections" }
         ]
       }
     },

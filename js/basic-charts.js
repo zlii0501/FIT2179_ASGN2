@@ -35,7 +35,7 @@ function initCh1LegendHover() {
 }
 
 /* VIZ 1 — Isotype waffle: 200 flames, each ≈1,000 detections */
-embedChart('#viz-waffle', 'vega/01_waffle.json?v=isotype-rows-20260530', embedOpts)
+embedChart('#viz-waffle', 'vega/01_waffle.json?v=isotype-frac-outline-20260530', embedOpts)
   .then(r => { ch1WaffleView = r.view; });
 
 /* VIZ 2 — State Streamgraph (loaded from file) */
