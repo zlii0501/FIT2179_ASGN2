@@ -139,7 +139,7 @@
     grid-column: 1 / -1;
     grid-row: auto;
     align-self: start;
-    height: 346px;
+    height: 385px;
   }
   [data-layout-id="fig13-hexbin"] {
     order: 4;
