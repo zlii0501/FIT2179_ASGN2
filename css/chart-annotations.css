@@ -73,6 +73,24 @@
   color: #e8c9a0;
 }
 
+/* Fig 06 (FRP density) — slightly larger callouts because the chart
+   has a lot of empty space and benefits from more readable labels. */
+[data-layout-id="fig06-frp-density"] .chart-callout {
+  font-size: 0.74rem;
+  max-width: 225px;
+  padding: 0.3rem 0.55rem;
+  line-height: 1.32;
+}
+[data-layout-id="fig06-frp-density"] .chart-callout .callout-text {
+  font-size: 0.74rem;
+}
+[data-layout-id="fig06-frp-density"] .chart-callout .callout-value {
+  font-size: 0.88rem;
+}
+[data-layout-id="fig06-frp-density"] .chart-callout .callout-eyebrow {
+  font-size: 0.6rem;
+}
+
 /* Tiny axis-label variant — used when the underlying chart is missing
    category labels and we want to add subtle inline tags rather than a
    full callout box. */
