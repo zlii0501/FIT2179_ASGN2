@@ -1724,7 +1724,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   padding: 0.8rem 0.85rem;
   background: rgba(10,14,26,0.68);
   border: 1px solid rgba(232,201,160,0.12);
-  border-radius: 6px;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
 }
 
 .fig-comparison-title {
@@ -2169,6 +2170,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   min-height: 0;
 }
 
+
 .fig12-viz-col {
   width: min(647px, 100%);
   border-left: 1px solid rgba(255, 255, 255, 0.12);
@@ -2310,8 +2312,9 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  /* gap: 0.45rem; */
   margin-top: auto;
+  margin-bottom: 30px;
   padding: 0.6rem 0.85rem;
   background: rgba(10,14,26,0.55);
   border: 1px solid rgba(255,255,255,0.07);
@@ -2369,7 +2372,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 @media (max-width: 760px) {
   [data-layout-id="fig12-raincloud"] {
-    --raincloud-fixed-height: 290px;
+    --raincloud-fixed-height: 255px;
   }
 
   .fig12-content-row {
@@ -2789,10 +2792,11 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .calendar-compare-controls {
   margin: 0 0 0.9rem;
-  padding: 0.75rem 0.8rem 0.65rem;
+  padding: 0.55rem 0.8rem 0.65rem;
   background: rgba(10,14,26,0.68);
   border: 1px solid rgba(232,201,160,0.12);
-  border-radius: 6px;
+  border-top: 1px solid rgba(232,201,160,0.08);
+  border-radius: 0 0 6px 6px;
 }
 
 .calendar-compare-head {
