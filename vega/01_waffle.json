@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": "container",
-  "height": 320,
+  "height": 290,
   "padding": { "left": 0, "right": 8, "top": 4, "bottom": 4 },
   "params": [{"name": "hoveredState", "value": ""}],
   "data": { "sequence": { "start": 0, "stop": 325, "as": "i" } },

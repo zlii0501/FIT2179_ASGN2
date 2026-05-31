@@ -24,7 +24,8 @@
   }
   .ch1-side-row [data-layout-id="fig02-waffle"] {
     flex: 0 0 696px;
-    height: 708px;
+    height: auto;
+    align-self: flex-start;
   }
   [data-layout-id="fig03-state-stream"] {
     grid-column: 1 / -1;
