@@ -806,7 +806,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 }
 
 [data-layout-id="fig03-state-radar"] #viz-state-radar {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-height: 0;
 }
 
