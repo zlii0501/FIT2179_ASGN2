@@ -404,7 +404,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   top: 0.55rem;
   right: 0.75rem;
   z-index: 2;
-  display: inline-flex;
+  display: none;
   align-items: center;
   min-height: 1.28rem;
   padding: 0.12rem 0.38rem;
