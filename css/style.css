@@ -188,7 +188,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .chapter-lede {
   grid-column: span 4;
   min-width: 0;
-  padding: 0 0.25rem 1rem 0;
+  padding: 0 0.25rem 0 0;
 }
 
 .chapter-lede .chapter-label {
