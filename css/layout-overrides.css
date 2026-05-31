@@ -35,7 +35,7 @@
   [data-layout-id="fig01-causes"] {
     grid-column: 1 / -1;
     align-self: start;
-    height: 726px;
+    height: auto;
   }
   /* Chapter 2 - When */
   .chapter-grid-ch2 {

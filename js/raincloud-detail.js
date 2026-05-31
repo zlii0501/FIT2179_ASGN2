@@ -7,7 +7,7 @@ let raincloudView = null;
 let raincloudMode = 'overview';
 let raincloudRenderToken = 0;
 
-const RAINCLOUD_CAPTION_OVERVIEW = 'Grey marks: each month’s 2005–2018 range. Red marks: Black Summer. Nov, Dec and Jan break far beyond the usual spread.';
+const RAINCLOUD_CAPTION_OVERVIEW = 'Grey marks: each month’s 2005–2018 range. Red marks: Black Summer. Nov, Dec and Jan break far beyond the usual spread, with Dec hitting 2× the max.';
 
 function setRaincloudCaption(monthLabel) {
   if (!raincloudCaptionEl) return;
