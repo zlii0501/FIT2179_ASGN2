@@ -176,7 +176,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   gap: 1.25rem;
   width: 100%;
   max-width: var(--page-max);
-  margin: 0;
+  margin: 0 auto;
   padding: 0 var(--page-pad);
 }
 
