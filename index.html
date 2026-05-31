@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>Australia's Black Summer — Data Story</title>
-  <link rel="stylesheet" href="css/style.css?v=vgap-half-refs-centered-20260531">
+  <link rel="stylesheet" href="css/style.css?v=map3d-90vh-button-20260531">
   <link rel="stylesheet" href="css/layout-overrides.css?v=vgap-unify-20260531">
   <link rel="stylesheet" href="css/chart-annotations.css?v=fig06-expanded-20260530">
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
@@ -686,12 +686,16 @@
         Rotate, zoom and pan across the continent to see where fire detections cluster. Each point is a VIIRS satellite hotspot; height and colour encode fire radiative power. Taller, redder spikes mark the catastrophic fire-power events that drove the season's worst destruction.
       </p>
     </div>
-    <div class="chart-card" style="grid-column: 1/-1; padding: 0; overflow: hidden;">
+    <div class="chart-card map3d-card" style="grid-column: 1/-1; padding: 0; overflow: hidden;">
+      <a class="map3d-open" href="map3d.html" target="_blank" rel="noopener noreferrer" aria-label="Open the 3D map in a new tab">
+        <span class="map3d-open-icon" aria-hidden="true">↗</span>
+        Open in new tab
+      </a>
       <iframe
         src="map3d.html"
         title="Black Summer 3D fire map"
         width="100%"
-        style="display: block; border: none; height: 95vh; min-height: 480px;"
+        style="display: block; border: none; height: 90vh; min-height: 480px;"
         loading="lazy"
         allowfullscreen
       ></iframe>
