@@ -16,6 +16,7 @@
   --page-max:  calc(1087px + 5.25rem);
   --page-pad:  2rem;
   --paragraph-font-size: 0.72rem;
+  --vgap:      1.4rem;
 }
 
 html { scroll-behavior: smooth; font-size: 20.8px; }
@@ -136,7 +137,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 /* === CHAPTER SECTIONS === */
 .chapter {
-  padding: 1rem 0 2rem;
+  padding: var(--vgap) 0;
   border-top: 1px solid var(--fire-glow);
 }
 
@@ -173,7 +174,7 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 
 .chapter-body {
   display: grid;
-  gap: 1.25rem;
+  gap: var(--vgap);
   width: 100%;
   max-width: var(--page-max);
   margin: 0 auto;
@@ -3102,8 +3103,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .references-meta {
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
-  padding: 1.2rem var(--page-pad) 1rem;
-  margin-top: 2rem;
+  padding: var(--vgap) var(--page-pad);
+  margin-top: var(--vgap);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-dim, rgba(232,201,160,0.62));
 }
