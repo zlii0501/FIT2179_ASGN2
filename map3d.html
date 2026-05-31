@@ -205,23 +205,29 @@
     .gesture-photos {
       display: flex; gap: 5px;
       padding: 8px 8px 5px;
-      flex: 1;
+      align-items: flex-start;
+      justify-content: center;
     }
     .gesture-photo {
-      flex: 1;
-      background: rgba(255,255,255,0.03);
-      border: 1.5px dashed rgba(232, 201, 160, 0.22);
+      flex: 1 1 0;
+      height: 115px;
+      background: #0d1520;
+      border: 1px solid rgba(232, 201, 160, 0.14);
       border-radius: 4px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 4px;
-      padding: 8px 4px;
-      min-height: 90px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
     }
-    .gesture-photo .ph-cam  { font-size: 20px; opacity: 0.25; }
-    .gesture-photo .ph-num  { font-size: 9px; color: rgba(232,201,160,0.4); letter-spacing:0.05em; }
-    .gesture-photo .ph-desc { font-size: 9px; color: rgba(232,201,160,0.55); text-align:center; line-height:1.4; }
-    .gesture-photo img      { width:100%; height:100%; object-fit:cover; border-radius:3px; display:block; }
+    .gesture-photo img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
 
     .gesture-info {
       padding: 5px 9px 9px;
@@ -327,7 +333,7 @@
   <canvas id="scene-canvas"></canvas>
 
   <!-- Camera toggle -->
-  <button id="cam-toggle" type="button">📷 开启手势</button>
+  <button id="cam-toggle" type="button">📷 Enable Gestures</button>
 
   <!-- Webcam preview + gesture badge (task 3) -->
   <div id="webcam-preview"></div>
@@ -345,13 +351,13 @@
   <div id="gesture-status">Gestures: off</div>
 
   <!-- Tutorial / help button -->
-  <button id="tutorial-help-btn" title="手势教程">?</button>
+  <button id="tutorial-help-btn" title="Gesture Guide">?</button>
 
   <!-- Tutorial popup -->
   <div id="tutorial-overlay" class="hidden">
     <div class="tutorial-modal">
       <div class="tutorial-header">
-        <h2>手势控制指南 — Gesture Guide</h2>
+        <h2>Gesture Control Guide</h2>
         <button class="tutorial-close-btn" id="tutorial-close">✕</button>
       </div>
       <div class="tutorial-grid">
@@ -360,14 +366,12 @@
         <div class="gesture-card">
           <div class="gesture-photos">
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #1</span>
-              <span class="ph-desc">握紧拳头<br>手心朝摄像头</span>
+              <img src="icon/gestures/gesture-01-fist.png?v=20260531-pngv2" alt="Closed fist, palm facing the camera">
             </div>
           </div>
           <div class="gesture-info">
-            <div class="gesture-title"><span class="gi">✊</span><strong>轨道旋转</strong></div>
-            <p class="gesture-desc">握拳后上下左右移动手部，旋转地图视角</p>
+            <div class="gesture-title"><span class="gi">✊</span><strong>Orbit</strong></div>
+            <p class="gesture-desc">Make a fist and move your hand to orbit the camera around the map</p>
           </div>
         </div>
 
@@ -375,19 +379,15 @@
         <div class="gesture-card">
           <div class="gesture-photos">
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #2</span>
-              <span class="ph-desc">握拳<br>大拇指向右</span>
+              <img src="icon/gestures/gesture-02-thumb-right.png?v=20260531-pngv2" alt="Closed fist, thumb extended to the right">
             </div>
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #3</span>
-              <span class="ph-desc">握拳<br>大拇指向左</span>
+              <img src="icon/gestures/gesture-03-thumb-left.png?v=20260531-pngv2" alt="Closed fist, thumb extended to the left">
             </div>
           </div>
           <div class="gesture-info">
-            <div class="gesture-title"><span class="gi">👍</span><strong>持续旋转</strong></div>
-            <p class="gesture-desc">握拳时拇指横向伸出，越伸越快；向右 / 向左</p>
+            <div class="gesture-title"><span class="gi">👍</span><strong>Continuous Spin</strong></div>
+            <p class="gesture-desc">Extend the thumb sideways from a fist — further out spins faster; right / left</p>
           </div>
         </div>
 
@@ -395,19 +395,15 @@
         <div class="gesture-card">
           <div class="gesture-photos">
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #4</span>
-              <span class="ph-desc">拇指尖<br>贴近食指尖</span>
+              <img src="icon/gestures/gesture-04-pinch-close.png?v=20260531-pngv2" alt="Thumb tip touching index tip">
             </div>
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #5</span>
-              <span class="ph-desc">拇指食指<br>轻轻张开</span>
+              <img src="icon/gestures/gesture-05-pinch-open.png?v=20260531-pngv2" alt="Thumb and index slightly apart">
             </div>
           </div>
           <div class="gesture-info">
-            <div class="gesture-title"><span class="gi">🤏</span><strong>缩放</strong></div>
-            <p class="gesture-desc">捏紧 → 放大；放松 → 缩小</p>
+            <div class="gesture-title"><span class="gi">🤏</span><strong>Zoom</strong></div>
+            <p class="gesture-desc">Pinch closed → zoom in; release → zoom out</p>
           </div>
         </div>
 
@@ -415,14 +411,12 @@
         <div class="gesture-card">
           <div class="gesture-photos">
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #6</span>
-              <span class="ph-desc">捏合手势<br>手臂向侧方偏移</span>
+              <img src="icon/gestures/gesture-06-pinch-side.png?v=20260531-pngv2" alt="Pinch held while the arm drifts sideways">
             </div>
           </div>
           <div class="gesture-info">
-            <div class="gesture-title"><span class="gi">🤏</span><strong>缩放 + 旋转</strong></div>
-            <p class="gesture-desc">捏合状态下手部向左/右偏移，同时缩放并旋转</p>
+            <div class="gesture-title"><span class="gi">🤏</span><strong>Zoom + Spin</strong></div>
+            <p class="gesture-desc">While pinched, drift the hand left or right to zoom and spin together</p>
           </div>
         </div>
 
@@ -430,14 +424,12 @@
         <div class="gesture-card">
           <div class="gesture-photos">
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #7</span>
-              <span class="ph-desc">只伸出食指<br>其余弯曲</span>
+              <img src="icon/gestures/gesture-07-index.png?v=20260531-pngv2" alt="Only the index finger extended, others curled">
             </div>
           </div>
           <div class="gesture-info">
-            <div class="gesture-title"><span class="gi">☝️</span><strong>平移</strong></div>
-            <p class="gesture-desc">食指单独伸出，左右移动平移地图</p>
+            <div class="gesture-title"><span class="gi">☝️</span><strong>Pan</strong></div>
+            <p class="gesture-desc">Extend only the index finger and move sideways to pan the map</p>
           </div>
         </div>
 
@@ -445,22 +437,20 @@
         <div class="gesture-card">
           <div class="gesture-photos">
             <div class="gesture-photo">
-              <span class="ph-cam">📷</span>
-              <span class="ph-num">照片 #8</span>
-              <span class="ph-desc">握拳<br>大拇指朝上</span>
+              <img src="icon/gestures/gesture-08-thumb-up.png?v=20260531-pngv2" alt="Closed fist, thumb pointing up">
             </div>
           </div>
           <div class="gesture-info">
-            <div class="gesture-title"><span class="gi">✌️</span><strong>快捷菜单</strong></div>
-            <p class="gesture-desc">伸出食指和中指（✌️）保持 1.5 秒开菜单；菜单内可重置 / 开关教程 / 切换深浅色场景</p>
+            <div class="gesture-title"><span class="gi">✌️</span><strong>Quick Menu</strong></div>
+            <p class="gesture-desc">Hold the peace sign (✌️) for 1.5 s to open the menu — reset / toggle tutorial / switch light or dark theme</p>
           </div>
         </div>
 
       </div><!-- .tutorial-grid -->
       <div class="tutorial-footer">
-        <span class="tutorial-note">共需 8 张手势照片 (#1–#8)，拍摄后替换各占位框</span>
+        <span class="tutorial-note">Hold the peace sign (✌️) for 1.5 s to reopen this guide anytime</span>
         <div class="tutorial-holdbar-wrap"><div class="tutorial-holdbar" id="tutorial-holdbar"></div></div>
-        <button class="tutorial-btn" id="tutorial-got-it">知道了</button>
+        <button class="tutorial-btn" id="tutorial-got-it">Got it</button>
       </div>
     </div>
   </div>
@@ -468,12 +458,12 @@
   <!-- Gesture quick-menu (thumbs-up hold) -->
   <div id="gesture-menu">
     <div class="gmenu-items">
-      <div class="gmenu-item active" data-idx="0">重置</div>
-      <div class="gmenu-item"        data-idx="1">教程</div>
-      <div class="gmenu-item"        data-idx="2">场景设置</div>
-      <div class="gmenu-item"        data-idx="3">退出菜单</div>
+      <div class="gmenu-item active" data-idx="0">Reset</div>
+      <div class="gmenu-item"        data-idx="1">Tutorial</div>
+      <div class="gmenu-item"        data-idx="2">Theme</div>
+      <div class="gmenu-item"        data-idx="3">Close Menu</div>
     </div>
-    <div class="gmenu-hint">✊ 握拳选择 · ✌️ 保持确认</div>
+    <div class="gmenu-hint">✊ Fist to select · ✌️ Hold to confirm</div>
     <div class="gmenu-holdbar-wrap"><div class="gmenu-holdbar" id="gmenu-holdbar"></div></div>
   </div>
 
@@ -1388,9 +1378,9 @@
         if (sel === 2) {
           isDarkTheme = !isDarkTheme;
           applyTerrainTheme();
-          setStatus(`场景: ${isDarkTheme ? '深色' : '浅色'}`, '#60a5fa');
+          setStatus(`Theme: ${isDarkTheme ? 'Dark' : 'Light'}`, '#60a5fa');
         }
-        // sel === 3: 退出菜单 — closeMenu() already called above, nothing else needed
+        // sel === 3: Close Menu — closeMenu() already called above, nothing else needed
       }
 
       function setStatus(text, color) {
@@ -1467,13 +1457,13 @@
         if (!document.getElementById('tutorial-overlay').classList.contains('hidden')) {
           const lmT = handsList[0];
 
-          // ✌️ peace sign held for 1.5 s → 知道了
+          // ✌️ peace sign held for 1.5 s → "Got it"
           const _tBar = document.getElementById('tutorial-holdbar');
           if (isPeace(lmT)) {
             tutorialCloseFrames++;
             const pct = Math.min(tutorialCloseFrames / TUTORIAL_CLOSE_FRAMES * 100, 100);
             _tBar.style.width = pct + '%';
-            setStatus(`✌️ 保持关闭教程… ${Math.round(pct)}%`, '#a78bfa');
+            setStatus(`✌️ Hold to close tutorial… ${Math.round(pct)}%`, '#a78bfa');
             if (tutorialCloseFrames >= TUTORIAL_CLOSE_FRAMES) {
               _tBar.style.width = '0%';
               document.getElementById('tutorial-got-it').click();
@@ -1482,7 +1472,7 @@
           } else {
             tutorialCloseFrames = 0;
             _tBar.style.width = '0%';
-            setStatus('● 教程中  ✌️ 长按关闭');
+            setStatus('● Tutorial open  ✌️ hold to close');
           }
           return;
         }
@@ -1511,12 +1501,12 @@
             if (thumbUpFrames >= MENU_CONFIRM_FRAMES) {
               gmenuConfirm();
             } else {
-              setStatus(`✌️ 确认: ${_gmenuItems[menuSelIdx].textContent}`, '#fbbf24');
+              setStatus(`✌️ Confirm: ${_gmenuItems[menuSelIdx].textContent}`, '#fbbf24');
             }
           } else if (_isPeace && !_confirmReady) {
             // Too soon after opening — ignore ✌️, show countdown
             const waitPct = Math.round(menuEnterFrames / MENU_ENTER_DELAY * 100);
-            setStatus(`菜单准备中… ${waitPct}%`, '#6b7280');
+            setStatus(`Menu opening… ${waitPct}%`, '#6b7280');
           } else if (extCnt === 0 && e_palmX !== null) {
             // Fist navigation — mirrored: invert X so hand-right = screen-right
             thumbUpFrames = Math.max(0, thumbUpFrames - 3); // decay, don't hard reset
@@ -1524,12 +1514,12 @@
             const n = _gmenuItems.length;
             const newIdx = Math.min(Math.floor((1 - e_palmX) * n), n - 1);
             gmenuSelect(newIdx);
-            setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   ✊ 移动手到对应区域`, '#fbbf24');
+            setStatus(`Menu: ${_gmenuItems[menuSelIdx].textContent}   ✊ Move hand to the matching zone`, '#fbbf24');
           } else {
             // Other gesture — decay slowly so detection flicker doesn't wipe progress
             thumbUpFrames = Math.max(0, thumbUpFrames - 2);
             _gmenuBar.style.width = (thumbUpFrames / MENU_CONFIRM_FRAMES * 100) + '%';
-            setStatus(`菜单: ${_gmenuItems[menuSelIdx].textContent}   握拳选择 · ✌️ 确认`, '#fbbf24');
+            setStatus(`Menu: ${_gmenuItems[menuSelIdx].textContent}   ✊ Fist to select · ✌️ Hold to confirm`, '#fbbf24');
           }
           p_palmX = null; p_palmY = null;
           e_ptX = e_ptY = p_ptX = p_ptY = null;
@@ -1545,7 +1535,7 @@
           if (thumbUpFrames >= MENU_OPEN_FRAMES) {
             openMenu();
           } else {
-            setStatus(`✌️ 保持打开菜单… ${Math.round(pct)}%`, '#fbbf24');
+            setStatus(`✌️ Hold to open menu… ${Math.round(pct)}%`, '#fbbf24');
           }
           _spinVel *= SPIN_DECAY;
           p_palmX = null; p_palmY = null;
@@ -1755,7 +1745,7 @@
         if (!camActive) {
           // Turn on — init gestures, then show tutorial
           camActive = true;
-          btn.textContent = '📷 关闭手势';
+          btn.textContent = '📷 Disable Gestures';
           btn.classList.add('cam-on');
           statusBadge.style.display = '';
           initGestures();
@@ -1765,7 +1755,7 @@
         } else {
           // Turn off — stop camera and hide gesture UI
           camActive = false;
-          btn.textContent = '📷 开启手势';
+          btn.textContent = '📷 Enable Gestures';
           btn.classList.remove('cam-on');
           if (window._mpCamera) {
             window._mpCamera.stop();
