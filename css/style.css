@@ -16,7 +16,7 @@
   --page-max:  calc(1087px + 5.25rem);
   --page-pad:  2rem;
   --paragraph-font-size: 0.72rem;
-  --vgap:      1.4rem;
+  --vgap:      0.7rem;
 }
 
 html { scroll-behavior: smooth; font-size: 20.8px; }
@@ -3107,6 +3107,13 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   margin-top: var(--vgap);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-dim, rgba(232,201,160,0.62));
+}
+
+.references-meta > * {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .references-head {
