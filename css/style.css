@@ -2193,8 +2193,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
 .raincloud-shell {
   position: relative;
   min-width: 0;
-  height: var(--raincloud-fixed-height);
-  min-height: var(--raincloud-fixed-height);
+  height: auto;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -2305,8 +2305,8 @@ h1, h2, h3, h4 { color: #f0dcc0; line-height: 1.2; }
   flex-direction: column;
   align-items: stretch;
   gap: 0.85rem;
-  height: var(--raincloud-fixed-height);
-  min-height: var(--raincloud-fixed-height);
+  height: auto;
+  min-height: 0;
   margin-top: 0;
   min-width: 0;
 }
